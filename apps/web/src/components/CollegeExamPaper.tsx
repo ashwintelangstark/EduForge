@@ -101,13 +101,15 @@ export const CollegeExamPaper: React.FC<CollegeExamPaperProps> = ({
         @media print {
           @page {
             size: A4 portrait;
-            margin: 8mm 10mm 10mm 10mm;
+            margin: 8mm 8mm 10mm 8mm;
           }
           body {
             background: #fff !important;
             color: #000 !important;
             margin: 0 !important;
             padding: 0 !important;
+            overflow: visible !important;
+            height: auto !important;
           }
           .no-print {
             display: none !important;
@@ -123,41 +125,85 @@ export const CollegeExamPaper: React.FC<CollegeExamPaperProps> = ({
           }
           .exam-columns-container {
             column-count: ${columnLayout === '2-column' ? 2 : 1} !important;
-            column-gap: 20px !important;
+            column-gap: 16px !important;
             column-rule: ${columnLayout === '2-column' ? '1px solid #94a3b8' : 'none'} !important;
+            column-fill: auto !important; /* CRITICAL: fills column sequentially to prevent splitting blocks across pages */
+            width: 100% !important;
           }
           .exam-q-block {
             break-inside: avoid !important;
             page-break-inside: avoid !important;
-            margin-bottom: 8px !important;
+            -webkit-column-break-inside: avoid !important;
+            break-inside: avoid-column !important;
+            break-inside: avoid-page !important;
+            display: inline-block !important; /* Forces atomic block formatting context that will not split */
+            width: 100% !important;
+            margin-bottom: 12px !important;
+            padding-bottom: 2px !important;
+            box-sizing: border-box !important;
+            contain: layout style !important;
+          }
+          .exam-q-block * {
+            -webkit-column-break-inside: avoid !important;
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
           }
           .exam-sec-divider {
+            break-inside: avoid !important;
             break-after: avoid !important;
             page-break-after: avoid !important;
+            -webkit-column-break-inside: avoid !important;
+            display: inline-block !important;
+            width: 100% !important;
             margin-top: 10px !important;
             margin-bottom: 6px !important;
           }
           .exam-master-key-block {
             break-inside: avoid !important;
             page-break-inside: avoid !important;
+            -webkit-column-break-inside: avoid !important;
+            display: block !important;
+            width: 100% !important;
+          }
+          .exam-q-block img,
+          .exam-q-block svg,
+          .exam-q-block table {
+            break-inside: avoid !important;
+            page-break-inside: avoid !important;
+            -webkit-column-break-inside: avoid !important;
+            max-width: 100% !important;
+            height: auto !important;
+          }
+          .exam-q-block img {
+            max-height: 120px !important;
+            object-fit: contain !important;
+          }
+          .exam-q-block .grid img {
+            max-height: 75px !important;
+            object-fit: contain !important;
           }
         }
 
         /* Screen 2-column styles */
         .exam-columns-container {
           column-count: ${columnLayout === '2-column' ? 2 : 1};
-          column-gap: 24px;
+          column-gap: 20px;
           column-rule: ${columnLayout === '2-column' ? '1px solid #cbd5e1' : 'none'};
+          column-fill: auto;
         }
         .exam-q-block {
           break-inside: avoid;
           page-break-inside: avoid;
+          -webkit-column-break-inside: avoid;
           display: inline-block;
           width: 100%;
+          contain: layout style;
+          box-sizing: border-box;
         }
         .exam-sec-divider {
           break-after: avoid;
           page-break-after: avoid;
+          -webkit-column-break-inside: avoid;
           display: inline-block;
           width: 100%;
         }
@@ -283,10 +329,16 @@ export const CollegeExamPaper: React.FC<CollegeExamPaperProps> = ({
                   const qSvg = q.diagramSvg || (q as any).diagram_svg || contentArr.find((b: any) => b.type === 'diagram' || b.diagramSvg || b.svg)?.diagramSvg || contentArr.find((b: any) => b.type === 'diagram' || b.diagramSvg || b.svg)?.svg;
                   const qImg = q.imageUrl || q.diagramUrl || contentArr.find((b: any) => b.type === 'image' || b.imageUrl || b.url)?.url;
 
+                  // Check if options contain images or diagrams
+                  const hasOptImages = rawOpts.some(o => {
+                    const t = String(o.rawText || o.text || o.label || o.imageUrl || '');
+                    return /<img|data:image|\.png|\.jpg|\.jpeg|\.svg|\/assets\//i.test(t) || Boolean(o.imageUrl || (o as any).diagramUrl);
+                  });
+
                   // Determine optimal option layout (2x2 vs 1-col vs inline 4)
                   const maxOptLen = Math.max(...rawOpts.map(o => String(o.rawText || o.text || o.label || '').length));
-                  const isUltraShort = maxOptLen <= 10 && rawOpts.length === 4;
-                  const isShort2x2 = maxOptLen <= 26 && rawOpts.length === 4;
+                  const isUltraShort = !hasOptImages && maxOptLen <= 10 && rawOpts.length === 4;
+                  const isShort2x2 = hasOptImages || (maxOptLen <= 26 && rawOpts.length === 4);
 
                   return (
                     <div key={q.id || qIdx} className="exam-q-block mb-3.5 pl-0.5 text-black">
@@ -300,10 +352,10 @@ export const CollegeExamPaper: React.FC<CollegeExamPaperProps> = ({
 
                       {/* Embedded Diagram / Image (Only if rawText does not already embed an image) */}
                       {!hasEmbeddedImg && (qSvg || (qImg && qImg !== 'undefined' && qImg !== 'null' && String(qImg).trim() !== '')) && (
-                        <div className="my-1.5 flex justify-center max-h-36 overflow-hidden">
+                        <div className="my-1.5 flex justify-center max-h-32 overflow-hidden">
                           {qSvg ? (
                             <div
-                              className="max-h-32 max-w-full flex items-center justify-center scale-90"
+                              className="max-h-28 max-w-full flex items-center justify-center scale-90"
                               dangerouslySetInnerHTML={{ __html: qSvg }}
                             />
                           ) : (
@@ -314,7 +366,7 @@ export const CollegeExamPaper: React.FC<CollegeExamPaperProps> = ({
                                 e.currentTarget.style.display = 'none';
                                 if (e.currentTarget.parentElement) e.currentTarget.parentElement.style.display = 'none';
                               }}
-                              className="max-h-32 max-w-full object-contain border border-slate-300 p-1"
+                              className="max-h-28 max-w-full object-contain border border-slate-300 p-0.5 rounded-xs"
                             />
                           )}
                         </div>
@@ -340,19 +392,19 @@ export const CollegeExamPaper: React.FC<CollegeExamPaperProps> = ({
                             })}
                           </div>
                         ) : isShort2x2 ? (
-                          // 2x2 Grid: (A) ...   (B) ...  /  (C) ...   (D) ...
-                          <div className="grid grid-cols-2 gap-x-3 gap-y-0.5">
+                          // 2x2 Grid (Ideal for diagram options and short options)
+                          <div className="grid grid-cols-2 gap-x-3 gap-y-1">
                             {rawOpts.map((opt, oIdx) => {
                               const key = (opt.key || String.fromCharCode(65 + oIdx)).toUpperCase();
                               const isCorrect = isAnswerKeyMode && (key === targetOptKey || opt.isCorrect);
                               const optText = opt.rawText || opt.text || opt.label || '';
 
                               return (
-                                <div key={opt.id || oIdx} className={`flex items-baseline gap-1 truncate ${isCorrect ? 'font-bold text-emerald-800' : ''}`}>
+                                <div key={opt.id || oIdx} className={`flex items-start gap-1 ${hasOptImages ? 'p-1 border border-slate-200 rounded-sm bg-white' : 'truncate'} ${isCorrect ? 'font-bold text-emerald-800 bg-emerald-50' : ''}`}>
                                   <span className="font-bold shrink-0">({key})</span>
-                                  <span className="truncate">
+                                  <div className={`flex-1 ${hasOptImages ? 'flex justify-center items-center max-h-20 overflow-hidden' : 'truncate'}`}>
                                     <MathTextRenderer text={optText} />
-                                  </span>
+                                  </div>
                                   {isCorrect && <Check className="inline w-3 h-3 text-emerald-600 stroke-[3] ml-0.5 shrink-0" />}
                                 </div>
                               );

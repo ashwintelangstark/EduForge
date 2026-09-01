@@ -63,3 +63,5 @@ uploads/
 # Test outputs
 *.docx
 test_output*
+build_packages/
+scratch/

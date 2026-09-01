@@ -198,34 +198,43 @@ questionsRouter.get('/:id', async (req: Request, res: Response, next: NextFuncti
 });
 
 // Helper to resolve or auto-create subject_id and chapter_id in Supabase
-async function resolveSubjectAndChapter(subjectName?: string, chapterTitle?: string) {
+async function resolveSubjectAndChapter(subjectName?: string, chapterTitle?: string, directSubjectId?: string, directChapterId?: string) {
   let subject_id: string | null = null;
   let chapter_id: string | null = null;
 
-  if (subjectName) {
-    const strSub = String(subjectName).trim();
-    const isSubUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(strSub);
+  // 1. Check direct UUIDs if provided
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  if (directSubjectId && uuidRegex.test(String(directSubjectId).trim())) {
+    subject_id = String(directSubjectId).trim();
+  }
+  if (directChapterId && uuidRegex.test(String(directChapterId).trim())) {
+    chapter_id = String(directChapterId).trim();
+  }
 
-    if (isSubUuid) {
-      const { data: sub } = await supabase.from('subjects').select('id').eq('id', strSub).maybeSingle();
-      if (sub?.id) subject_id = sub.id;
-    }
+  // 2. Fetch all subjects for clean, safe in-memory matching
+  const { data: allSubjects } = await supabase.from('subjects').select('id, name, code');
+  if (subjectName && !subject_id) {
+    const sTrim = String(subjectName).trim();
+    const sLower = sTrim.toLowerCase();
 
-    if (!subject_id) {
-      const { data: sub } = await supabase
-        .from('subjects')
-        .select('id')
-        .or(`name.ilike.${strSub},code.ilike.${strSub}`)
-        .limit(1)
-        .maybeSingle();
+    if (uuidRegex.test(sTrim)) {
+      subject_id = sTrim;
+    } else if (Array.isArray(allSubjects)) {
+      const matchedSub = allSubjects.find(s =>
+        s.id === sTrim ||
+        (s.name || '').trim().toLowerCase() === sLower ||
+        (s.code || '').trim().toLowerCase() === sLower ||
+        sLower.includes((s.name || '').trim().toLowerCase()) ||
+        (s.name || '').trim().toLowerCase().includes(sLower)
+      );
 
-      if (sub?.id) {
-        subject_id = sub.id;
+      if (matchedSub) {
+        subject_id = matchedSub.id;
       } else {
-        const code = strSub.substring(0, 3).toUpperCase();
+        const code = sTrim.substring(0, 3).toUpperCase();
         const { data: newSub } = await supabase
           .from('subjects')
-          .insert({ name: strSub, code, color: 'bg-teal-50 text-teal-700 border-teal-200' })
+          .insert({ name: sTrim, code, color: 'bg-teal-50 text-teal-700 border-teal-200' })
           .select('id')
           .maybeSingle();
         if (newSub?.id) subject_id = newSub.id;
@@ -233,57 +242,72 @@ async function resolveSubjectAndChapter(subjectName?: string, chapterTitle?: str
     }
   }
 
-  if (chapterTitle) {
-    const strCh = String(chapterTitle).trim();
-    const isChUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(strCh);
+  // 3. Match or resolve chapter safely without PostgREST .or() comma-breaking bugs
+  if (chapterTitle && !chapter_id) {
+    const cTrim = String(chapterTitle).trim();
+    const cLower = cTrim.toLowerCase();
+    const cClean = cLower.replace(/[^a-z0-9]/g, '');
 
-    if (isChUuid) {
-      const { data: ch } = await supabase.from('chapters').select('id, subject_id').eq('id', strCh).maybeSingle();
-      if (ch?.id) {
-        chapter_id = ch.id;
-        if (!subject_id && ch.subject_id) subject_id = ch.subject_id;
+    if (uuidRegex.test(cTrim)) {
+      chapter_id = cTrim;
+    } else {
+      let chQuery = supabase.from('chapters').select('id, title, chapter_code, subject_id');
+      if (subject_id) {
+        chQuery = chQuery.eq('subject_id', subject_id);
       }
-    }
+      const { data: chaptersList } = await chQuery;
 
-    if (!chapter_id && subject_id) {
-      const { data: ch } = await supabase
-        .from('chapters')
-        .select('id')
-        .eq('subject_id', subject_id)
-        .or(`title.ilike.${strCh},chapter_code.ilike.${strCh}`)
-        .limit(1)
-        .maybeSingle();
+      if (Array.isArray(chaptersList) && chaptersList.length > 0) {
+        const matched = chaptersList.find(c => {
+          if (c.id === cTrim) return true;
+          const tLower = (c.title || '').trim().toLowerCase();
+          const codeLower = (c.chapter_code || '').trim().toLowerCase();
+          if (tLower === cLower || codeLower === cLower) return true;
+          const tClean = tLower.replace(/[^a-z0-9]/g, '');
+          if (tClean && cClean && tClean === cClean) return true;
+          return false;
+        });
 
-      if (ch?.id) {
-        chapter_id = ch.id;
+        if (matched) {
+          chapter_id = matched.id;
+          if (!subject_id && matched.subject_id) subject_id = matched.subject_id;
+        }
       }
-    }
 
-    if (!chapter_id) {
-      const { data: ch } = await supabase
-        .from('chapters')
-        .select('id, subject_id')
-        .or(`title.ilike.${strCh},chapter_code.ilike.${strCh}`)
-        .limit(1)
-        .maybeSingle();
+      // If still not matched, check across all chapters
+      if (!chapter_id) {
+        const { data: allChs } = await supabase.from('chapters').select('id, title, chapter_code, subject_id');
+        if (Array.isArray(allChs)) {
+          const matched = allChs.find(c => {
+            if (c.id === cTrim) return true;
+            const tLower = (c.title || '').trim().toLowerCase();
+            const codeLower = (c.chapter_code || '').trim().toLowerCase();
+            if (tLower === cLower || codeLower === cLower) return true;
+            const tClean = tLower.replace(/[^a-z0-9]/g, '');
+            if (tClean && cClean && tClean === cClean) return true;
+            return false;
+          });
 
-      if (ch?.id) {
-        chapter_id = ch.id;
-        if (!subject_id && ch.subject_id) subject_id = ch.subject_id;
+          if (matched) {
+            chapter_id = matched.id;
+            if (!subject_id && matched.subject_id) subject_id = matched.subject_id;
+          }
+        }
       }
-    }
 
-    if (!chapter_id && subject_id) {
-      const { data: newCh } = await supabase
-        .from('chapters')
-        .insert({
-          subject_id,
-          chapter_code: `CH-${Date.now().toString().slice(-4)}`,
-          title: strCh
-        })
-        .select('id')
-        .maybeSingle();
-      if (newCh?.id) chapter_id = newCh.id;
+      // Only insert a brand new chapter if it truly does not exist in any format
+      if (!chapter_id && subject_id) {
+        const { data: newCh } = await supabase
+          .from('chapters')
+          .insert({
+            subject_id,
+            chapter_code: `CH-${Date.now().toString().slice(-4)}`,
+            title: cTrim
+          })
+          .select('id')
+          .maybeSingle();
+        if (newCh?.id) chapter_id = newCh.id;
+      }
     }
   }
 
@@ -331,7 +355,12 @@ async function saveQuestionOptions(questionId: string, options: any[]) {
 questionsRouter.post('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const body = req.body;
-    const { subject_id, chapter_id } = await resolveSubjectAndChapter(body.subject, body.chapter);
+    const { subject_id, chapter_id } = await resolveSubjectAndChapter(
+      body.subject || body.subject_name,
+      body.chapter || body.chapter_name,
+      body.subjectId || body.subject_id,
+      body.chapterId || body.chapter_id
+    );
 
     let questionCode = body.questionCode;
     if (!questionCode || questionCode.startsWith('Q-') || questionCode === 'undefined') {
@@ -362,7 +391,7 @@ questionsRouter.post('/', async (req: Request, res: Response, next: NextFunction
         dupQuery = dupQuery.eq('subject_id', subject_id);
       }
 
-      const { data: existingList } = await dupQuery.limit(300);
+      const { data: existingList } = await dupQuery.limit(500);
 
       const exactDup = (existingList || []).find((eq: any) => {
         const eqClean = (eq.raw_text || '').replace(/<[^>]*>?/gm, ' ').replace(/\s+/g, ' ').trim().toLowerCase();
@@ -439,7 +468,12 @@ questionsRouter.put('/:id', async (req: Request, res: Response, next: NextFuncti
   try {
     const { id } = req.params;
     const body = req.body;
-    const { subject_id, chapter_id } = await resolveSubjectAndChapter(body.subject, body.chapter);
+    const { subject_id, chapter_id } = await resolveSubjectAndChapter(
+      body.subject || body.subject_name,
+      body.chapter || body.chapter_name,
+      body.subjectId || body.subject_id,
+      body.chapterId || body.chapter_id
+    );
 
     let contentToUpdate = Array.isArray(body.content) ? [...body.content] : (Array.isArray(body.blocks) ? [...body.blocks] : undefined);
     if (contentToUpdate) {

@@ -177,7 +177,7 @@ html, body {
 @media print {
   @page {
     size: A4 portrait;
-    margin: 12mm 15mm 15mm 15mm;
+    margin: 8mm 8mm 10mm 8mm;
   }
 
   html, body {
@@ -224,18 +224,70 @@ html, body {
     overflow: visible !important;
   }
 
-  /* Prevent question cards from breaking/slicing across page boundaries */
+  .exam-columns-container {
+    column-count: 2 !important;
+    column-gap: 16px !important;
+    column-rule: 1px solid #94a3b8 !important;
+    column-fill: auto !important;
+    width: 100% !important;
+  }
+
+  /* Prevent question cards from breaking/slicing across page/column boundaries */
+  .exam-q-block,
   .question-item-block {
     break-inside: avoid !important;
     page-break-inside: avoid !important;
-    margin-bottom: 1.25rem !important;
+    -webkit-column-break-inside: avoid !important;
+    break-inside: avoid-column !important;
+    break-inside: avoid-page !important;
+    display: inline-block !important;
+    width: 100% !important;
+    margin-bottom: 12px !important;
+    box-sizing: border-box !important;
+    contain: layout style !important;
+  }
+
+  .exam-q-block *,
+  .question-item-block * {
+    -webkit-column-break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .exam-q-block img,
+  .exam-q-block svg,
+  .exam-q-block table,
+  .question-item-block img,
+  .question-item-block svg,
+  .question-item-block table {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    -webkit-column-break-inside: avoid !important;
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  .exam-q-block img {
+    max-height: 120px !important;
+    object-fit: contain !important;
+  }
+
+  .exam-q-block .grid img {
+    max-height: 75px !important;
+    object-fit: contain !important;
   }
 
   /* Keep section headers attached to the following questions */
-  .section-header-block {
+  .section-header-block,
+  .exam-sec-divider {
+    break-inside: avoid !important;
     break-after: avoid !important;
     page-break-after: avoid !important;
-    margin-top: 1.5rem !important;
-    margin-bottom: 1rem !important;
+    -webkit-column-break-inside: avoid !important;
+    display: inline-block !important;
+    width: 100% !important;
+    margin-top: 10px !important;
+    margin-bottom: 6px !important;
   }
 }
+

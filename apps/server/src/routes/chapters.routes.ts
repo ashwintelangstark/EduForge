@@ -17,16 +17,17 @@ async function resolveSubjectId(subjectIdOrName?: any): Promise<string | null> {
     return strVal;
   }
 
-  // Search by name or code in subjects table
-  const { data: existingSub } = await supabase
-    .from('subjects')
-    .select('id')
-    .or(`name.ilike.${strVal},code.ilike.${strVal}`)
-    .limit(1)
-    .maybeSingle();
-
-  if (existingSub?.id) {
-    return existingSub.id;
+  const { data: allSubs } = await supabase.from('subjects').select('id, name, code');
+  if (Array.isArray(allSubs)) {
+    const norm = strVal.toLowerCase();
+    const match = allSubs.find(s =>
+      s.id === strVal ||
+      (s.name || '').trim().toLowerCase() === norm ||
+      (s.code || '').trim().toLowerCase() === norm ||
+      norm.includes((s.name || '').trim().toLowerCase()) ||
+      (s.name || '').trim().toLowerCase().includes(norm)
+    );
+    if (match) return match.id;
   }
 
   // Create subject if not exists
@@ -35,7 +36,7 @@ async function resolveSubjectId(subjectIdOrName?: any): Promise<string | null> {
     .from('subjects')
     .insert({ name: strVal, code: subCode, color: 'bg-teal-50 text-teal-700 border-teal-200' })
     .select('id')
-    .single();
+    .maybeSingle();
 
   return newSub?.id || null;
 }
@@ -99,12 +100,46 @@ chaptersRouter.post('/', async (req: Request, res: Response, next: NextFunction)
   try {
     const { subjectId, subject, title, name, code } = req.body;
     const targetUuid = await resolveSubjectId(subjectId || subject);
+    const chapterTitle = (title || name || '').trim();
+
+    // Prevent duplicate chapters under the same subject
+    if (targetUuid && chapterTitle) {
+      const { data: existingChapters } = await supabase
+        .from('chapters')
+        .select('*, subjects(name)')
+        .eq('subject_id', targetUuid);
+
+      if (Array.isArray(existingChapters) && existingChapters.length > 0) {
+        const cClean = chapterTitle.toLowerCase().replace(/[^a-z0-9]/g, '');
+        const matched = existingChapters.find(c => {
+          const tLower = (c.title || '').trim().toLowerCase();
+          if (tLower === chapterTitle.toLowerCase()) return true;
+          const tClean = tLower.replace(/[^a-z0-9]/g, '');
+          if (tClean && cClean && tClean === cClean) return true;
+          return false;
+        });
+
+        if (matched) {
+          return res.status(200).json({
+            success: true,
+            data: {
+              id: matched.id,
+              title: matched.title,
+              code: matched.chapter_code,
+              subject: matched.subjects?.name || subject || 'Biology',
+              subjectId: matched.subject_id,
+              count: 0
+            }
+          });
+        }
+      }
+    }
 
     const { data, error } = await supabase
       .from('chapters')
       .insert({
         subject_id: targetUuid,
-        title: title || name,
+        title: chapterTitle,
         chapter_code: code || `CH-${Date.now().toString().slice(-4)}`
       })
       .select('*, subjects(name)')

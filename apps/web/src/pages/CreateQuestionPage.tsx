@@ -92,6 +92,7 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
   const [difficulty, setDifficulty] = useState<QuestionDifficulty>(initialQuestion?.difficulty || 'Medium');
   const [marks, setMarks] = useState<number>(initialQuestion?.marks || 4);
   const [negativeMarks, setNegativeMarks] = useState<number>(initialQuestion?.negativeMarks !== undefined ? initialQuestion.negativeMarks : 1);
+  const [isSaving, setIsSaving] = useState<boolean>(false);
 
   // Question Code manual override state
   const [customQuestionCode, setCustomQuestionCode] = useState<string>(() => {
@@ -320,6 +321,8 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
   };
 
   const handleSaveDraft = async () => {
+    if (isSaving) return false;
+
     const rawStatement = blocks
       .filter(b => b.type === 'text')
       .map(b => b.text)
@@ -331,6 +334,11 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
     const dynamicCode = formatQuestionCode({ subject: subToUse, chapter, id: initialQuestion?.id });
     const finalCode = (customQuestionCode || dynamicCode).trim();
 
+    const selectedSub = dbSubjects.find(s => (s.name || '').toLowerCase() === subToUse.toLowerCase());
+    const selectedSubId = selectedSub?.id;
+    const selectedChObj = availableChapters.find(c => (c.title || '').trim().toLowerCase() === (chapter || '').trim().toLowerCase());
+    const selectedChapterId = selectedChObj?.id;
+
     const questionData: Partial<Question> = {
       ...(initialQuestion?.id ? { id: initialQuestion.id } : {}),
       questionCode: finalCode,
@@ -340,7 +348,11 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
       rawText: rawStatement,
       content: blocks as any,
       subject: subToUse,
+      subjectId: selectedSubId,
+      subject_id: selectedSubId,
       chapter,
+      chapterId: selectedChapterId,
+      chapter_id: selectedChapterId,
       difficulty,
       marks,
       negativeMarks,
@@ -361,20 +373,23 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
     } as any;
 
     try {
-      const subToUse = userSubject !== 'All' ? userSubject : subject;
-      const selectedSub = dbSubjects.find(s => (s.name || '').toLowerCase() === subToUse.toLowerCase());
-      const selectedSubId = selectedSub?.id || subToUse;
+      setIsSaving(true);
 
       // If custom chapter was typed and doesn't exist in dbChapters, save it to database
       if (isCustomChapter && chapter && chapter.trim()) {
         const existingCh = dbChapters.find(c => (c.title || c.name || '').toLowerCase() === chapter.trim().toLowerCase());
         if (!existingCh) {
           try {
-            await api.createChapter(selectedSubId, {
+            const newChRes: any = await api.createChapter(selectedSubId || subToUse, {
               title: chapter.trim(),
               subject: subToUse,
               name: chapter.trim()
             });
+            if (newChRes?.data?.id || newChRes?.id) {
+              const chId = newChRes.data?.id || newChRes.id;
+              (questionData as any).chapterId = chId;
+              (questionData as any).chapter_id = chId;
+            }
             // Refresh database chapters in state
             const updatedChs = await api.getChapters();
             if (Array.isArray(updatedChs)) setDbChapters(updatedChs);
@@ -406,6 +421,8 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
       const errMsg = err?.response?.data?.error || err?.message || 'Error saving question.';
       alert(errMsg);
       return false;
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -478,6 +495,7 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
           </button>
           <button
             type="button"
+            disabled={isSaving}
             onClick={async () => {
               const success = await handleSaveDraft();
               if (success) {
@@ -485,9 +503,9 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
                 onBackToQuestionBank('saved_questions');
               }
             }}
-            className="px-4 py-2 bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold rounded-lg shadow-sm hover:shadow-md transition-all active:scale-[0.98] cursor-pointer font-sans"
+            className="px-4 py-2 bg-teal-700 hover:bg-teal-800 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs font-bold rounded-lg shadow-sm hover:shadow-md transition-all active:scale-[0.98] cursor-pointer font-sans"
           >
-            Save Question
+            {isSaving ? 'Saving Question...' : 'Save Question'}
           </button>
         </div>
       </div>

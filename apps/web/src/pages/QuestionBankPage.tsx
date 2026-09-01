@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../services/api.js';
 import { Question } from '@eduforge/shared';
-import { Search, Plus, Trash2, Edit3, Eye, Filter, BookOpen, Layers, Send, Bookmark } from 'lucide-react';
+import { Search, Plus, Trash2, Edit3, Eye, Filter, BookOpen, Layers, Send, Bookmark, FileText, Download, Check, X } from 'lucide-react';
 import { StudentPreviewDrawer } from '../components/StudentPreviewDrawer.js';
+import { CollegeExamPaper } from '../components/CollegeExamPaper.js';
 import { formatQuestionCode } from '../utils/questionCode.js';
 import { MathTextRenderer } from '../equation/MathTextRenderer.js';
 import { getUserProfile } from '../utils/userProfile.js';
@@ -99,6 +100,9 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
 
   // Admin Approvals Tab State
   const [adminApprovalTab, setAdminApprovalTab] = useState<'sent' | 'received'>('sent');
+
+  // PDF Modal State
+  const [isPdfModalOpen, setIsPdfModalOpen] = useState(false);
 
   useEffect(() => {
     loadMetadataAndQuestions();
@@ -216,47 +220,40 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
     }
   };
 
-  const handleSendForApproval = async (targetSubject: string) => {
+  const handleSendForApproval = async () => {
     if (selectedIds.length === 0) return;
     
     const idsToSend = [...selectedIds];
     const questionsToUpdate = questions.filter(q => idsToSend.includes(q.id));
 
-    // Validate that questions match the target subject
-    const mismatchedQuestions = questionsToUpdate.filter(q => {
-      const qSub = (q.subject || '').toLowerCase();
-      const targetSub = targetSubject.toLowerCase();
-      if (qSub && !qSub.includes(targetSub) && qSub !== targetSub) {
-        return true;
-      }
-      return false;
-    });
-
-    if (mismatchedQuestions.length > 0) {
-      alert(`Validation Error: You selected ${mismatchedQuestions.length} question(s) that do not match the ${targetSubject} subject (e.g. found "${mismatchedQuestions[0].subject || 'Unknown'}"). Please send only ${targetSubject} questions to the ${targetSubject} Faculty.`);
+    // Validate that questions have a valid subject
+    const invalidQuestions = questionsToUpdate.filter(q => !q.subject || q.subject.toLowerCase() === 'general');
+    if (invalidQuestions.length > 0) {
+      alert(`Validation Error: ${invalidQuestions.length} question(s) are missing a valid subject. Please assign subjects to these questions before sending for approval.`);
       return;
     }
 
-    if (confirm(`Send ${selectedIds.length} selected question(s) to ${targetSubject} Faculty for approval?`)) {
-      const pendingSource = `pending:${targetSubject}`;
-
+    if (confirm(`Send ${selectedIds.length} selected question(s) to their respective Faculty for approval?`)) {
       setQuestions(prev =>
-        prev.map(q =>
-          idsToSend.includes(q.id)
-            ? { ...q, source: pendingSource }
-            : q
-        )
+        prev.map(q => {
+          if (idsToSend.includes(q.id)) {
+            const targetSubject = q.subject || 'Unknown';
+            return { ...q, source: `pending:${targetSubject}` };
+          }
+          return q;
+        })
       );
       setSelectedIds([]);
 
       try {
         for (const q of questionsToUpdate) {
+          const targetSubject = q.subject || 'Unknown';
           await api.updateQuestion(q.id, {
             ...q,
-            source: pendingSource
+            source: `pending:${targetSubject}`
           } as any);
         }
-        alert(`Successfully sent ${idsToSend.length} question(s) to ${targetSubject} Faculty for approval!`);
+        alert(`Successfully sent ${idsToSend.length} question(s) for approval!`);
       } catch (err) {
         console.error('Failed to send for approval:', err);
       } finally {
@@ -348,6 +345,31 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
       // Fallback
     }
     onOpenCreateQuestion(q);
+  };
+
+  const handleGeneratePdfStream = () => {
+    const paperElem = document.querySelector('.printable-paper-sheet');
+    if (!paperElem) {
+      window.print();
+      return;
+    }
+
+    const existingRoot = document.getElementById('print-paper-export-root');
+    if (existingRoot) existingRoot.remove();
+
+    const printRoot = document.createElement('div');
+    printRoot.id = 'print-paper-export-root';
+    printRoot.innerHTML = paperElem.outerHTML;
+
+    document.body.appendChild(printRoot);
+
+    setTimeout(() => {
+      window.print();
+      setTimeout(() => {
+        const cleanupRoot = document.getElementById('print-paper-export-root');
+        if (cleanupRoot) cleanupRoot.remove();
+      }, 500);
+    }, 100);
   };
 
   const getCleanQuestionText = (htmlText?: string) => {
@@ -491,25 +513,15 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center justify-end gap-2 shrink-0 max-w-full">
           {mode === 'saved' && selectedIds.length > 0 && (
-            <div className="flex items-center bg-teal-50 border border-teal-200 rounded-lg px-2 shadow-sm transition-all hover:shadow-md">
-              <select
-                className="bg-transparent text-teal-800 text-xs font-bold outline-none cursor-pointer py-2 appearance-none pr-4"
-                onChange={(e) => {
-                  if (e.target.value) {
-                    handleSendForApproval(e.target.value);
-                    e.target.value = '';
-                  }
-                }}
-              >
-                <option value="">Send for Approval...</option>
-                <option value="Physics">Physics Faculty</option>
-                <option value="Chemistry">Chemistry Faculty</option>
-                <option value="Biology">Biology Faculty</option>
-                <option value="Mathematics">Mathematics Faculty</option>
-              </select>
-            </div>
+            <button
+              type="button"
+              onClick={handleSendForApproval}
+              className="px-3.5 sm:px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-lg flex items-center gap-1.5 shadow-sm hover:shadow-md transition-all active:scale-[0.98] cursor-pointer font-sans"
+            >
+              <Send className="w-3.5 h-3.5" /> Send for Approval ({selectedIds.length})
+            </button>
           )}
 
           {mode === 'saved' && selectedIds.length > 0 && (
@@ -518,7 +530,17 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
               onClick={handleBulkPublish}
               className="px-3.5 sm:px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg flex items-center gap-1.5 shadow-sm hover:shadow-md transition-all active:scale-[0.98] cursor-pointer font-sans"
             >
-              <Send className="w-3.5 h-3.5" /> Publish Selected ({selectedIds.length})
+              <Check className="w-3.5 h-3.5" /> Publish Selected ({selectedIds.length})
+            </button>
+          )}
+
+          {selectedIds.length > 0 && (
+            <button
+              type="button"
+              onClick={() => setIsPdfModalOpen(true)}
+              className="px-3.5 sm:px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded-lg flex items-center gap-1.5 shadow-sm hover:shadow-md transition-all active:scale-[0.98] cursor-pointer font-sans"
+            >
+              <FileText className="w-3.5 h-3.5" /> Create PDF ({selectedIds.length})
             </button>
           )}
 
@@ -870,18 +892,94 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
         </div>
       </div>
 
-      {/* Student Preview Drawer */}
+      {/* Fast Preview Drawer */}
       <StudentPreviewDrawer
         isOpen={isPreviewOpen}
-        question={previewQuestion}
         onClose={() => setIsPreviewOpen(false)}
-        onPrevious={handlePrevQuestion}
-        onNext={handleNextQuestion}
-        hasPrevious={currentPreviewIndex > 0}
-        hasNext={currentPreviewIndex >= 0 && currentPreviewIndex < filteredList.length - 1}
-        currentIndex={currentPreviewIndex >= 0 ? currentPreviewIndex : 0}
-        totalQuestions={filteredList.length}
+        question={previewQuestion}
+        onNext={currentPreviewIndex < filteredList.length - 1 ? handleNextQuestion : undefined}
+        onPrevious={currentPreviewIndex > 0 ? handlePrevQuestion : undefined}
       />
+
+      {/* Full Screen PDF Preview Modal */}
+      {isPdfModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-6xl max-h-[95vh] flex flex-col overflow-hidden ring-1 ring-slate-900/5">
+            {/* Modal Header */}
+            <div className="px-5 py-4 border-b border-slate-200 flex justify-between items-center bg-slate-50/50">
+              <div>
+                <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wide">
+                  Export PDF
+                </h3>
+                <p className="text-xs text-slate-500 font-medium mt-0.5">
+                  {selectedIds.length} Question(s) selected
+                </p>
+              </div>
+              <button
+                onClick={() => setIsPdfModalOpen(false)}
+                className="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Body: Printable Document Paper */}
+            <div className="p-3 sm:p-6 overflow-y-auto flex-1 bg-slate-200/80">
+              <div className="printable-paper-sheet max-w-[850px] mx-auto bg-white border border-slate-300 rounded-lg shadow-lg overflow-hidden">
+                <CollegeExamPaper
+                  examTitle={`Question Bank Export`}
+                  subjectNames={Array.from(new Set(questions.filter(q => selectedIds.includes(q.id)).map(q => q.subject || 'Mixed').filter(Boolean))).join(', ')}
+                  totalMarks={questions.filter(q => selectedIds.includes(q.id)).reduce((acc, q) => acc + (q.marks || 4), 0)}
+                  sections={[{
+                    id: 'sec-1',
+                    name: 'Selected Questions'
+                  }]}
+                  allQuestions={(() => {
+                    let globalIdx = 1;
+                    return questions.filter(q => selectedIds.includes(q.id)).map(q => ({
+                      id: q.id,
+                      questionNumber: globalIdx++,
+                      rawText: q.rawText || (typeof q.content === 'string' ? q.content : '') || '',
+                      content: q.content,
+                      options: q.options || [],
+                      correctOption: (q as any).correct_option || (q as any).correctOption || q.correctAnswer || 'A',
+                      correctAnswer: (q as any).correct_option || (q as any).correctOption || q.correctAnswer || 'A',
+                      marks: q.marks || 4,
+                      negativeMarks: q.negativeMarks || 1,
+                      diagramSvg: q.diagramSvg || (q as any).diagram_svg,
+                      imageUrl: q.imageUrl || q.diagramUrl,
+                      explanationText: q.explanationText || (q as any).solution || (q as any).explanation || '',
+                      solution: q.explanationText || (q as any).solution || (q as any).explanation || '',
+                      sectionId: 'sec-1',
+                      sectionName: 'Selected Questions',
+                      subject: q.subject || 'General'
+                    }));
+                  })()}
+                />
+              </div>
+            </div>
+
+            {/* Modal Footer Controls */}
+            <div className="px-5 py-3.5 border-t border-slate-200 flex items-center justify-between bg-slate-50">
+              <button
+                type="button"
+                onClick={() => setIsPdfModalOpen(false)}
+                className="px-4 py-2 border border-slate-200 bg-white hover:bg-slate-100 text-slate-800 text-xs font-bold rounded-lg transition-all cursor-pointer"
+              >
+                Close
+              </button>
+
+              <button
+                type="button"
+                onClick={handleGeneratePdfStream}
+                className="px-5 py-2 bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold rounded-lg flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs"
+              >
+                <Download className="w-3.5 h-3.5" /> Export PDF / Print
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
