@@ -1,0 +1,115 @@
+[
+  {
+    "id": "greek_lower",
+    "name": "Greek Lowercase",
+    "symbols": [
+      { "symbol": "α", "latex": "\\alpha", "name": "alpha" },
+      { "symbol": "β", "latex": "\\beta", "name": "beta" },
+      { "symbol": "γ", "latex": "\\gamma", "name": "gamma" },
+      { "symbol": "δ", "latex": "\\delta", "name": "delta" },
+      { "symbol": "ε", "latex": "\\varepsilon", "name": "epsilon" },
+      { "symbol": "ζ", "latex": "\\zeta", "name": "zeta" },
+      { "symbol": "η", "latex": "\\eta", "name": "eta" },
+      { "symbol": "θ", "latex": "\\theta", "name": "theta" },
+      { "symbol": "ϑ", "latex": "\\vartheta", "name": "theta (alt)" },
+      { "symbol": "ι", "latex": "\\iota", "name": "iota" },
+      { "symbol": "κ", "latex": "\\kappa", "name": "kappa" },
+      { "symbol": "λ", "latex": "\\lambda", "name": "lambda" },
+      { "symbol": "μ", "latex": "\\mu", "name": "mu" },
+      { "symbol": "ν", "latex": "\\nu", "name": "nu" },
+      { "symbol": "ξ", "latex": "\\xi", "name": "xi" },
+      { "symbol": "π", "latex": "\\pi", "name": "pi" },
+      { "symbol": "ρ", "latex": "\\rho", "name": "rho" },
+      { "symbol": "σ", "latex": "\\sigma", "name": "sigma" },
+      { "symbol": "τ", "latex": "\\tau", "name": "tau" },
+      { "symbol": "υ", "latex": "\\upsilon", "name": "upsilon" },
+      { "symbol": "φ", "latex": "\\phi", "name": "phi" },
+      { "symbol": "ϕ", "latex": "\\varphi", "name": "phi (alt)" },
+      { "symbol": "χ", "latex": "\\chi", "name": "chi" },
+      { "symbol": "ψ", "latex": "\\psi", "name": "psi" },
+      { "symbol": "ω", "latex": "\\omega", "name": "omega" }
+    ]
+  },
+  {
+    "id": "greek_upper",
+    "name": "Greek Uppercase",
+    "symbols": [
+      { "symbol": "Γ", "latex": "\\Gamma", "name": "Gamma" },
+      { "symbol": "Δ", "latex": "\\Delta", "name": "Delta" },
+      { "symbol": "Θ", "latex": "\\Theta", "name": "Theta" },
+      { "symbol": "Λ", "latex": "\\Lambda", "name": "Lambda" },
+      { "symbol": "Ξ", "latex": "\\Xi", "name": "Xi" },
+      { "symbol": "Π", "latex": "\\Pi", "name": "Pi" },
+      { "symbol": "Σ", "latex": "\\Sigma", "name": "Sigma" },
+      { "symbol": "Υ", "latex": "\\Upsilon", "name": "Upsilon" },
+      { "symbol": "Φ", "latex": "\\Phi", "name": "Phi" },
+      { "symbol": "Ψ", "latex": "\\Psi", "name": "Psi" },
+      { "symbol": "Ω", "latex": "\\Omega", "name": "Omega" }
+    ]
+  },
+  {
+    "id": "operators_relations",
+    "name": "Operators & Relations",
+    "symbols": [
+      { "symbol": "±", "latex": "\\pm", "name": "plus-minus" },
+      { "symbol": "∓", "latex": "\\mp", "name": "minus-plus" },
+      { "symbol": "×", "latex": "\\times", "name": "times" },
+      { "symbol": "÷", "latex": "\\div", "name": "divide" },
+      { "symbol": "·", "latex": "\\cdot", "name": "center dot" },
+      { "symbol": "≤", "latex": "\\leq", "name": "less than or equal" },
+      { "symbol": "≥", "latex": "\\geq", "name": "greater than or equal" },
+      { "symbol": "≠", "latex": "\\neq", "name": "not equal" },
+      { "symbol": "≈", "latex": "\\approx", "name": "approximately equal" },
+      { "symbol": "≡", "latex": "\\equiv", "name": "equivalent / identical" },
+      { "symbol": "∝", "latex": "\\propto", "name": "proportional to" },
+      { "symbol": "≪", "latex": "\\ll", "name": "much less than" },
+      { "symbol": "≫", "latex": "\\gg", "name": "much greater than" },
+      { "symbol": "≅", "latex": "\\cong", "name": "congruent" },
+      { "symbol": "∼", "latex": "\\sim", "name": "similar" }
+    ]
+  },
+  {
+    "id": "arrows_logic",
+    "name": "Arrows & Sets",
+    "symbols": [
+      { "symbol": "→", "latex": "\\rightarrow", "name": "right arrow" },
+      { "symbol": "←", "latex": "\\leftarrow", "name": "left arrow" },
+      { "symbol": "↔", "latex": "\\leftrightarrow", "name": "left-right arrow" },
+      { "symbol": "⇒", "latex": "\\Rightarrow", "name": "implies" },
+      { "symbol": "⇔", "latex": "\\Leftrightarrow", "name": "if and only if" },
+      { "symbol": "↦", "latex": "\\mapsto", "name": "maps to" },
+      { "symbol": "∈", "latex": "\\in", "name": "element of" },
+      { "symbol": "∉", "latex": "\\notin", "name": "not element of" },
+      { "symbol": "⊂", "latex": "\\subset", "name": "subset" },
+      { "symbol": "⊆", "latex": "\\subseteq", "name": "subset or equal" },
+      { "symbol": "∪", "latex": "\\cup", "name": "union" },
+      { "symbol": "∩", "latex": "\\cap", "name": "intersection" },
+      { "symbol": "∅", "latex": "\\emptyset", "name": "empty set" },
+      { "symbol": "∀", "latex": "\\forall", "name": "for all" },
+      { "symbol": "∃", "latex": "\\exists", "name": "there exists" },
+      { "symbol": "ℝ", "latex": "\\mathbb{R}", "name": "real numbers" },
+      { "symbol": "ℤ", "latex": "\\mathbb{Z}", "name": "integers" },
+      { "symbol": "ℕ", "latex": "\\mathbb{N}", "name": "natural numbers" },
+      { "symbol": "ℂ", "latex": "\\mathbb{C}", "name": "complex numbers" }
+    ]
+  },
+  {
+    "id": "calculus_geometry",
+    "name": "Calculus & Geometry",
+    "symbols": [
+      { "symbol": "∂", "latex": "\\partial", "name": "partial derivative" },
+      { "symbol": "∇", "latex": "\\nabla", "name": "del / nabla gradient" },
+      { "symbol": "∞", "latex": "\\infty", "name": "infinity" },
+      { "symbol": "∫", "latex": "\\int", "name": "integral" },
+      { "symbol": "∮", "latex": "\\oint", "name": "contour integral" },
+      { "symbol": "∑", "latex": "\\sum", "name": "summation" },
+      { "symbol": "∏", "latex": "\\prod", "name": "product" },
+      { "symbol": "∠", "latex": "\\angle", "name": "angle" },
+      { "symbol": "⊥", "latex": "\\perp", "name": "perpendicular" },
+      { "symbol": "∥", "latex": "\\parallel", "name": "parallel" },
+      { "symbol": "△", "latex": "\\triangle", "name": "triangle" },
+      { "symbol": "ℏ", "latex": "\\hbar", "name": "reduced Planck constant" },
+      { "symbol": "√", "latex": "\\sqrt{}", "name": "square root" }
+    ]
+  }
+]

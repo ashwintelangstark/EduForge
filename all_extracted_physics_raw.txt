@@ -1,0 +1,1507 @@
+=== PAGE 1: WhatsApp Image 2026-08-29 at 2.02.57 PM (1).jpeg ===
+--- LEFT COLUMN ---
+Physics | Units and Measurement
+The value of universal
+gravitational constant
+16.
+G = 6.67 x 10-"I Nm' kg2. The value of G in units
+ofg'cm's? is
+(b)
+6.67 x 10-7
+(a) 6.67 x 10-8
+(d)
+6.67x 10-10
+(c) 6.67 x 10-9
+(Page 2)
+17.
+If the value of atmospheric pressure is 10° dynecm?,
+its value in Si units is
+(a) 10*N m2
+(b) 10° N m-2
+(c) 10° N m
+(d) 10 N m-2
+(Page 2)
+18.
+The solid angle subtended by the periphery of an
+area 1cm? at a point situated symmetrically at a
+distance of 5 cm from the area is
+(a) 2 x 102 steradian
+(b) 4 x 10-2 steradian
+(c) 6 x 102 steradian
+(d) 8 x 10-2 steradian
+(Page 2)
+One barn is equal to
+19.
+10-30m
+(a)
+(b) 1028 m2
+(c) 10-28 m?
+(d) 1030 m?
+(Page 3)
+Significant Figures
+20. Which of the following statements is incorrect
+regarding significant figures?
+(a) All the non-zero digits are significant.
+(b) All the zeros between two non-zero digits are
+significant.
+(c)
+The trailing zero(s) in a number without a
+decimal point are not significant.
+(d) The power of 10 is counted while counting the
+(Page 4)
+number of significant figures.
+21. The respective number of significant figures for the
+numbers 6.320, 6.032, 0.0006032 are
+(d)
+4, 3,4
+(a) 3, 4,8 (b) 4, 4,8 (c) 4, 4,4
+(Page 4)
+22. The number of significant figures in the numbers
+4.8000 x10* and 48000.50 are respectively
+23. The value of resistance is 10.845 S2 and the current
+is 3.23 A. On multiplying, we get the potential
+difference is 35.02935 V. The value of potential
+difference in terms of significant figures would be
+(b) 35.0 V
+(a) 35 V
+(Page 5)
+(d) 35.03 V
+c) 35.029V
+24. A cube has a side of length 1.2 x 102 m. Its volume
+upto correct significant figures is
+(b) 1.73 x 10-° m?
+(a) 1.7 x 10°m'
+(d) 1.732 x 10-° m3
+(c) 1.78 x 106m*
+(Page 5)
+25. The radius of a sphere is 1.41 cm. Its volume to an
+appropriate number of significant figures is
+(b) 11.736 cm
+(a) 11.73 cm"
+(Page 5)
+(d) 117 cm
+(c) 11.7 cm?
+--- RIGHT COLUMN ---
+29
+26.
+The mass of a box measured by a grocer's balance
+is 2.3 kg. Two gold pieces of masses 20.15 g and
+20.17g are added to the box. The total mass of the
+box is
+(a)
+2.3 kg
+(b) 2.34 kg
+(Page 5)
+(c) 2.340 kg
+2.3403 kg
+27. In the question number 26, what is the difference in
+the masses of the pieces?
+(a) 0.02g
+(b) 0.021 g
+(Page 5)
+(c) 0.022g
+(d) 0.024 g
+28.
+The numbers 3.845 and 3.835 on rounding off to 3
+significant figures will give
+(b)
+3.84 and 3.83
+(a) 3.85 and 3.84
+3.84 and 3.84
+(c) 3.85 and 3.83
+(d)
+(Page5)
+29. In an experiment, the length of an object is
+measured to be 6.50 cm. This measured value can
+be written as 0.0650 m. The number of significant
+figures on 0.0650 m is
+(c) 2
+(b) 4
+(a) 3
+(d) 5
+(Page 5)
+30. The final result of the sum of the numbers 523.32,
+1.21524 and 107.3 rounded to correct significant
+figures is
+631.835
+(b)
+(a) 631.8
+631.83
+(d) 631.8352
+(Page 5)
+(c)
+31. The radius of a circular plate is 1.05 m. Its area
+(in m') up to correct significant figures is
+(a) 3.47
+(b) 3.475 (c) 3.467
+(d) 3.82
+(Page5)
+Dimensions of Physical Quantities
+Identify the pair of physical quantities which have
+different dimensions
+(a) Wave number and Rydberg's constant
+(b) Stress and coefficient of elasticity
+(c) Coercivity and magnetisation
+(Page7)
+(d) Specific heat capacity and latent heat
+33. Which of the following physical quantities has a unit
+but no dimensions?
+(a) Relative velocity
+(b) Relative density
+(c) Strain
+(Page 7)
+(d) Angle
+34.
+Which of the following physical quantities has
+neither units nor dimensions?
+(b)
+(a) Relative velocity
+Relative density
+(d)
+(c) Angle
+Energy
+(Page 7)
+35. A dimensionless quantity
+(a) never has a unit
+(b)
+always has unit
+(c) may have a unit
+(d) does not exist.
+(Page 7)
+36.
+Which of the following pairs of physical quantities
+have same dimensions?
+(a)
+Force and power
+(b) Torque and energy
+(d) Force and torque
+(c) Torque and power
+(Page 7)
+
+
+=== PAGE 2: WhatsApp Image 2026-08-29 at 2.02.57 PM (2).jpeg ===
+--- LEFT COLUMN ---
+30
+1.5
+Dimensional Formulae and
+Dimensional Equations
+37. From the following pairs of physical quantities,
+choose the pair that does not have same dimensions.
+(a) Angular momentum and Planck's constant
+(b) Moment of momentum and moment of force
+(c) Work and torque
+(Page 7)
+(d) Impulse and momentum
+38. If E, m, l and G denote energy, mass, angular
+momentum and gravitational constant respectively,
+46. Using the principle of homogeneity of dimensions,
+hasthe dimensions of
+the quantity
+m'G
+(a) mass
+(b) length
+(c) time
+(Page 7)
+(d) angle
+39. If power (P),surface tension (S) and Planck's
+constant (h) are arranged so that the dimensions of
+47. Which of the following relations is dimensionally
+time in their dimensional formulae are in ascending
+order, then which of the following is correct?
+(a) P, S, h
+(b) P, h, S
+(c) S, P, h
+(d)
+S, h, P
+(Page 7)
+48. Which of the following relations for the displacement
+40. The dimensions of Planck's constant are the same as
+that of
+(b)
+(a) linear impulse
+work
+(c) linear momentum
+(d)
+angular momentum
+(Page 7)
+4. Which one of the following is NOT correct?
+(a) Dimensional formula of thermal conductivity
+(K) is [M'L'T-K-].
+(b) Dimensional formula of potential (V) is
+[M'L'T'A].
+(c) Dimensional formula of permeability of free
+space(u,) is [M'L'T-2A2).
+49. The displacement ofa progressive wave is represented
+(d) Dimensional formula of RC is [M°L°T'].
+(Page 7)
+42. The dimensional formula of electric potential is
+(a) [MLT3A-11
+(b) [MLT^A]
+(c)ML'TA-1
+(d) [MLTA]
+(Page 7)
+50.A quantityfis given by f=
+43. Dimensional formula of AQ, heat supplied to the
+system is
+(a) [ML'T2
+(b) [MLT2]
+(c) [MLT']
+(d) [MLT]
+(Page 7)
+44. The dimensional formula of physical quantity is
+[M° L' T]. Then that physical quantity is
+51. A new system of units is proposed in which unit of
+(a) surface tension if a = 1, b = 1, c = -2
+(b) force if a = 1, b = 1,c = 2
+(c) angular frequency if a = 0, b = 0, c = -1
+(d) spring constant if a = 1, b = -1, c = -2 (Page 7)
+--- RIGHT COLUMN ---
+MtG NCERT at your Fingertips
+Dimensional Analysis and Its
+1.6
+Applications
+45. If P, Q, R are physical quantities, having different
+dimensions, which of the following combinations
+can never be a meaningful quantity?
+P-Q
+(b) PQ- R
+(a)
+R
+PR-Q-
+PQ
+(d)
+(c)
+(Page 8)
+R
+R
+which of the following is correct?
+(b)
+T° = 4л22
+(a) T2_ 4Tỉr
+GM
+472,3
+T=.
+T=
+(d)
+(c)
+(Page 8)
+G
+G
+correct?
+(a) 1 u = 931.5 MeV
+1 u = 931.5 MeV/2
+b)
+None of these
+(c) 1 u = 1.67 x10-27J (d)
+(Page 8)
+of a particle undergoing simple harmonic motion is
+not correct dimensionally?
+2nt
+(a) y=asin
+T
+(b) y=acosot
+sin
+(c)
+y=
+T
+2TLt
+2nt
+-+ cos
+(Page 8)
+(d) y=aN2 sin
+T
+by y = A sin(wt - kx) where x is distance and t is
+time. The dimensions of (
+are same as those of
+(b)
+(a) velocity
+wave number
+(c) wavelength
+(d)
+(Page8)
+frequency
+-, where c is speed
+G
+of light, G universal gravitational constant and h is
+the Planck's constant. Dimension of f is that of
+area
+(a)
+(b) volume
+(c) momentum
+(Page 8)
+(d) energy
+mass is o kg, unit of length is ß m and unit of time
+is y s. What will be value of 5 J in this new system?
+(a) 5aBy2
+(b) 5a B-y
+(c) 50г?B-ly2
+(Page 8)
+(d) 5a-By
+
+
+=== PAGE 3: WhatsApp Image 2026-08-29 at 2.02.57 PM (3).jpeg ===
+--- LEFT COLUMN ---
+Physics| Units and Measurement
+52.
+The equation of state of a gas is given by
+P+s (V-b')=CT, where P, V, T are presure,
+volume and temperature respectively, and a, b, c
+are constants. The dimensions of a and b are
+respectively
+(a) [MLST-2] and [I3/2]
+(b) [MLT-2] and [L3]
+(c) [MLST-2] and [L]
+(d) [ML'T-2] and [L3/2)
+(Page 8)
+53.
+53. If the energy, E = GP hª c*, where G is the universal
+gravitational constant, h is the Planck's constant and
+c is the velocity of light, then the values of p, q and
+rare, respectively
+(a) - 1/2,1/2 and 5/2
+(b) 1/2, - 1/2 and - 5/2
+(c) -1/2, 1/2 and 3/2
+(Page 9)
+(d) 1/2, - 1/2 and - 3/2
+NEET | JEE Plus
+1.A
+Errors in Measurement
+54. If the error in measuring the radius of the sphere is
+2% and that in measuring its mass is 3%, then the
+error in measuring the density of material of the
+sphere is
+(a) 5%
+(d) 11%
+(c) 9%
+(b) 7%
+--- RIGHT COLUMN ---
+31
+A4B13
+55. If Z=:
+CD3/2
+and AA, AB, AC, and AD are their
+absolute errors in A, B, C and D respectively. The
+relative error in Z is
+(a)
+AZ =4AA
+1AB, AC, 3 AD
+Z
+A
+3 B
+2 D
+1 AB ДC
+3 AD
+---
+(b)
+AZ -4A4, 1AB
+-+--
+Z
+A
+3 B
+2 D
+AZ
+(c)
+---
+=4-A+ 1AB, AC 3AD
+Z A3B C 2D
+3 AD
+(d)
+==144+14B_AC,
+3 В
+2 D
+56.
+In an experiment, the period of oscillation of a
+simple pendulum was observed to be 2.63 s, 2.56 s,
+2.42 s, 2.71 s and 2.80 s. The mean absolute error is
+(a) 0.11 s
+(b) 0.12 s
+(c) 0.13 s
+(d) 0.14 s
+57. Percentage errors in the measurement of mass and
+speed are 2% and 3% respectively. The error in the
+estimation of kinetic energy obtained by measuring
+mass and speed will be
+(a) 8% (b) 2%
+(c)12%
+(d) 10%
+58. A physical quantity X is related to four measurable
+quantities a, b, c and d as given, X = a'b52 d-2
+The percentage error in the measurement of a, b, c
+and d are 1%, 2%, 2% and 4% respectively. What is
+the percentage error in quantity X?
+(d) 23%
+(a) 15% (b) 17% (c) 21%
+
+
+=== PAGE 4: WhatsApp Image 2026-08-29 at 2.02.57 PM (4).jpeg ===
+--- LEFT COLUMN ---
+EXAM
+SCBRER
+This section includes different categories of questions which are useful for NEET | JEE | Board exams.
+Problems
+NCERT Exemplar
+This includes MCQs of 'NCERT Exemplar Problems' Book.
+assertion is followed by a statement of reason. Mark the
+The number of significant figures in 0.06900 is
+1.
+correct choice as :
+(b)
+4
+(a) If both assertion and reason are true and reason is
+(a) 5
+3
+(d)
+(c) 2
+(b) If both assertion and reason are true but reason is
+The sum of the numbers 436.32, 227.2 and 0.301
+2.
+in appropriate significant figures is
+(c) If assertion is true but reason is false.
+(b) 664
+(a) 663.821
+(d) 663.82
+(d) If both assertion and reason are false.
+(c) 663.8
+1.
+3.
+The mass and volume of a body are 4.237 g and
+2.5 cm', respectively. The density of the material of
+the body in correct significant figures is
+(b) 1.69 g cm 3
+(a) 1.6948 g cm 3
+2.
+(d) 1.695 g cm
+(c) 1.7 g cm-3
+4.
+The numbers 2.745 and 2.735 on rounding off to
+3 significant figures will give
+(a) 2.75 and 2.74
+3.
+(b) 2.74 and 2.73
+(c) 2.75 and 2.73
+(d) 2.74 and 2.74
+Young's modulus of steel is 1.9 x 10"N m . When
+4.
+expressed in cgs units of dynes cm?, it will be equal
+to
+(1 N = 10° dyne, 1 m' = 104 cm2)
+(a) 1.9 x 1010
+(b) 1.9 x 10"1
+(c) 1.9 x 102
+(d) 1.9 x 1013
+6.
+If momentum (p), area (A) and time (t) are taken
+5.
+to be fundamental quantities, then energy has the
+dimensional formula
+(a) [p'A- rl]
+(b) [pA' t]
+(c) [p' A-1/2 +]
+(d) [p' AV2 [l]
+Which of the following pairs of physical quantities
+does not have same dimensional formula?
+(a) Work and torque.
+(b) Angular momentum and Planck's constant.
+(c) Tension and surface tension.
+(d) Impulse and linear momentum.
+--- RIGHT COLUMN ---
+Questions
+Assertion & Reason
+Directions: In the following questions, a statement of
+the correct explanation of assertion.
+not the correct explanation of assertion.
+Assertion : The units of some physical quantities
+can be expressed as combination of the base units.
+Reason : We need only a limited number of units
+for expressing the derived physical quantities.
+Assertion : When we change the unit of
+measurement of a quantity, its numerical value
+changes.
+Reason: Smaller the unit of measurement smaller
+is its numerical value.
+Assertion : The number 1.202 has four significant
+figures and the number 0.0024 has two significant
+figures.
+Reason : All the non zero digits are significant.
+Assertion : A number 2.746 rounded off to three
+significant figures is 2.75, while the number 2.743
+would be 2.74.
+Reason : In rounding off the uncertain digits, the
+preceding digit is raised by 1 if the insignificant
+digit to be dropped is more than 5 and is left
+unchanged if the latter is less than 5.
+Assertion : The given equation x=x0 +ugt+-at?
+is dimensionally correct, where x is the distance
+travelled by a particle in time t, initial position xo,
+initial velocity u, and uniform acceleration a is
+along the direction of motion.
+Reason : Dimensional analysis can be used
+for checking the dimensional consistency or
+homogeneity of the equation.
+Assertion : Force can be added to pressure.
+Reason : Force and pressure have same dimensions.
+
+
+=== PAGE 5: WhatsApp Image 2026-08-29 at 2.02.57 PM.jpeg ===
+--- LEFT COLUMN ---
+NCERT
+MCQs CORNER
+EXTRACT
+ssessment is complementary part of the learning process. It gives you a total insight whether the learning outcomes
+Ahave been achieved or not. After going through the corresponding NCERT Textbook chapter, attempt these questions
+in exam like environment. Give yourself four marks for correct answer and deduct one mark for wrong answer. A table
+is given at the end, that will help you plan your next step.
+NCERT Connector: To connect better refer to the latest NCERT page number(s) mentioned along with each question.
+Introduction
+The units that are used for the fundamental physical
+8.
+1.
+quantities are called
+(b) base units
+(a) systems of unit
+(d) All of these
+(c) derived units
+(NCERT, Page 1)
+2.
+The system of units is a complete set of
+(a) base units only
+9.
+(b) derived units only
+(c) both base units and derived units
+(Page 1)
+(d) CGS system
+The International System ofUnits
+1.2
+Which of the following physical quantities has same
+unit in all the three systems of units?
+(b) Length
+(a) Mass
+10. Which one of the following is not a derived unit?
+(d) None of these
+(c) Time
+(Page 1)
+4.
+Which one of the following is not a unit of British
+11. Which of the following units is not a base unit?
+system of units?
+(b) Metre
+(a) Foot
+(Page 1)
+(d) Second
+(c) Pound
+12. Which of the following systems of units is not based
+5.
+In which year SI system of units was developed and
+recommended by General Conference on Weights
+and Measures?
+(a) 1951 (b) 1961 (c) 1971
+(d) 1981
+13. Spot out the odd one.
+(Page 1)
+6.
+In International System of units, there are seven
+base quantities whose units are defined. Which
+physical quantity has a prefix with its unit?
+(a) Mass
+(b) Thermodynamic temperature
+(c) Luminous intensity
+(d) Amount of substance
+(Page 2)
+7.
+The wrong unit conversion among the following is
+(a) 1 angstrom = 10-10 m
+(b) 1 fermi = 10-15 m
+--- RIGHT COLUMN ---
+All the Best!
+(c) 1 light year = 9.46 x 10'5 m
+(d) 1 astronomical unit = 1.496 x 105 m (Page2)
+Which one of the following physical quantities is
+not a fundamental quantity?
+(a) Luminous intensity
+(b) Thermodynamic temperature
+(c) Electric current
+(Page 2)
+(d) Work
+Which one of the following statements is incorrect?
+(a) Direct and indirect methods are used for the
+measurement of physical quantities.
+(b) Scientific notation and the prefixes are used to
+simplify numerical computation.
+(c) A dimensionally correct equation need not be
+a correct equation.
+(d) The SI units is based on six base units. (Page 2)
+(b) watt
+(a) joule
+(Page 2)
+(d) newton
+(c) kilogram
+) metre (b) candela(c) ampere (d) pascal
+(Page 2)
+on unit of mass, length and time alone?
+(d) SI
+(b) FPS (c) MKS
+(a) CGS
+(Page2)
+(a) calorie
+(b) kilowatt hour
+(Page 2)
+(d) watt
+(c) joule
+Explain unified atomic mass unit in kg.
+14.
+(b) 1.67 x 10-24 kg
+(a) 2.67x 10-27 kg
+(d) 1.67 x 10-27 kg
+(c) 9.1 x 10-3 kg
+(Page 2)
+15. The relative density of lead is 11.3. Its density in SI
+unit is
+(b) 1.13 x 102
+(a) 1.13 x 103
+(Page2)
+(d) 11.3
+(c) 1.13 x 10*
+
+
+=== PAGE 6: WhatsApp Image 2026-08-29 at 2.02.58 PM (1).jpeg ===
+--- LEFT COLUMN ---
+34
+(c) (A) → (S), (B) → (R), (C) → (Q), (D) → (P)
+(d) (A) → (R), (B) → (S), (C) → (P), (D) → (Q)
+Match the Column I with Column Il.
+3.
+Column II
+Column I
+(Dimensional formulae)
+(Units)
+Pa s
+(M°L'TK]
+(P)
+(A)
+1.
+МІTK!]
+(Q)
+NmKl
+(B)
+[ML-T]
+(R)
+1kgK-
+(C)
+2.
+(S)
+Wm'k
+[MLTK]
+(D)
+(А) → (Q), (B) → (P), (C) → (R), (D) → (S)
+(b) (A) → (P), (B) → (Q), (C) → (S), (D) → (R)
+(c) (A) → (R), (B) → (S), (C) → (P), (D) → (Q)
+(d) (A) → (S), (B) → (R), (C) → (Q), (D) → (P)
+Match Column I with Column II.
+4.
+3.
+Column Il
+Column I
+(P)
+[ML'T-]
+(A) Coefficient of viscosity
+4.
+(Q)
+(B)
+Surface tension
+[MLT]
+Angular momentum
+(R)
+(C)
+[MIT-]
+Rotational kinetic
+(D)
+(S)
+[M LºT-2]
+energy
+2.
+(a) (A) → (S), (B) → (R), (C) → (Q), (D) → (P)
+(b) (A) → (R), (B) → (S), (C) → (Q), (D) → (P)
+(c) (A) → (Q), (B) → (P), (C) → (S), (D) → (R)
+(d) (A) → (P), (B) → (Q), (C) → (R), (D) → (s)
+5.
+Match Column I with Column II.
+Column I
+Column II
+(A) RH(Rydberg constant)
+(P)
+kgm's!
+(B)
+hPlanck's constant)
+(Q)
+kgm's!
+(C)
+(R)
+Ug(Magnetic field energy
+density)
+(S)
+kgm's2
+(D) n(coefficient of viscosity)
+5.
+Choose the most appropriate answer from the
+options given below.
+(a) (A) → (S), (B) → (Q), (C) → (P), (D) → (R)
+(b) (A) → (Q), (B) → (R), (C) → (S), (D) → (P)
+(c) (A) → (R), (B) → (Q), (C) → (s), (D) → (P)
+(d) (A) → (R), (B) → (Q), (C) → (P), (D) → (S)
+6.
+CaseBased
+Questions
+Read the given passages and answer the following
+questions.
+The physical units which can neither be derived
+7.
+from one another, nor they can be further resolved
+into more simpler units are called fundamental
+--- RIGHT COLUMN ---
+units. The units of fundamental quantities such as
+mass, length and time etc. are fundamental units.
+Length is defined as the distance of separation
+between two points in space while mass is
+measurement of the quantity of matter that the
+object contains and time is the duration between
+occurrence of two incidents.
+The SI unit of pressure gradient is
+(a) Nm2 (b) Nm (c) Nm' (d) Nm3
+In international system of units, there are seven
+base quantities whose units are defined. Which
+physical quantity have a prefix with its unit?
+(a) Time
+(b) Thermodynamic temperature
+(c) Luminous intensity
+(d) None of these
+What is the SI unit of electron mobility?
+(b) mV2s
+(a) m'vls1
+(d) m V-35-3
+(c) m Vs1
+If E and H represents the intensity of electric field
+and magnetising field respectively, then the unit of
+E/H will be
+(a) joule (b) ohm (c) newton (d) mho
+Dimensional analysis is applied to derive formulae,
+to check dimensional consistency of equations and
+to deduce relation among the physical quantities.
+To convert one system of units into another system
+of units, we use the relation
+м)(E)(E)
+where My, Ly, T, are fundamental units in one
+system; M,, Lz, T, are fundamental units in the
+other system, a, b, c are the dimensions of the
+quantity in mass, length and time, n, is numerical
+value in one system and n, is its numerical value
+in the other system.
+Out of the following, the only pair that does not
+have identical dimensions is
+(a) angular momentum and Planck's constant
+(b) moment of inertia and moment of a force
+(c) work and torque
+(d) impulse and momentum
+The only mechanical quantity which has negative
+dimension of mass is
+(a) angular momentum
+(b) torque
+(c) coefficient of thermal conductivity
+(d) gravitational constant
+The velocity of a body which has fallen freely under
+gravity varies as g° hª, where g is the acceleration
+
+
+=== PAGE 7: WhatsApp Image 2026-08-29 at 2.02.58 PM (2).jpeg ===
+--- LEFT COLUMN ---
+Physics | Units and Measurement
+due to gravity and 'h' is the height through which
+it has fallen. The value of p and q are
+1
+1
+1
+(b)
+(a)
+2
+2
+2
+2
+1
+1
+-
+(d)
+2
+2
+2
+2
+According to quantum mechanics, light travels in
+8.
+the form of packets and energy associated with each
+3.
+packet is E =hu, where h is Planck's constant and
+v is the frequency. The dimensional formula for h is
+(b) [ML-T]
+(a) [M'LT-]
+(d) [MLT]
+(c) [MLT-]
+4.
+Numerical Value Type
+Questions
+Answer the following questions as Integer or Numerical
+value.
+1. A train goes from station A to D via stations
+B and C. The measured distances between various
+MULTIDIMENSIONAL
+This section includes integrative cross-concept questions and multiple application based HOTS questions, aligned with the evolving trends in NEET and JEE.
+Sometimes it is convenient to construct a system of
+1.
+14.
+units so that all quantities can be expressed in terms
+of only one physical quantity. In one such system,
+dimensions of different quantities are given in
+terms of a quantity X as follows: [position] = [X*);
+[speed] = [x®]; [acceleration] =[X*); Llinear
+momentum] = [X"); [force] = [X]. Then
+(b) P-9 -r = 3
+(a) a+ p = 2B
+(c) P-q + r = a
+5.
+2. A physical quantity z depends on four observables
+a 62/3
+a, b, c and d, as z=
+,• The percentages of error
+Vcd®
+in the measurement of a,b, c and d are 2%, 1.5%,
+4% and 2.5% respectively. The percentage of error
+in z is
+(b) 16.5%
+(a) 12.25%
+6.
+(d) 14.5%
+(c) 13.5%
+3.
+The speed of a wave produced in water is given by
+v=1g°p°. Where 2, gand p are wavelength of wave,
+acceleration due to gravity and density of water
+respectively. The values of a, b and c respectively, are
+1
+(a)
+-
+, 0,
+(b) 1,-1,0
+2
+(d)
+(c) 1,1,0
+22°
+--- RIGHT COLUMN ---
+35
+stations are : A to B = 648 km, B to C = 64.8 km,
+C to D = 6.48 km. Total distance covered by the
+train in proper significant figures is km.
+The power of a motor is 200 W. If the unit of length
+is halved, that of mass is doubled and that of time
+is also doubled, the power of the motor in the new
+new units.
+system is
+The density of a material in SI units is 128 kg m.
+In certain units in which the unit of length is 25 cm
+and the unit of mass is 50 g, the numerical value
+of density of the material is _
+Dimensional formula for thermal conductivity is
+[MLT-* K-]. Find the value of x.
+If velocity [V], time [T] and force [F] are chosen
+as the base quantities, the dimensions of the mass is
+[F*V-T]. What is the value of x?
+QUESTIONS
+The frequency (v) of an oscillating liquid drop may
+depend upon radius (r) of the drop, density (p) of
+liquid and the surface tension(s) of the liquid as :
+v=r p's. the values of a, b, and c respectively are
+3
+(b)
+(a)
+22
+3
+21)
+3 1
+(c)
+2
+2 2
+(a) (22
+To find the distance d over which a signal can be
+seen clearly in foggy conditions, a railways engineer
+uses dimensional analysis and assumes that the
+distance depends on the mass density p of the
+fog, intensity (power/area) S of the light from the
+signal and its frequency f. The engineer finds that
+. The value of n is
+d is proportional to Si/n
+(с) 3
+(d) 1
+(b) 2
+(a) 4
+Turpentine oil is flowing through a tube of length /
+and radius r. The pressure difference between the
+two ends of the tube is p. The viscosity of oil is
+, where v is velocity of
+4vl
+given by n= P(r-x)
+oil at a distance x from the axis of the tube. The
+dimensional formula of viscosity is
+(a) [M°L°T°]
+(b)[M'L-T]
+(c) [ML'T']
+(d) [ML-T]
+
+
+=== PAGE 8: WhatsApp Image 2026-08-29 at 2.02.58 PM (3).jpeg ===
+--- LEFT COLUMN ---
+36
+7.
+A calorie is a unit of heat energy and its value is
+4.18 J where 1 J = 1 kg m' s2
+. Suppose we use a
+new system of units in which unit of mass equals
+a kg, the unit of length equals ß m and the unit
+of the time is y sec. Then the value of a calorie in
+the new system of units is
+r
+(a) 4.18
+(b) 4.18
+оxB-
+B2
+4.18Y
+(d) 4.18-
+ay
+8. The time period of oscillation of a body is given
+mgA
+, K represents the kinetic energy,
+by T=2m
+m mass, g acceleration due to gravity and A is
+unknown. If [A] = [M"L/T); then what is the value
+ofx + y+z?
+(a) 3
+(b) 2
+(c) 1
+(d) 5
+9.
+Consider the efficiency of engine is given by
+-loge
+7= 0B
+kT: where a and B are constants.
+sin e
+If T is temperature, k is Boltzmann constant, 0 is
+angular displacement and x has the dimensions of
+14. The entropy of any system is given by
+length. Then, choose the incorrect option.
+(a) Dimensions of B is same as that of force.
+(b) Dimensions of o.'x is same as that of energy.
+(c) Dimensions of n'sine is same that of aß.
+(d) Dimensions of a is same as that of B.
+10. A student uses a simple pendulum of exactly
+1 m length to determine g, the acceleration due to
+gravity. He uses a stopwatch with the least count of
+1 s for this and records 40 s for 20 oscillations. For
+the observation, which of the following statements
+is correct?
+(a) Error AT in measuring T, the time period is
+0.05 s.
+(b)
+Error AT in measuring T, the time period is
+1 s.
+15.
+(c)
+Percentage error in the determinaton of g is
+greater than 5%.
+(d)
+Percentage error in the determinaton of g is
+2.5%.
+11.
+The energy of a system as a function of time t is
+given as E(t) = A2 exp(-a.t), where a = 0.2s!
+The measurement of A has an error of 1.25%. If
+the error in the measurement of time is 1.50%,
+the percentage error in the value of E(t) at t = 5 s
+--- RIGHT COLUMN ---
+WtGNCERT at your Fingertips
+(b) 4
+2
+(a)
+(d) 10
+6
+(c)
+Which of the following equations is dimensionally
+12.
+incorrect
+t = time, h = height, s = surface tension,
+0 = angle, p = density, a, r = radius, g = acceleration
+due to gravity, v = volume, P = pressure, W = work
+done, t = torque, € = permittivity, E = electric field,
+/ = current density, L = length
+тра*
+(b)
+(a) W = t0
+8nL
+дЕ
+(d)
+J=E
+(c)
+h=2scose
+dt
+prg
+13. In the measurement of a physical quantity
+x= 13g3: The percentage errors introduced in
+the measurements ofthe quantities A, B, Cand D
+are 2%, 2%, 4% and 5% respectively. Then the
+minimum amount of percentage of error in the
+measurement of X is contributed by
+(a) A
+(b)
+C
+(c)
+(d)
+D.
+ukR
++ 3
+S=a°BIn
+JB2
+where o and ß are the constants. u, J, K and R are
+number of moles, mechanical equivalent of heat,
+Boltzmann constant and gas constant respectively.
+dQ
+TakeS=
+Choose the incorrect option from
+T
+the following.
+(a) S, B, k and uR have the same dimensions
+(b) o and k have the same dimensions
+(c) o and J have the same dimensions
+(d) S and o have different dimensions
+The time period T of oscillation of a gas bubble
+from an explosion under water is proportional to
+pª d' E° where Pis the static pressure, d is the density
+of water and E is the total energy of explosion. Find
+the values of a, b and c.
+1
+-5
+-1
+5
+-1 -1
+-
+(a)
+(b)
+3
+2
+6
+6
+3
+2
+1
+1
+-5
+-1
+1
+-5
+(c)
+-
+-
+(d)
+2'
+6
+3
+3
+2
+6
+
+
+=== PAGE 9: WhatsApp Image 2026-08-29 at 2.02.58 PM (4).jpeg ===
+--- LEFT COLUMN ---
+This section includes previous years'NEET and JEE Main questions based on NCERT core content.
+Each side of a metallic cube of mass 5.580 kg is
+measured to be 9.0 cm. Keeping the significant
+figures in view, the density of the material of the
+cube can be best expressed as X x 10°kgm3,
+,where
+the value of X is
+(b) 7.7
+(a) 7.654
+(d) 7.6
+(с) 7.65
+(NEET 2026)
+The density p of a uniform cylinder is determined
+2.
+by measuring its mass m, length l and diameter
+d. The measured values of m, l and d are 97.42
+‡ 0.02 g, 8.35 = 0.05 mm and 20.20 + 0.02 mm,
+respectively. Calculated percentage fractional error
+in p is
+(a) 0.63% (b) 0.82% (c) 0.72%
+d)0.25%
+(JEE Main 2026)
+3.
+If E, E and t represent the free space permittivity,
+electric field and time respectively, then the unit
+EE
+of
+will be
+(d) A/m'
+Am
+(b) Am" (c) A/m
+(a)
+(JEE Main 2026)
+4.
+L, Cand Rrepresents physical quantities inductance,
+capacitance and resistance respectively. The
+dimensional formula [ML'T4A2] corresponds to
+1
+L
+R
+-
+(d)
+(a)
+(c)
+(b)
+C
+RV
+LC
+VLR
+VIC
+(JEE Main 2026)
+A physical quantity P is related to four observations
+a, b, c and d as follows: P=a b/cvd
+The percentage errorsof measurement in a, b, c
+and d are 1%, 3%, 2% and 4% respectively. The
+percentage error in the quantity P is
+(a) 13%
+(b) 15%
+(NEET2025)
+(d) 2%
+(c) 10%
+6.
+A balloon is made of a material of surface tension
+S and its inflation outlet (from where gas is filled
+in it) has small area A. It is filled with a gas of
+density p and takes a spherical shape of radius R.
+When the gas is allowed to flow freely out of it,
+its radius r changes from Rto O(zero) in time I.
+If the speed v(r) of gas coming out of the balloon
+depends on r as ra and To Sª AB p" R° then
+--- RIGHT COLUMN ---
+1
+7
+(a) а =-
+,б=
+,a=-
+2
+2B=-1Y=2
+2
+1
+1
+1
+,0=-
+(b) a=-
+,B=-
+,8=
+, Y=
+2
+2
+2
+2
+3
+,0=-
+а=
+-,B=-1,y=+1,8=
+(с)
+2
+2
+2
+5
+,0=
+(d) a=--
+2
+2B =-1,Y=-
+20=-
+2
+(NEET2025)
+The equation for real gas is given by
+7.
+(V - b) = RT, where P, V, T and R are
+P+-
+the pressure, volume, temperature and gas constant,
+respectively. The dimension of ab 2 is equivalent
+to that of
+(b) Strain
+(a) Compressibility
+(c) Planck's constant
+(d) Energy density
+(JEE Main 2025)
+8.
+The quantities which have the same dimensions as
+those of solid angle are
+(a) strain and angle
+(b) stress and angle
+(c) strain and arc
+(NEET2024)
+(d) angular speed and stress
+9.
+A force defined by F = af + Bt acts on a particle at
+a given time t. The factor which is dimensionless,
+if a and ßare constants, is
+(a) Bt
+(d)
+(b)
+(NEET2024)
+10. Time periods of oscillation of the same simple
+pendulum measured using four different measuring
+clocks were recorded as 4.62 s, 4.632 s, 4.6 s and
+4.64 s. The arithmetic mean of these readings in
+correct significant figure is
+(a) 4.6 s (b) 4.62 s (c) 5 s
+(d) 4.623 s
+(JEE Main 2024)
+11. A metal wire has mass (0.4 ‡ 0.002) g, radius
+(0.3 = 0.001) mm and length (5 + 0.02) cm.
+The maximum possible percentage error in the
+measurementof density will nearly be
+
+
+=== PAGE 10: WhatsApp Image 2026-08-29 at 2.02.58 PM (5).jpeg ===
+--- LEFT COLUMN ---
+38
+(a) 1.6%
+(b) 1.4%
+(c) 1.2%
+(d) 1.3%
+(NEET 2023)
+12. Match List I with List II.
+List-1
+List-Il
+(A)
+Planck's constant (h)
+[M'L2T-2]
+(I)
+(B)
+(I1)
+[M'L'T-4]
+Stopping potential (V.)
+(C)
+Work function (ф)
+(III)
+[M'L'T-]
+(D)
+Momentum (p)
+(IV) [M'L'T-3A-1]
+Choose the correct answer from the options given below.
+(a) (A) → (II), (B) → (IV), (C) → (III), (D) → (1)
+(b) (A) → (III), (B) → (IV), (C) → (I), (D) → (II)
+(c) (A) → (I), (B) → (III), (C) → (IV), (D) → (II)
+(d) (A) →(III), (B) → (I), (C) → (II), (D) → (IV)
+(JEE Main 2023)
+13.
+The dimensions [MLT2A-2] belong to the
+(a) magnetic flux
+(b) self inductance
+(c) magnetic permeability
+(d) electric permittivity
+(NEET 2022)
+14.
+Given below are two statements : One is labelled as
+Assertion A and the other is labelled as Reason R.
+Assertion A : Product of pressure (P) and time
+(t) has the same dimension as that of coefficient
+of viscosity.
+--- RIGHT COLUMN ---
+WtGNCERTat your Fingertips
+Force
+Reason R: Coefficient of viscosity =
+Velocity gradient
+Choose the correct answer from the options given
+below.
+(a) Both A and R true, and R is correct explanation
+of A.
+(b) Both A and R are true but R is NOT the correct
+explanation of A.
+(c) A is true but R is false.
+(d) A is false but R is true.
+(JEE Main 2022)
+15. Velocity (v) and acceleration (a) in two systems of
+units 1 and 2 are related as vz= n
+vy and az =
+,2
+mn
+respectively. Here m and n are constants. The
+relations for distance and time in two systems
+respectively are
+3
+n
+(a)
+4=L½ and"
+-T=T2
+m
+4
+n
+(b)
+Iz and Ti=
+m?
+4
+n?
+n
+(c)
+4=
+-Iz and Ti
+2
+m
+(d)
+4 = Lz and "
+(JEE Main 2022)
+Ti =T2
+2
+
+
+=== PAGE 11: WhatsApp Image 2026-08-29 at 2.02.58 PM.jpeg ===
+--- LEFT COLUMN ---
+Physics | Units and Measurement
+Assertion : Light year and wavelength have same
+dimensional formula.
+Reason : Both have the dimensions of time.
+6.
+Assertion : Pressure cannot be subtracted from
+8.
+pressure gradient.
+Reason : Pressure and pressure gradient have
+7.
+different dimensions.
+Assertion : Both velocity and speed have same
+9.
+dimensions.
+Reason : Velocity cannot be added to speed.
+8.
+10.
+Assertion : The dimensional formula of surface
+energy is [M'LT].
+Reason : Surface energy has same dimensions as
+that of potential energy.
+9.
+Statement Based
+Questions
+Directions : Each of the given questions contain two
+statements: Statement | and Statement II. Also these
+10. Statement I: If two quantities have same
+questions have four alternative choices, only one of them
+is the correct answer. You have to select the correct choice.
+(a)
+Both Statement l and Statement Il are correct.
+(b)
+Statement I is correct but Statement Il is incorrect.
+Both Statement I and Statement Il are incorrect.
+(c)
+(d)
+Statement I is incorrect but Statement Il is correct.
+80.86
+1.
+Statement I :
+= 40 as per significant digits.
+1.
+2.0
+Statement II : When measured values are divided
+the quotient has the number of significant digits
+that are present in the least of the significant digits
+available in the numerator or denominator.
+2.
+Statement I: CGS system is based on centimetre,
+gram and second as the fundamental units of
+length, mass and time.
+Statement II: The value of acceleration due to
+gravity in FPS is 32 ft/s.
+3.
+then the percentage
+Statement I: IF x- a". o"
+cP.d9
+2.
+error in the measurement of x,
+v =m sà
++*()+ P()+a(đ)
+Statement II: The above is true for all values of
+Да, Ab, Дс and Ad
+4.
+Statement I: Iftwo quantities have same dimensions,
+they represent the same physical quantity.
+Statement II: Physical quantities have a single
+dimensional formula.
+5.
+Statement I : Dimensions of specific heat is
+L-т-К-.
+--- RIGHT COLUMN ---
+33
+Statement II : Dimensions of gas constant is
+[ML'T-'K-].
+Statement I: Dimensions of energy and volume are
+different.
+Statement II: Energy cannot be divided by volume.
+Statement I: Only like quantities can be added or
+subtracted from each other.
+Statement II: Pressure can be subtracted from
+pressure gradient.
+Statement I : Planck's constant and angular mo-
+mentum have same dimensions.
+Statement II : Linear momentum and moment of
+inertia have same dimensions.
+Statement I : Avogadro number is the number of
+atoms in one gram mole.
+Statement II : Avogadro number is a dimensionless
+constant.
+dimensions, it is not necessary that they represent
+the same physical content.
+Statement II: The dimensions of pressure are
+IML-T].
+Questions
+MatchingType
+Match the Column I with Column II.
+Column I
+Column II
+(Physical quantity)
+(Name of unit)
+(A)
+Conductance
+(P)|
+gray
+(B)
+(Q) lumen
+Magnetic induction
+Absorbed radiation dose
+(C)
+(R)
+tesla
+(D)
+Luminous flux
+siemens
+(S)
+(a) (A) → (S), (B) → (R), (C) → (P), (D) → (Q)
+(b) (A) → (P), (B) → (Q), (C) → (R), (D) → (S)
+(c) (A) → (Q), (B) →(P), (C) → (S), (D) → (R)
+(d) (A)→ (R), (B) → (S), (C) → (P), (D) → (Q)
+Match the Column I with Column II.
+Column II
+Column I
+(Dimensional
+(Physical quantity)
+formulae)
+(A)
+Permittivity of free
+[M°LºT-1]
+space
+Radiant flux
+(B)
+(Q)
+[ML'T-3A-2]
+(C)
+(R)
+Resistivity
+[ML'T-3]
+(D)
+Hubble constant
+(S)
+[M'L-3T'A2)
+(a) (A)(, (B) → (Q),(C) → (), (D) → (s)
+(b) (A) → (Q), (B) → (P), (C) → (s), (D) → (k)
+
+

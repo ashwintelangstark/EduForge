@@ -1,0 +1,35 @@
+{
+  "fonts": [
+    { "name": "Inter", "family": "'Inter', sans-serif", "category": "Sans-serif" },
+    { "name": "Times New Roman", "family": "'Times New Roman', 'Liberation Serif', serif", "category": "Serif" },
+    { "name": "Arial", "family": "Arial, Helvetica, sans-serif", "category": "Sans-serif" },
+    { "name": "Computer Modern", "family": "'Computer Modern', 'Latin Modern Math', serif", "category": "Scientific / TeX" },
+    { "name": "Georgia", "family": "Georgia, serif", "category": "Serif" },
+    { "name": "Courier New", "family": "'Courier New', monospace", "category": "Monospace" }
+  ],
+  "margins": [
+    { "name": "Normal (15mm)", "top": 15, "bottom": 15, "left": 15, "right": 15 },
+    { "name": "Narrow (10mm)", "top": 10, "bottom": 10, "left": 10, "right": 10 },
+    { "name": "Wide (25mm)", "top": 25, "bottom": 25, "left": 25, "right": 25 },
+    { "name": "Standard Academic (20mm)", "top": 20, "bottom": 20, "left": 20, "right": 20 }
+  ],
+  "wordArtStyles": [
+    { "id": "gradient_purple", "name": "Neon Purple Gradient", "preview": "linear-gradient(135deg, #a855f7, #ec4899)" },
+    { "id": "gold_3d", "name": "3D Regal Gold", "preview": "linear-gradient(180deg, #fef08a, #ca8a04)" },
+    { "id": "neon_blue", "name": "Electric Cyan", "preview": "linear-gradient(135deg, #38bdf8, #6366f1)" },
+    { "id": "cyber_glow", "name": "Cyber Emerald", "preview": "linear-gradient(135deg, #34d399, #10b981)" },
+    { "id": "metallic", "name": "Platinum Metallic", "preview": "linear-gradient(180deg, #e2e8f0, #64748b)" },
+    { "id": "outline_red", "name": "Crimson Outline", "preview": "#ef4444" },
+    { "id": "sunset", "name": "Sunset Fire", "preview": "linear-gradient(135deg, #f97316, #e11d48)" },
+    { "id": "rainbow", "name": "Vibrant Rainbow", "preview": "linear-gradient(90deg, #ef4444, #f59e0b, #10b981, #3b82f6, #8b5cf6)" }
+  ],
+  "shapes": [
+    { "id": "rectangle", "name": "Rectangle" },
+    { "id": "circle", "name": "Circle" },
+    { "id": "triangle", "name": "Triangle" },
+    { "id": "arrow", "name": "Arrow" },
+    { "id": "line", "name": "Line" },
+    { "id": "callout", "name": "Callout Box" },
+    { "id": "box", "name": "Framed Box" }
+  ]
+}

@@ -1,0 +1,549 @@
+id,question_id,option_key,content,raw_text,sort_order
+3bc25fe4-1083-45c3-bfe3-642e09a1af4c,4b852ed4-171c-42c8-b8ad-401d94413c4f,a,"[{""type"": ""text"", ""html"": ""<p>(i) and (il)</p>""}]",(i) and (il),1
+2688fec1-3e80-4b70-9703-9968b26fb5ef,4b852ed4-171c-42c8-b8ad-401d94413c4f,b,"[{""type"": ""text"", ""html"": ""<p>(i) and (iii)</p>""}]",(i) and (iii),2
+42a50216-2b7d-4921-a2c3-331d1fcc0a4c,4b852ed4-171c-42c8-b8ad-401d94413c4f,c,"[{""type"": ""text"", ""html"": ""<p>(ii) and (ili)</p>""}]",(ii) and (ili),3
+f042398d-d382-4d79-b827-b43c4f8f524f,4b852ed4-171c-42c8-b8ad-401d94413c4f,d,"[{""type"": ""text"", ""html"": ""<p>(iii) and (iv)</p>""}]",(iii) and (iv),4
+07bd57db-a18e-40d6-8629-d9e4d63bb2b2,6f684c15-18aa-4779-88fd-9bc148963fd8,a,"[{""type"": ""text"", ""html"": ""<p>Earthworm, Amoeba, fungi</p>""}]","Earthworm, Amoeba, fungi",1
+17b00ea8-cc14-4a3b-9dc9-d3c99695bc8b,6f684c15-18aa-4779-88fd-9bc148963fd8,b,"[{""type"": ""text"", ""html"": ""<p>Earthworm, fungi, bacteria</p>""}]","Earthworm, fungi, bacteria",2
+58003448-59ae-404c-b52d-8904d9520f8f,6f684c15-18aa-4779-88fd-9bc148963fd8,c,"[{""type"": ""text"", ""html"": ""<p>Fungi, filamentous algae, protonema of mosses</p>""}]","Fungi, filamentous algae, protonema of mosses",3
+53892f04-cd53-4049-b84c-17b3b67d0479,6f684c15-18aa-4779-88fd-9bc148963fd8,d,"[{""type"": ""text"", ""html"": ""<p>Amoeba, Hydra, bacteria</p>""}]","Amoeba, Hydra, bacteria",4
+93bb00fc-aac1-4962-8688-c6e340452c8e,3261ab0a-4273-42d2-b70f-9dbcfd758c98,a,"[{""type"": ""text"", ""html"": ""<p>Mules</p>""}]",Mules,1
+7916e780-a710-47ae-88b8-abf51684f48d,3261ab0a-4273-42d2-b70f-9dbcfd758c98,b,"[{""type"": ""text"", ""html"": ""<p>Worker bees</p>""}]",Worker bees,2
+71b1191d-a99d-4f9e-b46c-ad7d504951cd,3261ab0a-4273-42d2-b70f-9dbcfd758c98,c,"[{""type"": ""text"", ""html"": ""<p>Infertile human females</p>""}]",Infertile human females,3
+2b586cb4-fd3b-4f43-8e7f-0e09db47a17b,3261ab0a-4273-42d2-b70f-9dbcfd758c98,d,"[{""type"": ""text"", ""html"": ""<p>All of these</p>""}]",All of these,4
+e6b70a23-7558-4a66-a563-ebc878c5c39d,fdf8e444-c34e-488f-83f4-de76fb4820aa,a,"[{""type"": ""text"", ""html"": ""<p>Some living organisms do not show growth at all.</p>""}]",Some living organisms do not show growth at all.,1
+8c89b469-273b-4f21-82ee-b233036704bc,fdf8e444-c34e-488f-83f4-de76fb4820aa,b,"[{""type"": ""text"", ""html"": ""<p>In case of larvae, growth is not visible.</p>""}]","In case of larvae, growth is not visible.",2
+7af43ea9-e3fe-426b-9ed1-5226f6a85046,fdf8e444-c34e-488f-83f4-de76fb4820aa,c,"[{""type"": ""text"", ""html"": ""<p> Dormant seeds do not grow.</p>""}]", Dormant seeds do not grow.,3
+4591c1a2-c492-4654-b04b-9b24bcc1cac1,fdf8e444-c34e-488f-83f4-de76fb4820aa,d,"[{""type"": ""text"", ""html"": ""<p> Non-living objects also grow by increase in body mass.</p>""}]", Non-living objects also grow by increase in body mass.,4
+a6909f9f-e807-49b4-98fa-2fa8612ae8df,d1232efd-18d5-41ca-802f-3591bd37a8f7,a,"[{""type"": ""text"", ""html"": ""<p>The external environmental stimuli can be physical, chemical or biological.</p>""}]","The external environmental stimuli can be physical, chemical or biological.",1
+a2265008-8c12-42b2-9711-6b172d38cf84,d1232efd-18d5-41ca-802f-3591bd37a8f7,b,"[{""type"": ""text"", ""html"": ""<p>All organisms, from the prokaryotes to the most complex eukaryotes can sense and respond to environmental stimuli.</p>""}]","All organisms, from the prokaryotes to the most complex eukaryotes can sense and respond to environmental stimuli.",2
+a05b00a5-ef20-4e86-a1c9-05b1ba794f14,d1232efd-18d5-41ca-802f-3591bd37a8f7,c,"[{""type"": ""text"", ""html"": ""<p> Consciousness and response to external stimuli are the defining properties of living organisms.</p>""}]", Consciousness and response to external stimuli are the defining properties of living organisms.,3
+77aad865-fa42-4590-b04f-b3e133f93a14,d1232efd-18d5-41ca-802f-3591bd37a8f7,d,"[{""type"": ""text"", ""html"": ""<p>All of these</p>""}]",All of these,4
+08df5efe-5d6a-49f1-a149-76777ea9a491,94a8c169-e619-47d6-85c8-bf07f5b89df0,a,"[{""type"": ""text"", ""html"": ""<p>(i) and (ii) only</p>""}]",(i) and (ii) only,1
+24526856-a02b-4e07-8a52-976251ef9c1a,94a8c169-e619-47d6-85c8-bf07f5b89df0,b,"[{""type"": ""text"", ""html"": ""<p>(ii) and (iii) only</p>""}]",(ii) and (iii) only,2
+77dcd374-a3f8-4187-ad11-be1bf03f5863,94a8c169-e619-47d6-85c8-bf07f5b89df0,c,"[{""type"": ""text"", ""html"": ""<p>() and (iii) only</p>""}]",() and (iii) only,3
+e726ab29-ecb1-4ae1-b36f-eb0da82430da,94a8c169-e619-47d6-85c8-bf07f5b89df0,d,"[{""type"": ""text"", ""html"": ""<p>(i), (ii) and (iii)</p>""}]","(i), (ii) and (iii)",4
+ac92b821-d299-4e5e-b0c5-ca971779ffd6,012c0fc0-6eb1-4ece-8a7d-2af8abd34a79,a,"[{""type"": ""text"", ""html"": ""<p>A-(i), B-(ii), C-(ii), D-(iv)</p>""}]","A-(i), B-(ii), C-(ii), D-(iv)",1
+ffc3af3b-d25e-4916-bb9f-e3747ef4bf38,012c0fc0-6eb1-4ece-8a7d-2af8abd34a79,b,"[{""type"": ""text"", ""html"": ""<p>A-(iv), B-(ii), (v), C-(iii), D-(i)</p>""}]","A-(iv), B-(ii), (v), C-(iii), D-(i)",2
+4e9204bc-e82b-4c44-a6c0-4e19766d0839,012c0fc0-6eb1-4ece-8a7d-2af8abd34a79,c,"[{""type"": ""text"", ""html"": ""<p>A-(ii), B-(v), C-(i), D-(iv)</p>""}]","A-(ii), B-(v), C-(i), D-(iv)",3
+8e93f967-c554-4778-94dd-a08e4dcaaa93,012c0fc0-6eb1-4ece-8a7d-2af8abd34a79,d,"[{""type"": ""text"", ""html"": ""<p>A-(v), B-(ii), (i), C-(ii), D-(iv)</p>""}]","A-(v), B-(ii), (i), C-(ii), D-(iv)",4
+12d13c59-f409-40f5-bec2-cd6de169fbac,40dcf034-be4a-4e4f-abce-3779454102a6,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+20e4197d-54a0-46e9-8604-c89058a2f70d,40dcf034-be4a-4e4f-abce-3779454102a6,b,"[{""type"": ""text"", ""html"": ""<p>Latin German</p>""}]",Latin German,2
+4f8152f3-b5e1-4bbc-bf73-cbd12be874df,40dcf034-be4a-4e4f-abce-3779454102a6,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+f7e50a21-ab0a-45ae-8ea8-af16dcbb06f7,40dcf034-be4a-4e4f-abce-3779454102a6,d,"[{""type"": ""text"", ""html"": ""<p>French (Page4)</p>""}]",French (Page4),4
+a88b2b6e-005f-477c-a171-48667c6cebab,50456a82-c192-4ef4-8646-8d0bc9952d47,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+cfa23225-1ab3-4eae-a59d-f44970ef9420,50456a82-c192-4ef4-8646-8d0bc9952d47,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+63b7470e-f6c5-4511-aac9-5559d405bfed,50456a82-c192-4ef4-8646-8d0bc9952d47,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+fe2f1d3b-eb11-480a-90ae-dde52b8c8472,50456a82-c192-4ef4-8646-8d0bc9952d47,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+dd2b2218-c616-4544-b3cf-5a06d9e7b21f,59d36913-566e-4be0-b710-dfacf7910ce7,a,"[{""type"": ""text"", ""html"": ""<p>species</p>""}]",species,1
+a47f3d63-fb7d-4a4f-b765-ab2869062a79,59d36913-566e-4be0-b710-dfacf7910ce7,b,"[{""type"": ""text"", ""html"": ""<p> genus race</p>""}]", genus race,2
+26937855-7a74-4ef6-b3a3-e54cb78a9798,59d36913-566e-4be0-b710-dfacf7910ce7,c,"[{""type"": ""text"", ""html"": ""<p> (Page 4)</p>""}]", (Page 4),3
+87ee200c-5fea-4937-9771-fc1f436a91ea,59d36913-566e-4be0-b710-dfacf7910ce7,d,"[{""type"": ""text"", ""html"": ""<p>family.</p>""}]",family.,4
+b7ea63dd-0d90-4574-9f24-033aa4bf1883,a53f4894-98db-4afe-96db-0b1aaab97e13,a,"[{""type"": ""text"", ""html"": ""<p>Biological names are generally in Latin and written in Italics.</p>""}]",Biological names are generally in Latin and written in Italics.,1
+9f925e6e-df73-4f45-9411-6b8a570bde0e,a53f4894-98db-4afe-96db-0b1aaab97e13,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+80c1a469-bfff-4388-8e0d-b9676e48ed0c,a53f4894-98db-4afe-96db-0b1aaab97e13,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+222a7c37-7738-4875-bf90-466a0e45693f,a53f4894-98db-4afe-96db-0b1aaab97e13,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+8c2e897b-c64f-43ca-9dce-6fda105b2a52,9f5ce26e-3263-4680-b107-e04fe344ada8,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+cc1bb24f-b76f-437e-8665-4c8a6c2941ce,9f5ce26e-3263-4680-b107-e04fe344ada8,b,"[{""type"": ""text"", ""html"": ""<p> The first word in a biological name represents the genus while the second component denotes the species.</p>""}]", The first word in a biological name represents the genus while the second component denotes the species.,2
+d97cdbf4-48d2-4e17-9238-faa8d5f6395a,9f5ce26e-3263-4680-b107-e04fe344ada8,c,"[{""type"": ""text"", ""html"": ""<p> Both the words in a biological name, when handwritten, are separately underlined, or printed</p>""}]"," Both the words in a biological name, when handwritten, are separately underlined, or printed",3
+3c5bfcb5-7c31-40f3-93f7-f8c9c172a9a5,9f5ce26e-3263-4680-b107-e04fe344ada8,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+4d9bff5f-b13e-4746-8fef-a8b42202dd59,6a66b930-b36d-4297-bb04-c2b891366ee5,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+7ae7fa63-45a7-4a68-8dc0-a21d7fd34103,6a66b930-b36d-4297-bb04-c2b891366ee5,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+4803dada-8ee2-4fc5-bfe5-c9204701b149,6a66b930-b36d-4297-bb04-c2b891366ee5,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+41603727-80ea-4dde-8388-4c88412728fc,6a66b930-b36d-4297-bb04-c2b891366ee5,d,"[{""type"": ""text"", ""html"": ""<p> The specific epithet starts with a capital letter while the generic epithet starts with a small letter. It can be illustrated with the example of mangifera Indica. (Page 4,5)</p>""}]"," The specific epithet starts with a capital letter while the generic epithet starts with a small letter. It can be illustrated with the example of mangifera Indica. (Page 4,5)",4
+5bf6677f-3ddd-43c0-b127-67acb51c04d9,b7964153-c09c-421c-aa49-b33b210e4fe6,a,"[{""type"": ""text"", ""html"": ""<p>genus is written after the species</p>""}]",genus is written after the species,1
+e48d8ae7-724b-48db-ad72-a9687ccc352d,b7964153-c09c-421c-aa49-b33b210e4fe6,b,"[{""type"": ""text"", ""html"": ""<p>both in genus and species, the first letter is a capital letter</p>""}]","both in genus and species, the first letter is a capital letter",2
+54eeea30-0f0b-4e6e-83c7-f754b51bef24,b7964153-c09c-421c-aa49-b33b210e4fe6,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+3afbf368-f922-403d-b7df-fa0ca0bf19b9,b7964153-c09c-421c-aa49-b33b210e4fe6,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+55d8ad71-5923-4518-9bca-5e683af15786,490bcce6-20e6-475f-a841-497b7c1284a9,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+a0b359c3-c871-4d54-ade4-aba006714af4,490bcce6-20e6-475f-a841-497b7c1284a9,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+9728cfbb-e26e-4db5-8cdc-8134cc65481e,490bcce6-20e6-475f-a841-497b7c1284a9,c,"[{""type"": ""text"", ""html"": ""<p>genus and species name are derived from Greek</p>""}]",genus and species name are derived from Greek,3
+9e55c177-2b2e-461d-adf2-a8caadb5d751,490bcce6-20e6-475f-a841-497b7c1284a9,d,"[{""type"": ""text"", ""html"": ""<p>both genus and species are printed in Italics. (Page 4,5) starts</p>""}]","both genus and species are printed in Italics. (Page 4,5) starts",4
+0cc7b352-f24a-4e7c-acd1-36fb0d513347,bb31483a-a48d-494a-b386-1d680564a17d,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+e7ecbaae-34d7-419f-8396-6ef15b220693,bb31483a-a48d-494a-b386-1d680564a17d,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+c5c22c84-469b-4015-bb10-4b4a237fbc82,bb31483a-a48d-494a-b386-1d680564a17d,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+2727b0be-9559-47bf-b2c9-1c45e5cd4ffe,bb31483a-a48d-494a-b386-1d680564a17d,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+b0750664-86de-4182-98f2-926aed022304,0200dbce-ccaa-4477-9649-8d375a43fd54,a,"[{""type"": ""text"", ""html"": ""<p>class (Page 5)</p>""}]",class (Page 5),1
+b1b03132-395f-45ea-af62-c4cf4f610668,0200dbce-ccaa-4477-9649-8d375a43fd54,b,"[{""type"": ""text"", ""html"": ""<p>species</p>""}]",species,2
+122131ce-fa77-44e1-abbf-0b3d5fb48fa6,0200dbce-ccaa-4477-9649-8d375a43fd54,c,"[{""type"": ""text"", ""html"": ""<p>genus</p>""}]",genus,3
+6d957385-e1c3-48bc-9794-6060daa7afec,0200dbce-ccaa-4477-9649-8d375a43fd54,d,"[{""type"": ""text"", ""html"": ""<p>family</p>""}]",family,4
+af3e1b17-e188-4bd6-bcd9-42d2c20d42a5,4b8e51e0-4858-417d-8a0c-a3828709f382,a,"[{""type"": ""text"", ""html"": ""<p>first identified by that author</p>""}]",first identified by that author,1
+6a9cf59b-bee4-4b2a-8e35-6be15af9da65,4b8e51e0-4858-417d-8a0c-a3828709f382,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+f495d190-6d57-45bf-82a1-10a3dcc40e06,4b8e51e0-4858-417d-8a0c-a3828709f382,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+9a5a1ea1-19aa-4533-8f3f-91c986507933,4b8e51e0-4858-417d-8a0c-a3828709f382,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+42a14aeb-eb0d-4271-a778-fa485d24c940,e90ff893-8d5f-47e9-a876-3f5980fd2261,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+752028f3-c259-4c44-ba3a-7dba3533aa30,e90ff893-8d5f-47e9-a876-3f5980fd2261,b,"[{""type"": ""text"", ""html"": ""<p>first grown by that author</p>""}]",first grown by that author,2
+3fb8d3e5-588d-4b7c-8112-1d50a25de5e3,e90ff893-8d5f-47e9-a876-3f5980fd2261,c,"[{""type"": ""text"", ""html"": ""<p> first described by that author</p>""}]", first described by that author,3
+d32352e4-faa7-49ec-b6fc-05dcd05faeba,e90ff893-8d5f-47e9-a876-3f5980fd2261,d,"[{""type"": ""text"", ""html"": ""<p> reassigned to another category by that author. (Page5)</p>""}]", reassigned to another category by that author. (Page5),4
+2055ab85-62b5-4064-9a59-84aae7c740f0,8ee2582d-2b5b-41ee-9f5f-21bcfbe3580e,a,"[{""type"": ""text"", ""html"": ""<p>The first word in a biological name represents the genus.</p>""}]",The first word in a biological name represents the genus.,1
+48393c5b-35a7-4a64-be35-e8ed68d89b95,8ee2582d-2b5b-41ee-9f5f-21bcfbe3580e,b,"[{""type"": ""text"", ""html"": ""<p> Both the words in a biological name when handwritten are separately underlined.</p>""}]", Both the words in a biological name when handwritten are separately underlined.,2
+55931cf7-e60d-4dd4-8a00-504e3bf0e1dc,8ee2582d-2b5b-41ee-9f5f-21bcfbe3580e,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+93035bde-5f0d-420e-9424-9719a011bdad,8ee2582d-2b5b-41ee-9f5f-21bcfbe3580e,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+8344c209-58db-44c5-ae0a-8d6f87de4fd6,39bbae0d-c6c1-48a4-8270-f87dc1c922ef,a,"[{""type"": ""text"", ""html"": ""<p>(i). (ii) and (iil) only (i), (ii), (iii) and (iv)</p>""}]","(i). (ii) and (iil) only (i), (ii), (iii) and (iv)",1
+a7b15425-65dc-4902-97a5-a70b12c12ff6,39bbae0d-c6c1-48a4-8270-f87dc1c922ef,b,"[{""type"": ""text"", ""html"": ""<p> (ii), (ii) and (iv) only</p>""}]"," (ii), (ii) and (iv) only",2
+43b022e2-1500-4b6c-b350-fe363ffcaec0,39bbae0d-c6c1-48a4-8270-f87dc1c922ef,c,"[{""type"": ""text"", ""html"": ""<p>(i), (iii) and (iv) only</p>""}]","(i), (iii) and (iv) only",3
+023f85a7-80a5-4439-895e-4573868677fa,39bbae0d-c6c1-48a4-8270-f87dc1c922ef,d,"[{""type"": ""text"", ""html"": ""<p> (Page 5)</p>""}]", (Page 5),4
+362b635e-9419-40d0-b790-49faa56d2d5e,bca381e8-1e27-4854-864f-3c8d5ab2e6d2,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+351b5dc4-4cd9-43f9-9be8-d4e4e4d52c96,bca381e8-1e27-4854-864f-3c8d5ab2e6d2,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+e480471e-2920-4d52-8e40-b595c70c3bf2,bca381e8-1e27-4854-864f-3c8d5ab2e6d2,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+b4249318-97ef-4c46-a7fd-593a629ad97b,bca381e8-1e27-4854-864f-3c8d5ab2e6d2,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+0900d750-748d-49c0-bc93-a1beb1d244ed,a2d6119c-02ec-49dd-947a-6e46156e6fba,a,"[{""type"": ""text"", ""html"": ""<p>Morphology</p>""}]",Morphology,1
+a3358f51-9833-46ec-a839-17a082c12f69,a2d6119c-02ec-49dd-947a-6e46156e6fba,b,"[{""type"": ""text"", ""html"": ""<p>Anatomy (Page 5). Taxonomy</p>""}]",Anatomy (Page 5). Taxonomy,2
+b8f6c95c-7e4f-4661-ac53-2203d11b3f95,a2d6119c-02ec-49dd-947a-6e46156e6fba,c,"[{""type"": ""text"", ""html"": ""<p>Ecology</p>""}]",Ecology,3
+a64c1829-d4da-427b-baa0-5c322431063c,a2d6119c-02ec-49dd-947a-6e46156e6fba,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+25da8af8-a425-4708-8f7d-b21981e67bd9,e5774bf7-d7fe-4392-8d9f-a98de710ee26,a,"[{""type"": ""text"", ""html"": ""<p>to study the world's flora</p>""}]",to study the world's flora,1
+e5e411a5-1c45-45a5-99a1-602db0f9a48f,e5774bf7-d7fe-4392-8d9f-a98de710ee26,b,"[{""type"": ""text"", ""html"": ""<p>to provide a method for identification and nomenclature</p>""}]",to provide a method for identification and nomenclature,2
+14fa9631-c934-429c-b709-a34363e5d974,e5774bf7-d7fe-4392-8d9f-a98de710ee26,c,"[{""type"": ""text"", ""html"": ""<p> to provide latin 'scientific\"" names for every group (Page 4,5) of plants in the world</p>""}]"," to provide latin 'scientific"" names for every group (Page 4,5) of plants in the world",3
+b0667676-9231-4339-b5de-c7936ac0e652,e5774bf7-d7fe-4392-8d9f-a98de710ee26,d,"[{""type"": ""text"", ""html"": ""<p>all of these.</p>""}]",all of these.,4
+a4afcebd-8dd6-4eb7-b829-f00ee1f48d2d,6176c6a5-d831-4d78-9f71-41c52774a55d,a,"[{""type"": ""text"", ""html"": ""<p>Identification</p>""}]",Identification,1
+fd712189-e3ca-4b79-9cbc-6b084fe7b6a0,6176c6a5-d831-4d78-9f71-41c52774a55d,b,"[{""type"": ""text"", ""html"": ""<p>Classification and nomenclature</p>""}]",Classification and nomenclature,2
+a2731f64-352c-4222-8fa3-abd9f340d170,6176c6a5-d831-4d78-9f71-41c52774a55d,c,"[{""type"": ""text"", ""html"": ""<p>Characterisation (Page 5)</p>""}]",Characterisation (Page 5),3
+dbb79e70-4874-45c5-b938-f8fc03a1612d,6176c6a5-d831-4d78-9f71-41c52774a55d,d,"[{""type"": ""text"", ""html"": ""<p>All of these</p>""}]",All of these,4
+9e46e4ca-3940-47f1-ae81-9673c1a0ad59,a1f8c8b8-699e-4675-a7f1-3e949251cd90,a,"[{""type"": ""text"", ""html"": ""<p>Greek, system, systematic arrangement of organisms</p>""}]","Greek, system, systematic arrangement of organisms",1
+c00c4110-72d3-4c2e-adba-b45eff49085f,a1f8c8b8-699e-4675-a7f1-3e949251cd90,b,"[{""type"": ""text"", ""html"": ""<p> Latin, system, arrangement of taxa</p>""}]"," Latin, system, arrangement of taxa",2
+cbc082f9-3d5c-4baf-84b1-f1c485e3fde6,a1f8c8b8-699e-4675-a7f1-3e949251cd90,c,"[{""type"": ""text"", ""html"": ""<p>Latin, systema, systematic arrangement of organisms (Page 5)</p>""}]","Latin, systema, systematic arrangement of organisms (Page 5)",3
+1498d8ca-f087-481c-ba31-2360448ca607,a1f8c8b8-699e-4675-a7f1-3e949251cd90,d,"[{""type"": ""text"", ""html"": ""<p>Greek, systema, arrangement of taxa</p>""}]","Greek, systema, arrangement of taxa",4
+f846c7d5-1a41-4bc5-937f-1cbf856521ff,cf8d06da-b70c-4b1c-840e-d5dbf0b2e722,a,"[{""type"": ""text"", ""html"": ""<p>the classification of organisms based on broad morphological characters</p>""}]",the classification of organisms based on broad morphological characters,1
+00dff1bc-d56d-4b8c-99a0-376a6d624b4b,cf8d06da-b70c-4b1c-840e-d5dbf0b2e722,b,"[{""type"": ""text"", ""html"": ""<p> delimiting various taxa of organisms and establishing their relationships</p>""}]", delimiting various taxa of organisms and establishing their relationships,2
+d86facb8-ce7b-4982-9e56-bdceb04048da,cf8d06da-b70c-4b1c-840e-d5dbf0b2e722,c,"[{""type"": ""text"", ""html"": ""<p> the classification of organisms based on their evolutionary history and establishingtheir phylogeny on the totality of various parameters from all fields of studies</p>""}]", the classification of organisms based on their evolutionary history and establishingtheir phylogeny on the totality of various parameters from all fields of studies,3
+f5477d7f-380f-4537-813d-cfb5fad3fea9,cf8d06da-b70c-4b1c-840e-d5dbf0b2e722,d,"[{""type"": ""text"", ""html"": ""<p>identification and arrangement of organisms on the (Page 6) basis of their cytological characteristics.</p>""}]",identification and arrangement of organisms on the (Page 6) basis of their cytological characteristics.,4
+db410c65-5ddf-4c2a-b473-97efc5e88c5a,5ecefa7b-0fa8-4d95-9c97-2ed65121c2ce,a,"[{""type"": ""text"", ""html"": ""<p>Systema Naturae</p>""}]",Systema Naturae,1
+6d77ff51-5777-4c42-9c4c-51d7b3c2bb66,5ecefa7b-0fa8-4d95-9c97-2ed65121c2ce,b,"[{""type"": ""text"", ""html"": ""<p>Historia Plantarum</p>""}]",Historia Plantarum,2
+1b1d9816-8af5-476c-9437-5b8c953f9cd9,5ecefa7b-0fa8-4d95-9c97-2ed65121c2ce,c,"[{""type"": ""text"", ""html"": ""<p>Historia Naturalis</p>""}]",Historia Naturalis,3
+622fb4e1-75d5-4ed9-8dad-1d7b11f2598e,5ecefa7b-0fa8-4d95-9c97-2ed65121c2ce,d,"[{""type"": ""text"", ""html"": ""<p>All of these (Page 5,6) wteNCERT at your Fingerops The scope of systematics includes</p>""}]","All of these (Page 5,6) wteNCERT at your Fingerops The scope of systematics includes",4
+f732407a-c43c-4995-b9f5-6ace90110351,f42022c3-db7c-43f9-9ca5-1ab217480f10,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+9c3f67d5-3d9a-49b1-a78c-0de5904c57d9,f42022c3-db7c-43f9-9ca5-1ab217480f10,b,"[{""type"": ""text"", ""html"": ""<p> dissimilarities among individuals only</p>""}]", dissimilarities among individuals only,2
+15ff5a6e-87e3-476e-9be9-6b257fcaf59f,f42022c3-db7c-43f9-9ca5-1ab217480f10,c,"[{""type"": ""text"", ""html"": ""<p> appearances in biological world</p>""}]", appearances in biological world,3
+fd2411ed-b3db-4faa-bc38-a3630fcd747e,f42022c3-db7c-43f9-9ca5-1ab217480f10,d,"[{""type"": ""text"", ""html"": ""<p> similarities and disimilarities ammong individuas, (Page6)</p>""}]"," similarities and disimilarities ammong individuas, (Page6)",4
+a1366b2c-6829-4206-941c-5cf06b00692d,826753f3-77bb-487b-bdb1-1795da5334ac,a,"[{""type"": ""text"", ""html"": ""<p>the basic unit of classification</p>""}]",the basic unit of classification,1
+b49e823f-9f26-45a2-820b-3eade9c0b526,826753f3-77bb-487b-bdb1-1795da5334ac,b,"[{""type"": ""text"", ""html"": ""<p> a rank or level in a taxonomic hierarchy</p>""}]", a rank or level in a taxonomic hierarchy,2
+93ca7813-5a8e-4d4b-be37-b586d08c2d59,826753f3-77bb-487b-bdb1-1795da5334ac,c,"[{""type"": ""text"", ""html"": ""<p> a group of related organisms able to interbreed</p>""}]", a group of related organisms able to interbreed,3
+8f7faff9-abdb-417c-9b9a-db9b502938d0,826753f3-77bb-487b-bdb1-1795da5334ac,d,"[{""type"": ""text"", ""html"": ""<p> a group of related organisms that are unable to interbreed freely. (Page 6)</p>""}]", a group of related organisms that are unable to interbreed freely. (Page 6),4
+b5cb921e-13c5-4bdc-82a0-a71a64788e01,0a4a9196-27b0-432a-8340-208d84d3b464,a,"[{""type"": ""text"", ""html"": ""<p>the ranks of species and genus</p>""}]",the ranks of species and genus,1
+8cb96a3e-1b26-4954-8d5c-4a65fc6952b6,0a4a9196-27b0-432a-8340-208d84d3b464,b,"[{""type"": ""text"", ""html"": ""<p>the ranks up to phylum</p>""}]",the ranks up to phylum,2
+d3c2494e-03f5-4a66-978a-3ff693360769,0a4a9196-27b0-432a-8340-208d84d3b464,c,"[{""type"": ""text"", ""html"": ""<p>the species epithet only</p>""}]",the species epithet only,3
+b159c305-2c50-4d1f-8420-8bdc3a532dc3,0a4a9196-27b0-432a-8340-208d84d3b464,d,"[{""type"": ""text"", ""html"": ""<p>any rank of taxonomic hierarchy. (Page 6)</p>""}]",any rank of taxonomic hierarchy. (Page 6),4
+74b5598a-44f2-45b5-9189-84bd1c6282c1,807a77f5-70e0-4ca8-b8ca-799fe00df48e,a,"[{""type"": ""text"", ""html"": ""<p>Class</p>""}]",Class,1
+5e4f0a54-e8c6-4bcf-bc77-5fedcbc98d05,807a77f5-70e0-4ca8-b8ca-799fe00df48e,b,"[{""type"": ""text"", ""html"": ""<p> Taxon</p>""}]", Taxon,2
+0b20c9e2-3a2d-4dea-b459-a8fe0bd14508,807a77f5-70e0-4ca8-b8ca-799fe00df48e,c,"[{""type"": ""text"", ""html"": ""<p>Family (Page6)</p>""}]",Family (Page6),3
+214d623c-f2c9-4377-8d94-eb87af0f1dd9,807a77f5-70e0-4ca8-b8ca-799fe00df48e,d,"[{""type"": ""text"", ""html"": ""<p>Cohort</p>""}]",Cohort,4
+35a5c6b6-d114-4690-bd69-b6cf79a805d3,5ae173c1-17f2-4ce5-86b2-c42886734eea,a,"[{""type"": ""text"", ""html"": ""<p>species</p>""}]",species,1
+bb81bd34-8213-4124-9e93-93377374dbaf,5ae173c1-17f2-4ce5-86b2-c42886734eea,b,"[{""type"": ""text"", ""html"": ""<p>kingdom</p>""}]",kingdom,2
+38630ac5-7bbd-42bd-80a8-fd99d6611b6d,5ae173c1-17f2-4ce5-86b2-c42886734eea,c,"[{""type"": ""text"", ""html"": ""<p>family</p>""}]",family,3
+ab3fc320-bd19-437b-ad42-d12d3a068798,5ae173c1-17f2-4ce5-86b2-c42886734eea,d,"[{""type"": ""text"", ""html"": ""<p>variety. (Page6)</p>""}]",variety. (Page6),4
+2266e0c2-2650-4cbd-86a5-ccd61ffc836a,2d9076e1-c795-4981-ab12-327ffd3dd1fb,a,"[{""type"": ""text"", ""html"": ""<p>species</p>""}]",species,1
+67339580-d419-4777-9524-6ee97a24bda5,2d9076e1-c795-4981-ab12-327ffd3dd1fb,b,"[{""type"": ""text"", ""html"": ""<p>genus</p>""}]",genus,2
+5c8eec56-60ee-48f1-8234-e344618573cc,2d9076e1-c795-4981-ab12-327ffd3dd1fb,c,"[{""type"": ""text"", ""html"": ""<p>order</p>""}]",order,3
+d674e5ba-333b-4819-8af1-70d36cb44869,2d9076e1-c795-4981-ab12-327ffd3dd1fb,d,"[{""type"": ""text"", ""html"": ""<p>family. (Page \u0431)</p>""}]",family. (Page б),4
+e69def33-69e0-4490-9a4a-41c63ed7e257,06b1b1ae-bcee-4723-92db-5d331f84e3b8,a,"[{""type"": ""text"", ""html"": ""<p>Biodiversity is the occurrence of variety of life forms differing in morphology, anatomy, habitats and habits.</p>""}]","Biodiversity is the occurrence of variety of life forms differing in morphology, anatomy, habitats and habits.",1
+3cfd5c03-cc0b-4f13-b600-89bd45fd991b,06b1b1ae-bcee-4723-92db-5d331f84e3b8,b,"[{""type"": ""text"", ""html"": ""<p> Systematics is the branch of biology that deals with cataloging plants, animals and other organisms into categories that can be named, remembered, compared and studied</p>""}]"," Systematics is the branch of biology that deals with cataloging plants, animals and other organisms into categories that can be named, remembered, compared and studied",2
+1390d3d5-305f-4f72-8abf-d61ab38ec0fb,06b1b1ae-bcee-4723-92db-5d331f84e3b8,c,"[{""type"": ""text"", ""html"": ""<p> Classification is the branch of biology that deals. with principles and procedures of identification and. nomenclature of organisms.</p>""}]", Classification is the branch of biology that deals. with principles and procedures of identification and. nomenclature of organisms.,3
+8f711f23-0c35-4de1-ace5-ebd4f6933e11,06b1b1ae-bcee-4723-92db-5d331f84e3b8,d,"[{""type"": ""text"", ""html"": ""<p> Taxonomical studies helps in identifying similarites and dissimilarities among the individuals of the same kind of organisms as well as of other kinds of organisms. (Page 3,4,5, 0)</p>""}]"," Taxonomical studies helps in identifying similarites and dissimilarities among the individuals of the same kind of organisms as well as of other kinds of organisms. (Page 3,4,5, 0)",4
+1552eaaa-696c-4fca-af64-9cacb9f34799,27513e76-d0f3-4ef3-a004-7545da58d702,a,"[{""type"": ""text"", ""html"": ""<p>locomotion</p>""}]",locomotion,1
+d6b733c0-c549-4f8c-ae9d-fb1ca2b9f3a8,27513e76-d0f3-4ef3-a004-7545da58d702,b,"[{""type"": ""text"", ""html"": ""<p>growth and movement</p>""}]",growth and movement,2
+3d50ba6b-c3da-48e1-a3d6-2f0679b6d6e3,27513e76-d0f3-4ef3-a004-7545da58d702,c,"[{""type"": ""text"", ""html"": ""<p>response to stimuli</p>""}]",response to stimuli,3
+19c3bc92-eb80-41f4-9f37-0fa57c3b0938,27513e76-d0f3-4ef3-a004-7545da58d702,d,"[{""type"": ""text"", ""html"": ""<p>none of these.</p>""}]",none of these.,4
+2489f020-a202-4f3e-93d9-abc11fc53cd9,8109d078-e2ce-4d0e-80a9-e3825983abb7,a,"[{""type"": ""text"", ""html"": ""<p>Growth and reproduction</p>""}]",Growth and reproduction,1
+77608fda-666e-457f-8de2-8893c25c0e90,8109d078-e2ce-4d0e-80a9-e3825983abb7,b,"[{""type"": ""text"", ""html"": ""<p>Metabolism and cellular level of organisation</p>""}]",Metabolism and cellular level of organisation,2
+6a9dcaef-a704-4c04-bba8-3be6c6432c25,8109d078-e2ce-4d0e-80a9-e3825983abb7,c,"[{""type"": ""text"", ""html"": ""<p>Response to stimuli and consciousness</p>""}]",Response to stimuli and consciousness,3
+357c6df7-ed1b-4238-82dd-7fe6f5885ee2,8109d078-e2ce-4d0e-80a9-e3825983abb7,d,"[{""type"": ""text"", ""html"": ""<p>All of these Read the following statements and select the correct</p>""}]",All of these Read the following statements and select the correct,4
+81a062b6-3068-46f8-9af3-9170dabffe07,fc59c811-bbff-43e0-98cd-20c0e5f77d73,a,"[{""type"": ""text"", ""html"": ""<p>1 and III</p>""}]",1 and III,1
+21d5d2a8-6b49-4220-b8cf-d829180bdaf6,fc59c811-bbff-43e0-98cd-20c0e5f77d73,b,"[{""type"": ""text"", ""html"": ""<p>Iland III</p>""}]",Iland III,2
+f3a957dd-3bdf-4d49-a38c-a44cdb0921d4,fc59c811-bbff-43e0-98cd-20c0e5f77d73,c,"[{""type"": ""text"", ""html"": ""<p>1 and Il</p>""}]",1 and Il,3
+1bbbd406-cff7-4747-8348-5471b1a5028f,fc59c811-bbff-43e0-98cd-20c0e5f77d73,d,"[{""type"": ""text"", ""html"": ""<p>Ionly</p>""}]",Ionly,4
+76a6ca01-f5c0-4024-9cdf-6f988a06a954,70e6e5f2-5db0-43a7-8a10-f56b416a18b9,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+2a9b4709-c825-494f-8a39-a61260b1c5d1,70e6e5f2-5db0-43a7-8a10-f56b416a18b9,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+9c38797c-db57-494d-89c8-44ae04fdf7bb,70e6e5f2-5db0-43a7-8a10-f56b416a18b9,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+be29c1c0-5acd-4eb5-b557-3cda5864f38d,70e6e5f2-5db0-43a7-8a10-f56b416a18b9,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+7de02e89-7ef6-4e77-9846-f113f500da2f,69f7b5f8-d606-472e-a209-6899c9d7ba29,a,"[{""type"": ""text"", ""html"": ""<p>T F F T</p>""}]",T F F T,1
+13a1e102-dab1-43f7-bc4f-ead467bb37bc,69f7b5f8-d606-472e-a209-6899c9d7ba29,b,"[{""type"": ""text"", ""html"": ""<p>F T T</p>""}]",F T T,2
+d0746736-69f8-439f-9771-0a74b69e0f85,69f7b5f8-d606-472e-a209-6899c9d7ba29,c,"[{""type"": ""text"", ""html"": ""<p>T T F T</p>""}]",T T F T,3
+f313000a-bbee-47db-a8ee-fd70cd2c4a24,69f7b5f8-d606-472e-a209-6899c9d7ba29,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+08f0521f-ddfc-4c17-842f-ddfaa6ea1f50,c000352b-bbcf-4681-9e67-fa9bb14b7293,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+9f9bf18b-ca54-4d62-a781-e5cee836df14,c000352b-bbcf-4681-9e67-fa9bb14b7293,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+62a13032-b60f-483e-8ae5-2504a867d1cf,c000352b-bbcf-4681-9e67-fa9bb14b7293,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+d8516f30-2b74-4252-8318-50b626b9cd2d,c000352b-bbcf-4681-9e67-fa9bb14b7293,d,"[{""type"": ""text"", ""html"": ""<p>F T F</p>""}]",F T F,4
+4280c5cb-d4cb-40fd-95eb-4d4e73571b5e,55087394-e95a-4950-bcac-81e364da34ac,a,"[{""type"": ""text"", ""html"": ""<p>increase in size by cell division</p>""}]",increase in size by cell division,1
+5b6a5bd4-2657-45a7-8e4b-a2c1c1616424,55087394-e95a-4950-bcac-81e364da34ac,b,"[{""type"": ""text"", ""html"": ""<p>ability to reproduce sexually or asexually to produce progenies of own type</p>""}]",ability to reproduce sexually or asexually to produce progenies of own type,2
+b77752dd-82a9-4b69-9122-abd50359acd7,55087394-e95a-4950-bcac-81e364da34ac,c,"[{""type"": ""text"", ""html"": ""<p>ability to sense their surroundings and respond to them</p>""}]",ability to sense their surroundings and respond to them,3
+9d7699d3-ce0a-4510-a895-d8eb114a203f,55087394-e95a-4950-bcac-81e364da34ac,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+4c81a81d-98ce-4b27-a59c-de5d13d5538b,fcbfb932-a309-4e27-981f-7a15fdf4f14f,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+18addf20-0f51-4151-af4e-47ca9cedb577,fcbfb932-a309-4e27-981f-7a15fdf4f14f,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+22436f1d-0fba-4728-9da7-bedbe2f5eac0,fcbfb932-a309-4e27-981f-7a15fdf4f14f,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+7a8d27be-8403-434d-920b-6dcaea9e401c,fcbfb932-a309-4e27-981f-7a15fdf4f14f,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+d9928c88-8dbd-47ea-bb39-af6b51dbf44d,01c084fe-e7b0-4fd6-950d-94204cc9c46d,a,"[{""type"": ""text"", ""html"": ""<p>Linnaeus</p>""}]",Linnaeus,1
+9325ff42-2b12-40f8-a125-ae4585a97a31,01c084fe-e7b0-4fd6-950d-94204cc9c46d,b,"[{""type"": ""text"", ""html"": ""<p> Mendel</p>""}]", Mendel,2
+0bec3651-f852-4a58-905e-a16b44784a35,01c084fe-e7b0-4fd6-950d-94204cc9c46d,c,"[{""type"": ""text"", ""html"": ""<p>Darwin</p>""}]",Darwin,3
+592df3f1-bae0-4d92-99a6-5a5bab5c1e57,01c084fe-e7b0-4fd6-950d-94204cc9c46d,d,"[{""type"": ""text"", ""html"": ""<p> Lamarck. (Page 4)</p>""}]", Lamarck. (Page 4),4
+479ee1e3-d065-49de-9cee-b39980a69055,a234009d-5b30-4cc1-be61-d25e3253bbcb,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+e3a2fe91-6d7a-4b04-9ae2-d5ac991693dd,a234009d-5b30-4cc1-be61-d25e3253bbcb,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+92e13d84-edd6-46c8-8da6-0b2651335c9e,a234009d-5b30-4cc1-be61-d25e3253bbcb,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+68f8a31f-d3ed-4f0d-a218-d723cde3c085,a234009d-5b30-4cc1-be61-d25e3253bbcb,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+2213e09f-ed77-447d-b3eb-3010115e175c,f1d45533-6632-44e5-9fdb-c7439088b153,a,"[{""type"": ""text"", ""html"": ""<p>species</p>""}]",species,1
+883402f4-3436-4c87-a682-a9ccc53a2333,f1d45533-6632-44e5-9fdb-c7439088b153,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+78ca2782-3f53-4d63-b9b4-10251deb0ba3,f1d45533-6632-44e5-9fdb-c7439088b153,c,"[{""type"": ""text"", ""html"": ""<p>phylum or division</p>""}]",phylum or division,3
+77771ecf-2cec-45a5-b402-3ffcf95c54f9,f1d45533-6632-44e5-9fdb-c7439088b153,d,"[{""type"": ""text"", ""html"": ""<p>kingdom. (Page 6) In a taxonomic hierarchy, genus is interpolated between</p>""}]","kingdom. (Page 6) In a taxonomic hierarchy, genus is interpolated between",4
+773860c9-88ee-45bf-a227-f48deadb646b,6c8ba9b3-78ec-4a75-8b59-fc52b41e9aa8,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+ecdf46ee-84ec-4716-afc6-c632a2234004,6c8ba9b3-78ec-4a75-8b59-fc52b41e9aa8,b,"[{""type"": ""text"", ""html"": ""<p>interbreeding feeding over the same food</p>""}]",interbreeding feeding over the same food,2
+3d2479ad-ff2e-4061-a6da-0e3dda48217f,6c8ba9b3-78ec-4a75-8b59-fc52b41e9aa8,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+d69050bb-9a7e-45f3-8334-313df19f424b,6c8ba9b3-78ec-4a75-8b59-fc52b41e9aa8,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+1659572f-89e7-44fb-9631-51c6d96fd24c,2ce534ea-2ae3-4ec3-8bc2-bf606e52d698,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+ea216d9e-2bf1-4db5-90b4-f1fd95340526,2ce534ea-2ae3-4ec3-8bc2-bf606e52d698,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+f869958a-6d13-4490-9371-f6f36c4cfcc7,2ce534ea-2ae3-4ec3-8bc2-bf606e52d698,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+9c1806ac-3953-4b2d-8e71-1f3fcd63b0fe,2ce534ea-2ae3-4ec3-8bc2-bf606e52d698,d,"[{""type"": ""text"", ""html"": ""<p>geographically isolated. Read the given assertion followed by reason and select</p>""}]",geographically isolated. Read the given assertion followed by reason and select,4
+4e585f46-6318-4796-8a12-20374ecb4fc0,f1943819-1557-41c4-bb31-2b8367e2fd66,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+6c2aa968-3253-4bb1-8156-450e610cff75,f1943819-1557-41c4-bb31-2b8367e2fd66,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+ae499fff-2952-45c5-b53b-58e6ae38024d,f1943819-1557-41c4-bb31-2b8367e2fd66,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+bc814b81-823c-4ff9-b22a-cfb49642ae92,f1943819-1557-41c4-bb31-2b8367e2fd66,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+f2dd7bd5-15df-4cb9-84ed-ef5fea1a4dc0,65ff0e5b-fb6e-4da2-9bf9-709793f96707,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+7afd92b2-17b6-473d-94a3-45d37933b030,65ff0e5b-fb6e-4da2-9bf9-709793f96707,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+968bfeb1-f70f-4519-9667-3b27833c93d3,65ff0e5b-fb6e-4da2-9bf9-709793f96707,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+bb2f23e5-49d9-4ddf-b64a-9cebe190c6a9,65ff0e5b-fb6e-4da2-9bf9-709793f96707,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+ad8147fe-3672-4077-af85-2b0b294c1584,ffceaecc-91d9-4929-b516-f54ee1656ac4,a,"[{""type"": ""text"", ""html"": ""<p>Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.</p>""}]","Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.",1
+8f0a2e20-6f93-43b8-b1ca-4ddf4ddff7bc,ffceaecc-91d9-4929-b516-f54ee1656ac4,b,"[{""type"": ""text"", ""html"": ""<p>Both Assertion and Reason are true, but Reason is not the correct explanation of Assertion.</p>""}]","Both Assertion and Reason are true, but Reason is not the correct explanation of Assertion.",2
+dfe79963-1777-4a01-a606-89220afe393c,ffceaecc-91d9-4929-b516-f54ee1656ac4,c,"[{""type"": ""text"", ""html"": ""<p>Assertion is true, but Reason is false.</p>""}]","Assertion is true, but Reason is false.",3
+4f4d8b65-207c-4af8-a7f0-2da1329d58fc,ffceaecc-91d9-4929-b516-f54ee1656ac4,d,"[{""type"": ""text"", ""html"": ""<p>Both Assertion and Reason are false.</p>""}]",Both Assertion and Reason are false.,4
+bb606c9f-2e85-4c41-943b-d49b90f310d2,5e3ab408-7759-4e79-9f7d-6cf68b6c1294,a,"[{""type"": ""text"", ""html"": ""<p>Both assertion and reason are true and reason is the correct explanation of assertion. Both assertion and reason are true but reason is</p>""}]",Both assertion and reason are true and reason is the correct explanation of assertion. Both assertion and reason are true but reason is,1
+7a1e9f82-abe4-4934-9093-440c2876ddef,5e3ab408-7759-4e79-9f7d-6cf68b6c1294,b,"[{""type"": ""text"", ""html"": ""<p> not the correct explanation of assertion.</p>""}]", not the correct explanation of assertion.,2
+f58784ce-ad10-48c8-8257-fad4ba47b9c6,5e3ab408-7759-4e79-9f7d-6cf68b6c1294,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+adfcc98b-e4eb-4a7a-8a1f-3aff804bea02,5e3ab408-7759-4e79-9f7d-6cf68b6c1294,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+1e099b1c-fc51-42bd-bd11-5f3448f71230,0e368b4e-53d7-4d94-8b13-a425d4a2cb0f,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+c85ca09b-a7fd-4d37-9f45-dd6dd6021fdd,0e368b4e-53d7-4d94-8b13-a425d4a2cb0f,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+02b81f9f-68fe-4184-bf9a-67990cd6b7c3,0e368b4e-53d7-4d94-8b13-a425d4a2cb0f,c,"[{""type"": ""text"", ""html"": ""<p> (Page 6) Assertion is false but reason is true.</p>""}]", (Page 6) Assertion is false but reason is true.,3
+ea8a2b57-e6bf-43b5-aa31-05881443b72d,0e368b4e-53d7-4d94-8b13-a425d4a2cb0f,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+a8f9afd2-80fb-44b1-a13c-8a9c76b4e7f6,782483b0-c369-447f-a6f9-8cd54265a4c9,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+a64bf07e-d84a-48be-843d-eae2ea96c053,782483b0-c369-447f-a6f9-8cd54265a4c9,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+c9138f62-d3cf-413c-9f73-b53ed1077439,782483b0-c369-447f-a6f9-8cd54265a4c9,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+4c92a74e-9b9e-4cbf-8158-ea958c160093,782483b0-c369-447f-a6f9-8cd54265a4c9,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+edb38ac7-b498-4787-b723-019210c217b7,3d797b08-da4a-4e64-81b2-71295f894b68,a,"[{""type"": ""text"", ""html"": ""<p>species (Page 6) family.</p>""}]",species (Page 6) family.,1
+79ddad65-5fbb-4f94-b077-22389f9fb2e1,3d797b08-da4a-4e64-81b2-71295f894b68,b,"[{""type"": ""text"", ""html"": ""<p> genus</p>""}]", genus,2
+7691d9be-36a2-4e2d-969c-5c6f5b0a283a,3d797b08-da4a-4e64-81b2-71295f894b68,c,"[{""type"": ""text"", ""html"": ""<p>tribe</p>""}]",tribe,3
+0f578532-22f3-4121-9cbc-2bcb9c04870a,3d797b08-da4a-4e64-81b2-71295f894b68,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+b9bf3f3d-00ae-4b82-a2ef-16db9a34eefd,d86ba24f-e13c-4935-bac0-a220135af903,a,"[{""type"": ""text"", ""html"": ""<p>classes (Page 7)</p>""}]",classes (Page 7),1
+b445e255-d16a-4ccd-bef8-2bcbbbcf922c,d86ba24f-e13c-4935-bac0-a220135af903,b,"[{""type"": ""text"", ""html"": ""<p>phyla</p>""}]",phyla,2
+7f47fca7-d290-4b5e-ae88-fc081fd798dc,d86ba24f-e13c-4935-bac0-a220135af903,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+9375463f-6aa2-46c4-ab1c-9070ba8ebe0e,d86ba24f-e13c-4935-bac0-a220135af903,d,"[{""type"": ""text"", ""html"": ""<p>orders. (c species</p>""}]",orders. (c species,4
+8d5abbbb-3f65-4450-9487-4d30edeca223,a9ccac02-9907-4125-b2e2-5f5f5ffc9e7a,a,"[{""type"": ""text"", ""html"": ""<p>family (Page 7)</p>""}]",family (Page 7),1
+118fdb85-9926-4d0d-af95-5901d8412710,a9ccac02-9907-4125-b2e2-5f5f5ffc9e7a,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+89df42c3-30de-4076-969c-5aa49372c6da,a9ccac02-9907-4125-b2e2-5f5f5ffc9e7a,c,"[{""type"": ""text"", ""html"": ""<p>genus</p>""}]",genus,3
+2288de69-831d-4724-9d6a-ecf4ee3f4d21,a9ccac02-9907-4125-b2e2-5f5f5ffc9e7a,d,"[{""type"": ""text"", ""html"": ""<p>division.</p>""}]",division.,4
+12eed90e-5b98-441f-8557-ed1330fae61b,83987919-38bb-48aa-964a-0dd73989a162,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+29595cac-48f6-4bd4-89fa-469d83b2b2ac,83987919-38bb-48aa-964a-0dd73989a162,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+335c37c7-3913-413b-9d3f-4c3f1ee230d8,83987919-38bb-48aa-964a-0dd73989a162,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+ac1af97a-b7f7-464d-87f3-8252eed71f44,83987919-38bb-48aa-964a-0dd73989a162,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+1fbaafa3-66de-4887-8c11-c75b5cf78260,d7bb4b12-90ba-4cef-a0f5-d7a2207b569d,a,"[{""type"": ""text"", ""html"": ""<p>It is a group or assemblage of related specres.</p>""}]",It is a group or assemblage of related specres.,1
+bf710521-7a5c-4fe1-b5b6-4a9c34d5934e,d7bb4b12-90ba-4cef-a0f5-d7a2207b569d,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+89259284-7a4c-46d2-8e8a-90939ad233f3,d7bb4b12-90ba-4cef-a0f5-d7a2207b569d,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+ee77198b-c28d-4f3d-a855-89c54048d0f6,d7bb4b12-90ba-4cef-a0f5-d7a2207b569d,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+2db55474-5467-4d33-a411-0ba7a1b12334,74379429-2e71-47ab-a8c0-deb60a4c2b39,a,"[{""type"": ""text"", ""html"": ""<p>Felis</p>""}]",Felis,1
+f8392aa3-ea85-47a8-a80c-e9f41fae3d8e,74379429-2e71-47ab-a8c0-deb60a4c2b39,b,"[{""type"": ""text"", ""html"": ""<p>Panthera</p>""}]",Panthera,2
+6049b64a-f50e-4dbc-b28c-db3768abbd6f,74379429-2e71-47ab-a8c0-deb60a4c2b39,c,"[{""type"": ""text"", ""html"": ""<p>Canis</p>""}]",Canis,3
+4fdaa29a-6957-4b6c-81ab-9d7a63297ba2,74379429-2e71-47ab-a8c0-deb60a4c2b39,d,"[{""type"": ""text"", ""html"": ""<p>none of these. (Page 7)</p>""}]",none of these. (Page 7),4
+bbe75fa0-7403-41e6-8180-e2ac65a72a62,0286dd4c-d85a-4794-871f-dd71eb72e2c4,a,"[{""type"": ""text"", ""html"": ""<p>-aceae (Page 7) -ae.</p>""}]",-aceae (Page 7) -ae.,1
+50fda5bc-d1c4-4982-95ac-f01830a97622,0286dd4c-d85a-4794-871f-dd71eb72e2c4,b,"[{""type"": ""text"", ""html"": ""<p>Both Assertion and Reason are true, but Reason is not the correct explanation of Assertion.</p>""}]","Both Assertion and Reason are true, but Reason is not the correct explanation of Assertion.",2
+f7c07282-02dd-41a9-a7a3-963212088b84,0286dd4c-d85a-4794-871f-dd71eb72e2c4,c,"[{""type"": ""text"", ""html"": ""<p>Assertion is true, but Reason is false.</p>""}]","Assertion is true, but Reason is false.",3
+55ec9598-faa3-4947-972f-46453b56a306,0286dd4c-d85a-4794-871f-dd71eb72e2c4,d,"[{""type"": ""text"", ""html"": ""<p> -idae</p>""}]", -idae,4
+80c601f5-7cbb-4b0e-8bdd-f4ced2442e2a,8d38a636-53fc-4d48-abb8-8460c7d6b571,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+7d5a7119-a02e-413c-8c11-23c7f8227d7b,8d38a636-53fc-4d48-abb8-8460c7d6b571,b,"[{""type"": ""text"", ""html"": ""<p> vegetative characters</p>""}]", vegetative characters,2
+7240da00-8256-4549-871c-4f9a590ee2d6,8d38a636-53fc-4d48-abb8-8460c7d6b571,c,"[{""type"": ""text"", ""html"": ""<p> shape of calyx (Page7)</p>""}]", shape of calyx (Page7),3
+ddb11d1b-f8e3-41e8-80e8-72b5ee3d3fe5,8d38a636-53fc-4d48-abb8-8460c7d6b571,d,"[{""type"": ""text"", ""html"": ""<p> presence and absence of bracts.</p>""}]", presence and absence of bracts.,4
+0804d6fc-afe2-4bc4-97b5-ff68a6d7a9ec,1e20a8ba-0f52-4133-9734-407b424f240b,a,"[{""type"": ""text"", ""html"": ""<p>genus</p>""}]",genus,1
+443b5bb1-08ce-40a0-acb6-c78fbc792362,1e20a8ba-0f52-4133-9734-407b424f240b,b,"[{""type"": ""text"", ""html"": ""<p> (Page7) the same family. They may belong to same</p>""}]", (Page7) the same family. They may belong to same,2
+bf456488-af6b-4b7d-a607-0d3438e06780,1e20a8ba-0f52-4133-9734-407b424f240b,c,"[{""type"": ""text"", ""html"": ""<p>variety</p>""}]",variety,3
+ce845ce0-ef00-4d42-b451-3c8667980bff,1e20a8ba-0f52-4133-9734-407b424f240b,d,"[{""type"": ""text"", ""html"": ""<p>order.</p>""}]",order.,4
+81964da1-748b-41a1-8242-813e91acea17,e82ab0f4-40f1-4768-a6c9-ce61fdd7b738,a,"[{""type"": ""text"", ""html"": ""<p>Species Class</p>""}]",Species Class,1
+f3fb1e50-f18a-4c02-a002-9fd9b152543a,e82ab0f4-40f1-4768-a6c9-ce61fdd7b738,b,"[{""type"": ""text"", ""html"": ""<p> one or more related orders? (Page 7)</p>""}]", one or more related orders? (Page 7),2
+a072e31a-1e73-4323-b5cc-86d449bc11d9,e82ab0f4-40f1-4768-a6c9-ce61fdd7b738,c,"[{""type"": ""text"", ""html"": ""<p>Family</p>""}]",Family,3
+fd9e4249-1574-431b-90fa-db112aacaa0f,e82ab0f4-40f1-4768-a6c9-ce61fdd7b738,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+7be6c343-64ca-49b0-ac2c-b8a8e8e2451a,c68e6162-bd93-4527-b6eb-5290f9581d0d,a,"[{""type"": ""text"", ""html"": ""<p>family</p>""}]",family,1
+a3e28ad1-515a-449d-99b2-2547328fd326,c68e6162-bd93-4527-b6eb-5290f9581d0d,b,"[{""type"": ""text"", ""html"": ""<p> (Page 7)</p>""}]", (Page 7),2
+ed48bf63-0717-4082-8742-62110a27c8c7,c68e6162-bd93-4527-b6eb-5290f9581d0d,c,"[{""type"": ""text"", ""html"": ""<p>class</p>""}]",class,3
+e8d18dc0-53e3-4224-840c-082b8319e748,c68e6162-bd93-4527-b6eb-5290f9581d0d,d,"[{""type"": ""text"", ""html"": ""<p> phylum.</p>""}]", phylum.,4
+1b68ee14-e9ad-4025-8352-221ed03efba8,644f2c1e-b4de-40fd-b29e-1dc7f5760117,a,"[{""type"": ""text"", ""html"": ""<p>orders (Page 7)</p>""}]",orders (Page 7),1
+ef2da2ea-7fd6-4137-9cf3-73c98a7d24a5,644f2c1e-b4de-40fd-b29e-1dc7f5760117,b,"[{""type"": ""text"", ""html"": ""<p>phylums</p>""}]",phylums,2
+c45b088e-9838-4808-95bc-b62d9fd6f817,644f2c1e-b4de-40fd-b29e-1dc7f5760117,c,"[{""type"": ""text"", ""html"": ""<p>families</p>""}]",families,3
+389ad159-5951-4edc-a576-fb4ca223bd59,644f2c1e-b4de-40fd-b29e-1dc7f5760117,d,"[{""type"": ""text"", ""html"": ""<p>kingdoms.</p>""}]",kingdoms.,4
+40229ccd-b32a-4892-b51a-c0f0546d97e2,e02bbbd0-cffb-459b-974d-41db71b2e85c,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+d61f7714-8538-4492-8d13-addccb171110,e02bbbd0-cffb-459b-974d-41db71b2e85c,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+6f2bf07a-cdc2-43a8-af42-a8ee6d50aaaf,e02bbbd0-cffb-459b-974d-41db71b2e85c,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+6ad113ce-a1a4-400f-957d-c73c0570d87b,e02bbbd0-cffb-459b-974d-41db71b2e85c,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+6937a1f4-6631-4b70-a256-b3878482d26e,7ddc5e30-e7b2-4ffe-b602-1e61dffa796f,a,"[{""type"": ""text"", ""html"": ""<p>Carnivora (Page 7)</p>""}]",Carnivora (Page 7),1
+889a8e7f-4deb-4a0b-b586-054ebc40506a,7ddc5e30-e7b2-4ffe-b602-1e61dffa796f,b,"[{""type"": ""text"", ""html"": ""<p>Diptera</p>""}]",Diptera,2
+873bc904-125a-4a0d-ba75-03bd42aea071,7ddc5e30-e7b2-4ffe-b602-1e61dffa796f,c,"[{""type"": ""text"", ""html"": ""<p>Sapindales</p>""}]",Sapindales,3
+8d0c6529-b91f-4309-8811-6affaba8f585,7ddc5e30-e7b2-4ffe-b602-1e61dffa796f,d,"[{""type"": ""text"", ""html"": ""<p>Primata</p>""}]",Primata,4
+e0822a59-3946-4a9a-9e56-196d81bb2dc3,08f84709-47e1-4ee1-b727-fc2944645709,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+2a0208e4-3524-4a99-8ff8-ecececdf03aa,08f84709-47e1-4ee1-b727-fc2944645709,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+c4bd7657-eed2-4031-b9bd-efed4eb2a49c,08f84709-47e1-4ee1-b727-fc2944645709,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+45fd6b10-21d5-4cd1-a2dc-cae22f1b28a7,08f84709-47e1-4ee1-b727-fc2944645709,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+26a3f7ad-f85a-4415-976e-620b27e73499,e77d5c7d-4bf4-470c-bedd-8f5cbc3a403a,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+d222d612-2001-4c09-ba04-cc8bfd8a62f4,e77d5c7d-4bf4-470c-bedd-8f5cbc3a403a,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+3534198d-5c4a-478f-8029-954d3312e0ee,e77d5c7d-4bf4-470c-bedd-8f5cbc3a403a,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+7d2f7a74-7267-4fc6-8e90-17230e09258e,e77d5c7d-4bf4-470c-bedd-8f5cbc3a403a,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+08bd7e0a-d745-44ce-9bea-bd09ae9a8873,2791b24e-2311-4038-8ad2-bf8b5d503d02,a,"[{""type"": ""text"", ""html"": ""<p>A, B and C</p>""}]","A, B and C",1
+59989fb1-d3e2-4483-ba8a-474c5b21b2d4,2791b24e-2311-4038-8ad2-bf8b5d503d02,b,"[{""type"": ""text"", ""html"": ""<p>B, C and D</p>""}]","B, C and D",2
+b6721b92-2cb7-46d3-9d03-3a2317c416b8,2791b24e-2311-4038-8ad2-bf8b5d503d02,c,"[{""type"": ""text"", ""html"": ""<p>AandD</p>""}]",AandD,3
+0a5dad69-efa3-459a-8e52-d2e9b382de94,2791b24e-2311-4038-8ad2-bf8b5d503d02,d,"[{""type"": ""text"", ""html"": ""<p> B and C (Page 6,7)</p>""}]"," B and C (Page 6,7)",4
+f130b9a4-bdb4-4779-8fb7-9a4cc39575a9,74c469d4-c3d3-49db-b442-c64b87799737,a,"[{""type"": ""text"", ""html"": ""<p> Panthera leo - Belongs to Class Mammalia</p>""}]", Panthera leo - Belongs to Class Mammalia,1
+f5dbcd0e-1aaa-4adf-ba69-94d53d699217,74c469d4-c3d3-49db-b442-c64b87799737,b,"[{""type"": ""text"", ""html"": ""<p>Musca domestica - The common house lizard, a reptile</p>""}]","Musca domestica - The common house lizard, a reptile",2
+b7864840-a56a-4752-a2d6-2ea87e544343,74c469d4-c3d3-49db-b442-c64b87799737,c,"[{""type"": ""text"", ""html"": ""<p> Petunia</p>""}]", Petunia,3
+f795ce1e-3236-4fa2-b26b-a79f8d702ab9,74c469d4-c3d3-49db-b442-c64b87799737,d,"[{""type"": ""text"", ""html"": ""<p> - Belong to Family Solanaceae Solanum tuberosum - A dicotyledonous plant</p>""}]", - Belong to Family Solanaceae Solanum tuberosum - A dicotyledonous plant,4
+97d330dc-5e89-4a02-9a20-732549dafafc,cd8d1cbe-bf71-4837-a875-42dc9a9e6aff,a,"[{""type"": ""text"", ""html"": ""<p>indica, tuberosum and leo represent the specific option.</p>""}]","indica, tuberosum and leo represent the specific option.",1
+9407f82e-8920-4b1b-899d-1e37539028bd,cd8d1cbe-bf71-4837-a875-42dc9a9e6aff,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+ab135b36-0ec2-4c3b-9e4c-262bd876ce99,cd8d1cbe-bf71-4837-a875-42dc9a9e6aff,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+6e86e39e-d0c1-497c-8aef-b7e3099b5208,cd8d1cbe-bf71-4837-a875-42dc9a9e6aff,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+5e8bd1cf-b478-4c8d-bc55-b8449be98ad6,c3652229-3531-4324-9373-079749f1d176,a,"[{""type"": ""text"", ""html"": ""<p> Genus</p>""}]", Genus,1
+2aa507d6-c55f-41d4-9630-d937e88e1e7d,c3652229-3531-4324-9373-079749f1d176,b,"[{""type"": ""text"", ""html"": ""<p> P-(i), Q-(ii), R-(iii), S-(iv)</p>""}]"," P-(i), Q-(ii), R-(iii), S-(iv)",2
+fed49e53-e7c7-46b4-a0df-eca2ffbcf3d4,c3652229-3531-4324-9373-079749f1d176,c,"[{""type"": ""text"", ""html"": ""<p> Column 1 P. Column Il Petunia (i) Q. Order</p>""}]", Column 1 P. Column Il Petunia (i) Q. Order,3
+fef1409a-886c-409a-9779-e2d6f92a9e9d,c3652229-3531-4324-9373-079749f1d176,d,"[{""type"": ""text"", ""html"": ""<p> Solanaceae R. (ii) Family Polemoniales S. (iii) Kingdom Plantae (iv)</p>""}]", Solanaceae R. (ii) Family Polemoniales S. (iii) Kingdom Plantae (iv),4
+b4c5606b-c220-42a8-b326-f4b6973d3a2b,9e746796-4c7d-440e-900c-d0698e011620,a,"[{""type"": ""text"", ""html"": ""<p>phylum</p>""}]",phylum,1
+4b5f6738-5fd6-4f33-bec0-6dbfc2996d31,9e746796-4c7d-440e-900c-d0698e011620,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+8e7f9558-95fc-4576-bb3d-c57c5aebaa02,9e746796-4c7d-440e-900c-d0698e011620,c,"[{""type"": ""text"", ""html"": ""<p>P-(iii), Q-(i), R-(ii), S-(iv) (Page7.8)</p>""}]","P-(iii), Q-(i), R-(ii), S-(iv) (Page7.8)",3
+9bd505f4-47c7-4bec-930a-e8c76fe4634b,9e746796-4c7d-440e-900c-d0698e011620,d,"[{""type"": ""text"", ""html"": ""<p>P-(ii), Q-(i), R-(iv), S-(iii)</p>""}]","P-(ii), Q-(i), R-(iv), S-(iii)",4
+cf19c1ef-051e-4a57-b7d4-53965d23fba4,f688be63-fb5c-43fc-af8a-16a1bac42b1e,a,"[{""type"": ""text"", ""html"": ""<p> Taxonomists have also developed sub-categories,</p>""}]"," Taxonomists have also developed sub-categories,",1
+1e08255d-bc7a-44d3-8389-6b29f5ed9cc5,f688be63-fb5c-43fc-af8a-16a1bac42b1e,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+e5cdeb23-6497-40e1-966e-857876dfa3c0,f688be63-fb5c-43fc-af8a-16a1bac42b1e,c,"[{""type"": ""text"", ""html"": ""<p> Mangitera belong to Family Anacardiaceae. Family lies between class and order. (Page 8)</p>""}]", Mangitera belong to Family Anacardiaceae. Family lies between class and order. (Page 8),3
+860b3f7a-a4de-4acf-a5e9-7031864e7bbe,f688be63-fb5c-43fc-af8a-16a1bac42b1e,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+a0ba148b-4bc2-4702-9a05-eeb4aa09fbcf,21f3c939-003c-4370-a865-4b53fae0f56b,a,"[{""type"": ""text"", ""html"": ""<p>classification</p>""}]",classification,1
+c367cd77-a604-453f-abd1-5553f3720266,21f3c939-003c-4370-a865-4b53fae0f56b,b,"[{""type"": ""text"", ""html"": ""<p>taxonomy</p>""}]",taxonomy,2
+87d9705f-c8f6-47e1-8c34-55c0a51b2a57,21f3c939-003c-4370-a865-4b53fae0f56b,c,"[{""type"": ""text"", ""html"": ""<p>hierarchy</p>""}]",hierarchy,3
+97213834-0495-4f60-b64b-0bb0a1298488,21f3c939-003c-4370-a865-4b53fae0f56b,d,"[{""type"": ""text"", ""html"": ""<p>key. (Page 8)</p>""}]",key. (Page 8),4
+fbb1a295-eb41-44da-ae1c-8335c017b67e,8f31f482-62b4-4313-bc25-48be1f7e274f,a,"[{""type"": ""text"", ""html"": ""<p>Both statements 1 and Il are true.</p>""}]",Both statements 1 and Il are true.,1
+d5ed963e-eb31-4daa-9aa1-6193a885b9f9,8f31f482-62b4-4313-bc25-48be1f7e274f,b,"[{""type"": ""text"", ""html"": ""<p> order division (Page 7,8)</p>""}]"," order division (Page 7,8)",2
+7d1e3f2c-8c76-4c8c-b823-d2b60f1669bb,8f31f482-62b4-4313-bc25-48be1f7e274f,c,"[{""type"": ""text"", ""html"": ""<p> Statement I is false but statement Il is true.</p>""}]", Statement I is false but statement Il is true.,3
+23301a9e-67a3-4c06-a310-a741b028a92e,8f31f482-62b4-4313-bc25-48be1f7e274f,d,"[{""type"": ""text"", ""html"": ""<p>species.</p>""}]",species.,4
+7e06300e-c46c-4ec0-aa6d-ba4377749229,05c9ba64-0c01-474a-a051-faaf3f142a39,a,"[{""type"": ""text"", ""html"": ""<p>An order includes related classes. Family comprises a group of related species which has more characters in common.</p>""}]",An order includes related classes. Family comprises a group of related species which has more characters in common.,1
+9ea933c0-d237-4467-a45f-7f0b4f86c133,05c9ba64-0c01-474a-a051-faaf3f142a39,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+2a2fb61d-fb2e-4e08-806d-420d42d4ac28,05c9ba64-0c01-474a-a051-faaf3f142a39,c,"[{""type"": ""text"", ""html"": ""<p> Triticum aestivum comes under the order</p>""}]", Triticum aestivum comes under the order,3
+3f9d4cd3-082a-487f-9fa1-88a94a87d02c,05c9ba64-0c01-474a-a051-faaf3f142a39,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+12669fdf-ed08-4510-ba50-e922c54e7f07,1cf12882-d79d-42ef-946b-56226d3b9065,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+c04d1c8d-ba99-4296-a421-6af747a06ebe,1cf12882-d79d-42ef-946b-56226d3b9065,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+03af4871-7229-4795-95fc-538ebcb42dc9,1cf12882-d79d-42ef-946b-56226d3b9065,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+ec969b6f-a255-4dc7-aa53-39062cc49002,1cf12882-d79d-42ef-946b-56226d3b9065,d,"[{""type"": ""text"", ""html"": ""<p> Families like Convolvulaceae, Solanaceae are included in the order Polemoniales mainly based on the floral characters. (Page 7,8)</p>""}]"," Families like Convolvulaceae, Solanaceae are included in the order Polemoniales mainly based on the floral characters. (Page 7,8)",4
+c732b76b-ae26-45ea-a954-bb6bcd419af5,9de95cbc-b851-4de3-9a07-d64255b9ce55,a,"[{""type"": ""text"", ""html"": ""<p>Class-Phylum-Order-Family-Genus-Species</p>""}]",Class-Phylum-Order-Family-Genus-Species,1
+28439257-6d94-4278-8128-feefed7847f9,9de95cbc-b851-4de3-9a07-d64255b9ce55,b,"[{""type"": ""text"", ""html"": ""<p>Division-Class-Family-Order-Genus-Species</p>""}]",Division-Class-Family-Order-Genus-Species,2
+22c0426b-e469-416c-85aa-dc6c33591cfe,9de95cbc-b851-4de3-9a07-d64255b9ce55,c,"[{""type"": ""text"", ""html"": ""<p>Division-Class-Order-Family-Genus-Species</p>""}]",Division-Class-Order-Family-Genus-Species,3
+e6b10493-8d4e-4036-9a47-37b28793c0b3,9de95cbc-b851-4de3-9a07-d64255b9ce55,d,"[{""type"": ""text"", ""html"": ""<p>Phylum-Order-Class-Family-Genus-Species (Page 8)</p>""}]",Phylum-Order-Class-Family-Genus-Species (Page 8),4
+de7c71f5-0379-4755-a44f-6879673ff472,e69c2e87-298e-48f9-959c-b639f2005316,a,"[{""type"": ""text"", ""html"": ""<p>Class to Order</p>""}]",Class to Order,1
+ad67d989-e9dc-4e6e-ac49-b7bca9e0ea2f,e69c2e87-298e-48f9-959c-b639f2005316,b,"[{""type"": ""text"", ""html"": ""<p>Species to Kingdom</p>""}]",Species to Kingdom,2
+9f10acbb-4af0-46fd-866a-fca7c999cc54,e69c2e87-298e-48f9-959c-b639f2005316,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+184b8d0a-468d-424b-952c-26fc959c311e,e69c2e87-298e-48f9-959c-b639f2005316,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+4c0b2946-7a89-4d43-b582-1ce2c96f04ec,29d3d909-d577-45ec-9f6b-b6d902f295f4,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+d94967f8-fc60-4c1d-af2d-b92a2155eaed,29d3d909-d577-45ec-9f6b-b6d902f295f4,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+b7283824-180a-4ea2-a0cf-551e8fabacad,29d3d909-d577-45ec-9f6b-b6d902f295f4,c,"[{""type"": ""text"", ""html"": ""<p>Genus to Species (Page 8)</p>""}]",Genus to Species (Page 8),3
+17d55603-8820-4cca-b4cb-dded04354318,29d3d909-d577-45ec-9f6b-b6d902f295f4,d,"[{""type"": ""text"", ""html"": ""<p>Kingdom to Species.</p>""}]",Kingdom to Species.,4
+51040b21-06b2-4f56-9648-68115aee6353,cd0707e0-0292-41ea-bee5-fb5539e8424a,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+2512b78a-896a-4c41-b6d6-3afad2b2de4d,cd0707e0-0292-41ea-bee5-fb5539e8424a,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+b7cb752d-4add-4e90-a3c5-35cd3a32eedd,cd0707e0-0292-41ea-bee5-fb5539e8424a,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+b00f485c-e8bb-4ccd-ac70-4f84cab15233,cd0707e0-0292-41ea-bee5-fb5539e8424a,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+619d978f-e170-4b40-90ad-7e767dc25282,a70e363b-b28e-45ef-b83b-4bd0eaec5a00,a,"[{""type"": ""text"", ""html"": ""<p>Family (Page 8)</p>""}]",Family (Page 8),1
+049abdc7-0b58-4d57-8cb4-677e30589938,a70e363b-b28e-45ef-b83b-4bd0eaec5a00,b,"[{""type"": ""text"", ""html"": ""<p>Class</p>""}]",Class,2
+c32687ae-2752-42dd-ac67-b6003f0b94ee,a70e363b-b28e-45ef-b83b-4bd0eaec5a00,c,"[{""type"": ""text"", ""html"": ""<p>Genus</p>""}]",Genus,3
+07e41c20-0209-40ce-81e0-f5c60374f9d9,a70e363b-b28e-45ef-b83b-4bd0eaec5a00,d,"[{""type"": ""text"", ""html"": ""<p>Species</p>""}]",Species,4
+13f64f62-4109-417b-808d-f3c2c1cc90e3,9fcea6fb-47b2-46c6-bd03-1bd9f7ba81ef,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+b9816002-dc0c-4bf3-8d4d-885d61818d50,9fcea6fb-47b2-46c6-bd03-1bd9f7ba81ef,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+a5fd8443-7223-42d0-b208-a0eeefcc6227,9fcea6fb-47b2-46c6-bd03-1bd9f7ba81ef,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+1c745ade-51e6-4813-9edf-083f981c1b9c,9fcea6fb-47b2-46c6-bd03-1bd9f7ba81ef,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+73f193b1-e1e9-4093-a8ed-4f6846607d4b,9b558c08-2210-4f33-a12b-6abd279e6a56,a,"[{""type"": ""text"", ""html"": ""<p>- ales</p>""}]",- ales,1
+23fcbf92-350c-42c8-9f20-3ea36c292a11,9b558c08-2210-4f33-a12b-6abd279e6a56,b,"[{""type"": ""text"", ""html"": ""<p>- onae</p>""}]",- onae,2
+081db6fb-7388-4b67-ae6c-94ad1ee66405,9b558c08-2210-4f33-a12b-6abd279e6a56,c,"[{""type"": ""text"", ""html"": ""<p>- aceae</p>""}]",- aceae,3
+1d377d71-8a64-423e-8829-c4fccd6b069e,9b558c08-2210-4f33-a12b-6abd279e6a56,d,"[{""type"": ""text"", ""html"": ""<p>- ae</p>""}]",- ae,4
+aeadb53b-4861-441a-a450-982266bb5f0b,97902398-5c60-42e1-a7db-123218691448,a,"[{""type"": ""text"", ""html"": ""<p>identification and study of organ systems of plants and animals</p>""}]",identification and study of organ systems of plants and animals,1
+fcdaf066-9e9f-4ecb-8eda-40c444bd9b81,97902398-5c60-42e1-a7db-123218691448,b,"[{""type"": ""text"", ""html"": ""<p> identitication and preservation of plants and animals</p>""}]", identitication and preservation of plants and animals,2
+3ccb5083-929d-43ec-9ab0-2af02c4d2b4c,97902398-5c60-42e1-a7db-123218691448,c,"[{""type"": ""text"", ""html"": ""<p> diversity of kinds of organisms and their relationship</p>""}]", diversity of kinds of organisms and their relationship,3
+bc7f4b2e-87da-4c4a-94c6-a86cc99671a8,97902398-5c60-42e1-a7db-123218691448,d,"[{""type"": ""text"", ""html"": ""<p>study of habitats of organisms and their classification.</p>""}]",study of habitats of organisms and their classification.,4
+40d02086-1dd5-4293-a8e8-dc936454935e,0f94dcde-6e53-43b7-9ac5-f4e398676f84,a,"[{""type"": ""text"", ""html"": ""<p>an individual plant or animal</p>""}]",an individual plant or animal,1
+aa3f9444-ad0b-44c9-8e94-2afb36908883,0f94dcde-6e53-43b7-9ac5-f4e398676f84,b,"[{""type"": ""text"", ""html"": ""<p>a collection of plants or animals</p>""}]",a collection of plants or animals,2
+7a82684b-89bb-4ab0-a835-7b5d39b9a01f,0f94dcde-6e53-43b7-9ac5-f4e398676f84,c,"[{""type"": ""text"", ""html"": ""<p>group of closely related species of plants or animals</p>""}]",group of closely related species of plants or animals,3
+19f00f2b-8647-4ab7-b931-b7884edad366,0f94dcde-6e53-43b7-9ac5-f4e398676f84,d,"[{""type"": ""text"", ""html"": ""<p>none of these.</p>""}]",none of these.,4
+62ba00db-01e7-427d-8192-91d00bc8b962,00b5c977-5932-4195-9d7d-a20eb8aa526e,a,"[{""type"": ""text"", ""html"": ""<p>Class</p>""}]",Class,1
+c6ff7e20-d89a-4262-aaed-edabf631fc36,00b5c977-5932-4195-9d7d-a20eb8aa526e,b,"[{""type"": ""text"", ""html"": ""<p>Order</p>""}]",Order,2
+e2b3dd08-70c7-463d-8b70-8164d0e9805e,00b5c977-5932-4195-9d7d-a20eb8aa526e,c,"[{""type"": ""text"", ""html"": ""<p>Division</p>""}]",Division,3
+29bb828d-e3a0-4c59-aa29-11bac28d85f2,00b5c977-5932-4195-9d7d-a20eb8aa526e,d,"[{""type"": ""text"", ""html"": ""<p>Family</p>""}]",Family,4
+b5f2c9e7-c01e-4768-a224-4d8d8a7248de,22334fae-1b76-40db-9239-7ed1a910d4a8,a,"[{""type"": ""text"", ""html"": ""<p>they have common genetic material of the same type</p>""}]",they have common genetic material of the same type,1
+3ab47250-8ffe-4a63-8375-a3b1f8044fbd,22334fae-1b76-40db-9239-7ed1a910d4a8,b,"[{""type"": ""text"", ""html"": ""<p>they share common genetic material but to varying degrees</p>""}]",they share common genetic material but to varying degrees,2
+5694f6b9-733b-4bca-b671-ce1ce9119c02,22334fae-1b76-40db-9239-7ed1a910d4a8,c,"[{""type"": ""text"", ""html"": ""<p> all have common cellular organisation</p>""}]", all have common cellular organisation,3
+498f735b-4b1f-4374-b9d2-07ba9f02fd69,22334fae-1b76-40db-9239-7ed1a910d4a8,d,"[{""type"": ""text"", ""html"": ""<p>all of the above.</p>""}]",all of the above.,4
+050cec25-b681-4ed6-8d57-b881093a969e,1a65693a-b081-45e8-9336-977191e1436e,a,"[{""type"": ""text"", ""html"": ""<p>Growth</p>""}]",Growth,1
+d7ae1f7e-bbaf-4846-b3c2-0fed95ea40a0,1a65693a-b081-45e8-9336-977191e1436e,b,"[{""type"": ""text"", ""html"": ""<p>Ability to make sound</p>""}]",Ability to make sound,2
+5f09570b-210f-4d2a-83ce-a52eea7a53dd,1a65693a-b081-45e8-9336-977191e1436e,c,"[{""type"": ""text"", ""html"": ""<p>Reproduction</p>""}]",Reproduction,3
+068ce590-28ca-455d-a777-c3700e5cc3f5,1a65693a-b081-45e8-9336-977191e1436e,d,"[{""type"": ""text"", ""html"": ""<p>Response to external stimuli</p>""}]",Response to external stimuli,4
+d87a275f-aa93-49ce-9a2d-752c6e99e8ee,0f298a04-ee18-4d7f-b974-8039b5391cb6,a,"[{""type"": ""text"", ""html"": ""<p> If both assertion and reason are true and reason is the correct explanation of assertion.</p>""}]", If both assertion and reason are true and reason is the correct explanation of assertion.,1
+1101d087-cc88-42fb-82eb-56c3c0c6ea1d,0f298a04-ee18-4d7f-b974-8039b5391cb6,b,"[{""type"": ""text"", ""html"": ""<p> If both assertion and reason are true but reason is not the correct explanation of assertion.</p>""}]", If both assertion and reason are true but reason is not the correct explanation of assertion.,2
+bbc3fc37-cabc-4018-a436-764b526108b7,0f298a04-ee18-4d7f-b974-8039b5391cb6,c,"[{""type"": ""text"", ""html"": ""<p> If assertion is true but reason is false.</p>""}]", If assertion is true but reason is false.,3
+bfe90b68-61a7-4623-9da1-b92cb5000bb1,0f298a04-ee18-4d7f-b974-8039b5391cb6,d,"[{""type"": ""text"", ""html"": ""<p> If assertion is false but reason is true.</p>""}]", If assertion is false but reason is true.,4
+2c548582-b103-4b04-8f12-40aa9027ec6e,e90ec7ac-24db-4681-8323-fa5335477d78,a,"[{""type"": ""text"", ""html"": ""<p>Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.</p>""}]","Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.",1
+64e855da-a309-4f41-8998-1e40019896af,e90ec7ac-24db-4681-8323-fa5335477d78,b,"[{""type"": ""text"", ""html"": ""<p>Both Assertion and Reason are true, but Reason is not the correct explanation of Assertion.</p>""}]","Both Assertion and Reason are true, but Reason is not the correct explanation of Assertion.",2
+456d1d5d-1ef6-423c-9b55-8509abc2a319,e90ec7ac-24db-4681-8323-fa5335477d78,c,"[{""type"": ""text"", ""html"": ""<p>Assertion is true, but Reason is false.</p>""}]","Assertion is true, but Reason is false.",3
+437c88e2-3498-4173-8f25-28658f705e4c,e90ec7ac-24db-4681-8323-fa5335477d78,d,"[{""type"": ""text"", ""html"": ""<p>Both Assertion and Reason are false.</p>""}]",Both Assertion and Reason are false.,4
+3e692453-19a6-48a6-bdd1-b10f8c282af2,5c20308e-78eb-4a8b-bdf5-0a1b5cd32130,a,"[{""type"": ""text"", ""html"": ""<p>Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.</p>""}]","Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.",1
+ac9e910e-6639-4217-a431-2e097f9f0594,5c20308e-78eb-4a8b-bdf5-0a1b5cd32130,b,"[{""type"": ""text"", ""html"": ""<p>Both Assertion and Reason are true, but Reason is not the correct explanation of Assertion.</p>""}]","Both Assertion and Reason are true, but Reason is not the correct explanation of Assertion.",2
+d184fb3f-b751-4f7f-98ef-dc276c01731b,5c20308e-78eb-4a8b-bdf5-0a1b5cd32130,c,"[{""type"": ""text"", ""html"": ""<p>Assertion is true, but Reason is false.</p>""}]","Assertion is true, but Reason is false.",3
+7589c549-0510-430d-95ba-5907e1cd5c25,5c20308e-78eb-4a8b-bdf5-0a1b5cd32130,d,"[{""type"": ""text"", ""html"": ""<p>Both Assertion and Reason are false.</p>""}]",Both Assertion and Reason are false.,4
+a1116991-ea93-4d84-a2da-49fe0e29e796,2bef89bb-eb91-4fa0-bf76-cf66c9629ba2,a,"[{""type"": ""text"", ""html"": ""<p>Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.</p>""}]","Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.",1
+be6fb98b-151f-40fb-994e-35c28ff30b49,2bef89bb-eb91-4fa0-bf76-cf66c9629ba2,b,"[{""type"": ""text"", ""html"": ""<p>Both Assertion and Reason are true, but Reason is not the correct explanation of Assertion.</p>""}]","Both Assertion and Reason are true, but Reason is not the correct explanation of Assertion.",2
+567adef3-aa51-4178-b9a8-793d3d13188e,2bef89bb-eb91-4fa0-bf76-cf66c9629ba2,c,"[{""type"": ""text"", ""html"": ""<p>Assertion is true, but Reason is false.</p>""}]","Assertion is true, but Reason is false.",3
+6eb947a6-dcc1-4fa8-8fe2-5ac79f3be068,2bef89bb-eb91-4fa0-bf76-cf66c9629ba2,d,"[{""type"": ""text"", ""html"": ""<p>Both Assertion and Reason are false.</p>""}]",Both Assertion and Reason are false.,4
+ae337266-2a13-474f-ac13-076709c38305,e102d387-e571-48df-8e3e-f56305a6559a,a,"[{""type"": ""text"", ""html"": ""<p>Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.</p>""}]","Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.",1
+8c4ad660-4897-44e0-a27d-0eef402bbfe7,e102d387-e571-48df-8e3e-f56305a6559a,b,"[{""type"": ""text"", ""html"": ""<p>Both Assertion and Reason are true, but Reason is not the correct explanation of Assertion.</p>""}]","Both Assertion and Reason are true, but Reason is not the correct explanation of Assertion.",2
+e4786ab3-3ddb-46cd-93e4-e067bfe0047d,e102d387-e571-48df-8e3e-f56305a6559a,c,"[{""type"": ""text"", ""html"": ""<p>Assertion is true, but Reason is false.</p>""}]","Assertion is true, but Reason is false.",3
+572dafc5-a92f-455a-9cf1-292edeb5bbca,e102d387-e571-48df-8e3e-f56305a6559a,d,"[{""type"": ""text"", ""html"": ""<p>Both Assertion and Reason are false.</p>""}]",Both Assertion and Reason are false.,4
+18c9737d-53da-4a3d-8ca5-3806cb9ad3c9,af20144d-d04b-4bb3-80a3-0e1c1a28d0ea,a,"[{""type"": ""text"", ""html"": ""<p>Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.</p>""}]","Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.",1
+460dab56-9ae5-4fdd-ac73-fda30e04351d,af20144d-d04b-4bb3-80a3-0e1c1a28d0ea,b,"[{""type"": ""text"", ""html"": ""<p>Both Assertion and Reason are true, but Reason is not the correct explanation of Assertion.</p>""}]","Both Assertion and Reason are true, but Reason is not the correct explanation of Assertion.",2
+c2da4c06-c643-44c0-b62c-ff2f011002ba,af20144d-d04b-4bb3-80a3-0e1c1a28d0ea,c,"[{""type"": ""text"", ""html"": ""<p>Assertion is true, but Reason is false.</p>""}]","Assertion is true, but Reason is false.",3
+81a67721-c740-4af8-acee-8a2ccbadb722,af20144d-d04b-4bb3-80a3-0e1c1a28d0ea,d,"[{""type"": ""text"", ""html"": ""<p>Both Assertion and Reason are false.</p>""}]",Both Assertion and Reason are false.,4
+d95a2c80-a1c1-420f-9686-72a05371a52d,403256c6-494a-45de-b686-a90d2dd5802b,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+4183fa1b-2c21-4eee-95e1-9b00415a5518,403256c6-494a-45de-b686-a90d2dd5802b,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+796386d4-a123-407b-a817-e63e3da10eaf,403256c6-494a-45de-b686-a90d2dd5802b,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+12d1a84c-1116-44f9-9d93-5bdf34fd7d44,403256c6-494a-45de-b686-a90d2dd5802b,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+d986228c-48ba-46a1-aee7-d26173dbccad,b0607fba-8897-41af-8478-75cac94e42d4,a,"[{""type"": ""text"", ""html"": ""<p> A-(i), B(ii), C-(ii), D-(iv)</p>""}]"," A-(i), B(ii), C-(ii), D-(iv)",1
+04857000-9727-4721-89cc-a32d536249c6,b0607fba-8897-41af-8478-75cac94e42d4,b,"[{""type"": ""text"", ""html"": ""<p> A-(iii), B-(i), C-(ii), D-(iv) A-(iii), B-(i), C-(iv), D-(ii)</p>""}]"," A-(iii), B-(i), C-(ii), D-(iv) A-(iii), B-(i), C-(iv), D-(ii)",2
+22d870bb-ee29-44a9-baaf-554cf55fe498,b0607fba-8897-41af-8478-75cac94e42d4,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+938befd8-f563-4eba-9936-12dbeb7875a8,b0607fba-8897-41af-8478-75cac94e42d4,d,"[{""type"": ""text"", ""html"": ""<p> A-(ii), B-(iv), C-(iii), D-(t) Match column / with column Il and select the correct</p>""}]"," A-(ii), B-(iv), C-(iii), D-(t) Match column / with column Il and select the correct",4
+dcfaa7f8-0680-4e61-91fb-b1f1647ce616,895e8fb2-5b5e-4577-a534-f0f12d250d5f,a,"[{""type"": ""text"", ""html"": ""<p>P-(i), Q-(ii), R-(iii), S-(iv)</p>""}]","P-(i), Q-(ii), R-(iii), S-(iv)",1
+b6cc964f-7632-42b6-b6db-13705e3e07ff,895e8fb2-5b5e-4577-a534-f0f12d250d5f,b,"[{""type"": ""text"", ""html"": ""<p>P-(iv), Q-(ii), R-(i), S-(ii)</p>""}]","P-(iv), Q-(ii), R-(i), S-(ii)",2
+47876e2f-3716-4d0d-85cb-4198d116d30c,895e8fb2-5b5e-4577-a534-f0f12d250d5f,c,"[{""type"": ""text"", ""html"": ""<p>P-(iii), Q-(i), R-(ii), S-(iv)</p>""}]","P-(iii), Q-(i), R-(ii), S-(iv)",3
+986ef6a6-bf55-4efb-813e-2747b5d592ba,895e8fb2-5b5e-4577-a534-f0f12d250d5f,d,"[{""type"": ""text"", ""html"": ""<p> P-(ii), Q-(i), R-(iv), S-(iii)</p>""}]"," P-(ii), Q-(i), R-(iv), S-(iii)",4
+9cea8797-86b7-4713-b9ce-b5f60bfe58da,ceb6c58d-8da3-4c27-a4e2-8b80b7291628,a,"[{""type"": ""text"", ""html"": ""<p>P-(i), Q-(ii), R-(ii), S-(iv)</p>""}]","P-(i), Q-(ii), R-(ii), S-(iv)",1
+4545234b-f59c-4477-a3dc-40358cbb544e,ceb6c58d-8da3-4c27-a4e2-8b80b7291628,b,"[{""type"": ""text"", ""html"": ""<p>P-(iv), Q-(ii), R-(i), Si(ii)</p>""}]","P-(iv), Q-(ii), R-(i), Si(ii)",2
+2d87ae57-6ff2-48af-b846-ed1721921517,ceb6c58d-8da3-4c27-a4e2-8b80b7291628,c,"[{""type"": ""text"", ""html"": ""<p>P-(ii), -(i), R-(ii), S- (iv)</p>""}]","P-(ii), -(i), R-(ii), S- (iv)",3
+102d8ae2-fa32-4b9c-8eb8-7ef41532ed2b,ceb6c58d-8da3-4c27-a4e2-8b80b7291628,d,"[{""type"": ""text"", ""html"": ""<p>P-(ii), Q-(i), R-(iv), Si(iii) Case Based Questions Readthegivenpassageandanswerthefollowingquestions. Hierarchy of categories is the classification of organisms in a definite sequence of categories called taxonomic categories. It was first proposed by Linnaeus. The flow- chart given below shows the taxonomical categories depicting hierarchical arrangement in ascending order. Kingdom Class Family Species</p>""}]","P-(ii), Q-(i), R-(iv), Si(iii) Case Based Questions Readthegivenpassageandanswerthefollowingquestions. Hierarchy of categories is the classification of organisms in a definite sequence of categories called taxonomic categories. It was first proposed by Linnaeus. The flow- chart given below shows the taxonomical categories depicting hierarchical arrangement in ascending order. Kingdom Class Family Species",4
+0d63d52e-e109-4b5a-8949-d06e181d128d,6afee054-fcfd-4dbe-9daf-0ac4857cca00,a,"[{""type"": ""text"", ""html"": ""<p>A - Order, B- Division, C- Genus</p>""}]","A - Order, B- Division, C- Genus",1
+2d78ff2c-c228-41d5-b034-ccd7f4a7fafc,6afee054-fcfd-4dbe-9daf-0ac4857cca00,b,"[{""type"": ""text"", ""html"": ""<p>A- Phylum, B - Order, C - Genus</p>""}]","A- Phylum, B - Order, C - Genus",2
+3911109d-bd86-4585-a88b-aac7801b3d4c,6afee054-fcfd-4dbe-9daf-0ac4857cca00,c,"[{""type"": ""text"", ""html"": ""<p>A- Genus, B - Phylum, C - Division</p>""}]","A- Genus, B - Phylum, C - Division",3
+f22fc07d-78fb-433e-9ba7-308ffebfcc82,6afee054-fcfd-4dbe-9daf-0ac4857cca00,d,"[{""type"": ""text"", ""html"": ""<p> A - Phylum, B - Genus, C - Order</p>""}]"," A - Phylum, B - Genus, C - Order",4
+f92971e4-51ba-4af7-87fd-53c4fabed616,59f9facf-2380-479c-b9c5-4485a4d63668,a,"[{""type"": ""text"", ""html"": ""<p>These are aggregates of closely related species. These are characterised on the basis of reproductive features of plant species.</p>""}]",These are aggregates of closely related species. These are characterised on the basis of reproductive features of plant species.,1
+ab96dd33-3617-4344-b617-ef8f5ccab555,59f9facf-2380-479c-b9c5-4485a4d63668,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+510e2a6b-e8d1-4ac6-8086-0aed9cea8b68,59f9facf-2380-479c-b9c5-4485a4d63668,c,"[{""type"": ""text"", ""html"": ""<p> These are assemblage of families exhibiting a few similar characters.</p>""}]", These are assemblage of families exhibiting a few similar characters.,3
+ca9000ff-a0ed-4c17-98ca-560f70448156,59f9facf-2380-479c-b9c5-4485a4d63668,d,"[{""type"": ""text"", ""html"": ""<p>None of these</p>""}]",None of these,4
+6b8896c9-b463-4c39-bcf0-018ffe8339e3,5cd76e12-b405-46d9-a6da-a16eca598dfa,a,"[{""type"": ""text"", ""html"": ""<p>Insecta</p>""}]",Insecta,1
+4f01b460-37cb-4676-be82-66387d792849,5cd76e12-b405-46d9-a6da-a16eca598dfa,b,"[{""type"": ""text"", ""html"": ""<p>Musca</p>""}]",Musca,2
+a5b1242f-071a-419c-be4f-37fa47656d0b,5cd76e12-b405-46d9-a6da-a16eca598dfa,c,"[{""type"": ""text"", ""html"": ""<p>Polemoniales</p>""}]",Polemoniales,3
+3e73743d-8a5a-46da-8e1b-03265296dff1,5cd76e12-b405-46d9-a6da-a16eca598dfa,d,"[{""type"": ""text"", ""html"": ""<p>Hominidae</p>""}]",Hominidae,4
+91ff20b8-6861-4097-9058-51ac1e892524,f18da631-e65a-4730-a7f3-c58ac35351e4,a,"[{""type"": ""text"", ""html"": ""<p>A</p>""}]",A,1
+eae7aa05-4239-4958-befb-1f4e0634e269,f18da631-e65a-4730-a7f3-c58ac35351e4,b,"[{""type"": ""text"", ""html"": ""<p>B</p>""}]",B,2
+be324700-fdf7-42d3-8572-98f4c02cfb5a,f18da631-e65a-4730-a7f3-c58ac35351e4,c,"[{""type"": ""text"", ""html"": ""<p>C</p>""}]",C,3
+068bb77b-aac8-4a9d-a5e0-5d4ef818b7ac,f18da631-e65a-4730-a7f3-c58ac35351e4,d,"[{""type"": ""text"", ""html"": ""<p>none of these.</p>""}]",none of these.,4
+63911afc-0730-4139-9202-34b36ff7ab68,f425426a-482a-406d-b090-fe31e4c79d60,a,"[{""type"": ""text"", ""html"": ""<p>A- Insecta, B - Chordata, C - Sapindales</p>""}]","A- Insecta, B - Chordata, C - Sapindales",1
+0afd6d6c-507d-404e-a0ae-8bdd00808987,f425426a-482a-406d-b090-fe31e4c79d60,b,"[{""type"": ""text"", ""html"": ""<p>A - Primata, B - Homo, C - Sapindales</p>""}]","A - Primata, B - Homo, C - Sapindales",2
+46e5d982-e806-452a-b96b-83c7b504d98d,f425426a-482a-406d-b090-fe31e4c79d60,c,"[{""type"": ""text"", ""html"": ""<p>A - Poales, B - Arthropoda, C - Triticum C - Musca.</p>""}]","A - Poales, B - Arthropoda, C - Triticum C - Musca.",3
+c4db13ac-c572-42f9-96bc-856eb5f6af58,f425426a-482a-406d-b090-fe31e4c79d60,d,"[{""type"": ""text"", ""html"": ""<p>A - Arthropoda, B - Diptera,</p>""}]","A - Arthropoda, B - Diptera,",4
+4e07778c-4520-4adc-9510-4f937ce65aa9,052c3918-7145-4706-982a-4ffbb884e3ad,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+030acff4-db68-4285-9990-ae3cf851b208,052c3918-7145-4706-982a-4ffbb884e3ad,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+01e19b02-5e70-44c2-85a4-c5bc8e6da03a,052c3918-7145-4706-982a-4ffbb884e3ad,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+d709ccb9-7186-4a29-8d0f-1d8dc0f4fe60,052c3918-7145-4706-982a-4ffbb884e3ad,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+7f73142d-05c5-4d84-b928-a783ce3371a9,4e5d42a2-555c-4ee7-acfd-2dd313683836,a,"[{""type"": ""text"", ""html"": ""<p>C could be order Carnivora.</p>""}]",C could be order Carnivora.,1
+54734d69-d4c1-4959-85cf-75cbe33b0413,4e5d42a2-555c-4ee7-acfd-2dd313683836,b,"[{""type"": ""text"", ""html"": ""<p>B could be class Insecta.</p>""}]",B could be class Insecta.,2
+cdcddccf-9343-4e44-8500-67234fa5e5d1,4e5d42a2-555c-4ee7-acfd-2dd313683836,c,"[{""type"": ""text"", ""html"": ""<p>The species of A could be P. pardus.</p>""}]",The species of A could be P. pardus.,3
+8ee355ad-f756-48ef-a002-b8c98ede5b7e,4e5d42a2-555c-4ee7-acfd-2dd313683836,d,"[{""type"": ""text"", ""html"": ""<p>B could be family Canidae</p>""}]",B could be family Canidae,4
+632df45c-d43e-4e03-87af-6395d9cf1f1a,62c9e42f-e1b0-4d57-98a2-4c912c8796d4,a,"[{""type"": ""text"", ""html"": ""<p>Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.</p>""}]","Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.",1
+c64a3c75-e73a-4703-8953-35efc75af861,62c9e42f-e1b0-4d57-98a2-4c912c8796d4,b,"[{""type"": ""text"", ""html"": ""<p>Both Assertion and Reason are true, but Reason is not the correct explanation of Assertion.</p>""}]","Both Assertion and Reason are true, but Reason is not the correct explanation of Assertion.",2
+b7ae4ff9-02f2-46ca-b6a0-f4e900a1e422,62c9e42f-e1b0-4d57-98a2-4c912c8796d4,c,"[{""type"": ""text"", ""html"": ""<p>Assertion is true, but Reason is false.</p>""}]","Assertion is true, but Reason is false.",3
+dc7b0464-ee3e-402f-aabc-a85a0dccef7d,62c9e42f-e1b0-4d57-98a2-4c912c8796d4,d,"[{""type"": ""text"", ""html"": ""<p>Both Assertion and Reason are false.</p>""}]",Both Assertion and Reason are false.,4
+5567b0d4-f3de-48f5-924c-037c4c575477,a6faf72d-ac7c-407f-bb84-94f76e6991d9,a,"[{""type"": ""text"", ""html"": ""<p>Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.</p>""}]","Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.",1
+3d132b7d-00ba-4bad-b383-bd5dfd5dcbcd,a6faf72d-ac7c-407f-bb84-94f76e6991d9,b,"[{""type"": ""text"", ""html"": ""<p>Both Assertion and Reason are true, but Reason is not the correct explanation of Assertion.</p>""}]","Both Assertion and Reason are true, but Reason is not the correct explanation of Assertion.",2
+4804bd29-915c-46a5-8205-25e7ace8cdf2,a6faf72d-ac7c-407f-bb84-94f76e6991d9,c,"[{""type"": ""text"", ""html"": ""<p>Assertion is true, but Reason is false.</p>""}]","Assertion is true, but Reason is false.",3
+3f936a6b-5ce1-4adb-afb3-c241d15bae27,a6faf72d-ac7c-407f-bb84-94f76e6991d9,d,"[{""type"": ""text"", ""html"": ""<p>Both Assertion and Reason are false.</p>""}]",Both Assertion and Reason are false.,4
+304af50e-2a51-40fe-9089-8a1c4d2f39b7,70ac250b-01b1-4d88-9c85-0d427a43492d,a,"[{""type"": ""text"", ""html"": ""<p>Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.</p>""}]","Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.",1
+68851ad5-17b4-4a90-9124-caf97b52d618,70ac250b-01b1-4d88-9c85-0d427a43492d,b,"[{""type"": ""text"", ""html"": ""<p>Both Assertion and Reason are true, but Reason is not the correct explanation of Assertion.</p>""}]","Both Assertion and Reason are true, but Reason is not the correct explanation of Assertion.",2
+4a6fd869-5138-49ae-914c-f730071544fb,70ac250b-01b1-4d88-9c85-0d427a43492d,c,"[{""type"": ""text"", ""html"": ""<p>Assertion is true, but Reason is false.</p>""}]","Assertion is true, but Reason is false.",3
+299787f7-8e41-425c-a38f-284367f96b25,70ac250b-01b1-4d88-9c85-0d427a43492d,d,"[{""type"": ""text"", ""html"": ""<p>Both Assertion and Reason are false.</p>""}]",Both Assertion and Reason are false.,4
+e67d6a2f-1700-468e-90a3-aded73e8988a,2869607e-b5d5-493c-ae14-21e3aea5dfb1,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+d9ce222c-a481-4729-a7a1-bfb4ae6cdbcb,2869607e-b5d5-493c-ae14-21e3aea5dfb1,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+a11d572e-81a7-4d24-b829-3b229492bd5e,2869607e-b5d5-493c-ae14-21e3aea5dfb1,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+e5c403d2-3e5d-49c2-9c00-009c79427efe,2869607e-b5d5-493c-ae14-21e3aea5dfb1,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+4c5bed23-9e89-45d0-ac1d-b83121e1faa8,bb64ee8c-9b5b-4085-96c6-0b2595ade28d,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+90b6fd02-28b5-476d-ae8a-f0107a782649,bb64ee8c-9b5b-4085-96c6-0b2595ade28d,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+ecc41a15-e86b-4f23-bb71-44f351ed93c4,bb64ee8c-9b5b-4085-96c6-0b2595ade28d,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+76b6b1aa-9129-43bc-b684-00875b5dd68f,bb64ee8c-9b5b-4085-96c6-0b2595ade28d,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+5273a29d-68a2-4a6b-9239-9a6f76821c74,960e2ded-e95b-4f7a-9999-644209c8e1a4,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+dfaff2b8-fe0a-4fc9-babe-3374980e10db,960e2ded-e95b-4f7a-9999-644209c8e1a4,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+61fcb667-0812-45cd-a296-e1f7123707cf,960e2ded-e95b-4f7a-9999-644209c8e1a4,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+55748405-3dfa-4c17-a335-e95eadc87657,960e2ded-e95b-4f7a-9999-644209c8e1a4,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+9126cf15-ad4b-4ace-9fce-290cc24b25da,af56f791-9d34-4bce-a1bc-2a9ef589bd16,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+5c831c6a-8266-4fa7-811d-29d23f6305da,af56f791-9d34-4bce-a1bc-2a9ef589bd16,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+b37ac76e-9fcc-4815-b603-c36c533b7c0a,af56f791-9d34-4bce-a1bc-2a9ef589bd16,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+d1384d69-96ca-483a-b8b4-108654b62eb1,af56f791-9d34-4bce-a1bc-2a9ef589bd16,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+352c9d72-de54-4eeb-9cc2-c1e9e6753e14,29d17843-248a-4905-8d37-904d687d0ecf,a,"[{""type"": ""text"", ""html"": ""<p> Statement I is correct but statement Il is incorrect.</p>""}]", Statement I is correct but statement Il is incorrect.,1
+c020bd16-6907-43e2-9294-3824a40d992c,29d17843-248a-4905-8d37-904d687d0ecf,b,"[{""type"": ""text"", ""html"": ""<p> Statement l is incorrect but statement Il is correct.</p>""}]", Statement l is incorrect but statement Il is correct.,2
+8bfba508-88d2-4a09-a1c8-36d021c2f0cc,29d17843-248a-4905-8d37-904d687d0ecf,c,"[{""type"": ""text"", ""html"": ""<p> Both statements l and Il are incorrect.</p>""}]", Both statements l and Il are incorrect.,3
+0baf5596-5247-47b3-9f99-a301f2943161,29d17843-248a-4905-8d37-904d687d0ecf,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+6e2f6427-00a5-4f36-8146-34bc290f256a,0a2a238a-d885-49a1-8172-f91ded2b7b53,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+3eead9b7-d7b4-4672-ab4d-d30c3eb1e879,0a2a238a-d885-49a1-8172-f91ded2b7b53,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+c11c06b4-62ca-4054-a6e6-6f8a0ba07e88,0a2a238a-d885-49a1-8172-f91ded2b7b53,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+0108cfd7-fd67-4c39-ac02-b609691316f7,0a2a238a-d885-49a1-8172-f91ded2b7b53,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+ee6ebd17-dbda-45b4-9b23-01cbbe928558,bd9daa33-9fce-4ef5-97d1-8c8a710a8fa3,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+bfa7f16b-a3a2-4f23-b96e-d9fabe9f359c,bd9daa33-9fce-4ef5-97d1-8c8a710a8fa3,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+36990229-2f34-4f57-9db6-fed2e2c9e177,bd9daa33-9fce-4ef5-97d1-8c8a710a8fa3,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+249c5f62-d9fe-4931-9700-3dd613563911,bd9daa33-9fce-4ef5-97d1-8c8a710a8fa3,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+f6c0f5f1-89db-4068-88b3-7b25eb1fe896,597a23ec-5324-4814-b9e3-7f2fed017754,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+06608d81-367f-4b09-8006-22b86d9cbe9e,597a23ec-5324-4814-b9e3-7f2fed017754,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+11c76d46-dd3d-425d-928e-74a0a941e304,597a23ec-5324-4814-b9e3-7f2fed017754,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+43890d58-868d-49d9-add3-7932dc2edb48,597a23ec-5324-4814-b9e3-7f2fed017754,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+a5ef9201-ad8e-450e-a66a-1142beec50ea,47c4cf78-43b1-47b7-a155-511279990183,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+4a05f257-a1e5-4fa9-adcb-6d09fb5cbb5f,47c4cf78-43b1-47b7-a155-511279990183,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+d57bb825-3b3d-4881-a079-7302c1d45a88,47c4cf78-43b1-47b7-a155-511279990183,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+1ec1b56a-f8c1-4e5b-adb6-34037e98bd97,47c4cf78-43b1-47b7-a155-511279990183,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+115880c7-c5a1-4278-9f14-e487d2c8c746,82b260da-9f08-4b90-a43a-4768bb92837b,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+413d48dd-96cf-4741-9dc9-e1f0815dfcab,82b260da-9f08-4b90-a43a-4768bb92837b,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+3d9487f5-95ee-4605-8d5a-ba7e88042050,82b260da-9f08-4b90-a43a-4768bb92837b,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+a8731190-d2e5-4e7d-a785-a91f045bb591,82b260da-9f08-4b90-a43a-4768bb92837b,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+1468c07d-4ec6-4e40-9f03-48f3b9971359,61447817-e474-40be-9229-057aa92d992f,a,"[{""type"": ""text"", ""html"": ""<p>Both Statement I and Statement II are correct.</p>""}]",Both Statement I and Statement II are correct.,1
+699c4ec5-cbd3-40c1-a0f6-b4f906449243,61447817-e474-40be-9229-057aa92d992f,b,"[{""type"": ""text"", ""html"": ""<p>Both Statement I and Statement II are incorrect.</p>""}]",Both Statement I and Statement II are incorrect.,2
+47b1a662-c6d5-456d-90cf-9aec00dd53b9,61447817-e474-40be-9229-057aa92d992f,c,"[{""type"": ""text"", ""html"": ""<p>Statement I is correct but Statement II is incorrect.</p>""}]",Statement I is correct but Statement II is incorrect.,3
+6a9dda1b-1b0f-4500-b744-f09404f16ab5,61447817-e474-40be-9229-057aa92d992f,d,"[{""type"": ""text"", ""html"": ""<p>Statement I is incorrect but Statement II is correct.</p>""}]",Statement I is incorrect but Statement II is correct.,4
+7be0186f-6485-43a6-95d6-6a5c8f2400a9,8e5ec1e9-4aa8-4a73-b32e-f89bdfdc1d2a,a,"[{""type"": ""text"", ""html"": ""<p>Both Statement I and Statement II are correct.</p>""}]",Both Statement I and Statement II are correct.,1
+72acdf3e-b474-4ac5-8c2c-1811c5872128,8e5ec1e9-4aa8-4a73-b32e-f89bdfdc1d2a,b,"[{""type"": ""text"", ""html"": ""<p>Both Statement I and Statement II are incorrect.</p>""}]",Both Statement I and Statement II are incorrect.,2
+5496f2ba-1de1-4da1-ab29-3839d8ae5ef2,8e5ec1e9-4aa8-4a73-b32e-f89bdfdc1d2a,c,"[{""type"": ""text"", ""html"": ""<p>Statement I is correct but Statement II is incorrect.</p>""}]",Statement I is correct but Statement II is incorrect.,3
+ff8830f8-2e41-405b-ad8f-f4f066022771,8e5ec1e9-4aa8-4a73-b32e-f89bdfdc1d2a,d,"[{""type"": ""text"", ""html"": ""<p>Statement I is incorrect but Statement II is correct.</p>""}]",Statement I is incorrect but Statement II is correct.,4
+84b200f3-c934-44e7-b3c2-b6127c3062f4,ca2393bf-e590-4a57-8d9d-8418a27f1afc,a,"[{""type"": ""text"", ""html"": ""<p>Both Statement I and Statement II are correct.</p>""}]",Both Statement I and Statement II are correct.,1
+55257580-b000-433c-8a52-c78d2ce45345,ca2393bf-e590-4a57-8d9d-8418a27f1afc,b,"[{""type"": ""text"", ""html"": ""<p>Both Statement I and Statement II are incorrect.</p>""}]",Both Statement I and Statement II are incorrect.,2
+f207b27a-cf57-4cc1-9a47-9f0df4c4bece,ca2393bf-e590-4a57-8d9d-8418a27f1afc,c,"[{""type"": ""text"", ""html"": ""<p>Statement I is correct but Statement II is incorrect.</p>""}]",Statement I is correct but Statement II is incorrect.,3
+52844bc2-1dd1-418f-8b3b-d3c59ac18e31,ca2393bf-e590-4a57-8d9d-8418a27f1afc,d,"[{""type"": ""text"", ""html"": ""<p>Statement I is incorrect but Statement II is correct.</p>""}]",Statement I is incorrect but Statement II is correct.,4
+71b597b8-d433-4e4c-8d5f-f3d99581f9c8,4897ce8f-74dc-40b9-8545-2d6345c17bab,a,"[{""type"": ""text"", ""html"": ""<p> A-(iv), B-(iii), C-(i), D-(ii)</p>""}]"," A-(iv), B-(iii), C-(i), D-(ii)",1
+05015342-4e70-49ba-b387-ac015baf0bc9,4897ce8f-74dc-40b9-8545-2d6345c17bab,b,"[{""type"": ""text"", ""html"": ""<p> A-(ii), B-(iv), C-(i), D-(iii)</p>""}]"," A-(ii), B-(iv), C-(i), D-(iii)",2
+825b79ef-0578-4eac-9add-e86c96cfd5ff,4897ce8f-74dc-40b9-8545-2d6345c17bab,c,"[{""type"": ""text"", ""html"": ""<p> A(ii), B-(i), C-(ii), D-(iv)</p>""}]"," A(ii), B-(i), C-(ii), D-(iv)",3
+85ffd81d-db84-4122-a373-46646c4a328e,4897ce8f-74dc-40b9-8545-2d6345c17bab,d,"[{""type"": ""text"", ""html"": ""<p>Statement I is incorrect but Statement II is correct.</p>""}]",Statement I is incorrect but Statement II is correct.,4
+4e4e2650-b184-4cee-b3d7-91809bf93055,45dcc659-2976-45bc-a9d4-6dadf059d37e,a,"[{""type"": ""text"", ""html"": ""<p>P and Qonly</p>""}]",P and Qonly,1
+0c0a11f2-a4bd-4802-883e-05812bf59070,45dcc659-2976-45bc-a9d4-6dadf059d37e,b,"[{""type"": ""text"", ""html"": ""<p>P, Q and R only</p>""}]","P, Q and R only",2
+9c25c9c8-17cd-4ac6-bdd0-b9166c9086b6,45dcc659-2976-45bc-a9d4-6dadf059d37e,c,"[{""type"": ""text"", ""html"": ""<p>RandS only</p>""}]",RandS only,3
+66540334-6449-41e2-9f02-3c63a568b243,45dcc659-2976-45bc-a9d4-6dadf059d37e,d,"[{""type"": ""text"", ""html"": ""<p>P,Rand S only</p>""}]","P,Rand S only",4
+744a606a-480d-4f81-9da9-be126093ca35,fa92816a-bf25-4b7d-9df4-5c2b7e4a1080,a,"[{""type"": ""text"", ""html"": ""<p>Hominidae \u2192 Homo \u2192 Mammalia \u2192 Chordata \u2192 Primata</p>""}]",Hominidae → Homo → Mammalia → Chordata → Primata,1
+c9952062-28d4-40a2-8451-4abaed101ff4,fa92816a-bf25-4b7d-9df4-5c2b7e4a1080,b,"[{""type"": ""text"", ""html"": ""<p>Homo \u2192 Hominidae \u2192 Primata \u2192 Mammalia \u2192 Chordata</p>""}]",Homo → Hominidae → Primata → Mammalia → Chordata,2
+f51b9efe-a641-4400-8e84-c3aa654956be,fa92816a-bf25-4b7d-9df4-5c2b7e4a1080,c,"[{""type"": ""text"", ""html"": ""<p>Primata Chordata \u2192 Mammalia \u2192 Hominidae \u2192 Homo</p>""}]",Primata Chordata → Mammalia → Hominidae → Homo,3
+c1295a30-f624-49df-b7e8-5ec9acb40e2e,fa92816a-bf25-4b7d-9df4-5c2b7e4a1080,d,"[{""type"": ""text"", ""html"": ""<p>Chordata \u2192 Mammalia \u2192 Primata \u2192 Hominidae \u2192 Homo</p>""}]",Chordata → Mammalia → Primata → Hominidae → Homo,4
+c6cf9179-ab46-417e-a7c1-3eb638fb3c5e,7eddc423-fdf3-495b-b8fd-5ddba155c12e,a,"[{""type"": ""text"", ""html"": ""<p>(i) and (ii)</p>""}]",(i) and (ii),1
+725fc684-1e61-4327-ad2f-f9d4a7f1ddd7,7eddc423-fdf3-495b-b8fd-5ddba155c12e,b,"[{""type"": ""text"", ""html"": ""<p>(ii) and (iii)</p>""}]",(ii) and (iii),2
+b02f5fa2-053a-4211-8c94-1ece9995a796,7eddc423-fdf3-495b-b8fd-5ddba155c12e,c,"[{""type"": ""text"", ""html"": ""<p>(ii) and (iv)</p>""}]",(ii) and (iv),3
+5e259415-b9b0-4f45-bb77-dc9a456c22e0,7eddc423-fdf3-495b-b8fd-5ddba155c12e,d,"[{""type"": ""text"", ""html"": ""<p>(iii) and (iv)</p>""}]",(iii) and (iv),4
+fd8060a7-dffd-47a9-a01b-010523d0262f,22bef0c0-99aa-44f2-b3b2-648f76edf6ab,a,"[{""type"": ""text"", ""html"": ""<p>(i) genus, species; (ii) increasing</p>""}]","(i) genus, species; (ii) increasing",1
+a155e747-df49-48d0-bd83-f847d6b9af8e,22bef0c0-99aa-44f2-b3b2-648f76edf6ab,b,"[{""type"": ""text"", ""html"": ""<p>(ii) decreasing; (iii) same</p>""}]",(ii) decreasing; (iii) same,2
+94c2ab37-3597-46cd-9d5a-725b9d251ca5,22bef0c0-99aa-44f2-b3b2-648f76edf6ab,c,"[{""type"": ""text"", ""html"": ""<p>(iii) same; (iv) Class</p>""}]",(iii) same; (iv) Class,3
+13810f3a-984a-4180-844d-4ecd5894c33f,22bef0c0-99aa-44f2-b3b2-648f76edf6ab,d,"[{""type"": ""text"", ""html"": ""<p>(i) species, genus; (iv) Order</p>""}]","(i) species, genus; (iv) Order",4
+ba036b34-fb9f-444b-9372-e4720822e65a,25654c31-69f6-426b-a84b-b7b93f8cbd42,a,"[{""type"": ""text"", ""html"": ""<p>3</p>""}]",3,1
+19f45c77-fcd7-49e0-bfe6-216553d0f7a8,25654c31-69f6-426b-a84b-b7b93f8cbd42,b,"[{""type"": ""text"", ""html"": ""<p>4</p>""}]",4,2
+0c7848a5-bd3f-4325-9925-45c804082499,25654c31-69f6-426b-a84b-b7b93f8cbd42,c,"[{""type"": ""text"", ""html"": ""<p>5</p>""}]",5,3
+c121c407-22eb-4c8c-aada-70234ba619c4,25654c31-69f6-426b-a84b-b7b93f8cbd42,d,"[{""type"": ""text"", ""html"": ""<p>6</p>""}]",6,4
+0c45551b-06d2-4dac-8c18-265bc24c6a25,25e28eda-5ac1-4fa2-a2f3-3c3d89514ae3,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+4309ffd9-22e9-447f-932a-ad52286044ee,25e28eda-5ac1-4fa2-a2f3-3c3d89514ae3,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+8ceaf83d-54a4-4b2d-b15b-a5db7378f6ee,25e28eda-5ac1-4fa2-a2f3-3c3d89514ae3,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+0f56f9de-1cf1-4d2e-9363-c72a70cfab71,25e28eda-5ac1-4fa2-a2f3-3c3d89514ae3,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+ab3330ec-748f-4c10-bbb1-1ebe32bdd7a0,3d47e521-8294-4a3e-a0ed-2eac4e436a80,a,"[{""type"": ""text"", ""html"": ""<p> A-(ii), B-(iv), C-(V)</p>""}]"," A-(ii), B-(iv), C-(V)",1
+84e83ae1-1fe4-4a2a-8b05-897d019956a9,3d47e521-8294-4a3e-a0ed-2eac4e436a80,b,"[{""type"": ""text"", ""html"": ""<p> A-(ii), B-(iv), C-(i)</p>""}]"," A-(ii), B-(iv), C-(i)",2
+ee75cf15-6793-4771-8920-ecff303d38d3,3d47e521-8294-4a3e-a0ed-2eac4e436a80,c,"[{""type"": ""text"", ""html"": ""<p> if C is a family, then it could be</p>""}]"," if C is a family, then it could be",3
+5674ecd1-eccc-4255-aaf9-03e0fd80a053,3d47e521-8294-4a3e-a0ed-2eac4e436a80,d,"[{""type"": ""text"", ""html"": ""<p> A-(iii), B-(vi), C-(i) A-(ii), B-(vi), C-(i)</p>""}]"," A-(iii), B-(vi), C-(i) A-(ii), B-(vi), C-(i)",4
+491562cf-4d7c-4317-949a-79793e72b47f,76234f4f-1769-4279-bacd-83eb95ba17e9,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+3d6c88cd-5b83-4fad-bc39-e7321ea74ff1,76234f4f-1769-4279-bacd-83eb95ba17e9,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+a9ed9a56-1fa2-4d2c-b469-b30f113347ee,76234f4f-1769-4279-bacd-83eb95ba17e9,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+8a733474-4b8b-4944-9c40-cf6c58b01db5,76234f4f-1769-4279-bacd-83eb95ba17e9,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+59400e0a-4c8f-47c1-b94a-41ddae6989e9,b569e746-8f97-4244-a87f-07abc51b499c,a,"[{""type"": ""text"", ""html"": ""<p>Option A</p>""}]",Option A,1
+2bfc0b06-ea58-4c48-be4d-086af23bf594,b569e746-8f97-4244-a87f-07abc51b499c,b,"[{""type"": ""text"", ""html"": ""<p>Option B</p>""}]",Option B,2
+ab09880e-9390-4963-874c-d14c426d9d80,b569e746-8f97-4244-a87f-07abc51b499c,c,"[{""type"": ""text"", ""html"": ""<p>Option C</p>""}]",Option C,3
+d6589dbd-8ddd-4998-bc92-84abc3e65728,b569e746-8f97-4244-a87f-07abc51b499c,d,"[{""type"": ""text"", ""html"": ""<p>Option D</p>""}]",Option D,4
+08f7dc62-134f-40bb-8313-dc5475c5e985,19605c3e-7d4e-4491-ba84-ba1300cfb983,a,"[{""type"": ""text"", ""html"": ""<p> Panthera tgns Mammalia Carnivora Felidae Chordata</p>""}]", Panthera tgns Mammalia Carnivora Felidae Chordata,1
+faa8bf20-1540-4fe9-b8e2-f889598b8a12,19605c3e-7d4e-4491-ba84-ba1300cfb983,b,"[{""type"": ""text"", ""html"": ""<p> tigns Panthera Vertebrata Mammalia Carnivora Felidae</p>""}]", tigns Panthera Vertebrata Mammalia Carnivora Felidae,2
+53fd9d4c-d5e6-45e7-992e-8c66f80da98d,19605c3e-7d4e-4491-ba84-ba1300cfb983,c,"[{""type"": ""text"", ""html"": ""<p> Mammalia Felidae Carnivora Feliaceae Panthera leo</p>""}]", Mammalia Felidae Carnivora Feliaceae Panthera leo,3
+e5b69e16-4cae-45c1-8e57-9abc2036e5f5,19605c3e-7d4e-4491-ba84-ba1300cfb983,d,"[{""type"": ""text"", ""html"": ""<p> (Page 6, 7,8)</p>""}]"," (Page 6, 7,8)",4
+46fff088-7223-40ab-9ede-1b1dd01f2c21,ed6d7b66-b3a3-48ee-9bde-7e8089f8a503,a,"[{""type"": ""text"", ""html"": ""<p>Kingdom, Phylum, Class, Order, Family, Genus, Species</p>""}]","Kingdom, Phylum, Class, Order, Family, Genus, Species",1
+70c3ae4d-787f-4713-a5ab-5edcfc018c89,ed6d7b66-b3a3-48ee-9bde-7e8089f8a503,b,"[{""type"": ""text"", ""html"": ""<p> Kingdom, Class, Phylum, Family, Order, Genus, Species</p>""}]"," Kingdom, Class, Phylum, Family, Order, Genus, Species",2
+ae4219fb-d535-4ced-8f42-d6d867ee0161,ed6d7b66-b3a3-48ee-9bde-7e8089f8a503,c,"[{""type"": ""text"", ""html"": ""<p> Kingdom, Order, Class, Phylum, Family, Genus, Species</p>""}]"," Kingdom, Order, Class, Phylum, Family, Genus, Species",3
+d9fdd995-b39d-47d2-adfc-807f5a8ffdc3,ed6d7b66-b3a3-48ee-9bde-7e8089f8a503,d,"[{""type"": ""text"", ""html"": ""<p> Kingdom, Order, Phylum, Class, Family, Genus, (2022) Species</p>""}]"," Kingdom, Order, Phylum, Class, Family, Genus, (2022) Species",4

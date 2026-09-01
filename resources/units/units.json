@@ -1,0 +1,33 @@
+{
+  "units": [
+    { "id": "meter", "name": "Meter", "symbol": "m", "type": "base", "dimension": "[L]", "category": "Length", "siEquivalent": "1 m" },
+    { "id": "kilogram", "name": "Kilogram", "symbol": "kg", "type": "base", "dimension": "[M]", "category": "Mass", "siEquivalent": "1 kg" },
+    { "id": "second", "name": "Second", "symbol": "s", "type": "base", "dimension": "[T]", "category": "Time", "siEquivalent": "1 s" },
+    { "id": "ampere", "name": "Ampere", "symbol": "A", "type": "base", "dimension": "[I]", "category": "Electric Current", "siEquivalent": "1 A" },
+    { "id": "kelvin", "name": "Kelvin", "symbol": "K", "type": "base", "dimension": "[K]", "category": "Thermodynamic Temperature", "siEquivalent": "1 K" },
+    { "id": "mole", "name": "Mole", "symbol": "mol", "type": "base", "dimension": "[N]", "category": "Amount of Substance", "siEquivalent": "1 mol" },
+    { "id": "candela", "name": "Candela", "symbol": "cd", "type": "base", "dimension": "[J]", "category": "Luminous Intensity", "siEquivalent": "1 cd" },
+    { "id": "newton", "name": "Newton", "symbol": "N", "type": "derived", "dimension": "[MLT^-2]", "category": "Force", "siEquivalent": "1 kg·m/s²" },
+    { "id": "joule", "name": "Joule", "symbol": "J", "type": "derived", "dimension": "[ML^2T^-2]", "category": "Energy / Work", "siEquivalent": "1 N·m = 1 kg·m²/s²" },
+    { "id": "watt", "name": "Watt", "symbol": "W", "type": "derived", "dimension": "[ML^2T^-3]", "category": "Power", "siEquivalent": "1 J/s = 1 kg·m²/s³" },
+    { "id": "pascal", "name": "Pascal", "symbol": "Pa", "type": "derived", "dimension": "[ML^-1T^-2]", "category": "Pressure / Stress", "siEquivalent": "1 N/m² = 1 kg/(m·s²)" },
+    { "id": "coulomb", "name": "Coulomb", "symbol": "C", "type": "derived", "dimension": "[IT]", "category": "Electric Charge", "siEquivalent": "1 A·s" },
+    { "id": "volt", "name": "Volt", "symbol": "V", "type": "derived", "dimension": "[ML^2T^-3I^-1]", "category": "Electric Potential / EMF", "siEquivalent": "1 W/A = 1 J/C" },
+    { "id": "ohm", "name": "Ohm", "symbol": "Ω", "type": "derived", "dimension": "[ML^2T^-3I^-2]", "category": "Electrical Resistance", "siEquivalent": "1 V/A" },
+    { "id": "farad", "name": "Farad", "symbol": "F", "type": "derived", "dimension": "[M^-1L^-2T^4I^2]", "category": "Capacitance", "siEquivalent": "1 C/V" },
+    { "id": "weber", "name": "Weber", "symbol": "Wb", "type": "derived", "dimension": "[ML^2T^-2I^-1]", "category": "Magnetic Flux", "siEquivalent": "1 V·s = 1 T·m²" },
+    { "id": "tesla", "name": "Tesla", "symbol": "T", "type": "derived", "dimension": "[MT^-2I^-1]", "category": "Magnetic Field Density", "siEquivalent": "1 Wb/m² = 1 N/(A·m)" },
+    { "id": "henry", "name": "Henry", "symbol": "H", "type": "derived", "dimension": "[ML^2T^-2I^-2]", "category": "Inductance", "siEquivalent": "1 Wb/A = 1 V·s/A" },
+    { "id": "hertz", "name": "Hertz", "symbol": "Hz", "type": "derived", "dimension": "[T^-1]", "category": "Frequency", "siEquivalent": "1 s^-1" },
+    { "id": "electronvolt", "name": "Electronvolt", "symbol": "eV", "type": "derived", "dimension": "[ML^2T^-2]", "category": "Atomic Energy", "siEquivalent": "1.602176634 × 10^-19 J" }
+  ],
+  "prefixes": [
+    { "id": "giga", "name": "Giga", "symbol": "G", "factor": "10^9", "power": 9 },
+    { "id": "mega", "name": "Mega", "symbol": "M", "factor": "10^6", "power": 6 },
+    { "id": "kilo", "name": "Kilo", "symbol": "k", "factor": "10^3", "power": 3 },
+    { "id": "milli", "name": "Milli", "symbol": "m", "factor": "10^-3", "power": -3 },
+    { "id": "micro", "name": "Micro", "symbol": "μ", "factor": "10^-6", "power": -6 },
+    { "id": "nano", "name": "Nano", "symbol": "n", "factor": "10^-9", "power": -9 },
+    { "id": "pico", "name": "Pico", "symbol": "p", "factor": "10^-12", "power": -12 }
+  ]
+}

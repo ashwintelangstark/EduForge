@@ -1,0 +1,289 @@
+id,question_id,option_key,content,raw_text,sort_order
+1fcd51f4-c441-410a-90c5-416aa68d6f04,e8382b40-054d-46a4-bf31-2247b9f2ed3a,a,"[{""type"": ""text"", ""html"": ""<p>An isolated system</p>""}]",An isolated system,1
+b0ff68ca-a2bb-4361-b116-52bf0a9966d4,e8382b40-054d-46a4-bf31-2247b9f2ed3a,b,"[{""type"": ""text"", ""html"": ""<p>An open system</p>""}]",An open system,2
+e4ecf1dd-5df1-48e6-af4a-164bf82c3841,e8382b40-054d-46a4-bf31-2247b9f2ed3a,c,"[{""type"": ""text"", ""html"": ""<p>A closed system</p>""}]",A closed system,3
+0e8aa774-193e-4750-ab34-6284dbef1355,e8382b40-054d-46a4-bf31-2247b9f2ed3a,d,"[{""type"": ""text"", ""html"": ""<p>An adiabatic system</p>""}]",An adiabatic system,4
+a137d557-0aaf-4f0e-bb20-d425f08f0074,2fce78a8-ecd9-4475-823c-469b93d4f0cd,a,"[{""type"": ""text"", ""html"": ""<p>Temperature, pressure and density</p>""}]","Temperature, pressure and density",1
+fc523cc7-4149-4820-8730-b1d6c0e14484,2fce78a8-ecd9-4475-823c-469b93d4f0cd,b,"[{""type"": ""text"", ""html"": ""<p>Mass and volume</p>""}]",Mass and volume,2
+7d8b2103-5f27-4d5b-a0ca-66e703f8683d,2fce78a8-ecd9-4475-823c-469b93d4f0cd,c,"[{""type"": ""text"", ""html"": ""<p>Internal energy and enthalpy</p>""}]",Internal energy and enthalpy,3
+5e43dbf4-aaba-4cc9-8808-13c0a54a2671,2fce78a8-ecd9-4475-823c-469b93d4f0cd,d,"[{""type"": ""text"", ""html"": ""<p>Heat capacity and entropy</p>""}]",Heat capacity and entropy,4
+94288d0f-d38e-4cec-ba30-ae0f64a767d5,d1dab530-43b5-4be9-a32f-4f0099704bb2,a,"[{""type"": ""text"", ""html"": ""<p>Enthalpy (H), entropy (S) and internal energy (U)</p>""}]","Enthalpy (H), entropy (S) and internal energy (U)",1
+b9235243-bb36-4b84-a709-bfb7ebaa5035,d1dab530-43b5-4be9-a32f-4f0099704bb2,b,"[{""type"": ""text"", ""html"": ""<p>Molar heat capacity</p>""}]",Molar heat capacity,2
+0017b07b-1a33-48cc-89f5-7774119b0d93,d1dab530-43b5-4be9-a32f-4f0099704bb2,c,"[{""type"": ""text"", ""html"": ""<p>Density and refractive index</p>""}]",Density and refractive index,3
+d964b583-6b6b-43f7-99c5-f79c63fbf963,d1dab530-43b5-4be9-a32f-4f0099704bb2,d,"[{""type"": ""text"", ""html"": ""<p>Surface tension and viscosity</p>""}]",Surface tension and viscosity,4
+74dcd641-4e9e-48c0-8599-95ed7c955f20,6ef40bf0-5b10-4d21-9688-c0122f968e8e,a,"[{""type"": ""text"", ""html"": ""<p>Internal energy (U), Enthalpy (H), Gibbs energy (G)</p>""}]","Internal energy (U), Enthalpy (H), Gibbs energy (G)",1
+5fa50116-8bcb-4147-86f9-8f9f6dca19b2,6ef40bf0-5b10-4d21-9688-c0122f968e8e,b,"[{""type"": ""text"", ""html"": ""<p>Heat (q) and Work (w)</p>""}]",Heat (q) and Work (w),2
+5d539e2b-9674-4416-a483-0f0a97c61440,6ef40bf0-5b10-4d21-9688-c0122f968e8e,c,"[{""type"": ""text"", ""html"": ""<p>Heat (q) only</p>""}]",Heat (q) only,3
+92051f77-0121-4cd6-b996-33fda5907b66,6ef40bf0-5b10-4d21-9688-c0122f968e8e,d,"[{""type"": ""text"", ""html"": ""<p>Work (w) only</p>""}]",Work (w) only,4
+99c81ee3-8fab-4d48-b561-5a9535f13165,1206eecb-1f6c-47a8-ae48-80c472e0dbff,a,"[{""type"": ""text"", ""html"": ""<p>q = 0 (No heat exchange between system and surroundings)</p>""}]",q = 0 (No heat exchange between system and surroundings),1
+0c6de2fa-ffd6-4662-a834-b27e15296481,1206eecb-1f6c-47a8-ae48-80c472e0dbff,b,"[{""type"": ""text"", ""html"": ""<p>\u0394T = 0</p>""}]",ΔT = 0,2
+7bd10a49-c99e-4a4c-a06a-b4efea13072c,1206eecb-1f6c-47a8-ae48-80c472e0dbff,c,"[{""type"": ""text"", ""html"": ""<p>\u0394P = 0</p>""}]",ΔP = 0,3
+101df2ec-4282-4385-b22e-54a0d624370c,1206eecb-1f6c-47a8-ae48-80c472e0dbff,d,"[{""type"": ""text"", ""html"": ""<p>\u0394V = 0</p>""}]",ΔV = 0,4
+c980162d-33d9-4403-a574-3de4c02b6396,aeb462b3-bf8a-4ff2-8549-5a85915d35b6,a,"[{""type"": ""text"", ""html"": ""<p>\u0394T = 0 and \u0394U = 0 for an ideal gas</p>""}]",ΔT = 0 and ΔU = 0 for an ideal gas,1
+5d40fc86-ca13-401b-969f-322eb12c8555,aeb462b3-bf8a-4ff2-8549-5a85915d35b6,b,"[{""type"": ""text"", ""html"": ""<p>q = 0</p>""}]",q = 0,2
+9c769b41-7854-45d3-936c-58022c3f068e,aeb462b3-bf8a-4ff2-8549-5a85915d35b6,c,"[{""type"": ""text"", ""html"": ""<p>w = 0</p>""}]",w = 0,3
+8d094427-6396-42ef-8e29-d144ec2ed826,aeb462b3-bf8a-4ff2-8549-5a85915d35b6,d,"[{""type"": ""text"", ""html"": ""<p>\u0394H \u2260 0 and \u0394U \u2260 0</p>""}]",ΔH ≠ 0 and ΔU ≠ 0,4
+8099ec9c-6329-42b2-80cb-fecb85ba5c33,e577adfa-08cf-44d7-b1b5-89337cba50ac,a,"[{""type"": ""text"", ""html"": ""<p>w = 0 (since \u0394V = 0)</p>""}]",w = 0 (since ΔV = 0),1
+4a7b53df-85ca-494a-a4e7-c832575f9ebf,e577adfa-08cf-44d7-b1b5-89337cba50ac,b,"[{""type"": ""text"", ""html"": ""<p>w = -P\u0394V</p>""}]",w = -PΔV,2
+97a0c7a6-43a3-446e-a6b2-4434baacb026,e577adfa-08cf-44d7-b1b5-89337cba50ac,c,"[{""type"": ""text"", ""html"": ""<p>w = -2.303 nRT log(V2/V1)</p>""}]",w = -2.303 nRT log(V2/V1),3
+925ff2c9-b6c3-4721-9ec6-3bc806131f3f,e577adfa-08cf-44d7-b1b5-89337cba50ac,d,"[{""type"": ""text"", ""html"": ""<p>w = q</p>""}]",w = q,4
+7ac9a4c1-128c-490c-aed0-ac5432eea81a,91aa1dd1-6bcd-44f3-a52f-693200f0b3ef,a,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta U = q + w\\)</p>""}]",\(\Delta U = q + w\),1
+34b227b1-36f6-4ba4-9e1d-1bf2a99b8dd9,91aa1dd1-6bcd-44f3-a52f-693200f0b3ef,b,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta U = q - w\\)</p>""}]",\(\Delta U = q - w\),2
+9dd1027e-fe70-4951-a741-f69ac3b47454,91aa1dd1-6bcd-44f3-a52f-693200f0b3ef,c,"[{""type"": ""text"", ""html"": ""<p>\\(q = \\Delta U + w\\)</p>""}]",\(q = \Delta U + w\),3
+922dee68-a934-47e2-b848-332b8f3d339a,91aa1dd1-6bcd-44f3-a52f-693200f0b3ef,d,"[{""type"": ""text"", ""html"": ""<p>\\(w = \\Delta U + q\\)</p>""}]",\(w = \Delta U + q\),4
+3ca2300a-7cc3-419c-8641-3bb19d58d516,753ae363-1e29-4446-b06f-becb76c754f8,a,"[{""type"": ""text"", ""html"": ""<p>\\(w = -2.303 nRT \\log_{10}\\left(\\frac{V_2}{V_1}\\right)\\)</p>""}]",\(w = -2.303 nRT \log_{10}\left(\frac{V_2}{V_1}\right)\),1
+6eb612bf-7be1-4598-8307-1f17ba1af426,753ae363-1e29-4446-b06f-becb76c754f8,b,"[{""type"": ""text"", ""html"": ""<p>\\(w = -P_{\\text{ext}}(V_2 - V_1)\\)</p>""}]",\(w = -P_{\text{ext}}(V_2 - V_1)\),2
+7b932189-c3cf-4440-add1-02453753f970,753ae363-1e29-4446-b06f-becb76c754f8,c,"[{""type"": ""text"", ""html"": ""<p>\\(w = nRT \\ln\\left(\\frac{V_1}{V_2}\\right)\\)</p>""}]",\(w = nRT \ln\left(\frac{V_1}{V_2}\right)\),3
+6c8f0e83-b194-4a72-a1fe-e955aa04989d,753ae363-1e29-4446-b06f-becb76c754f8,d,"[{""type"": ""text"", ""html"": ""<p>\\(w = -\\Delta U\\)</p>""}]",\(w = -\Delta U\),4
+318da7bc-dbcf-4ba0-88f9-43b1f22a7bb4,4e949fc1-3f51-4c3c-a993-5e543fcc8008,a,"[{""type"": ""text"", ""html"": ""<p>\\(w = 0\\), and if isothermal then \\(q = 0\\) and \\(\\Delta U = 0\\)</p>""}]","\(w = 0\), and if isothermal then \(q = 0\) and \(\Delta U = 0\)",1
+30e8d284-9ecf-465f-94c4-4399fd8e3689,4e949fc1-3f51-4c3c-a993-5e543fcc8008,b,"[{""type"": ""text"", ""html"": ""<p>\\(w = -P\\Delta V\\)</p>""}]",\(w = -P\Delta V\),2
+af248c75-160f-470a-9ece-c360591606ed,4e949fc1-3f51-4c3c-a993-5e543fcc8008,c,"[{""type"": ""text"", ""html"": ""<p>\\(w = -nRT\\)</p>""}]",\(w = -nRT\),3
+4deb40a4-85bd-4f36-adcf-eefbb132237d,4e949fc1-3f51-4c3c-a993-5e543fcc8008,d,"[{""type"": ""text"", ""html"": ""<p>\\(w = \\infty\\)</p>""}]",\(w = \infty\),4
+2c99f38d-90ec-4852-b29a-86e92c4720f4,267d68b3-1d17-489f-9152-45d29d865195,a,"[{""type"": ""text"", ""html"": ""<p>\\(H = U + PV\\)</p>""}]",\(H = U + PV\),1
+bc037f7e-ed80-4d7d-98cc-95268a5b76e9,267d68b3-1d17-489f-9152-45d29d865195,b,"[{""type"": ""text"", ""html"": ""<p>\\(H = U - PV\\)</p>""}]",\(H = U - PV\),2
+7b93053d-5489-447d-8012-307e43edfe6b,267d68b3-1d17-489f-9152-45d29d865195,c,"[{""type"": ""text"", ""html"": ""<p>\\(H = G + TS\\)</p>""}]",\(H = G + TS\),3
+e77a8e4d-5706-489a-ab7c-3654f8440789,267d68b3-1d17-489f-9152-45d29d865195,d,"[{""type"": ""text"", ""html"": ""<p>\\(H = q + w\\)</p>""}]",\(H = q + w\),4
+f2b1d391-1884-473b-9aaf-b3b0d27ecca3,a8dbf3ad-c795-4588-9876-2b634dfdfaf1,a,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta H = \\Delta U + \\Delta n_g RT\\)</p>""}]",\(\Delta H = \Delta U + \Delta n_g RT\),1
+a3e2f057-b49c-466b-ac38-c2271e5a1d5b,a8dbf3ad-c795-4588-9876-2b634dfdfaf1,b,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta H = \\Delta U - \\Delta n_g RT\\)</p>""}]",\(\Delta H = \Delta U - \Delta n_g RT\),2
+766da448-63b1-4bba-9950-7a6db444490a,a8dbf3ad-c795-4588-9876-2b634dfdfaf1,c,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta U = \\Delta H + \\Delta n_g RT\\)</p>""}]",\(\Delta U = \Delta H + \Delta n_g RT\),3
+0618e003-54a3-4e52-b354-7c728d6e491d,a8dbf3ad-c795-4588-9876-2b634dfdfaf1,d,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta H = \\Delta U + P\\Delta V + V\\Delta P\\)</p>""}]",\(\Delta H = \Delta U + P\Delta V + V\Delta P\),4
+8895f4a9-f1eb-48f8-8c49-a1d0a18ada78,21158d5a-e50b-42f3-930f-34792c6468f9,a,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta H = \\Delta U - 2RT\\) (since \\(\\Delta n_g = -2\\))</p>""}]",\(\Delta H = \Delta U - 2RT\) (since \(\Delta n_g = -2\)),1
+c927150d-00e3-412c-aacd-8869d1548e2e,21158d5a-e50b-42f3-930f-34792c6468f9,b,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta H = \\Delta U + 2RT\\)</p>""}]",\(\Delta H = \Delta U + 2RT\),2
+8b63890c-476d-42c2-b468-434af20f317a,21158d5a-e50b-42f3-930f-34792c6468f9,c,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta H = \\Delta U\\)</p>""}]",\(\Delta H = \Delta U\),3
+e0eddd5f-28a2-4961-a19e-a80ac0839700,21158d5a-e50b-42f3-930f-34792c6468f9,d,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta H = \\Delta U - 4RT\\)</p>""}]",\(\Delta H = \Delta U - 4RT\),4
+2f36c6cd-3f32-45ee-8bd2-f39127a90bcb,6a7cb10d-d78a-4d40-9060-4d9b9f455370,a,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta H = \\Delta U\\) (since \\(\\Delta n_g = 1 - 1 = 0\\))</p>""}]",\(\Delta H = \Delta U\) (since \(\Delta n_g = 1 - 1 = 0\)),1
+875f3444-0bd5-4123-9340-1c17577e058e,6a7cb10d-d78a-4d40-9060-4d9b9f455370,b,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta H > \\Delta U\\)</p>""}]",\(\Delta H > \Delta U\),2
+6ae89a51-94bb-4eb5-85bd-a4afb3e93276,6a7cb10d-d78a-4d40-9060-4d9b9f455370,c,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta H < \\Delta U\\)</p>""}]",\(\Delta H < \Delta U\),3
+3511e352-7e0f-4462-ba7d-e71e3ca777b9,6a7cb10d-d78a-4d40-9060-4d9b9f455370,d,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta H = \\Delta U + RT\\)</p>""}]",\(\Delta H = \Delta U + RT\),4
+7330d94a-e133-4e8a-aa29-6ab47d9e5456,c0f38874-1f87-44b0-bc31-246628a1f9f9,a,"[{""type"": ""text"", ""html"": ""<p>\\(C_p - C_v = R\\)</p>""}]",\(C_p - C_v = R\),1
+ab612cfb-ccff-4ea7-bd44-1aa7417f7825,c0f38874-1f87-44b0-bc31-246628a1f9f9,b,"[{""type"": ""text"", ""html"": ""<p>\\(C_v - C_p = R\\)</p>""}]",\(C_v - C_p = R\),2
+ab9c547c-3bd9-40df-bd11-6787bc7f620f,c0f38874-1f87-44b0-bc31-246628a1f9f9,c,"[{""type"": ""text"", ""html"": ""<p>\\(C_p + C_v = R\\)</p>""}]",\(C_p + C_v = R\),3
+fb7783b3-8358-4e8e-86dd-045019ef259c,c0f38874-1f87-44b0-bc31-246628a1f9f9,d,"[{""type"": ""text"", ""html"": ""<p>\\(C_p / C_v = R\\)</p>""}]",\(C_p / C_v = R\),4
+3f627f60-02f4-49ed-9d09-490844a5ccb4,34c165e7-2b79-40cc-9835-e2afdf4a31f0,a,"[{""type"": ""text"", ""html"": ""<p>\\(\\frac{5}{3} = 1.67\\)</p>""}]",\(\frac{5}{3} = 1.67\),1
+fdf82c90-4883-44ab-8c4d-e411d8b3ddaa,34c165e7-2b79-40cc-9835-e2afdf4a31f0,b,"[{""type"": ""text"", ""html"": ""<p>\\(\\frac{7}{5} = 1.40\\)</p>""}]",\(\frac{7}{5} = 1.40\),2
+0a22b195-1181-44e4-9d5c-02d4f8bd2b50,34c165e7-2b79-40cc-9835-e2afdf4a31f0,c,"[{""type"": ""text"", ""html"": ""<p>\\(\\frac{4}{3} = 1.33\\)</p>""}]",\(\frac{4}{3} = 1.33\),3
+032ef566-51a8-49f8-8824-3a2910c1ed12,34c165e7-2b79-40cc-9835-e2afdf4a31f0,d,"[{""type"": ""text"", ""html"": ""<p>\\(1.00\\)</p>""}]",\(1.00\),4
+02f06f84-612f-407d-9612-22d4ce11ab69,205233f9-ea38-4e78-97ba-c255242021a9,a,"[{""type"": ""text"", ""html"": ""<p>\\(\\frac{7}{5} = 1.40\\)</p>""}]",\(\frac{7}{5} = 1.40\),1
+2db6abf1-f989-4dde-8ba6-c3c6e8461bb8,205233f9-ea38-4e78-97ba-c255242021a9,b,"[{""type"": ""text"", ""html"": ""<p>\\(\\frac{5}{3} = 1.67\\)</p>""}]",\(\frac{5}{3} = 1.67\),2
+8caf7072-4598-4ed6-8d6e-8afc033bd6d5,205233f9-ea38-4e78-97ba-c255242021a9,c,"[{""type"": ""text"", ""html"": ""<p>\\(\\frac{4}{3} = 1.33\\)</p>""}]",\(\frac{4}{3} = 1.33\),3
+68996fec-dbec-48d7-b40e-ad52ee3ee2d7,205233f9-ea38-4e78-97ba-c255242021a9,d,"[{""type"": ""text"", ""html"": ""<p>\\(2.00\\)</p>""}]",\(2.00\),4
+c1736344-6c16-4a1d-98db-8ae07e275c38,3a64e0d6-05e9-4c3a-900d-3ff4e175687a,a,"[{""type"": ""text"", ""html"": ""<p>Bomb calorimeter (constant volume, \\(q_v = \\Delta U\\))</p>""}]","Bomb calorimeter (constant volume, \(q_v = \Delta U\))",1
+af3013eb-7a38-4983-b4a0-af4b37f7678c,3a64e0d6-05e9-4c3a-900d-3ff4e175687a,b,"[{""type"": ""text"", ""html"": ""<p>Coffee cup calorimeter (constant pressure)</p>""}]",Coffee cup calorimeter (constant pressure),2
+a5a3b0e4-2e4d-4e25-b3e9-9256ab1a564a,3a64e0d6-05e9-4c3a-900d-3ff4e175687a,c,"[{""type"": ""text"", ""html"": ""<p>Open beaker</p>""}]",Open beaker,3
+f9a5b8e3-7106-466c-997b-bfae2dc5de91,3a64e0d6-05e9-4c3a-900d-3ff4e175687a,d,"[{""type"": ""text"", ""html"": ""<p>Thermometer flask</p>""}]",Thermometer flask,4
+f9ddb7bb-89a6-4d61-bf2a-4109ff6eb727,c27e7e34-069d-4b93-8884-b81ceee523f6,a,"[{""type"": ""text"", ""html"": ""<p>Constant pressure in a coffee cup calorimeter (\\(q_p = \\Delta H\\))</p>""}]",Constant pressure in a coffee cup calorimeter (\(q_p = \Delta H\)),1
+3c866886-b126-4f37-bf16-f2349085deab,c27e7e34-069d-4b93-8884-b81ceee523f6,b,"[{""type"": ""text"", ""html"": ""<p>Constant volume in bomb calorimeter</p>""}]",Constant volume in bomb calorimeter,2
+3497663f-d0e2-4a3f-9e98-4d2a2d1a2c10,c27e7e34-069d-4b93-8884-b81ceee523f6,c,"[{""type"": ""text"", ""html"": ""<p>Constant temperature only</p>""}]",Constant temperature only,3
+35a34a1c-824b-45b1-9943-11b8cd52694a,c27e7e34-069d-4b93-8884-b81ceee523f6,d,"[{""type"": ""text"", ""html"": ""<p>Zero pressure</p>""}]",Zero pressure,4
+c40c7b79-1908-4476-9381-248703696903,ee128b89-3f8c-4b91-b934-8d2616253a51,a,"[{""type"": ""text"", ""html"": ""<p>Zero</p>""}]",Zero,1
+0c800ee0-5c17-40fe-b956-4b6704a0c301,ee128b89-3f8c-4b91-b934-8d2616253a51,b,"[{""type"": ""text"", ""html"": ""<p>Positive</p>""}]",Positive,2
+393451ca-02be-4540-9e48-41bf4938e010,ee128b89-3f8c-4b91-b934-8d2616253a51,c,"[{""type"": ""text"", ""html"": ""<p>Negative</p>""}]",Negative,3
+0f5e391d-a99c-4021-b055-5d993c6b5af3,ee128b89-3f8c-4b91-b934-8d2616253a51,d,"[{""type"": ""text"", ""html"": ""<p>\\(100 \\text{ kJ}\\cdot\\text{mol}^{-1}\\)</p>""}]",\(100 \text{ kJ}\cdot\text{mol}^{-1}\),4
+8de8c15c-d522-4766-868d-749f6ca99945,c1034091-d314-47a3-a38e-a3aa0e03b399,a,"[{""type"": ""text"", ""html"": ""<p>\\(\\text{O}_2(g)\\), \\(\\text{C}(\\text{graphite})\\), \\(\\text{S}(\\text{rhombic})\\)</p>""}]","\(\text{O}_2(g)\), \(\text{C}(\text{graphite})\), \(\text{S}(\text{rhombic})\)",1
+a647b467-041d-47f4-ad4f-05ff23885d8c,c1034091-d314-47a3-a38e-a3aa0e03b399,b,"[{""type"": ""text"", ""html"": ""<p>\\(\\text{O}_3(g)\\)</p>""}]",\(\text{O}_3(g)\),2
+9a9c3dc3-834d-40da-bea0-dc74dec9f69e,c1034091-d314-47a3-a38e-a3aa0e03b399,c,"[{""type"": ""text"", ""html"": ""<p>\\(\\text{C}(\\text{diamond})\\)</p>""}]",\(\text{C}(\text{diamond})\),3
+e1c65009-a84f-429a-ab49-547865ce3dae,c1034091-d314-47a3-a38e-a3aa0e03b399,d,"[{""type"": ""text"", ""html"": ""<p>\\(\\text{S}(\\text{monoclinic})\\)</p>""}]",\(\text{S}(\text{monoclinic})\),4
+fe1b57de-be86-4534-96a8-265dc529feb1,3ea76f64-816d-47cc-8253-4305230d102a,a,"[{""type"": ""text"", ""html"": ""<p>Independent of the path or number of steps taken</p>""}]",Independent of the path or number of steps taken,1
+b667b15a-3759-45ad-92ef-e6c20ce3a98a,3ea76f64-816d-47cc-8253-4305230d102a,b,"[{""type"": ""text"", ""html"": ""<p>Dependent on the path taken</p>""}]",Dependent on the path taken,2
+bf834e6c-7d99-4000-83d7-57e52f2dcf14,3ea76f64-816d-47cc-8253-4305230d102a,c,"[{""type"": ""text"", ""html"": ""<p>Directly proportional to time</p>""}]",Directly proportional to time,3
+e9c01d08-f649-44c6-8916-f05eb33cc902,3ea76f64-816d-47cc-8253-4305230d102a,d,"[{""type"": ""text"", ""html"": ""<p>Zero for all reactions</p>""}]",Zero for all reactions,4
+1cd49bc4-af46-489d-a71a-4ef63b8e5cfc,1e26a71b-25ab-4738-92da-2cf12c846c10,a,"[{""type"": ""text"", ""html"": ""<p>Negative (exothermic)</p>""}]",Negative (exothermic),1
+9a7c48c4-6947-419a-82c2-80ed035082c2,1e26a71b-25ab-4738-92da-2cf12c846c10,b,"[{""type"": ""text"", ""html"": ""<p>Positive (endothermic)</p>""}]",Positive (endothermic),2
+8f5984eb-b96f-48f4-a86d-d13090798af1,1e26a71b-25ab-4738-92da-2cf12c846c10,c,"[{""type"": ""text"", ""html"": ""<p>Zero</p>""}]",Zero,3
+728fb928-7470-4af0-b2a5-1c90f01d0c07,1e26a71b-25ab-4738-92da-2cf12c846c10,d,"[{""type"": ""text"", ""html"": ""<p>Unpredictable</p>""}]",Unpredictable,4
+a0509901-393a-443e-a719-2ea83433a3d6,f591aaef-b05c-4b7a-9977-818c25ab75a0,a,"[{""type"": ""text"", ""html"": ""<p>A-(iv), B-(i), C-(ii), D-(iii)</p>""}]","A-(iv), B-(i), C-(ii), D-(iii)",1
+2e74372c-809f-4429-81ba-78fe54cddd86,f591aaef-b05c-4b7a-9977-818c25ab75a0,b,"[{""type"": ""text"", ""html"": ""<p>A-(i), B-(ii), C-(iii), D-(iv)</p>""}]","A-(i), B-(ii), C-(iii), D-(iv)",2
+4600ea6f-444a-4537-896b-cf3ef515d2aa,f591aaef-b05c-4b7a-9977-818c25ab75a0,c,"[{""type"": ""text"", ""html"": ""<p>A-(ii), B-(iv), C-(i), D-(iii)</p>""}]","A-(ii), B-(iv), C-(i), D-(iii)",3
+23de9fd0-298d-4311-a4fd-8810738f20bb,f591aaef-b05c-4b7a-9977-818c25ab75a0,d,"[{""type"": ""text"", ""html"": ""<p>A-(iii), B-(i), C-(iv), D-(ii)</p>""}]","A-(iii), B-(i), C-(iv), D-(ii)",4
+3b5fcf34-923d-4104-8219-92481c43a4f4,fe8beab0-6165-4cd0-a627-643a03de0667,a,"[{""type"": ""text"", ""html"": ""<p>Bond dissociation enthalpy</p>""}]",Bond dissociation enthalpy,1
+c2151653-8e0e-4f17-bbff-75d64e768299,fe8beab0-6165-4cd0-a627-643a03de0667,b,"[{""type"": ""text"", ""html"": ""<p>Enthalpy of atomization</p>""}]",Enthalpy of atomization,2
+e8464624-1318-478f-ae73-850a705dbafe,fe8beab0-6165-4cd0-a627-643a03de0667,c,"[{""type"": ""text"", ""html"": ""<p>Lattice enthalpy</p>""}]",Lattice enthalpy,3
+613ffa26-fc3c-46e9-97eb-9f331cc902bc,fe8beab0-6165-4cd0-a627-643a03de0667,d,"[{""type"": ""text"", ""html"": ""<p>Enthalpy of ionization</p>""}]",Enthalpy of ionization,4
+cb3581fd-00be-4fdb-a16c-daef30d7086c,35c77a6d-d7ec-4d9a-b7e4-bdbf12b7cddd,a,"[{""type"": ""text"", ""html"": ""<p>Enthalpy of atomization</p>""}]",Enthalpy of atomization,1
+70c8839f-4a99-4f28-8a6f-0ccff10d6991,35c77a6d-d7ec-4d9a-b7e4-bdbf12b7cddd,b,"[{""type"": ""text"", ""html"": ""<p>Enthalpy of formation</p>""}]",Enthalpy of formation,2
+f53c0a24-3819-47fc-b181-12249bee6cb7,35c77a6d-d7ec-4d9a-b7e4-bdbf12b7cddd,c,"[{""type"": ""text"", ""html"": ""<p>Enthalpy of vaporization</p>""}]",Enthalpy of vaporization,3
+050d0ae2-da93-421c-8808-b0cc8716795d,35c77a6d-d7ec-4d9a-b7e4-bdbf12b7cddd,d,"[{""type"": ""text"", ""html"": ""<p>Enthalpy of sublimation</p>""}]",Enthalpy of sublimation,4
+c8959d60-4346-4a3a-b132-5a4c6b4aba50,94e90832-4ca9-438a-8172-4acf0514636d,a,"[{""type"": ""text"", ""html"": ""<p>Born-Haber cycle</p>""}]",Born-Haber cycle,1
+c9496a8f-ba81-4717-8a80-d03796d46edf,94e90832-4ca9-438a-8172-4acf0514636d,b,"[{""type"": ""text"", ""html"": ""<p>Carnot cycle</p>""}]",Carnot cycle,2
+0a02a912-b085-42e3-8321-e40064136fa6,94e90832-4ca9-438a-8172-4acf0514636d,c,"[{""type"": ""text"", ""html"": ""<p>Hess cycle only</p>""}]",Hess cycle only,3
+236d50a9-806e-4863-a08d-c717ad9e3a62,94e90832-4ca9-438a-8172-4acf0514636d,d,"[{""type"": ""text"", ""html"": ""<p>Calorimetric bomb directly</p>""}]",Calorimetric bomb directly,4
+922e49a1-d1f3-4750-962e-c1365eaf6c40,5cf1c0ce-9222-40cc-aa78-832647323b3b,a,"[{""type"": ""text"", ""html"": ""<p>A spontaneous process</p>""}]",A spontaneous process,1
+6ebce8a7-3aa1-470a-ba8d-b90075449f16,5cf1c0ce-9222-40cc-aa78-832647323b3b,b,"[{""type"": ""text"", ""html"": ""<p>A non-spontaneous process</p>""}]",A non-spontaneous process,2
+2a106620-1e6b-42c3-b418-67a903f7e6ac,5cf1c0ce-9222-40cc-aa78-832647323b3b,c,"[{""type"": ""text"", ""html"": ""<p>A reversible process only</p>""}]",A reversible process only,3
+5dfdc70c-b3f2-493f-a7a7-d404ce49b581,5cf1c0ce-9222-40cc-aa78-832647323b3b,d,"[{""type"": ""text"", ""html"": ""<p>An adiabatic process</p>""}]",An adiabatic process,4
+14c35d96-3892-45a4-aa98-0cb9adc10f14,97c63c77-9271-40c8-89b2-7044d11a515b,a,"[{""type"": ""text"", ""html"": ""<p>Randomness or disorder of a thermodynamic system</p>""}]",Randomness or disorder of a thermodynamic system,1
+08dd7a81-3fb6-48e8-973d-d63bae8c3153,97c63c77-9271-40c8-89b2-7044d11a515b,b,"[{""type"": ""text"", ""html"": ""<p>Total energy of system</p>""}]",Total energy of system,2
+50921451-7b6f-4b55-9c89-161fde7a9b23,97c63c77-9271-40c8-89b2-7044d11a515b,c,"[{""type"": ""text"", ""html"": ""<p>Useful work done</p>""}]",Useful work done,3
+8d19fb75-3424-4a60-8770-8753f01ddf1a,97c63c77-9271-40c8-89b2-7044d11a515b,d,"[{""type"": ""text"", ""html"": ""<p>Pressure of gas</p>""}]",Pressure of gas,4
+ddb3e7c8-25c1-4fc9-83cb-d7c4ea0a4bf2,eb669985-ac16-496e-be6b-f6fdd92d04ea,a,"[{""type"": ""text"", ""html"": ""<p>\\(\\text{J}\\cdot\\text{K}^{-1}\\cdot\\text{mol}^{-1}\\)</p>""}]",\(\text{J}\cdot\text{K}^{-1}\cdot\text{mol}^{-1}\),1
+6420e9d8-269b-48b3-a8b4-a884c330c287,eb669985-ac16-496e-be6b-f6fdd92d04ea,b,"[{""type"": ""text"", ""html"": ""<p>\\(\\text{kJ}\\cdot\\text{mol}^{-1}\\)</p>""}]",\(\text{kJ}\cdot\text{mol}^{-1}\),2
+4b5116dc-0298-4fe0-b8c0-0e0457b3ed70,eb669985-ac16-496e-be6b-f6fdd92d04ea,c,"[{""type"": ""text"", ""html"": ""<p>\\(\\text{J}\\cdot\\text{s}^{-1}\\)</p>""}]",\(\text{J}\cdot\text{s}^{-1}\),3
+ba303d99-1d17-4768-85e9-b5944828505b,eb669985-ac16-496e-be6b-f6fdd92d04ea,d,"[{""type"": ""text"", ""html"": ""<p>\\(\\text{N}\\cdot\\text{m}^{-2}\\)</p>""}]",\(\text{N}\cdot\text{m}^{-2}\),4
+e9324a5b-6c11-4b15-8c0c-73b2694f9bea,9c15fc46-9e71-4481-ba7f-fbbffb7785a0,a,"[{""type"": ""text"", ""html"": ""<p>Gaseous state > Liquid state > Solid state</p>""}]",Gaseous state > Liquid state > Solid state,1
+077cae70-07b2-4182-912f-ec4da34c6767,9c15fc46-9e71-4481-ba7f-fbbffb7785a0,b,"[{""type"": ""text"", ""html"": ""<p>Solid state > Liquid state > Gaseous state</p>""}]",Solid state > Liquid state > Gaseous state,2
+e2bc2492-ddb3-4887-bb29-e47fe8b6f43a,9c15fc46-9e71-4481-ba7f-fbbffb7785a0,c,"[{""type"": ""text"", ""html"": ""<p>Liquid state > Gaseous state > Solid state</p>""}]",Liquid state > Gaseous state > Solid state,3
+1146a624-7010-43e1-bff8-a362abe5f9fa,9c15fc46-9e71-4481-ba7f-fbbffb7785a0,d,"[{""type"": ""text"", ""html"": ""<p>All have equal entropy</p>""}]",All have equal entropy,4
+3cb13eef-22f2-4347-a778-00697ce6f9ba,b8ed3d35-626a-4c40-a933-46c14c87f8de,a,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta S = \\frac{q_{\\text{rev}}}{T}\\)</p>""}]",\(\Delta S = \frac{q_{\text{rev}}}{T}\),1
+31d2d5a0-cbc9-43c8-b149-5d8d6107df54,b8ed3d35-626a-4c40-a933-46c14c87f8de,b,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta S = \\frac{w_{\\text{rev}}}{T}\\)</p>""}]",\(\Delta S = \frac{w_{\text{rev}}}{T}\),2
+8dd68826-65c7-4e91-bfb1-b74d52e6455e,b8ed3d35-626a-4c40-a933-46c14c87f8de,c,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta S = \\frac{\\Delta H}{P}\\)</p>""}]",\(\Delta S = \frac{\Delta H}{P}\),3
+d718b042-0f1a-4eb5-968d-d698e9aa8c31,b8ed3d35-626a-4c40-a933-46c14c87f8de,d,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta S = T \\cdot q_{\\text{rev}}\\)</p>""}]",\(\Delta S = T \cdot q_{\text{rev}}\),4
+8f9a7278-df84-4794-9941-72f3f5b418a0,647b748e-a915-43de-8cb4-c5a216e73b9b,a,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta S_{\\text{total}} = \\Delta S_{\\text{sys}} + \\Delta S_{\\text{surr}} > 0\\)</p>""}]",\(\Delta S_{\text{total}} = \Delta S_{\text{sys}} + \Delta S_{\text{surr}} > 0\),1
+5b268c85-99c4-4a32-8061-07fbb37174d1,647b748e-a915-43de-8cb4-c5a216e73b9b,b,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta S_{\\text{total}} = 0\\)</p>""}]",\(\Delta S_{\text{total}} = 0\),2
+5e805633-0c91-4ffb-b151-3024fb21cb09,647b748e-a915-43de-8cb4-c5a216e73b9b,c,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta S_{\\text{total}} < 0\\)</p>""}]",\(\Delta S_{\text{total}} < 0\),3
+b81227d7-e24f-4fd2-828b-3118e9dc0ddf,647b748e-a915-43de-8cb4-c5a216e73b9b,d,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta S_{\\text{sys}} = 0\\)</p>""}]",\(\Delta S_{\text{sys}} = 0\),4
+e2f067ee-6542-4707-8864-2e23d87ebc1f,670e1a96-28cc-4fce-8314-ee8ed605e088,a,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta S_{\\text{total}} = 0\\)</p>""}]",\(\Delta S_{\text{total}} = 0\),1
+278b9640-6609-4a10-b364-e21429a9fcbb,670e1a96-28cc-4fce-8314-ee8ed605e088,b,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta S_{\\text{total}} > 0\\)</p>""}]",\(\Delta S_{\text{total}} > 0\),2
+0b8879b1-1440-4b93-95a9-70bed89eaddc,670e1a96-28cc-4fce-8314-ee8ed605e088,c,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta S_{\\text{total}} < 0\\)</p>""}]",\(\Delta S_{\text{total}} < 0\),3
+4a732bec-fb21-44e9-b38f-4d644aae06e8,670e1a96-28cc-4fce-8314-ee8ed605e088,d,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta S_{\\text{total}} = \\infty\\)</p>""}]",\(\Delta S_{\text{total}} = \infty\),4
+134df505-124e-4c69-bae4-f72bda08319a,ccb93257-780d-475c-8f87-6715ec45c723,a,"[{""type"": ""text"", ""html"": ""<p>\\(G = H - TS\\)</p>""}]",\(G = H - TS\),1
+b94fc103-0601-434a-a7ee-32e1a8bcb610,ccb93257-780d-475c-8f87-6715ec45c723,b,"[{""type"": ""text"", ""html"": ""<p>\\(G = H + TS\\)</p>""}]",\(G = H + TS\),2
+0b525f96-bc26-407a-8b1c-68ab9dc284e5,ccb93257-780d-475c-8f87-6715ec45c723,c,"[{""type"": ""text"", ""html"": ""<p>\\(G = U - TS\\)</p>""}]",\(G = U - TS\),3
+61b8e3b4-8629-4c29-be42-12eb9ba3f4b3,ccb93257-780d-475c-8f87-6715ec45c723,d,"[{""type"": ""text"", ""html"": ""<p>\\(G = U + PV - TS\\)</p>""}]",\(G = U + PV - TS\),4
+915600f3-f345-40f7-98cc-9ab48beffa44,38bb7d9a-89a4-4e36-8e87-1df88b5ea151,a,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta G = \\Delta H - T\\Delta S\\)</p>""}]",\(\Delta G = \Delta H - T\Delta S\),1
+04b65fb1-6de6-4c39-addd-2c45bf2b2453,38bb7d9a-89a4-4e36-8e87-1df88b5ea151,b,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta G = \\Delta H + T\\Delta S\\)</p>""}]",\(\Delta G = \Delta H + T\Delta S\),2
+17fa5449-0250-40af-b6a1-0af6a42f4ba1,38bb7d9a-89a4-4e36-8e87-1df88b5ea151,c,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta H = \\Delta G - T\\Delta S\\)</p>""}]",\(\Delta H = \Delta G - T\Delta S\),3
+63ba3a26-06ee-4e05-b664-5a92bc1b6adc,38bb7d9a-89a4-4e36-8e87-1df88b5ea151,d,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta G = \\Delta U - T\\Delta S\\)</p>""}]",\(\Delta G = \Delta U - T\Delta S\),4
+2debfd67-9b43-4eab-97c5-21acc83fabe4,d14d664c-a371-4dbb-90b7-c3d7302d9ed8,a,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta G < 0\\) (Negative) for spontaneous, \\(\\Delta G = 0\\) at equilibrium, \\(\\Delta G > 0\\) for non-spontaneous</p>""}]","\(\Delta G < 0\) (Negative) for spontaneous, \(\Delta G = 0\) at equilibrium, \(\Delta G > 0\) for non-spontaneous",1
+ad12f09f-f6b4-4c22-bd41-e19279c07e37,d14d664c-a371-4dbb-90b7-c3d7302d9ed8,b,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta G > 0\\) for spontaneous</p>""}]",\(\Delta G > 0\) for spontaneous,2
+d75832d9-c269-4f53-821f-b07346626f79,d14d664c-a371-4dbb-90b7-c3d7302d9ed8,c,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta G = 0\\) for spontaneous</p>""}]",\(\Delta G = 0\) for spontaneous,3
+66428177-fabc-47de-ade7-0a053a299af6,d14d664c-a371-4dbb-90b7-c3d7302d9ed8,d,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta G \\ge 0\\) for spontaneous</p>""}]",\(\Delta G \ge 0\) for spontaneous,4
+b1e681a9-7887-4e70-87b0-d8996028422a,ee8f49c8-4f23-4a0b-9e37-7a619ea95128,a,"[{""type"": ""text"", ""html"": ""<p>Spontaneous at all temperatures</p>""}]",Spontaneous at all temperatures,1
+65befd4d-ddd5-4d9b-8f2f-da615a125a2b,ee8f49c8-4f23-4a0b-9e37-7a619ea95128,b,"[{""type"": ""text"", ""html"": ""<p>Non-spontaneous at all temperatures</p>""}]",Non-spontaneous at all temperatures,2
+4920d8f6-58e5-4e99-b720-e1cf2bbd0dca,ee8f49c8-4f23-4a0b-9e37-7a619ea95128,c,"[{""type"": ""text"", ""html"": ""<p>Spontaneous only at high temperatures</p>""}]",Spontaneous only at high temperatures,3
+cdf3193e-39d8-42ac-9c0a-509f852832af,ee8f49c8-4f23-4a0b-9e37-7a619ea95128,d,"[{""type"": ""text"", ""html"": ""<p>Spontaneous only at low temperatures</p>""}]",Spontaneous only at low temperatures,4
+7e14240e-226c-4c08-8f20-9874c3da14e0,2263fe7f-344b-450f-ac27-22bc27c3dbf3,a,"[{""type"": ""text"", ""html"": ""<p>Non-spontaneous at all temperatures</p>""}]",Non-spontaneous at all temperatures,1
+c98f7d3b-b215-446a-bf56-b2c97372ca9e,2263fe7f-344b-450f-ac27-22bc27c3dbf3,b,"[{""type"": ""text"", ""html"": ""<p>Spontaneous at all temperatures</p>""}]",Spontaneous at all temperatures,2
+e83943ce-9eb6-4e62-9a1f-d30d7bf1e4a5,2263fe7f-344b-450f-ac27-22bc27c3dbf3,c,"[{""type"": ""text"", ""html"": ""<p>Spontaneous at high temperatures</p>""}]",Spontaneous at high temperatures,3
+5f1126a1-b9be-4959-8970-6c374cd7e0ca,2263fe7f-344b-450f-ac27-22bc27c3dbf3,d,"[{""type"": ""text"", ""html"": ""<p>Spontaneous at low temperatures</p>""}]",Spontaneous at low temperatures,4
+518c6fe3-da73-443c-ac87-54de5b05f039,a5f7c32c-8dc4-4087-92ae-0ef6a12c63a8,a,"[{""type"": ""text"", ""html"": ""<p>High temperatures (where \\(T\\Delta S > \\Delta H\\))</p>""}]",High temperatures (where \(T\Delta S > \Delta H\)),1
+f403f7f4-db85-4eef-bd21-0c8300071ed0,a5f7c32c-8dc4-4087-92ae-0ef6a12c63a8,b,"[{""type"": ""text"", ""html"": ""<p>Low temperatures</p>""}]",Low temperatures,2
+68e4f0db-ff4c-46a6-b176-30f17084d2e2,a5f7c32c-8dc4-4087-92ae-0ef6a12c63a8,c,"[{""type"": ""text"", ""html"": ""<p>All temperatures</p>""}]",All temperatures,3
+850f33b0-51a6-468c-8803-29e569870a7c,a5f7c32c-8dc4-4087-92ae-0ef6a12c63a8,d,"[{""type"": ""text"", ""html"": ""<p>Zero Kelvin</p>""}]",Zero Kelvin,4
+e909d75e-8243-40d5-b748-242779056e31,224e9e4f-3b4b-4d4e-b3bd-903efcc06c7b,a,"[{""type"": ""text"", ""html"": ""<p>Low temperatures (where \\(|\\Delta H| > |T\\Delta S|\\))</p>""}]",Low temperatures (where \(|\Delta H| > |T\Delta S|\)),1
+45169d86-d9cd-403a-bad1-ca799bf3ad7a,224e9e4f-3b4b-4d4e-b3bd-903efcc06c7b,b,"[{""type"": ""text"", ""html"": ""<p>High temperatures</p>""}]",High temperatures,2
+9e6f3a0c-79bc-4c52-be64-2afa850d05f0,224e9e4f-3b4b-4d4e-b3bd-903efcc06c7b,c,"[{""type"": ""text"", ""html"": ""<p>All temperatures</p>""}]",All temperatures,3
+df84ab2e-e768-4b51-96e8-4dc9089585ce,224e9e4f-3b4b-4d4e-b3bd-903efcc06c7b,d,"[{""type"": ""text"", ""html"": ""<p>No temperature</p>""}]",No temperature,4
+65e3fe7e-b380-484c-b99e-6d845d19217d,59402246-cdd7-46c4-9f7c-4c3875e4129f,a,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta G^\\circ = -RT \\ln K = -2.303 RT \\log_{10} K\\)</p>""}]",\(\Delta G^\circ = -RT \ln K = -2.303 RT \log_{10} K\),1
+e8595bc8-660e-4aee-9c12-1b1154c23a1a,59402246-cdd7-46c4-9f7c-4c3875e4129f,b,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta G^\\circ = RT \\ln K\\)</p>""}]",\(\Delta G^\circ = RT \ln K\),2
+c28fa2b2-9872-4e54-9238-557b3f47a147,59402246-cdd7-46c4-9f7c-4c3875e4129f,c,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta G^\\circ = -nFE^\\circ\\)</p>""}]",\(\Delta G^\circ = -nFE^\circ\),3
+7617e49a-c7f2-412a-bacb-359eb08181ed,59402246-cdd7-46c4-9f7c-4c3875e4129f,d,"[{""type"": ""text"", ""html"": ""<p>\\(K = e^{\\Delta G^\\circ / RT}\\)</p>""}]",\(K = e^{\Delta G^\circ / RT}\),4
+d7e07d6f-8d73-4caf-9ad6-044d3335a62a,7ace057e-7e1f-497e-a662-1f1a0dc91ddf,a,"[{""type"": ""text"", ""html"": ""<p>Negative (\\(\\Delta G^\\circ < 0\\)), favoring products</p>""}]","Negative (\(\Delta G^\circ < 0\)), favoring products",1
+7f7aed0f-5ae0-4d11-89d0-16a98e5e7ea6,7ace057e-7e1f-497e-a662-1f1a0dc91ddf,b,"[{""type"": ""text"", ""html"": ""<p>Positive (\\(\\Delta G^\\circ > 0\\))</p>""}]",Positive (\(\Delta G^\circ > 0\)),2
+9ccd61bb-c493-445f-822e-0e58d473b442,7ace057e-7e1f-497e-a662-1f1a0dc91ddf,c,"[{""type"": ""text"", ""html"": ""<p>Zero</p>""}]",Zero,3
+d6f35b7a-1f01-4850-91fb-8d4b75591273,7ace057e-7e1f-497e-a662-1f1a0dc91ddf,d,"[{""type"": ""text"", ""html"": ""<p>\\(1.0\\)</p>""}]",\(1.0\),4
+a83e9ee7-b38a-4388-be14-a4ee6b194f69,928c494c-edec-4d1f-8bfc-20feb0c9c920,a,"[{""type"": ""text"", ""html"": ""<p>Zero</p>""}]",Zero,1
+e12b55ca-60c2-4434-90b3-dbb95fe9d91c,928c494c-edec-4d1f-8bfc-20feb0c9c920,b,"[{""type"": ""text"", ""html"": ""<p>Maximum</p>""}]",Maximum,2
+1af47697-e3da-4c84-a6c0-742408daa152,928c494c-edec-4d1f-8bfc-20feb0c9c920,c,"[{""type"": ""text"", ""html"": ""<p>Infinite</p>""}]",Infinite,3
+48e04147-aaa6-48af-bdde-1eb56c3bb293,928c494c-edec-4d1f-8bfc-20feb0c9c920,d,"[{""type"": ""text"", ""html"": ""<p>Negative</p>""}]",Negative,4
+d7aa625b-15b8-47a0-b2f0-25e857af7b20,bc9ed5a5-0b69-4259-bcb4-726f476109d2,a,"[{""type"": ""text"", ""html"": ""<p>Absolute entropy of pure substances at any temperature</p>""}]",Absolute entropy of pure substances at any temperature,1
+fe58ae47-285c-4212-9121-1123815c07cf,bc9ed5a5-0b69-4259-bcb4-726f476109d2,b,"[{""type"": ""text"", ""html"": ""<p>Absolute enthalpy of substances</p>""}]",Absolute enthalpy of substances,2
+39ad6e61-382f-43bf-a0f4-42d60adc5ff1,bc9ed5a5-0b69-4259-bcb4-726f476109d2,c,"[{""type"": ""text"", ""html"": ""<p>Absolute internal energy</p>""}]",Absolute internal energy,3
+b2524203-c8da-4dd9-a5ac-8a14387b3ab2,bc9ed5a5-0b69-4259-bcb4-726f476109d2,d,"[{""type"": ""text"", ""html"": ""<p>Rate of chemical reaction</p>""}]",Rate of chemical reaction,4
+f4dee7ee-dffd-4098-99ae-ed8222665173,9dacd9f1-79fa-4248-92f5-ec633103795f,a,"[{""type"": ""text"", ""html"": ""<p>\\(w = -P_{\\text{ext}}(V_2 - V_1)\\)</p>""}]",\(w = -P_{\text{ext}}(V_2 - V_1)\),1
+e610d94a-375b-41d4-88ff-99f541a4ad31,9dacd9f1-79fa-4248-92f5-ec633103795f,b,"[{""type"": ""text"", ""html"": ""<p>\\(w = -2.303 nRT \\log(V_2/V_1)\\)</p>""}]",\(w = -2.303 nRT \log(V_2/V_1)\),2
+68d612e9-fbbf-4d41-91e2-05d2eba72597,9dacd9f1-79fa-4248-92f5-ec633103795f,c,"[{""type"": ""text"", ""html"": ""<p>\\(w = 0\\)</p>""}]",\(w = 0\),3
+0da3b4dc-886c-45c3-b246-3ff333078f52,9dacd9f1-79fa-4248-92f5-ec633103795f,d,"[{""type"": ""text"", ""html"": ""<p>\\(w = -\\Delta U\\)</p>""}]",\(w = -\Delta U\),4
+72e0689d-26d7-4cc7-b9dc-6e01cbc465a7,f239d9c8-128a-47ea-8598-a9c07b746e78,a,"[{""type"": ""text"", ""html"": ""<p>Decreases (cooling effect, \\(\\Delta U = w < 0\\))</p>""}]","Decreases (cooling effect, \(\Delta U = w < 0\))",1
+1fb689c8-d047-456f-92e4-8c1e3da398a7,f239d9c8-128a-47ea-8598-a9c07b746e78,b,"[{""type"": ""text"", ""html"": ""<p>Increases</p>""}]",Increases,2
+4489ae8c-f198-4159-94e4-acc0af216e9d,f239d9c8-128a-47ea-8598-a9c07b746e78,c,"[{""type"": ""text"", ""html"": ""<p>Remains constant</p>""}]",Remains constant,3
+0d1c2068-1730-4d1f-8f3a-56963d5b2f60,f239d9c8-128a-47ea-8598-a9c07b746e78,d,"[{""type"": ""text"", ""html"": ""<p>First increases then decreases</p>""}]",First increases then decreases,4
+220454f9-4fdb-48f9-8bf4-9fd9ddc1fb86,82f2af13-4474-4e6c-86cb-d0799f8c34e9,a,"[{""type"": ""text"", ""html"": ""<p>Increases (\\(\\Delta U = w > 0\\))</p>""}]",Increases (\(\Delta U = w > 0\)),1
+01b2930b-70ee-4fbc-a3bc-4baad7ef2a63,82f2af13-4474-4e6c-86cb-d0799f8c34e9,b,"[{""type"": ""text"", ""html"": ""<p>Decreases</p>""}]",Decreases,2
+76a072cd-e3ca-46e6-bf50-32546ccd4820,82f2af13-4474-4e6c-86cb-d0799f8c34e9,c,"[{""type"": ""text"", ""html"": ""<p>Remains constant</p>""}]",Remains constant,3
+e4336c28-5055-446b-8d0b-284844ccbebf,82f2af13-4474-4e6c-86cb-d0799f8c34e9,d,"[{""type"": ""text"", ""html"": ""<p>Becomes zero</p>""}]",Becomes zero,4
+26bcb04c-bdb7-4632-bcd2-78936dae7128,49daa1f4-d1da-4d21-9731-fb7f8837b68c,a,"[{""type"": ""text"", ""html"": ""<p>A-(iii), B-(i), C-(iv), D-(ii)</p>""}]","A-(iii), B-(i), C-(iv), D-(ii)",1
+7d5fbf65-93df-4a9d-ad07-889a739437c1,49daa1f4-d1da-4d21-9731-fb7f8837b68c,b,"[{""type"": ""text"", ""html"": ""<p>A-(i), B-(ii), C-(iii), D-(iv)</p>""}]","A-(i), B-(ii), C-(iii), D-(iv)",2
+86938e49-2541-499f-861f-de6273c6ff91,49daa1f4-d1da-4d21-9731-fb7f8837b68c,c,"[{""type"": ""text"", ""html"": ""<p>A-(ii), B-(iii), C-(i), D-(iv)</p>""}]","A-(ii), B-(iii), C-(i), D-(iv)",3
+d2289fc4-3aa8-4b29-a265-e1f9ae7ab29a,49daa1f4-d1da-4d21-9731-fb7f8837b68c,d,"[{""type"": ""text"", ""html"": ""<p>A-(iv), B-(ii), C-(iii), D-(i)</p>""}]","A-(iv), B-(ii), C-(iii), D-(i)",4
+2a2a3b01-f62f-43e2-a4d9-a2b609e2976f,a1776409-f17d-4f3d-a47a-7b9d20bd32e0,a,"[{""type"": ""text"", ""html"": ""<p>Positive (\\(\\Delta S > 0\\))</p>""}]",Positive (\(\Delta S > 0\)),1
+d729cc8e-94aa-4ddf-a696-c6aba92c31a0,a1776409-f17d-4f3d-a47a-7b9d20bd32e0,b,"[{""type"": ""text"", ""html"": ""<p>Negative (\\(\\Delta S < 0\\))</p>""}]",Negative (\(\Delta S < 0\)),2
+ee5aeeae-8964-41c4-b04f-b921d0032274,a1776409-f17d-4f3d-a47a-7b9d20bd32e0,c,"[{""type"": ""text"", ""html"": ""<p>Zero</p>""}]",Zero,3
+97c7a2e1-6041-4eee-b093-94729bb3b643,a1776409-f17d-4f3d-a47a-7b9d20bd32e0,d,"[{""type"": ""text"", ""html"": ""<p>Undefined</p>""}]",Undefined,4
+0a162539-bcfa-4a61-b7e6-ea2638284c8e,0c946aa7-84b3-4945-a898-e301c8a59bd2,a,"[{""type"": ""text"", ""html"": ""<p>Decreases (\\(\\Delta S_{\\text{sys}} < 0\\)) while surroundings entropy increases</p>""}]",Decreases (\(\Delta S_{\text{sys}} < 0\)) while surroundings entropy increases,1
+f65fcbc7-1a52-4307-84c5-5a9442f0bcd1,0c946aa7-84b3-4945-a898-e301c8a59bd2,b,"[{""type"": ""text"", ""html"": ""<p>Increases</p>""}]",Increases,2
+9f5cb191-9a1e-4ad9-92d4-c00226177091,0c946aa7-84b3-4945-a898-e301c8a59bd2,c,"[{""type"": ""text"", ""html"": ""<p>Remains zero</p>""}]",Remains zero,3
+89840c03-e41d-410f-b829-2d5aea4cd454,0c946aa7-84b3-4945-a898-e301c8a59bd2,d,"[{""type"": ""text"", ""html"": ""<p>Becomes negative infinity</p>""}]",Becomes negative infinity,4
+635e5628-4807-448a-939c-c84fd73df937,18577ff4-3be8-4b62-af39-08ca3c73baf8,a,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta H < 0\\) (bond formation is exothermic) and \\(\\Delta S < 0\\) (randomness decreases)</p>""}]",\(\Delta H < 0\) (bond formation is exothermic) and \(\Delta S < 0\) (randomness decreases),1
+9baf1c78-89e3-4ce1-81b6-ae2fefd2a7c5,18577ff4-3be8-4b62-af39-08ca3c73baf8,b,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta H > 0\\) and \\(\\Delta S > 0\\)</p>""}]",\(\Delta H > 0\) and \(\Delta S > 0\),2
+40383e42-6241-43ec-bfd5-ec662151fad9,18577ff4-3be8-4b62-af39-08ca3c73baf8,c,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta H < 0\\) and \\(\\Delta S > 0\\)</p>""}]",\(\Delta H < 0\) and \(\Delta S > 0\),3
+5eacc369-cb2d-45dd-bd8d-bee61d02b109,18577ff4-3be8-4b62-af39-08ca3c73baf8,d,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta H > 0\\) and \\(\\Delta S < 0\\)</p>""}]",\(\Delta H > 0\) and \(\Delta S < 0\),4
+73d1feb3-f479-4f56-bda9-c58e6828a8b5,9821292c-0f48-43c2-9715-382cda8e36dc,a,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta H > 0\\) (endothermic) and \\(\\Delta S > 0\\) (randomness increases)</p>""}]",\(\Delta H > 0\) (endothermic) and \(\Delta S > 0\) (randomness increases),1
+b8628efb-9e21-4d23-b367-b49ce3a7e897,9821292c-0f48-43c2-9715-382cda8e36dc,b,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta H < 0\\) and \\(\\Delta S < 0\\)</p>""}]",\(\Delta H < 0\) and \(\Delta S < 0\),2
+d0648e0a-05f6-4f56-8727-08d8742482a7,9821292c-0f48-43c2-9715-382cda8e36dc,c,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta H > 0\\) and \\(\\Delta S < 0\\)</p>""}]",\(\Delta H > 0\) and \(\Delta S < 0\),3
+d9a09517-c3b6-4eb9-a881-96973bffdc14,9821292c-0f48-43c2-9715-382cda8e36dc,d,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta H < 0\\) and \\(\\Delta S > 0\\)</p>""}]",\(\Delta H < 0\) and \(\Delta S > 0\),4
+64705397-795a-415e-afb0-8ab39679a7cd,233da77f-59fd-4973-b0d4-9d1992bd43d6,a,"[{""type"": ""text"", ""html"": ""<p>\\(-57.1 \\text{ kJ}\\cdot\\text{mol}^{-1}\\) (or \\(-13.7 \\text{ kcal}\\cdot\\text{mol}^{-1}\\))</p>""}]",\(-57.1 \text{ kJ}\cdot\text{mol}^{-1}\) (or \(-13.7 \text{ kcal}\cdot\text{mol}^{-1}\)),1
+e0083e8a-9457-483a-96b6-9e259fb06fd5,233da77f-59fd-4973-b0d4-9d1992bd43d6,b,"[{""type"": ""text"", ""html"": ""<p>\\(-100 \\text{ kJ}\\cdot\\text{mol}^{-1}\\)</p>""}]",\(-100 \text{ kJ}\cdot\text{mol}^{-1}\),2
+08040d73-a1fc-492d-9695-040c8c396f28,233da77f-59fd-4973-b0d4-9d1992bd43d6,c,"[{""type"": ""text"", ""html"": ""<p>\\(+57.1 \\text{ kJ}\\cdot\\text{mol}^{-1}\\)</p>""}]",\(+57.1 \text{ kJ}\cdot\text{mol}^{-1}\),3
+d4808eb7-a37b-48b3-9fa0-9e3a1eb38b6e,233da77f-59fd-4973-b0d4-9d1992bd43d6,d,"[{""type"": ""text"", ""html"": ""<p>\\(0 \\text{ kJ}\\cdot\\text{mol}^{-1}\\)</p>""}]",\(0 \text{ kJ}\cdot\text{mol}^{-1}\),4
+64848863-6479-4f1c-aa57-3bf9d3814297,c6680e9a-637c-4b38-a326-27a887533034,a,"[{""type"": ""text"", ""html"": ""<p>Some heat is consumed in complete ionization of the weak acid</p>""}]",Some heat is consumed in complete ionization of the weak acid,1
+59b0298a-eff9-4b21-9634-95af5f470914,c6680e9a-637c-4b38-a326-27a887533034,b,"[{""type"": ""text"", ""html"": ""<p>Weak acid releases more heat</p>""}]",Weak acid releases more heat,2
+12d083a9-8e43-4fba-8808-c0d4c0a195a0,c6680e9a-637c-4b38-a326-27a887533034,c,"[{""type"": ""text"", ""html"": ""<p>Reaction is incomplete</p>""}]",Reaction is incomplete,3
+0968097e-eaea-4a1a-b659-17be27b03c6a,c6680e9a-637c-4b38-a326-27a887533034,d,"[{""type"": ""text"", ""html"": ""<p>Water is not formed</p>""}]",Water is not formed,4
+df5c0502-b1a0-42b1-ad61-fb304d988cf0,b338a8a0-8cdc-46b4-a59e-b98b6c1f071a,a,"[{""type"": ""text"", ""html"": ""<p>\\(\\text{H}_2(g) \\rightarrow 2\\text{H}(g)\\)</p>""}]",\(\text{H}_2(g) \rightarrow 2\text{H}(g)\),1
+6817f70f-c278-43f3-8ca6-2539bc408826,b338a8a0-8cdc-46b4-a59e-b98b6c1f071a,b,"[{""type"": ""text"", ""html"": ""<p>\\(\\text{H}_2(g) \\rightarrow \\text{H}_2(l)\\)</p>""}]",\(\text{H}_2(g) \rightarrow \text{H}_2(l)\),2
+571dc921-e44c-4dc2-9e42-9f12ac9319e1,b338a8a0-8cdc-46b4-a59e-b98b6c1f071a,c,"[{""type"": ""text"", ""html"": ""<p>\\(\\text{H}^+(aq) + \\text{OH}^-(aq) \\rightarrow \\text{H}_2\\text{O}(l)\\)</p>""}]",\(\text{H}^+(aq) + \text{OH}^-(aq) \rightarrow \text{H}_2\text{O}(l)\),3
+2a7188b1-abf6-4acb-be81-30e76023ef2b,b338a8a0-8cdc-46b4-a59e-b98b6c1f071a,d,"[{""type"": ""text"", ""html"": ""<p>\\(2\\text{H}_2(g) + \\text{O}_2(g) \\rightarrow 2\\text{H}_2\\text{O}(l)\\)</p>""}]",\(2\text{H}_2(g) + \text{O}_2(g) \rightarrow 2\text{H}_2\text{O}(l)\),4
+9aeb5278-5ef4-4b2f-936e-7de2c5c58631,7d7f69b6-284a-4da5-aa76-536e583aa657,a,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta U = 0\\), \\(\\Delta H = 0\\), \\(\\Delta S = 0\\), and \\(q = -w\\)</p>""}]","\(\Delta U = 0\), \(\Delta H = 0\), \(\Delta S = 0\), and \(q = -w\)",1
+e57c8659-be53-4641-ba2d-a84c961d636e,7d7f69b6-284a-4da5-aa76-536e583aa657,b,"[{""type"": ""text"", ""html"": ""<p>\\(w = 0\\) and \\(q = 0\\)</p>""}]",\(w = 0\) and \(q = 0\),2
+9ee99bfe-5985-43a4-a266-fb144d31ad41,7d7f69b6-284a-4da5-aa76-536e583aa657,c,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta U > 0\\)</p>""}]",\(\Delta U > 0\),3
+f2f682f1-5251-44fb-b26b-bdb790034b6e,7d7f69b6-284a-4da5-aa76-536e583aa657,d,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta H > 0\\)</p>""}]",\(\Delta H > 0\),4
+6ce8f606-b3cd-4e4b-8306-22b5f37c4bd9,ef639a74-af15-49a7-a0ae-e9b0a4929794,a,"[{""type"": ""text"", ""html"": ""<p>\\(w = -P\\Delta V = -2 \\times (10 - 2) = -16 \\text{ L}\\cdot\\text{atm} = -1621.2 \\text{ J}\\)</p>""}]",\(w = -P\Delta V = -2 \times (10 - 2) = -16 \text{ L}\cdot\text{atm} = -1621.2 \text{ J}\),1
+7540eb16-c482-4f17-a38c-d071c4c14e7f,ef639a74-af15-49a7-a0ae-e9b0a4929794,b,"[{""type"": ""text"", ""html"": ""<p>\\(-800 \\text{ J}\\)</p>""}]",\(-800 \text{ J}\),2
+6160256f-38a8-42ef-bacf-d83cec55ba80,ef639a74-af15-49a7-a0ae-e9b0a4929794,c,"[{""type"": ""text"", ""html"": ""<p>\\(-3200 \\text{ J}\\)</p>""}]",\(-3200 \text{ J}\),3
+c4e6c04e-3ede-4514-9348-b12255d0d5fa,ef639a74-af15-49a7-a0ae-e9b0a4929794,d,"[{""type"": ""text"", ""html"": ""<p>\\(+1621.2 \\text{ J}\\)</p>""}]",\(+1621.2 \text{ J}\),4
+c91373f4-bd8b-4321-867b-3656099769e6,82be6689-4c2a-4a0a-b95d-a12f90ddd206,a,"[{""type"": ""text"", ""html"": ""<p>External pressure is infinitesimally smaller than internal pressure at every stage</p>""}]",External pressure is infinitesimally smaller than internal pressure at every stage,1
+45dc4d9a-1f83-42eb-aa08-038b4dc18553,82be6689-4c2a-4a0a-b95d-a12f90ddd206,b,"[{""type"": ""text"", ""html"": ""<p>External pressure is zero</p>""}]",External pressure is zero,2
+19d6eb35-d6f5-4f31-a441-f2bcceb8e6ce,82be6689-4c2a-4a0a-b95d-a12f90ddd206,c,"[{""type"": ""text"", ""html"": ""<p>Volume change is zero</p>""}]",Volume change is zero,3
+be53c7b1-22d2-4ef1-b100-6069c9b03289,82be6689-4c2a-4a0a-b95d-a12f90ddd206,d,"[{""type"": ""text"", ""html"": ""<p>Temperature decreases</p>""}]",Temperature decreases,4
+b2810cc1-4546-4bb4-8792-4c7d43d89670,acf62f19-355c-4156-bbe9-060ac3c421e8,a,"[{""type"": ""text"", ""html"": ""<p>\\(314.8 \\text{ kJ}\\)</p>""}]",\(314.8 \text{ kJ}\),1
+daa68d95-1b8a-4d7f-a795-19368f69b5ff,acf62f19-355c-4156-bbe9-060ac3c421e8,b,"[{""type"": ""text"", ""html"": ""<p>\\(393.5 \\text{ kJ}\\)</p>""}]",\(393.5 \text{ kJ}\),2
+701c012f-dd41-4470-bc8e-55fe62cb1f11,acf62f19-355c-4156-bbe9-060ac3c421e8,c,"[{""type"": ""text"", ""html"": ""<p>\\(196.75 \\text{ kJ}\\)</p>""}]",\(196.75 \text{ kJ}\),3
+16d66594-2d47-420b-8bca-8f350dc9db1d,acf62f19-355c-4156-bbe9-060ac3c421e8,d,"[{""type"": ""text"", ""html"": ""<p>\\(787.0 \\text{ kJ}\\)</p>""}]",\(787.0 \text{ kJ}\),4
+b28de034-b5d1-4cf5-896c-7f7b751b01d7,20588fb9-1cad-4da2-b7b2-7e92589c080b,a,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta G^\\circ = -nFE^\\circ = -2 \\times 96487 \\times 1.10 = -212.27 \\text{ kJ}\\cdot\\text{mol}^{-1}\\)</p>""}]",\(\Delta G^\circ = -nFE^\circ = -2 \times 96487 \times 1.10 = -212.27 \text{ kJ}\cdot\text{mol}^{-1}\),1
+9bb55c54-c681-486d-bc8a-2243246d2cd7,20588fb9-1cad-4da2-b7b2-7e92589c080b,b,"[{""type"": ""text"", ""html"": ""<p>\\(+212.27 \\text{ kJ}\\cdot\\text{mol}^{-1}\\)</p>""}]",\(+212.27 \text{ kJ}\cdot\text{mol}^{-1}\),2
+2d103781-f387-4797-9235-04fb4f881c2f,20588fb9-1cad-4da2-b7b2-7e92589c080b,c,"[{""type"": ""text"", ""html"": ""<p>\\(-106.13 \\text{ kJ}\\cdot\\text{mol}^{-1}\\)</p>""}]",\(-106.13 \text{ kJ}\cdot\text{mol}^{-1}\),3
+2864aa25-74af-4f41-b2eb-cc6f74265516,20588fb9-1cad-4da2-b7b2-7e92589c080b,d,"[{""type"": ""text"", ""html"": ""<p>\\(+106.13 \\text{ kJ}\\cdot\\text{mol}^{-1}\\)</p>""}]",\(+106.13 \text{ kJ}\cdot\text{mol}^{-1}\),4
+7e532287-c948-4fd8-84d5-b5861ddc33dc,654e098a-32d4-4073-9be4-d3e159d0022e,a,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta U = q + w = 701 - 394 = +307 \\text{ J}\\)</p>""}]",\(\Delta U = q + w = 701 - 394 = +307 \text{ J}\),1
+c7aac5b5-0c23-47ee-9abd-eef4de46407e,654e098a-32d4-4073-9be4-d3e159d0022e,b,"[{""type"": ""text"", ""html"": ""<p>\\(-307 \\text{ J}\\)</p>""}]",\(-307 \text{ J}\),2
+00c22c2f-d56a-49d7-bcad-d6a09637d520,654e098a-32d4-4073-9be4-d3e159d0022e,c,"[{""type"": ""text"", ""html"": ""<p>\\(+1095 \\text{ J}\\)</p>""}]",\(+1095 \text{ J}\),3
+1562f430-defb-4bc9-9008-a51db9eaa1d5,654e098a-32d4-4073-9be4-d3e159d0022e,d,"[{""type"": ""text"", ""html"": ""<p>\\(-1095 \\text{ J}\\)</p>""}]",\(-1095 \text{ J}\),4
+dd74148b-9c1c-4dc8-89d4-4aee86a9c5f5,cd6aadcb-e89f-4105-99e4-7e01a7d31f6e,a,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta S_{\\text{vap}} = \\frac{40660}{373} = 108.99 \\text{ J}\\cdot\\text{K}^{-1}\\cdot\\text{mol}^{-1}\\)</p>""}]",\(\Delta S_{\text{vap}} = \frac{40660}{373} = 108.99 \text{ J}\cdot\text{K}^{-1}\cdot\text{mol}^{-1}\),1
+eeb21892-37de-44d8-8585-78e6bfc5345a,cd6aadcb-e89f-4105-99e4-7e01a7d31f6e,b,"[{""type"": ""text"", ""html"": ""<p>\\(10.89 \\text{ J}\\cdot\\text{K}^{-1}\\cdot\\text{mol}^{-1}\\)</p>""}]",\(10.89 \text{ J}\cdot\text{K}^{-1}\cdot\text{mol}^{-1}\),2
+0b41ab27-133c-44b0-bd74-7220d35cb11f,cd6aadcb-e89f-4105-99e4-7e01a7d31f6e,c,"[{""type"": ""text"", ""html"": ""<p>\\(406.6 \\text{ J}\\cdot\\text{K}^{-1}\\cdot\\text{mol}^{-1}\\)</p>""}]",\(406.6 \text{ J}\cdot\text{K}^{-1}\cdot\text{mol}^{-1}\),3
+7ac9d486-229f-40a3-9421-62a240d0a990,cd6aadcb-e89f-4105-99e4-7e01a7d31f6e,d,"[{""type"": ""text"", ""html"": ""<p>\\(0 \\text{ J}\\cdot\\text{K}^{-1}\\cdot\\text{mol}^{-1}\\)</p>""}]",\(0 \text{ J}\cdot\text{K}^{-1}\cdot\text{mol}^{-1}\),4
+19318c42-bff4-4905-8321-9dc7a3adfcbd,4d3a0ab5-8af9-4194-90a0-b078b5b1a2e0,a,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta S_{\\text{vap}} \\approx 88 \\text{ J}\\cdot\\text{K}^{-1}\\cdot\\text{mol}^{-1}\\)</p>""}]",\(\Delta S_{\text{vap}} \approx 88 \text{ J}\cdot\text{K}^{-1}\cdot\text{mol}^{-1}\),1
+86acdac3-ca09-40ae-aac4-0d24f411daea,4d3a0ab5-8af9-4194-90a0-b078b5b1a2e0,b,"[{""type"": ""text"", ""html"": ""<p>\\(50 \\text{ J}\\cdot\\text{K}^{-1}\\cdot\\text{mol}^{-1}\\)</p>""}]",\(50 \text{ J}\cdot\text{K}^{-1}\cdot\text{mol}^{-1}\),2
+40137293-057d-4e3b-b362-db632e2c6337,4d3a0ab5-8af9-4194-90a0-b078b5b1a2e0,c,"[{""type"": ""text"", ""html"": ""<p>\\(150 \\text{ J}\\cdot\\text{K}^{-1}\\cdot\\text{mol}^{-1}\\)</p>""}]",\(150 \text{ J}\cdot\text{K}^{-1}\cdot\text{mol}^{-1}\),3
+4bac2c70-8c9a-4313-9d8f-1e9eab58e1b2,4d3a0ab5-8af9-4194-90a0-b078b5b1a2e0,d,"[{""type"": ""text"", ""html"": ""<p>\\(0 \\text{ J}\\cdot\\text{K}^{-1}\\cdot\\text{mol}^{-1}\\)</p>""}]",\(0 \text{ J}\cdot\text{K}^{-1}\cdot\text{mol}^{-1}\),4
+0743f2de-4687-4feb-8353-2d875bb116d1,71b55361-29b0-4cea-9c4e-cd88221b7a4e,a,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta G < 0\\)</p>""}]",\(\Delta G < 0\),1
+1507208b-735d-4f43-a24d-81e599b0efd7,71b55361-29b0-4cea-9c4e-cd88221b7a4e,b,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta H < 0\\) only</p>""}]",\(\Delta H < 0\) only,2
+c9fb5ce2-1a9a-4b48-b845-a8a667289bd9,71b55361-29b0-4cea-9c4e-cd88221b7a4e,c,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta S > 0\\) only</p>""}]",\(\Delta S > 0\) only,3
+e87b57f4-1bc7-4b59-bf24-f3a183d14421,71b55361-29b0-4cea-9c4e-cd88221b7a4e,d,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta U = 0\\)</p>""}]",\(\Delta U = 0\),4
+adb0ca67-85fc-41f8-a3b7-da6aecf8fe2b,11cf7906-97cb-4740-89b8-a38afd438d8c,a,"[{""type"": ""text"", ""html"": ""<p>\\(T = \\frac{\\Delta H}{\\Delta S} = \\frac{-10000}{-20} = 500 \\text{ K}\\)</p>""}]",\(T = \frac{\Delta H}{\Delta S} = \frac{-10000}{-20} = 500 \text{ K}\),1
+970f672f-f652-4fbf-99c0-c69799d230de,11cf7906-97cb-4740-89b8-a38afd438d8c,b,"[{""type"": ""text"", ""html"": ""<p>\\(250 \\text{ K}\\)</p>""}]",\(250 \text{ K}\),2
+ae685707-1713-4c23-8b9a-eb8328181752,11cf7906-97cb-4740-89b8-a38afd438d8c,c,"[{""type"": ""text"", ""html"": ""<p>\\(1000 \\text{ K}\\)</p>""}]",\(1000 \text{ K}\),3
+696559de-2e59-41d2-8963-dd6cc884cddb,11cf7906-97cb-4740-89b8-a38afd438d8c,d,"[{""type"": ""text"", ""html"": ""<p>\\(300 \\text{ K}\\)</p>""}]",\(300 \text{ K}\),4
+18542e28-3dec-4919-9c3e-bf50f6078a79,606e0c23-ea48-4501-bd47-357848119e43,a,"[{""type"": ""text"", ""html"": ""<p>Increases according to Van't Hoff equation</p>""}]",Increases according to Van't Hoff equation,1
+7e2be89f-6ad3-42f3-855c-db01233116f5,606e0c23-ea48-4501-bd47-357848119e43,b,"[{""type"": ""text"", ""html"": ""<p>Decreases</p>""}]",Decreases,2
+5d9aec56-2214-461d-97e5-ec0d036b3ea4,606e0c23-ea48-4501-bd47-357848119e43,c,"[{""type"": ""text"", ""html"": ""<p>Remains constant</p>""}]",Remains constant,3
+d7f959c9-1ef9-466c-8824-f1c8d887561c,606e0c23-ea48-4501-bd47-357848119e43,d,"[{""type"": ""text"", ""html"": ""<p>Becomes zero</p>""}]",Becomes zero,4
+38f8342d-b256-4997-8be7-013afffb0b56,a1de5dac-862d-46f9-af45-16f450f3ecfc,a,"[{""type"": ""text"", ""html"": ""<p>Decreases</p>""}]",Decreases,1
+cad3060a-b4cd-4b5e-abf6-17cbd935330d,a1de5dac-862d-46f9-af45-16f450f3ecfc,b,"[{""type"": ""text"", ""html"": ""<p>Increases</p>""}]",Increases,2
+9dc1a48f-e1f1-4e95-8d2f-512f805b0ee4,a1de5dac-862d-46f9-af45-16f450f3ecfc,c,"[{""type"": ""text"", ""html"": ""<p>Remains constant</p>""}]",Remains constant,3
+b47cbe67-060f-4246-9518-d77091e0b0b0,a1de5dac-862d-46f9-af45-16f450f3ecfc,d,"[{""type"": ""text"", ""html"": ""<p>Doubles</p>""}]",Doubles,4
+678aacee-5aec-49ca-876d-5846ac693445,566526f0-0f77-4060-a271-7317b4b62360,a,"[{""type"": ""text"", ""html"": ""<p>\\(-\\frac{\\Delta H^\\circ}{R}\\)</p>""}]",\(-\frac{\Delta H^\circ}{R}\),1
+3f8c4192-922e-426d-a408-bf3ebeca4aa7,566526f0-0f77-4060-a271-7317b4b62360,b,"[{""type"": ""text"", ""html"": ""<p>\\(\\frac{\\Delta H^\\circ}{R}\\)</p>""}]",\(\frac{\Delta H^\circ}{R}\),2
+450681fd-f49b-4083-ab01-b65ebbead643,566526f0-0f77-4060-a271-7317b4b62360,c,"[{""type"": ""text"", ""html"": ""<p>\\(-\\frac{\\Delta S^\\circ}{R}\\)</p>""}]",\(-\frac{\Delta S^\circ}{R}\),3
+20f87286-6fd7-475c-9285-d975a376e50d,566526f0-0f77-4060-a271-7317b4b62360,d,"[{""type"": ""text"", ""html"": ""<p>\\(\\frac{\\Delta G^\\circ}{RT}\\)</p>""}]",\(\frac{\Delta G^\circ}{RT}\),4
+6fa0f000-5667-4da9-a51c-401bc34115ba,509fc43f-ab9b-4e25-804c-cf6c2c616c0d,a,"[{""type"": ""text"", ""html"": ""<p>A-(iv), B-(i), C-(ii), D-(iii)</p>""}]","A-(iv), B-(i), C-(ii), D-(iii)",1
+d0d91df4-1e0c-48ef-9b59-ba486e12519d,509fc43f-ab9b-4e25-804c-cf6c2c616c0d,b,"[{""type"": ""text"", ""html"": ""<p>A-(i), B-(ii), C-(iii), D-(iv)</p>""}]","A-(i), B-(ii), C-(iii), D-(iv)",2
+e95e5943-b43f-4e2b-8f0a-e86a7fae1be7,509fc43f-ab9b-4e25-804c-cf6c2c616c0d,c,"[{""type"": ""text"", ""html"": ""<p>A-(ii), B-(iv), C-(i), D-(iii)</p>""}]","A-(ii), B-(iv), C-(i), D-(iii)",3
+5e732bb1-1182-4fde-9f04-dba7a1a2b580,509fc43f-ab9b-4e25-804c-cf6c2c616c0d,d,"[{""type"": ""text"", ""html"": ""<p>A-(iii), B-(i), C-(iv), D-(ii)</p>""}]","A-(iii), B-(i), C-(iv), D-(ii)",4
+30796dea-eee1-4105-9eae-4bcf2d7e2080,901704f4-b9a6-4ca8-90a6-36f99697b5ec,a,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta G = 0\\)</p>""}]",\(\Delta G = 0\),1
+422a49ac-a590-4228-8a54-e56c5fe2ea7d,901704f4-b9a6-4ca8-90a6-36f99697b5ec,b,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta G < 0\\)</p>""}]",\(\Delta G < 0\),2
+ac374baa-da8a-4dcd-bdf7-492e01430381,901704f4-b9a6-4ca8-90a6-36f99697b5ec,c,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta G > 0\\)</p>""}]",\(\Delta G > 0\),3
+32031627-144d-419b-9117-dbcdfd2d6923,901704f4-b9a6-4ca8-90a6-36f99697b5ec,d,"[{""type"": ""text"", ""html"": ""<p>\\(\\Delta G = \\infty\\)</p>""}]",\(\Delta G = \infty\),4
+3ac2d446-ac0d-451e-8dbe-e0fc8123ab54,008643b4-f2ee-4655-8dcb-c948210047ff,a,"[{""type"": ""text"", ""html"": ""<p>Negative (since 2 moles of gas combine to form 1 mole of gas)</p>""}]",Negative (since 2 moles of gas combine to form 1 mole of gas),1
+b48e1d11-d0f5-4afe-9b02-db27698f9534,008643b4-f2ee-4655-8dcb-c948210047ff,b,"[{""type"": ""text"", ""html"": ""<p>Positive</p>""}]",Positive,2
+fa8fc417-e01d-4fbc-b924-6a6eef9e379a,008643b4-f2ee-4655-8dcb-c948210047ff,c,"[{""type"": ""text"", ""html"": ""<p>Zero</p>""}]",Zero,3
+541fc34a-f5dc-49cd-89c4-641d6fc890b0,008643b4-f2ee-4655-8dcb-c948210047ff,d,"[{""type"": ""text"", ""html"": ""<p>Equal to \\(\\Delta H\\)</p>""}]",Equal to \(\Delta H\),4

@@ -1,0 +1,101 @@
+[
+  {
+    "id": "a4-single-column",
+    "name": "A4 Single Column MCQ Paper",
+    "description": "Clean, spacious single-column format with ample space for diagrams, comprehensive tables, and detailed question explanations.",
+    "category": "generic",
+    "isSystem": true,
+    "settings": {
+      "pageSize": "A4",
+      "orientation": "portrait",
+      "margins": { "top": 15, "bottom": 15, "left": 15, "right": 15 },
+      "columns": 1,
+      "columnGap": 0,
+      "columnDivider": false,
+      "defaultFont": "Inter",
+      "defaultFontSize": 11,
+      "questionSpacing": 14,
+      "optionSpacing": 5,
+      "lineSpacing": 1.25,
+      "paragraphSpacing": 6,
+      "headerHeightMm": 32,
+      "footerHeightMm": 12,
+      "showPageNumbers": true,
+      "pageNumberPosition": "bottom_center"
+    },
+    "defaultMetadata": {
+      "instituteName": "APEX ACADEMY OF SCIENCE & TECHNOLOGY",
+      "examName": "ALL INDIA MOCK TEST SERIES — 2026",
+      "subject": "PHYSICS & CHEMISTRY",
+      "timeAllowedMinutes": 180,
+      "maxMarks": 180,
+      "headerTemplate": "boxed",
+      "generalInstructions": [
+        "The test contains objective questions with 4 choices each.",
+        "Each correct response awards +4 marks; incorrect response deducts -1 mark.",
+        "Use of scientific calculators and electronic devices is strictly prohibited."
+      ]
+    },
+    "defaultSections": [
+      {
+        "defaultTitle": "SECTION A: PHYSICS",
+        "defaultInstructions": "Questions carry 4 marks each with -1 negative marking.",
+        "defaultMarks": 100
+      },
+      {
+        "defaultTitle": "SECTION B: CHEMISTRY",
+        "defaultInstructions": "Questions carry 4 marks each with -1 negative marking.",
+        "defaultMarks": 80
+      }
+    ],
+    "defaultOptionLayout": "grid_2x2",
+    "createdAt": "2026-08-21T00:00:00.000Z",
+    "updatedAt": "2026-08-21T00:00:00.000Z"
+  },
+  {
+    "id": "school-exam",
+    "name": "School & Board Examination Paper",
+    "description": "Classic single-column board examination layout with formal header, candidate roll number fields, and structured sectional breakdown.",
+    "category": "school",
+    "isSystem": true,
+    "settings": {
+      "pageSize": "A4",
+      "orientation": "portrait",
+      "margins": { "top": 18, "bottom": 18, "left": 18, "right": 18 },
+      "columns": 1,
+      "columnGap": 0,
+      "columnDivider": false,
+      "defaultFont": "Arial",
+      "defaultFontSize": 11,
+      "questionSpacing": 14,
+      "optionSpacing": 5,
+      "lineSpacing": 1.25,
+      "paragraphSpacing": 6,
+      "headerHeightMm": 40,
+      "footerHeightMm": 12,
+      "showPageNumbers": true,
+      "pageNumberPosition": "bottom_center"
+    },
+    "defaultMetadata": {
+      "instituteName": "ST. XAVIER'S SENIOR SECONDARY SCHOOL",
+      "examName": "ANNUAL BOARD PREPARATORY EXAMINATION 2026",
+      "subject": "SCIENCE (PHYSICS & CHEMISTRY)",
+      "timeAllowedMinutes": 180,
+      "maxMarks": 80,
+      "headerTemplate": "double_line",
+      "generalInstructions": [
+        "Please check that this question paper contains all printed pages.",
+        "15 minutes reading time will be allotted before writing starts.",
+        "Attempt all questions in Section A, B, and C."
+      ]
+    },
+    "defaultSections": [
+      { "defaultTitle": "SECTION A (Objective Type Questions - 1 Mark each)", "defaultMarks": 20 },
+      { "defaultTitle": "SECTION B (Short Answer Questions - 2 Marks each)", "defaultMarks": 20 },
+      { "defaultTitle": "SECTION C (Long Answer Questions - 5 Marks each)", "defaultMarks": 40 }
+    ],
+    "defaultOptionLayout": "vertical",
+    "createdAt": "2026-08-21T00:00:00.000Z",
+    "updatedAt": "2026-08-21T00:00:00.000Z"
+  }
+]

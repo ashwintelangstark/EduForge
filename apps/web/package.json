@@ -1,0 +1,42 @@
+{
+  "name": "@eduforge/web",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@eduforge/shared": "file:../../packages/shared",
+    "@supabase/supabase-js": "^2.112.4",
+    "@tiptap/extension-image": "^3.30.3",
+    "@tiptap/extension-placeholder": "^3.30.3",
+    "@tiptap/extension-subscript": "^3.30.3",
+    "@tiptap/extension-superscript": "^3.30.3",
+    "@tiptap/extension-underline": "^3.30.3",
+    "@tiptap/pm": "^3.30.3",
+    "@tiptap/react": "^3.30.3",
+    "@tiptap/starter-kit": "^3.30.3",
+    "clsx": "^2.1.1",
+    "katex": "^0.16.9",
+    "lucide-react": "^0.395.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwind-merge": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/katex": "^0.16.7",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.4",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.13",
+    "vitest": "^1.6.0"
+  }
+}

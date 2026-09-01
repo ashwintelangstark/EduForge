@@ -1,0 +1,264 @@
+[
+  {
+    "id": "q-phys-001",
+    "questionNumber": 1,
+    "questionType": "MCQ_SINGLE",
+    "subject": "Physics",
+    "chapter": "Kinematics & Gravitation",
+    "topic": "Projectile Motion",
+    "difficulty": "Medium",
+    "marks": 4,
+    "negativeMarks": 1,
+    "tags": ["kinematics", "projectile", "mechanics"],
+    "year": 2025,
+    "optionLayout": "grid_2x2",
+    "rawText": "A particle is projected from the ground with an initial velocity u at an angle θ with the horizontal. The maximum height H reached by the projectile is given by:",
+    "content": [
+      {
+        "id": "p-1",
+        "type": "paragraph",
+        "runs": [
+          { "id": "t-1", "text": "A particle is projected from the ground with an initial velocity " },
+          { "id": "t-2", "text": "u", "formatting": { "italic": true } },
+          { "id": "t-3", "text": " at an angle " },
+          { "id": "t-4", "text": "θ", "formatting": { "italic": true } },
+          { "id": "t-5", "text": " with the horizontal. The maximum height " },
+          { "id": "t-6", "text": "H", "formatting": { "bold": true, "italic": true } },
+          { "id": "t-7", "text": " reached by the projectile is given by:" }
+        ]
+      }
+    ],
+    "options": [
+      {
+        "id": "opt-a",
+        "key": "a",
+        "rawText": "H = \\frac{u^2 \\sin^2\\theta}{2g}",
+        "isCorrect": true,
+        "content": [
+          {
+            "id": "opt-p-a",
+            "type": "equation",
+            "rawLatex": "H = \\frac{u^2 \\sin^2\\theta}{2g}",
+            "ast": {
+              "version": "1.0",
+              "nodes": [
+                {
+                  "id": "n-1",
+                  "type": "fraction",
+                  "numerator": [{ "id": "n-1-1", "type": "text", "value": "u^2 \\sin^2\\theta" }],
+                  "denominator": [{ "id": "n-1-2", "type": "text", "value": "2g" }]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "opt-b",
+        "key": "b",
+        "rawText": "H = \\frac{u^2 \\sin 2\\theta}{g}",
+        "isCorrect": false,
+        "content": [
+          {
+            "id": "opt-p-b",
+            "type": "equation",
+            "rawLatex": "H = \\frac{u^2 \\sin 2\\theta}{g}",
+            "ast": { "version": "1.0", "nodes": [] }
+          }
+        ]
+      },
+      {
+        "id": "opt-c",
+        "key": "c",
+        "rawText": "H = \\frac{u^2 \\cos^2\\theta}{2g}",
+        "isCorrect": false,
+        "content": [
+          {
+            "id": "opt-p-c",
+            "type": "equation",
+            "rawLatex": "H = \\frac{u^2 \\cos^2\\theta}{2g}",
+            "ast": { "version": "1.0", "nodes": [] }
+          }
+        ]
+      },
+      {
+        "id": "opt-d",
+        "key": "d",
+        "rawText": "H = \\frac{2u \\sin\\theta}{g}",
+        "isCorrect": false,
+        "content": [
+          {
+            "id": "opt-p-d",
+            "type": "equation",
+            "rawLatex": "H = \\frac{2u \\sin\\theta}{g}",
+            "ast": { "version": "1.0", "nodes": [] }
+          }
+        ]
+      }
+    ],
+    "correctAnswer": "a",
+    "explanationText": "Using the kinematic equation v_y^2 = u_y^2 - 2gH. At max height, v_y = 0 and u_y = u sin θ, hence H = (u^2 sin^2 θ) / 2g.",
+    "isSystem": true,
+    "createdAt": "2026-08-21T00:00:00.000Z",
+    "updatedAt": "2026-08-21T00:00:00.000Z"
+  },
+  {
+    "id": "q-chem-002",
+    "questionNumber": 2,
+    "questionType": "MCQ_SINGLE",
+    "subject": "Chemistry",
+    "chapter": "Chemical Equilibrium",
+    "topic": "Haber Process & Le Chatelier",
+    "difficulty": "Medium",
+    "marks": 4,
+    "negativeMarks": 1,
+    "tags": ["equilibrium", "haber-process", "thermodynamics"],
+    "year": 2025,
+    "optionLayout": "vertical",
+    "rawText": "For the exothermic industrial Haber synthesis of ammonia: N₂(g) + 3H₂(g) ⇌ 2NH₃(g), ΔH = -92.4 kJ/mol, which conditions favor maximum ammonia yield?",
+    "content": [
+      {
+        "id": "p-chem-1",
+        "type": "paragraph",
+        "runs": [
+          { "id": "t-c-1", "text": "For the exothermic industrial Haber synthesis of ammonia:" }
+        ]
+      },
+      {
+        "id": "eq-chem-1",
+        "type": "equation",
+        "rawLatex": "\\text{N}_2\\text{(g)} + 3\\text{H}_2\\text{(g)} \\rightleftharpoons 2\\text{NH}_3\\text{(g)}, \\quad \\Delta H = -92.4\\text{ kJ/mol}",
+        "ast": { "version": "1.0", "nodes": [] }
+      },
+      {
+        "id": "p-chem-2",
+        "type": "paragraph",
+        "runs": [
+          { "id": "t-c-2", "text": "Which combination of temperature and pressure maximizes the equilibrium yield of ammonia?" }
+        ]
+      }
+    ],
+    "options": [
+      {
+        "id": "opt-chem-a",
+        "key": "a",
+        "rawText": "High Pressure and Low (Optimum) Temperature",
+        "isCorrect": true,
+        "content": [
+          {
+            "id": "p-oa",
+            "type": "paragraph",
+            "runs": [{ "id": "t-oa", "text": "High Pressure and Low (Optimum) Temperature (~450°C, 200 atm)" }]
+          }
+        ]
+      },
+      {
+        "id": "opt-chem-b",
+        "key": "b",
+        "rawText": "Low Pressure and High Temperature",
+        "isCorrect": false,
+        "content": [
+          {
+            "id": "p-ob",
+            "type": "paragraph",
+            "runs": [{ "id": "t-ob", "text": "Low Pressure and High Temperature" }]
+          }
+        ]
+      },
+      {
+        "id": "opt-chem-c",
+        "key": "c",
+        "rawText": "High Pressure and Very High Temperature (>900°C)",
+        "isCorrect": false,
+        "content": [
+          {
+            "id": "p-oc",
+            "type": "paragraph",
+            "runs": [{ "id": "t-oc", "text": "High Pressure and Very High Temperature (>900°C)" }]
+          }
+        ]
+      },
+      {
+        "id": "opt-chem-d",
+        "key": "d",
+        "rawText": "Low Pressure and Low Temperature",
+        "isCorrect": false,
+        "content": [
+          {
+            "id": "p-od",
+            "type": "paragraph",
+            "runs": [{ "id": "t-od", "text": "Low Pressure and Low Temperature" }]
+          }
+        ]
+      }
+    ],
+    "correctAnswer": "a",
+    "explanationText": "Forward reaction decreases moles of gas (4 moles -> 2 moles), favored by high pressure. Being exothermic (ΔH < 0), lower temperature shifts equilibrium forward according to Le Chatelier's principle.",
+    "isSystem": true,
+    "createdAt": "2026-08-21T00:00:00.000Z",
+    "updatedAt": "2026-08-21T00:00:00.000Z"
+  },
+  {
+    "id": "q-phys-003",
+    "questionNumber": 3,
+    "questionType": "MCQ_SINGLE",
+    "subject": "Physics",
+    "chapter": "Current Electricity",
+    "topic": "Resistors & Kirchhoff's Laws",
+    "difficulty": "Easy",
+    "marks": 4,
+    "negativeMarks": 1,
+    "tags": ["circuits", "resistance", "electricity"],
+    "year": 2024,
+    "optionLayout": "grid_2x2",
+    "rawText": "Three identical resistors each of resistance R = 6 Ω are connected in parallel. The equivalent resistance of the combination is:",
+    "content": [
+      {
+        "id": "p-phys3-1",
+        "type": "paragraph",
+        "runs": [
+          { "id": "t-p3-1", "text": "Three identical resistors each of resistance " },
+          { "id": "t-p3-2", "text": "R = 6 Ω", "formatting": { "bold": true } },
+          { "id": "t-p3-3", "text": " are connected in parallel across a DC battery. The equivalent resistance " },
+          { "id": "t-p3-4", "text": "R_eq", "formatting": { "italic": true } },
+          { "id": "t-p3-5", "text": " is:" }
+        ]
+      }
+    ],
+    "options": [
+      {
+        "id": "opt-3-a",
+        "key": "a",
+        "rawText": "2 Ω",
+        "isCorrect": true,
+        "content": [{ "id": "p-3a", "type": "paragraph", "runs": [{ "id": "t-3a", "text": "2.0 Ω" }] }]
+      },
+      {
+        "id": "opt-3-b",
+        "key": "b",
+        "rawText": "18 Ω",
+        "isCorrect": false,
+        "content": [{ "id": "p-3b", "type": "paragraph", "runs": [{ "id": "t-3b", "text": "18.0 Ω" }] }]
+      },
+      {
+        "id": "opt-3-c",
+        "key": "c",
+        "rawText": "3 Ω",
+        "isCorrect": false,
+        "content": [{ "id": "p-3c", "type": "paragraph", "runs": [{ "id": "t-3c", "text": "3.0 Ω" }] }]
+      },
+      {
+        "id": "opt-3-d",
+        "key": "d",
+        "rawText": "0.5 Ω",
+        "isCorrect": false,
+        "content": [{ "id": "p-3d", "type": "paragraph", "runs": [{ "id": "t-3d", "text": "0.5 Ω" }] }]
+      }
+    ],
+    "correctAnswer": "a",
+    "explanationText": "1/R_eq = 1/6 + 1/6 + 1/6 = 3/6 = 1/2 => R_eq = 2 Ω.",
+    "isSystem": true,
+    "createdAt": "2026-08-21T00:00:00.000Z",
+    "updatedAt": "2026-08-21T00:00:00.000Z"
+  }
+]

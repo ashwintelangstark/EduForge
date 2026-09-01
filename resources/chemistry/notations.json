@@ -1,0 +1,162 @@
+[
+  {
+    "id": "h2o",
+    "name": "Water Molecule",
+    "type": "structure",
+    "formula": "H₂O",
+    "latex": "\\text{H}_2\\text{O}",
+    "description": "Common inorganic solvent"
+  },
+  {
+    "id": "h2so4",
+    "name": "Sulfuric Acid",
+    "type": "structure",
+    "formula": "H₂SO₄",
+    "latex": "\\text{H}_2\\text{SO}_4",
+    "description": "Strong mineral acid"
+  },
+  {
+    "id": "co2",
+    "name": "Carbon Dioxide",
+    "type": "structure",
+    "formula": "CO₂",
+    "latex": "\\text{CO}_2",
+    "description": "Linear gas molecule"
+  },
+  {
+    "id": "nh4_plus",
+    "name": "Ammonium Cation",
+    "type": "ion",
+    "formula": "NH₄⁺",
+    "latex": "\\text{NH}_4^+",
+    "description": "Positively charged polyatomic cation"
+  },
+  {
+    "id": "so4_2minus",
+    "name": "Sulfate Dianion",
+    "type": "ion",
+    "formula": "SO₄²⁻",
+    "latex": "\\text{SO}_4^{2-}",
+    "description": "Polyatomic sulfate anion with -2 charge"
+  },
+  {
+    "id": "reaction_water_synthesis",
+    "name": "Water Synthesis Reaction",
+    "type": "reaction",
+    "formula": "2H₂ + O₂ → 2H₂O",
+    "latex": "2\\text{H}_2\\text{(g)} + \\text{O}_2\\text{(g)} \\rightarrow 2\\text{H}_2\\text{O}\\text{(l)}",
+    "description": "Combustion of hydrogen to form liquid water"
+  },
+  {
+    "id": "reaction_haber_process",
+    "name": "Haber-Bosch Ammonia Equilibrium",
+    "type": "reaction",
+    "formula": "N₂ + 3H₂ ⇌ 2NH₃",
+    "latex": "\\text{N}_2\\text{(g)} + 3\\text{H}_2\\text{(g)} \\rightleftharpoons 2\\text{NH}_3\\text{(g)}",
+    "description": "Reversible industrial synthesis of ammonia"
+  },
+  {
+    "id": "arrow_forward",
+    "name": "Forward Reaction Arrow",
+    "type": "arrow",
+    "formula": "→",
+    "latex": "\\rightarrow",
+    "description": "Standard irreversible chemical change"
+  },
+  {
+    "id": "arrow_equilibrium",
+    "name": "Equilibrium Arrow",
+    "type": "arrow",
+    "formula": "⇌",
+    "latex": "\\rightleftharpoons",
+    "description": "Dynamic chemical equilibrium"
+  },
+  {
+    "id": "arrow_heat",
+    "name": "Reaction with Heat (Delta)",
+    "type": "arrow",
+    "formula": "—Δ→",
+    "latex": "\\xrightarrow{\\Delta}",
+    "description": "Thermal decomposition / heating"
+  },
+  {
+    "id": "arrow_gas_evolved",
+    "name": "Gas Evolution (Up Arrow)",
+    "type": "arrow",
+    "formula": "↑",
+    "latex": "\\uparrow",
+    "description": "Indicates evolution of gas"
+  },
+  {
+    "id": "arrow_precipitate",
+    "name": "Precipitation (Down Arrow)",
+    "type": "arrow",
+    "formula": "↓",
+    "latex": "\\downarrow",
+    "description": "Indicates formation of insoluble solid precipitate"
+  },
+  {
+    "id": "state_solid",
+    "name": "Solid State",
+    "type": "state",
+    "formula": "(s)",
+    "latex": "\\text{(s)}",
+    "description": "Solid aggregate state"
+  },
+  {
+    "id": "state_liquid",
+    "name": "Liquid State",
+    "type": "state",
+    "formula": "(l)",
+    "latex": "\\text{(l)}",
+    "description": "Liquid state"
+  },
+  {
+    "id": "state_gas",
+    "name": "Gaseous State",
+    "type": "state",
+    "formula": "(g)",
+    "latex": "\\text{(g)}",
+    "description": "Vapor or gaseous state"
+  },
+  {
+    "id": "state_aqueous",
+    "name": "Aqueous Solution",
+    "type": "state",
+    "formula": "(aq)",
+    "latex": "\\text{(aq)}",
+    "description": "Dissolved in water"
+  },
+  {
+    "id": "org_benzene",
+    "name": "Benzene Ring",
+    "type": "organic",
+    "formula": "C₆H₆",
+    "latex": "\\text{C}_6\\text{H}_6",
+    "description": "Aromatic hydrocarbon ring"
+  },
+  {
+    "id": "org_alcohol",
+    "name": "Hydroxyl / Alcohol Group",
+    "type": "organic",
+    "formula": "-OH",
+    "latex": "-\\text{OH}",
+    "description": "Alcohol functional group"
+  },
+  {
+    "id": "org_carboxylic",
+    "name": "Carboxylic Acid Group",
+    "type": "organic",
+    "formula": "-COOH",
+    "latex": "-\\text{COOH}",
+    "description": "Carboxyl acidic functional group"
+  },
+  {
+    "id": "org_amine",
+    "name": "Amine Group",
+    "type": "organic",
+    "formula": "-NH₂",
+    "latex": "-\\text{NH}_2",
+    "description": "Basic nitrogen organic group"
+  }
+]

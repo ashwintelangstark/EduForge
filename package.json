@@ -1,0 +1,36 @@
+{
+  "name": "eduforge",
+  "version": "1.0.0",
+  "private": true,
+  "description": "EduForge - Desktop Document Editor & Question Paper Authoring Suite by HAEGL Technologies",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n \"server,web\" -c \"magenta,green\" \"npm run dev:server\" \"npm run dev:web\"",
+    "dev:server": "npm run dev --workspace=apps/server",
+    "dev:web": "npm run dev --workspace=apps/web",
+    "build": "npm run build --workspace=packages/shared && npm run build --workspace=apps/web && node -e \"const fs=require('fs'); fs.cpSync('apps/web/dist', 'dist', {recursive: true});\"",
+    "test": "npm run test --workspaces --if-present",
+    "typecheck": "npm run build",
+    "supabase:start": "supabase start",
+    "supabase:stop": "supabase stop",
+    "supabase:reset": "supabase db reset",
+    "supabase:migration:new": "supabase migration new"
+  },
+  "keywords": [
+    "question-paper-builder",
+    "math-ast",
+    "scientific-editor",
+    "docx",
+    "pdf",
+    "a4-canvas"
+  ],
+  "author": "HAEGL Technologies",
+  "license": "ISC",
+  "devDependencies": {
+    "@rollup/rollup-win32-x64-msvc": "^4.63.1",
+    "concurrently": "^10.0.5"
+  }
+}

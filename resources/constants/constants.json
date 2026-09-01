@@ -1,0 +1,112 @@
+[
+  {
+    "id": "c",
+    "name": "Speed of Light in Vacuum",
+    "symbol": "c",
+    "latex": "c",
+    "value": "2.99792458 × 10⁸",
+    "unit": "m/s",
+    "category": "Universal",
+    "description": "Speed of all electromagnetic waves in vacuum"
+  },
+  {
+    "id": "h",
+    "name": "Planck Constant",
+    "symbol": "h",
+    "latex": "h",
+    "value": "6.62607015 × 10⁻³⁴",
+    "unit": "J·s",
+    "category": "Atomic",
+    "description": "Quantum of electromagnetic action relating photon energy to frequency"
+  },
+  {
+    "id": "G",
+    "name": "Newtonian Constant of Gravitation",
+    "symbol": "G",
+    "latex": "G",
+    "value": "6.67430 × 10⁻¹¹",
+    "unit": "N·m²/kg²",
+    "category": "Gravitational",
+    "description": "Proportionality constant in Newton's law of universal gravitation"
+  },
+  {
+    "id": "e",
+    "name": "Elementary Charge",
+    "symbol": "e",
+    "latex": "e",
+    "value": "1.602176634 × 10⁻¹⁹",
+    "unit": "C",
+    "category": "Electromagnetic",
+    "description": "Electric charge carried by a single proton or magnitude of electron charge"
+  },
+  {
+    "id": "k_B",
+    "name": "Boltzmann Constant",
+    "symbol": "k",
+    "latex": "k_B",
+    "value": "1.380649 × 10⁻²³",
+    "unit": "J/K",
+    "category": "Physico-Chemical",
+    "description": "Relates average kinetic energy of gas particles with thermodynamic temperature"
+  },
+  {
+    "id": "N_A",
+    "name": "Avogadro Constant",
+    "symbol": "Nₐ",
+    "latex": "N_A",
+    "value": "6.02214076 × 10²³",
+    "unit": "mol⁻¹",
+    "category": "Physico-Chemical",
+    "description": "Number of constituent particles in one mole of a substance"
+  },
+  {
+    "id": "eps_0",
+    "name": "Vacuum Electric Permittivity",
+    "symbol": "ε₀",
+    "latex": "\\varepsilon_0",
+    "value": "8.8541878128 × 10⁻¹²",
+    "unit": "F/m",
+    "category": "Electromagnetic",
+    "description": "Capability of vacuum to permit electric field lines"
+  },
+  {
+    "id": "mu_0",
+    "name": "Vacuum Magnetic Permeability",
+    "symbol": "μ₀",
+    "latex": "\\mu_0",
+    "value": "1.25663706212 × 10⁻⁶",
+    "unit": "H/m",
+    "category": "Electromagnetic",
+    "description": "Magnetic constant in vacuum (4π × 10⁻⁷ H/m)"
+  },
+  {
+    "id": "R",
+    "name": "Molar Gas Constant",
+    "symbol": "R",
+    "latex": "R",
+    "value": "8.314462618",
+    "unit": "J/(mol·K)",
+    "category": "Physico-Chemical",
+    "description": "Universal gas constant in ideal gas law PV = nRT"
+  },
+  {
+    "id": "g",
+    "name": "Standard Acceleration of Gravity",
+    "symbol": "g",
+    "latex": "g",
+    "value": "9.80665",
+    "unit": "m/s²",
+    "category": "Gravitational",
+    "description": "Standard gravitational acceleration at sea level on Earth"
+  },
+  {
+    "id": "sigma",
+    "name": "Stefan-Boltzmann Constant",
+    "symbol": "σ",
+    "latex": "\\sigma",
+    "value": "5.670374419 × 10⁻⁸",
+    "unit": "W/(m²·K⁴)",
+    "category": "Physico-Chemical",
+    "description": "Constant in Stefan-Boltzmann blackbody radiation law"
+  }
+]

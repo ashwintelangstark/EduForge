@@ -1,0 +1,15 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Do NOT rewrite backend /api requests (pass through to Passenger / subfolder)
+  RewriteRule ^api(/.*)?$ - [L]
+
+  # If requested file or directory exists, serve it directly
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Fallback to index.html for Single Page Application client routing
+  RewriteRule ^ index.html [L]
+</IfModule>

@@ -1,0 +1,241 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary: 15 118 110;
+    --primary-foreground: 255 255 255;
+    --app-bg: #f7faf9;
+    --app-surface: #ffffff;
+    --app-border: #e0e9e8;
+    --app-text: #0f172a;
+    --app-text-muted: #64748b;
+    --app-header-bg: #ffffff;
+    --app-ribbon-bg: #ffffff;
+    --app-canvas-bg: #e2e8f0;
+    --ui-title: #0f172a;
+  }
+
+  body {
+    background-color: #f7faf9;
+    color: #0f172a;
+  }
+}
+
+/* UI Default Premium Font: Manrope applied strictly across interface */
+* {
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, nav, header {
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* HIGHLY VISIBLE TEXT & IMAGE SELECTION STYLES */
+::selection {
+  background-color: #99f6e4 !important; /* Vibrant Teal-200 */
+  color: #042f2e !important;
+}
+
+::-moz-selection {
+  background-color: #99f6e4 !important;
+  color: #042f2e !important;
+}
+
+.ProseMirror ::selection {
+  background-color: #99f6e4 !important;
+  color: #042f2e !important;
+}
+
+.ProseMirror ::-moz-selection {
+  background-color: #99f6e4 !important;
+  color: #042f2e !important;
+}
+
+/* ProseMirror Node & Image Selection Outlines */
+.ProseMirror-selectednode {
+  outline: 3px solid #0f766e !important;
+  outline-offset: 3px !important;
+  border-radius: 6px;
+  box-shadow: 0 0 0 5px rgba(15, 118, 110, 0.25) !important;
+}
+
+.ProseMirror img.ProseMirror-selectednode,
+.ProseMirror img:focus,
+.ProseMirror img[data-selected="true"],
+.ProseMirror img.selected-img {
+  outline: 3px solid #0f766e !important;
+  outline-offset: 3px !important;
+  border-radius: 6px;
+  box-shadow: 0 0 0 6px rgba(15, 118, 110, 0.3) !important;
+  transition: all 0.15s ease-in-out;
+}
+
+/* High Refresh Rate (60Hz / 120Hz / 144Hz) & GPU Hardware Acceleration */
+*, *::before, *::after {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+html, body {
+  scroll-behavior: smooth;
+}
+
+.page-sheet, .canvas-container, [contenteditable] {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Modal and form control text colors */
+.bg-white input,
+.bg-white textarea,
+.bg-white select,
+.bg-slate-50 input,
+.bg-slate-50 textarea,
+.bg-slate-50 select {
+  color: #000000;
+}
+
+/* Document Paper Sheet */
+.page-sheet {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom Teal Scrollbars */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(15, 118, 110, 0.05);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(15, 118, 110, 0.25);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(15, 118, 110, 0.5);
+}
+
+/* Interactive Card & Container Elevation Styles */
+.teal-card {
+  background-color: #ffffff;
+  border: 1px solid #e0e9e8;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.03), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.teal-card:hover {
+  box-shadow: 0 10px 15px -3px rgba(15, 118, 110, 0.08), 0 4px 6px -4px rgba(15, 118, 110, 0.04);
+  transform: translateY(-2px);
+}
+
+.teal-button-primary {
+  background-color: #0f766e;
+  color: #ffffff;
+  font-weight: 700;
+  border-radius: 0.5rem;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 2px 0 rgba(15, 118, 110, 0.2);
+}
+
+.teal-button-primary:hover {
+  background-color: #115e59;
+  box-shadow: 0 4px 12px 0 rgba(15, 118, 110, 0.3);
+}
+
+.teal-button-primary:active {
+  transform: scale(0.98);
+}
+
+.teal-button-secondary {
+  border: 1px solid #0f766e;
+  color: #0f766e;
+  background-color: #ffffff;
+  font-weight: 700;
+  border-radius: 0.5rem;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.teal-button-secondary:hover {
+  background-color: #f0fdfa;
+}
+
+.teal-button-secondary:active {
+  transform: scale(0.98);
+}
+
+/* Print CSS - Universal & Clean Multi-page PDF Export */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 12mm 15mm 15mm 15mm;
+  }
+
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  /* Hide main app root when exporting via cloned print container */
+  body:has(#print-paper-export-root) #root {
+    display: none !important;
+  }
+
+  #print-paper-export-root {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    overflow: visible !important;
+  }
+
+  /* Hide UI elements, toolbars, buttons, and navigation bars */
+  aside, header, nav, button, .no-print {
+    display: none !important;
+  }
+
+  /* Ensure printable paper sheet flows naturally without absolute position duplication */
+  .printable-paper-sheet {
+    position: static !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    overflow: visible !important;
+  }
+
+  /* Prevent question cards from breaking/slicing across page boundaries */
+  .question-item-block {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    margin-bottom: 1.25rem !important;
+  }
+
+  /* Keep section headers attached to the following questions */
+  .section-header-block {
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+    margin-top: 1.5rem !important;
+    margin-bottom: 1rem !important;
+  }
+}
