@@ -305,6 +305,23 @@ export const ImageStudioModal: React.FC<ImageStudioModalProps> = ({
 
   if (!isOpen) return null;
 
+  const filterCssStyle = React.useMemo(() => {
+    switch (filter) {
+      case 'magic_color':
+        return 'contrast(1.35) saturate(1.25) brightness(1.05)';
+      case 'auto_hdr':
+        return 'contrast(1.45) saturate(1.35) brightness(1.1)';
+      case 'grayscale':
+        return 'grayscale(100%) contrast(1.2)';
+      case 'bw_scanner':
+        return 'grayscale(100%) contrast(2.2) brightness(0.95)';
+      case 'lighten':
+        return 'brightness(1.2) contrast(1.1)';
+      default:
+        return 'none';
+    }
+  }, [filter]);
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-3 sm:p-6 animate-in fade-in duration-200">
       <div className="bg-slate-900 text-white rounded-2xl shadow-2xl border border-slate-800 w-full max-w-5xl h-[90vh] flex flex-col overflow-hidden">
@@ -410,7 +427,8 @@ export const ImageStudioModal: React.FC<ImageStudioModalProps> = ({
             <img
               src={imageSrc}
               alt="Workspace"
-              className="max-h-[58vh] max-w-full object-contain rounded-lg shadow-2xl pointer-events-none"
+              style={{ filter: filterCssStyle }}
+              className="max-h-[58vh] max-w-full object-contain rounded-lg shadow-2xl pointer-events-none transition-all duration-150"
             />
 
             {/* Smart Crop Quadrilateral Overlay with Handles */}

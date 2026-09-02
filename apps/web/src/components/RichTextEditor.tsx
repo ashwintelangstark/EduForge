@@ -532,13 +532,37 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
   const handleStudioSave = (newBase64: string) => {
     if (!newBase64 || newBase64.length < 50) return;
     if (editor) {
-      const { selection } = editor.state;
-      if (selection && (selection as any).node && (selection as any).node.type.name === 'image') {
-        editor.chain().focus().setNodeSelection(selection.from).updateAttributes('image', { src: newBase64 }).run();
-      } else {
+      // 1. Update matching image nodes across TipTap document
+      const { state } = editor;
+      let updated = false;
+
+      state.doc.descendants((node, pos) => {
+        if (node.type.name === 'image') {
+          const width = node.attrs.width || '100%';
+          const alignment = node.attrs.alignment || 'center';
+          editor.chain().focus().setNodeSelection(pos).updateAttributes('image', { src: newBase64, width, alignment }).run();
+          updated = true;
+          return false;
+        }
+      });
+
+      if (!updated) {
         editor.chain().focus().updateAttributes('image', { src: newBase64 }).run();
       }
+
+      // 2. Direct DOM image src update for instant UI feedback
+      const activeImgs = document.querySelectorAll('img.selected-img, img[data-selected="true"]');
+      activeImgs.forEach(img => {
+        (img as HTMLImageElement).src = newBase64;
+      });
+
       setSelectedImageSrc(newBase64);
+
+      // 3. Immediately emit onChange with updated HTML content to parent component
+      setTimeout(() => {
+        const updatedHtml = editor.getHTML();
+        onChange(updatedHtml);
+      }, 50);
     }
   };
 
