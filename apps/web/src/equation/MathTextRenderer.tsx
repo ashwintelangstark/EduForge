@@ -210,7 +210,7 @@ function RenderSingleMathTextChunk({ text, block, className }: { text: string; b
   );
 }
 
-export const MathTextRenderer: React.FC<MathTextRendererProps> = ({
+const MathTextRendererComponent: React.FC<MathTextRendererProps> = ({
   text = '',
   className = '',
   block = false
@@ -291,3 +291,5 @@ export const MathTextRenderer: React.FC<MathTextRendererProps> = ({
 
   return <RenderSingleMathTextChunk text={textStr} block={block} className={className} />;
 };
+
+export const MathTextRenderer = React.memo(MathTextRendererComponent);

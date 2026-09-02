@@ -59,7 +59,7 @@ export function sanitizeLatexFormula(latex: string): string {
   return s;
 }
 
-export const KaTeXRenderer: React.FC<KaTeXRendererProps> = ({
+const KaTeXRendererComponent: React.FC<KaTeXRendererProps> = ({
   math,
   block = false,
   className = '',
@@ -146,3 +146,5 @@ export const KaTeXRenderer: React.FC<KaTeXRendererProps> = ({
     />
   );
 };
+
+export const KaTeXRenderer = React.memo(KaTeXRendererComponent);
