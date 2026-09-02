@@ -10,12 +10,109 @@ import {
   Bold, Italic, Underline as UnderlineIcon, Subscript as SubscriptIcon,
   Superscript as SuperscriptIcon, List, ListOrdered, Sigma, Sparkles,
   RotateCcw, RotateCw, Eye, EyeOff, Image as ImageIcon, Loader2,
-  AlignLeft, AlignCenter, AlignRight, AlignJustify, Trash2, Move
+  AlignLeft, AlignCenter, AlignRight, AlignJustify, Trash2, Move, Check
 } from 'lucide-react';
 import { api } from '../services/api.js';
 import { MathTextRenderer } from '../equation/MathTextRenderer.js';
 import { MathTypeModal } from './MathTypeModal.js';
 import { ImageLibraryModal } from './ImageLibraryModal.js';
+
+export function autoCapitalizeSentences(text: string): string {
+  if (!text) return '';
+  let str = text;
+
+  // Capitalize first letter of HTML paragraph/div content e.g. <p>which ... -> <p>Which ...
+  str = str.replace(/(<p[^>]*>|<div[^>]*>|^)(\s*)([a-z])/gi, (m, p1, p2, char) => `${p1}${p2}${char.toUpperCase()}`);
+
+  // Capitalize first letter after sentence terminators e.g. ". which" -> ". Which"
+  str = str.replace(/([.!?]\s+)([a-z])/g, (m, p1, char) => `${p1}${char.toUpperCase()}`);
+
+  // Capitalize standalone single 'i' e.g. "if i go" -> "if I go"
+  str = str.replace(/\b(i)\b/g, 'I');
+
+  return str;
+}
+
+export interface GrammarIssue {
+  original: string;
+  replacement: string;
+  reason: string;
+  type: 'spelling' | 'capitalization' | 'grammar' | 'punctuation';
+}
+
+export function detectGrammarAndTypos(text: string): GrammarIssue[] {
+  if (!text) return [];
+  const clean = text.replace(/<[^>]*>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
+  if (!clean) return [];
+
+  const issues: GrammarIssue[] = [];
+
+  // 1. Check if first letter of sentence is not capitalized
+  const firstMatch = clean.match(/^([a-z])/);
+  if (firstMatch) {
+    issues.push({
+      original: firstMatch[1],
+      replacement: firstMatch[1].toUpperCase(),
+      reason: 'First letter of statement should be capitalized.',
+      type: 'capitalization'
+    });
+  }
+
+  // 2. Repeated words e.g. "the the", "is is"
+  const doubleWordMatch = clean.match(/\b([a-zA-Z]{2,})\s+\1\b/i);
+  if (doubleWordMatch) {
+    issues.push({
+      original: doubleWordMatch[0],
+      replacement: doubleWordMatch[1],
+      reason: `Repeated word "${doubleWordMatch[1]}" detected.`,
+      type: 'grammar'
+    });
+  }
+
+  // 3. Common spelling mistakes in academic & STEM questions
+  const commonTypos: Record<string, string> = {
+    'teh': 'the',
+    'recieve': 'receive',
+    'seperate': 'separate',
+    'occurance': 'occurrence',
+    'formual': 'formula',
+    'equasion': 'equation',
+    'calculat': 'calculate',
+    'posision': 'position',
+    'veclocity': 'velocity',
+    'accelration': 'acceleration',
+    'temprature': 'temperature',
+    'diference': 'difference',
+    'diferent': 'different',
+    'proportiol': 'proportional',
+    'dependant': 'dependent',
+    'independant': 'independent',
+    'similiar': 'similar',
+    'valance': 'valence',
+    'soluton': 'solution',
+    'potensial': 'potential',
+    'elecron': 'electron',
+    'neuton': 'neutron',
+    'molicule': 'molecule',
+    'elementry': 'elementary',
+    'compund': 'compound'
+  };
+
+  const words = clean.split(/\s+/);
+  words.forEach(w => {
+    const cleanW = w.toLowerCase().replace(/[^a-z]/g, '');
+    if (commonTypos[cleanW]) {
+      issues.push({
+        original: w,
+        replacement: commonTypos[cleanW],
+        reason: `Possible typo "${w}". Suggested replacement: "${commonTypos[cleanW]}".`,
+        type: 'spelling'
+      });
+    }
+  });
+
+  return issues;
+}
 
 // Custom TipTap Global Extension for Text Alignment (Left, Center, Right, Justify)
 export const CustomTextAlign = Extension.create({
@@ -171,9 +268,36 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
       onChange(html);
     },
     onBlur: () => {
+      if (smartAssistantEnabled && editor) {
+        const currentHtml = editor.getHTML();
+        const autoCap = autoCapitalizeSentences(currentHtml);
+        if (autoCap !== currentHtml) {
+          editor.commands.setContent(autoCap, { emitUpdate: true });
+          onChange(autoCap);
+        }
+      }
       if (onBlur) onBlur();
     }
   });
+
+  const grammarIssues = React.useMemo(() => {
+    if (!smartAssistantEnabled || !value) return [];
+    return detectGrammarAndTypos(value);
+  }, [smartAssistantEnabled, value]);
+
+  const handleAutoFixGrammar = () => {
+    if (!editor || !value) return;
+    let fixed = autoCapitalizeSentences(value);
+    const issues = detectGrammarAndTypos(fixed);
+    issues.forEach(iss => {
+      if (iss.type === 'spelling' || iss.type === 'grammar') {
+        const regex = new RegExp(`\\b${iss.original}\\b`, 'gi');
+        fixed = fixed.replace(regex, iss.replacement);
+      }
+    });
+    editor.commands.setContent(fixed, { emitUpdate: true });
+    onChange(fixed);
+  };
 
   // Keep editor content in sync with incoming `value` prop
   useEffect(() => {
@@ -748,6 +872,32 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
           className="outline-hidden focus:outline-hidden prose prose-sm max-w-none text-black font-sans text-sm"
         />
       </div>
+
+      {/* Live Smart Assistant Grammar, Capitalization & Typo Inspector Bar */}
+      {smartAssistantEnabled && grammarIssues.length > 0 && (
+        <div className="border-t border-amber-200/80 bg-amber-50/90 p-2.5 text-xs flex flex-wrap items-center justify-between gap-2 shadow-2xs">
+          <div className="flex items-center gap-2 flex-wrap">
+            <Sparkles className="w-3.5 h-3.5 text-amber-600 shrink-0 fill-amber-500" />
+            <span className="font-bold text-amber-900 text-[11px] uppercase tracking-wide">
+              Smart Assistant Suggestions ({grammarIssues.length}):
+            </span>
+            {grammarIssues.map((iss, i) => (
+              <span key={i} className="inline-flex items-center gap-1 bg-white border border-amber-200 px-2 py-0.5 rounded-md text-[11px] text-slate-800 shadow-2xs">
+                <span className="line-through text-red-500 font-mono">{iss.original}</span>
+                <span className="text-emerald-700 font-bold font-mono">→ {iss.replacement}</span>
+              </span>
+            ))}
+          </div>
+          <button
+            type="button"
+            onClick={handleAutoFixGrammar}
+            className="px-2.5 py-1 bg-amber-600 hover:bg-amber-700 text-white text-[11px] font-bold rounded-md shadow-2xs transition-colors cursor-pointer shrink-0 flex items-center gap-1"
+          >
+            <Check className="w-3 h-3" />
+            <span>Fix All</span>
+          </button>
+        </div>
+      )}
 
       {/* Live KaTeX Formula & Layout Preview */}
       {previewOpen && value && (
