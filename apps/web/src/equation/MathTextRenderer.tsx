@@ -112,43 +112,8 @@ export function stripQuestionCode(text: string | undefined): string {
 
 const LATEX_KEYWORD_REGEX = /\\(frac|sqrt|vec|int|sum|prod|partial|alpha|beta|gamma|delta|Delta|theta|Theta|lambda|Lambda|mu|pi|Pi|sigma|Sigma|omega|Omega|phi|Phi|psi|Psi|infty|times|div|pm|mp|le|ge|neq|approx|equiv|rightarrow|leftarrow|rightleftharpoons|ce|text|mathrm|mathbf|mathit|textsubscript|textsuperscript|cdot|circ|degree|angle|sin|cos|tan|cot|sec|csc|log|ln|lim|Omega|quad|qquad)\b|[_^]\{|\\[a-zA-Z]+/;
 
-export const MathTextRenderer: React.FC<MathTextRendererProps> = ({
-  text = '',
-  className = '',
-  block = false
-}) => {
-  if (!text) return null;
-
-  // Support JSON-stringified block arrays e.g. [{"type":"equation","latex":"..."}]
-  if (typeof text === 'string' && (text.startsWith('[') || text.startsWith('{'))) {
-    try {
-      const parsed = JSON.parse(text);
-      if (Array.isArray(parsed)) {
-        return (
-          <span className={className}>
-            {parsed.map((item: any, idx: number) => {
-              if (item.type === 'equation' || item.latex) {
-                return <KaTeXRenderer key={idx} math={item.latex || item.rawLatex || ''} block={item.displayMode === 'block'} />;
-              }
-              if (item.html || item.text) {
-                return <MathTextRenderer key={idx} text={item.html || item.text} />;
-              }
-              return null;
-            })}
-          </span>
-        );
-      } else if (parsed && (parsed.type === 'equation' || parsed.latex)) {
-        return <KaTeXRenderer math={parsed.latex || parsed.rawLatex || ''} block={parsed.displayMode === 'block'} className={className} />;
-      }
-    } catch {
-      // Not valid JSON, proceed to text parsing
-    }
-  }
-
-  const textStr = typeof text === 'string' ? text : String(text);
-
-  // Clean HTML wrapper tags like <p>...</p> or <div>...</div> and auto-detect LaTeX
-  let trimmed = autoDetectAndWrapLatex(cleanHtmlTags(textStr));
+function RenderSingleMathTextChunk({ text, block, className }: { text: string; block?: boolean; className?: string }) {
+  let trimmed = autoDetectAndWrapLatex(cleanHtmlTags(text));
   if (!trimmed) return null;
 
   // 1. Explicit $...$ or $$...$$ delimiters
@@ -199,9 +164,7 @@ export const MathTextRenderer: React.FC<MathTextRendererProps> = ({
     );
   }
 
-  // 3. Pure formula test:
-  // Must NOT be a natural language sentence (i.e. contains spaces between ordinary words)
-  const wordCount = trimmed.split(/\s+/).length;
+  // 3. Pure formula test
   const hasEnglishWords = /\b(the|is|are|of|in|to|and|for|with|from|by|at|which|what|calculate|find|determine|when|if|where|each|connected|equivalent|combination|resistor|resistors|identical)\b/i.test(trimmed);
 
   const isPureFormula = !hasEnglishWords && (
@@ -226,6 +189,87 @@ export const MathTextRenderer: React.FC<MathTextRendererProps> = ({
     );
   }
 
-  // 5. Normal plain text
   return <span className={className}>{trimmed}</span>;
+}
+
+export const MathTextRenderer: React.FC<MathTextRendererProps> = ({
+  text = '',
+  className = '',
+  block = false
+}) => {
+  if (!text) return null;
+
+  // Support JSON-stringified block arrays e.g. [{"type":"equation","latex":"..."}]
+  if (typeof text === 'string' && (text.startsWith('[') || text.startsWith('{'))) {
+    try {
+      const parsed = JSON.parse(text);
+      if (Array.isArray(parsed)) {
+        return (
+          <span className={className}>
+            {parsed.map((item: any, idx: number) => {
+              if (item.type === 'equation' || item.latex) {
+                return <KaTeXRenderer key={idx} math={item.latex || item.rawLatex || ''} block={item.displayMode === 'block'} />;
+              }
+              if (item.html || item.text) {
+                return <MathTextRenderer key={idx} text={item.html || item.text} />;
+              }
+              return null;
+            })}
+          </span>
+        );
+      } else if (parsed && (parsed.type === 'equation' || parsed.latex)) {
+        return <KaTeXRenderer math={parsed.latex || parsed.rawLatex || ''} block={parsed.displayMode === 'block'} className={className} />;
+      }
+    } catch {
+      // Not valid JSON, proceed to text parsing
+    }
+  }
+
+  const textStr = typeof text === 'string' ? text : String(text);
+
+  // If contains HTML <img> tags, parse them into uncropped JSX <img> elements
+  if (/<img\s+/i.test(textStr)) {
+    const imgTagRegex = /(<img\s+[^>]*>)/gi;
+    const parts = textStr.split(imgTagRegex);
+
+    return (
+      <span className={className}>
+        {parts.map((part, idx) => {
+          if (!part) return null;
+
+          if (/^<img\s+/i.test(part.trim())) {
+            const srcMatch = part.match(/src=["']([^"']+)["']/i) || part.match(/src=([^\s>]+)/i);
+            const widthMatch = part.match(/width=["']([^"']+)["']/i);
+            const altMatch = part.match(/alt=["']([^"']+)["']/i);
+            const imgSrc = srcMatch ? srcMatch[1] : '';
+
+            if (!imgSrc) return null;
+
+            const resolvedSrc = resolveImageUrl(imgSrc);
+            const customWidth = widthMatch ? widthMatch[1] : undefined;
+
+            return (
+              <img
+                key={`img-${idx}`}
+                src={resolvedSrc}
+                alt={altMatch ? altMatch[1] : 'Question Image'}
+                style={{
+                  width: customWidth || undefined,
+                  maxWidth: '100%',
+                  height: 'auto',
+                  maxHeight: 'none',
+                  objectFit: 'contain'
+                }}
+                className="my-2 max-w-full h-auto object-contain border border-slate-300 p-1 bg-white rounded-md block shadow-2xs"
+              />
+            );
+          }
+
+          return <RenderSingleMathTextChunk key={`chunk-${idx}`} text={part} block={block} className={className} />;
+        })}
+      </span>
+    );
+  }
+
+  return <RenderSingleMathTextChunk text={textStr} block={block} className={className} />;
 };

@@ -282,14 +282,15 @@ html, body {
     height: auto !important;
   }
 
-  .exam-q-block img {
-    max-height: 120px !important;
+  .exam-q-block img,
+  .question-item-block img,
+  .exam-columns-container img {
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
     object-fit: contain !important;
-  }
-
-  .exam-q-block .grid img {
-    max-height: 75px !important;
-    object-fit: contain !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
   }
 
   /* Keep section headers attached to the following questions */

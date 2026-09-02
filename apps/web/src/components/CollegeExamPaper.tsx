@@ -487,21 +487,22 @@ export const CollegeExamPaper: React.FC<CollegeExamPaperProps> = ({
 
                       {/* Embedded Diagram / Image */}
                       {!hasEmbeddedImg && (qSvg || (qImg && qImg !== 'undefined' && qImg !== 'null' && String(qImg).trim() !== '')) && (
-                        <div className="my-1.5 flex justify-center max-h-32 overflow-hidden">
+                        <div className="my-2 flex justify-center w-full">
                           {qSvg ? (
                             <div
-                              className="max-h-28 max-w-full flex items-center justify-center scale-90"
+                              className="max-w-full flex items-center justify-center scale-90"
                               dangerouslySetInnerHTML={{ __html: qSvg }}
                             />
                           ) : (
                             <img
                               src={resolveImageUrl(qImg)}
-                              alt=""
+                              alt="Question Diagram"
                               onError={(e) => {
                                 e.currentTarget.style.display = 'none';
                                 if (e.currentTarget.parentElement) e.currentTarget.parentElement.style.display = 'none';
                               }}
-                              className="max-h-28 max-w-full object-contain border border-slate-300 p-0.5 rounded-xs"
+                              className="max-w-full h-auto object-contain border border-slate-300 p-1 rounded bg-white shadow-2xs"
+                              style={{ maxHeight: 'none' }}
                             />
                           )}
                         </div>

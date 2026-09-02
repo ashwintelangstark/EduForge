@@ -173,7 +173,7 @@ const EditableOptionItem: React.FC<{
                     }
                   }
                 }}
-                className="max-h-20 max-w-[140px] rounded border border-slate-200 bg-white p-0.5 object-contain shadow-2xs"
+                className="max-h-48 max-w-[240px] h-auto rounded border border-slate-200 bg-white p-1 object-contain shadow-2xs"
               />
               {isEditable && onUpdateOptionImage && (
                 <button
