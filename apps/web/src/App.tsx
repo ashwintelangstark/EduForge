@@ -23,7 +23,7 @@ import { api } from './services/api.js';
 import { DocumentModel, Template, Question } from '@eduforge/shared';
 import { ThemeProvider } from './state/ThemeContext.js';
 
-import { supabase } from './lib/supabase.js';
+import { supabase } from './services/supabaseDirect.js';
 import { getUserProfile, UserProfile } from './utils/userProfile.js';
 
 const AppContent: React.FC = () => {
@@ -83,7 +83,7 @@ const AppContent: React.FC = () => {
   };
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(({ data: { session } }: any) => {
       if (session) {
         localStorage.setItem('eduforge_auth', 'true');
         syncSessionUser(session.user);
@@ -91,7 +91,7 @@ const AppContent: React.FC = () => {
       }
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event: any, session: any) => {
       if (session) {
         localStorage.setItem('eduforge_auth', 'true');
         syncSessionUser(session.user);

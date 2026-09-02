@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff, Lock, Mail, ArrowRight, ShieldCheck, UserPlus, LogIn, AlertCircle, User, BookOpen, Shield } from 'lucide-react';
-import { supabase } from '../lib/supabase.js';
+import { supabase } from '../services/supabaseDirect.js';
 import { api } from '../services/api.js';
 
 interface LoginPageProps {
