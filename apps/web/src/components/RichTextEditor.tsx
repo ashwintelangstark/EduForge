@@ -340,43 +340,54 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
     editor.chain().focus().insertContent(formatted).run();
   };
 
-  // Helper to read File as Base64 Data URL or Upload via backend API
+  // Helper to read File as Base64 Data URL immediately for instant UI response, plus background sync
   const processAndInsertImageFile = async (file: File) => {
-    setIsUploadingImage(true);
     try {
-      let finalUrl = '';
-      try {
-        const res = await api.uploadImage(file);
-        finalUrl = res.url;
-      } catch {
-        // Fallback to client-side Data URL
-        finalUrl = await new Promise<string>((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result as string);
-          reader.onerror = reject;
-          reader.readAsDataURL(file);
-        });
-      }
+      // 1. Instantly read local data URL so insertion is immediate (0ms delay)
+      const localDataUrl = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
 
-      if (finalUrl && editor) {
+      if (localDataUrl && editor) {
         editor
           .chain()
           .focus()
           .setImage({
-            src: finalUrl,
+            src: localDataUrl,
             width: '50%',
             alignment: 'center'
           } as any)
           .run();
 
+        setSelectedImageSrc(localDataUrl);
+
         if (onImagePasted) {
-          onImagePasted(finalUrl);
+          onImagePasted(localDataUrl);
         }
       }
+
+      // 2. Asynchronously upload to backend/Supabase in background without blocking UI
+      api.uploadImage(file).then(res => {
+        if (res?.url && editor) {
+          // If remote upload succeeded, upgrade the image src in the document
+          editor.state.doc.descendants((node, pos) => {
+            if (node.type.name === 'image' && node.attrs.src === localDataUrl) {
+              editor.chain().setNodeSelection(pos).updateAttributes('image', { src: res.url }).run();
+              return false;
+            }
+          });
+          if (onImagePasted) {
+            onImagePasted(res.url);
+          }
+        }
+      }).catch(err => {
+        console.warn('Background image upload to cloud deferred, using local data URL:', err);
+      });
     } catch (err) {
       console.error('Error processing image:', err);
-    } finally {
-      setIsUploadingImage(false);
     }
   };
 
@@ -391,6 +402,8 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
           alignment: 'center'
         } as any)
         .run();
+
+      setSelectedImageSrc(url);
 
       if (onImagePasted) {
         onImagePasted(url);
@@ -495,18 +508,35 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
   // Editor content click handler for image selection
   const handleEditorClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
-    // Clear all previously selected image highlights
-    document.querySelectorAll('.ProseMirror img').forEach(img => {
-      img.classList.remove('selected-img');
-      img.removeAttribute('data-selected');
-    });
+    const imgEl = (target.tagName === 'IMG' ? target : target.closest('img')) as HTMLImageElement | null;
 
-    if (target.tagName === 'IMG') {
-      setSelectedImageSrc((target as HTMLImageElement).src);
-      target.classList.add('selected-img');
-      target.setAttribute('data-selected', 'true');
+    if (imgEl) {
+      document.querySelectorAll('.ProseMirror img').forEach(img => {
+        img.classList.remove('selected-img');
+        img.removeAttribute('data-selected');
+      });
+      setSelectedImageSrc(imgEl.src);
+      imgEl.classList.add('selected-img');
+      imgEl.setAttribute('data-selected', 'true');
     } else {
-      setSelectedImageSrc(null);
+      // If clicking inside toolbar or controls, do not deselect
+      if (!target.closest('.image-toolbar-container') && !target.closest('button')) {
+        setSelectedImageSrc(null);
+        document.querySelectorAll('.ProseMirror img').forEach(img => {
+          img.classList.remove('selected-img');
+          img.removeAttribute('data-selected');
+        });
+      }
+    }
+  };
+
+  const handleEditorDoubleClick = (e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+    const imgEl = (target.tagName === 'IMG' ? target : target.closest('img')) as HTMLImageElement | null;
+    if (imgEl && imgEl.src) {
+      setSelectedImageSrc(imgEl.src);
+      setStudioImageSrc(imgEl.src);
+      setIsImageStudioOpen(true);
     }
   };
 
@@ -520,7 +550,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
       }
     }
     if (!src) {
-      const selectedImgEl = document.querySelector('img.selected-img, img[data-selected="true"], img') as HTMLImageElement;
+      const selectedImgEl = document.querySelector('.ProseMirror img.selected-img, .ProseMirror img[data-selected="true"], .ProseMirror img') as HTMLImageElement;
       if (selectedImgEl) src = selectedImgEl.src;
     }
     if (src) {
@@ -577,6 +607,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
       onDrop={handleDrop}
       onPaste={handlePaste}
       onClick={handleEditorClick}
+      onDoubleClick={handleEditorDoubleClick}
       className={`rounded-lg border border-slate-300 bg-white transition-all focus-within:border-teal-600 focus-within:ring-1 focus-within:ring-teal-500/20 overflow-hidden shadow-2xs relative ${className}`}
     >
       {/* Hidden File Input for Image Upload */}
@@ -588,17 +619,9 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
         className="hidden"
       />
 
-      {/* Uploading Image Overlay */}
-      {isUploadingImage && (
-        <div className="absolute inset-0 bg-white/85 backdrop-blur-xs flex items-center justify-center gap-2 z-50 text-xs font-bold text-indigo-800 animate-in fade-in duration-100">
-          <Loader2 className="w-4 h-4 animate-spin text-indigo-600" />
-          <span>Inserting copied image...</span>
-        </div>
-      )}
-
       {/* SPECIAL FLOATING CONTEXT TOOLBAR WHEN AN IMAGE IS SELECTED */}
       {isImageSelected && (
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-indigo-200 bg-indigo-50/90 px-3 py-1.5 text-xs text-indigo-900 animate-in slide-in-from-top-1 duration-150">
+        <div className="image-toolbar-container flex flex-wrap items-center justify-between gap-2 border-b border-indigo-200 bg-indigo-50/90 px-3 py-1.5 text-xs text-indigo-900 animate-in slide-in-from-top-1 duration-150">
           <div className="flex items-center gap-1 font-bold text-[11px]">
             <Move className="w-3.5 h-3.5 text-indigo-600" />
             <span>Selected Image Controls:</span>

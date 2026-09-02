@@ -10,16 +10,20 @@ const upload = multer({
 });
 
 const BUCKET_NAME = process.env.VITE_SUPABASE_STORAGE_BUCKET || 'question-assets';
+let bucketChecked = false;
 
 async function ensureBucketExists() {
+  if (bucketChecked) return;
   try {
     const { data: buckets } = await supabase.storage.listBuckets();
     const exists = (buckets || []).some(b => b.name === BUCKET_NAME);
     if (!exists) {
       await supabase.storage.createBucket(BUCKET_NAME, { public: true });
     }
+    bucketChecked = true;
   } catch (err) {
     // Ignore error if bucket creation fails or exists
+    bucketChecked = true;
   }
 }
 

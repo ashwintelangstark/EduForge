@@ -4,13 +4,14 @@ import { MathTextRenderer } from '../equation/MathTextRenderer.js';
 import { MathTypeEditor } from '../equation/MathTypeEditor.js';
 import { DiagramStudioModal } from './DiagramStudioModal.js';
 import { RichTextEditor } from '../components/RichTextEditor.js';
+import { ImageStudioModal } from '../components/ImageStudioModal.js';
 import { api } from '../services/api.js';
 import { getUserProfile } from '../utils/userProfile.js';
 import { formatQuestionCode } from '../utils/questionCode.js';
 import { getDatabaseChaptersForSubject } from '../pages/CreateQuestionPage.js';
 import {
   HelpCircle, X, Check, Plus, Trash2, Sigma, Sparkles,
-  Image as ImageIcon, Palette, Upload, Loader2
+  Image as ImageIcon, Palette, Upload, Loader2, Wand2, Crop
 } from 'lucide-react';
 
 interface QuestionBuilderModalProps {
@@ -142,6 +143,11 @@ export const QuestionBuilderModal: React.FC<QuestionBuilderModalProps> = ({
   // Diagram Studio integration
   const [isDiagramStudioOpen, setIsDiagramStudioOpen] = useState<boolean>(false);
   const [diagramStudioTarget, setDiagramStudioTarget] = useState<{ field: 'statement' } | { field: 'option'; index: number }>({ field: 'statement' });
+
+  // Image Studio integration (Perspective Crop, Normal Crop & Filters)
+  const [isImageStudioOpen, setIsImageStudioOpen] = useState<boolean>(false);
+  const [studioTarget, setStudioTarget] = useState<{ type: 'question'; index: number } | { type: 'option'; index: number } | null>(null);
+  const [studioImageSrc, setStudioImageSrc] = useState<string>('');
 
   // Master Control: Single Button Toggle for Smart Assistant Features
   const [isSmartAssistantEnabled, setIsSmartAssistantEnabled] = useState<boolean>(() => {
@@ -280,22 +286,39 @@ export const QuestionBuilderModal: React.FC<QuestionBuilderModalProps> = ({
     if (!files || files.length === 0) return;
 
     try {
-      setIsUploadingQuestionImage(true);
-      const newUrls: string[] = [];
+      // 1. Immediately read all files as local base64 Data URLs for 0ms insertion delay
+      const localDataUrls = await Promise.all(
+        Array.from(files).map(file => new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        }))
+      );
+
       let updatedHtml = rawText || '';
-      for (let i = 0; i < files.length; i++) {
-        const res = await api.uploadImage(files[i]);
-        if (res.url) {
-          newUrls.push(res.url);
-          updatedHtml += `<p><img src="${res.url}" /></p>`;
-        }
-      }
+      localDataUrls.forEach(url => {
+        updatedHtml += `<p><img src="${url}" /></p>`;
+      });
+
       setRawText(updatedHtml);
-      setImageUrls(prev => [...prev, ...newUrls]);
+      setImageUrls(prev => [...prev, ...localDataUrls]);
+
+      // 2. Upload to backend in background without blocking UI
+      Array.from(files).forEach((file, i) => {
+        api.uploadImage(file).then(res => {
+          if (res?.url) {
+            const localUrl = localDataUrls[i];
+            setImageUrls(prev => prev.map(u => u === localUrl ? res.url : u));
+            setRawText(prev => prev.split(localUrl).join(res.url));
+          }
+        }).catch(err => {
+          console.warn('Background question image upload deferred:', err);
+        });
+      });
     } catch (err) {
       console.error('Question image upload error:', err);
     } finally {
-      setIsUploadingQuestionImage(false);
       if (questionImageInputRef.current) questionImageInputRef.current.value = '';
     }
   };
@@ -305,27 +328,53 @@ export const QuestionBuilderModal: React.FC<QuestionBuilderModalProps> = ({
     if (!files || files.length === 0) return;
 
     try {
-      setUploadingOptionIdx(index);
+      // 1. Instantly read local data URLs for 0ms insertion delay
+      const localDataUrls = await Promise.all(
+        Array.from(files).map(file => new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        }))
+      );
+
       let updatedText = options[index].rawText || '';
-      let lastUrl = options[index].imageUrl;
-      for (let i = 0; i < files.length; i++) {
-        const res = await api.uploadImage(files[i]);
-        if (res.url) {
-          lastUrl = res.url;
-          updatedText += `<p><img src="${res.url}" /></p>`;
-        }
-      }
+      localDataUrls.forEach(url => {
+        updatedText += `<p><img src="${url}" /></p>`;
+      });
+
       const updated = [...options];
       updated[index] = {
         ...updated[index],
         rawText: updatedText,
-        imageUrl: lastUrl
+        imageUrl: localDataUrls[localDataUrls.length - 1]
       };
       setOptions(updated);
+
+      // 2. Background upload
+      Array.from(files).forEach((file, i) => {
+        api.uploadImage(file).then(res => {
+          if (res?.url) {
+            const localUrl = localDataUrls[i];
+            setOptions(prev => {
+              const next = [...prev];
+              if (next[index]) {
+                next[index] = {
+                  ...next[index],
+                  rawText: (next[index].rawText || '').split(localUrl).join(res.url),
+                  imageUrl: next[index].imageUrl === localUrl ? res.url : next[index].imageUrl
+                };
+              }
+              return next;
+            });
+          }
+        }).catch(err => {
+          console.warn('Background option image upload deferred:', err);
+        });
+      });
     } catch (err) {
       console.error('Option image upload error:', err);
     } finally {
-      setUploadingOptionIdx(null);
       if (optionImageInputRefs.current[index]) {
         optionImageInputRefs.current[index]!.value = '';
       }
@@ -336,6 +385,47 @@ export const QuestionBuilderModal: React.FC<QuestionBuilderModalProps> = ({
     const updated = [...options];
     updated[index] = { ...updated[index], imageUrl: url };
     setOptions(updated);
+  };
+
+  const openImageStudioForQuestion = (url: string, index: number) => {
+    setStudioTarget({ type: 'question', index });
+    setStudioImageSrc(url);
+    setIsImageStudioOpen(true);
+  };
+
+  const openImageStudioForOption = (url: string, index: number) => {
+    setStudioTarget({ type: 'option', index });
+    setStudioImageSrc(url);
+    setIsImageStudioOpen(true);
+  };
+
+  const handleStudioSave = (newBase64: string) => {
+    if (!studioTarget || !newBase64) return;
+    if (studioTarget.type === 'question') {
+      const oldUrl = imageUrls[studioTarget.index];
+      setImageUrls(prev => {
+        const next = [...prev];
+        next[studioTarget.index] = newBase64;
+        return next;
+      });
+      if (oldUrl) {
+        setRawText(prev => prev.split(oldUrl).join(newBase64));
+      }
+    } else if (studioTarget.type === 'option') {
+      const optIdx = studioTarget.index;
+      const oldUrl = options[optIdx]?.imageUrl;
+      setOptions(prev => {
+        const next = [...prev];
+        if (next[optIdx]) {
+          next[optIdx] = {
+            ...next[optIdx],
+            imageUrl: newBase64,
+            rawText: oldUrl ? (next[optIdx].rawText || '').split(oldUrl).join(newBase64) : next[optIdx].rawText
+          };
+        }
+        return next;
+      });
+    }
   };
 
   const handleSaveDiagram = (svg: string) => {
@@ -756,6 +846,43 @@ export const QuestionBuilderModal: React.FC<QuestionBuilderModalProps> = ({
                   </div>
                 </div>
               )}
+
+              {/* Attached Question Images List */}
+              {imageUrls.length > 0 && (
+                <div className="mt-2.5 p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+                  <span className="text-[11px] font-bold text-slate-700 uppercase tracking-wider block">
+                    Attached Question Images ({imageUrls.length}):
+                  </span>
+                  <div className="flex flex-wrap gap-2.5">
+                    {imageUrls.map((url, idx) => (
+                      <div key={idx} className="relative group bg-white border border-slate-300 rounded-lg p-1 shadow-2xs flex items-center gap-2">
+                        <img src={url} alt={`Question Img ${idx + 1}`} className="w-14 h-14 object-contain rounded bg-slate-50" />
+                        <div className="flex flex-col gap-1 pr-1">
+                          <button
+                            type="button"
+                            onClick={() => openImageStudioForQuestion(url, idx)}
+                            className="px-2 py-0.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 rounded text-[10px] font-bold flex items-center gap-1 cursor-pointer"
+                            title="Crop, Filter & Enhance"
+                          >
+                            <Wand2 className="w-3 h-3 text-emerald-600" /> Crop & Filter
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setImageUrls(prev => prev.filter((_, i) => i !== idx));
+                              setRawText(prev => prev.split(url).join(''));
+                            }}
+                            className="px-2 py-0.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded text-[10px] font-bold flex items-center gap-1 cursor-pointer"
+                            title="Delete this image"
+                          >
+                            <Trash2 className="w-3 h-3 text-rose-600" /> Remove
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Options Header & Layout */}
@@ -1010,6 +1137,14 @@ export const QuestionBuilderModal: React.FC<QuestionBuilderModalProps> = ({
         }
         onClose={() => setIsDiagramStudioOpen(false)}
         onSaveDiagram={handleSaveDiagram}
+      />
+
+      {/* Embedded Image Studio Modal (Crop, Perspective Warp & Filters) */}
+      <ImageStudioModal
+        isOpen={isImageStudioOpen}
+        imageSrc={studioImageSrc}
+        onClose={() => setIsImageStudioOpen(false)}
+        onSave={handleStudioSave}
       />
     </>
   );

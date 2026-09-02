@@ -90,9 +90,16 @@ const EditableOptionItem: React.FC<{
     if (!file || !onUpdateOptionImage) return;
 
     try {
-      setIsUploading(true);
-      const res = await api.uploadImage(file);
-      onUpdateOptionImage(opt.id, res.url);
+      const reader = new FileReader();
+      reader.onload = () => {
+        const localDataUrl = reader.result as string;
+        onUpdateOptionImage(opt.id, localDataUrl);
+      };
+      reader.readAsDataURL(file);
+
+      api.uploadImage(file).then(res => {
+        if (res?.url) onUpdateOptionImage(opt.id, res.url);
+      }).catch(err => console.warn('Background option image upload deferred:', err));
     } catch (err) {
       console.error('Option image upload error:', err);
     } finally {
@@ -109,11 +116,18 @@ const EditableOptionItem: React.FC<{
       e.preventDefault();
       e.stopPropagation();
       try {
-        setIsUploading(true);
         const file = imageItems[0].getAsFile();
         if (file) {
-          const res = await api.uploadImage(file);
-          if (res.url) onUpdateOptionImage(opt.id, res.url);
+          const reader = new FileReader();
+          reader.onload = () => {
+            const localDataUrl = reader.result as string;
+            onUpdateOptionImage(opt.id, localDataUrl);
+          };
+          reader.readAsDataURL(file);
+
+          api.uploadImage(file).then(res => {
+            if (res?.url) onUpdateOptionImage(opt.id, res.url);
+          }).catch(err => console.warn('Background option image upload deferred:', err));
         }
       } catch (err) {
         console.error('Error pasting image to option:', err);
