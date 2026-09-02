@@ -143,6 +143,28 @@ export const QuestionBuilderModal: React.FC<QuestionBuilderModalProps> = ({
   const [isDiagramStudioOpen, setIsDiagramStudioOpen] = useState<boolean>(false);
   const [diagramStudioTarget, setDiagramStudioTarget] = useState<{ field: 'statement' } | { field: 'option'; index: number }>({ field: 'statement' });
 
+  // Master Control: Single Button Toggle for Smart Assistant Features
+  const [isSmartAssistantEnabled, setIsSmartAssistantEnabled] = useState<boolean>(() => {
+    return localStorage.getItem('eduforge_smart_assistant') !== 'false';
+  });
+
+  // Smart Punctuation Enforcer
+  const applySmartPunctuation = (text: string) => {
+    if (!isSmartAssistantEnabled || !text) return text;
+    let trimmed = text.trim();
+    const interrogativeRegex = /^\s*(?:<[^>]*>)*\s*(which|what|how|why|when|where|who|whom|whose|calculate|find|determine|select|name|state|identify|evaluate|explain|derive|describe|prove|compare)\b/i;
+    if (interrogativeRegex.test(trimmed)) {
+      const plainEnd = trimmed.replace(/<[^>]*>/g, '').trim();
+      if (plainEnd && !/[?.!:;]$/.test(plainEnd)) {
+        if (trimmed.endsWith('</p>')) {
+          return trimmed.replace(/<\/p>$/i, '?</p>');
+        }
+        return `${trimmed}?`;
+      }
+    }
+    return text;
+  };
+
   const defaultOptions: QuestionOption[] = [
     { id: 'opt-1', key: 'a', rawText: '', isCorrect: true, content: [] },
     { id: 'opt-2', key: 'b', rawText: '', isCorrect: false, content: [] },
@@ -434,13 +456,32 @@ export const QuestionBuilderModal: React.FC<QuestionBuilderModalProps> = ({
                 <p className="text-xs text-slate-600 font-medium">Configure statement, formulas with MathType, local image attachments, diagrams, and options</p>
               </div>
             </div>
-            <button
-              type="button"
-              onClick={onClose}
-              className="p-1 text-slate-500 hover:text-black hover:bg-slate-200 rounded-lg transition-colors cursor-pointer"
-            >
-              <X className="w-5 h-5" />
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  const nextState = !isSmartAssistantEnabled;
+                  setIsSmartAssistantEnabled(nextState);
+                  localStorage.setItem('eduforge_smart_assistant', String(nextState));
+                }}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-2xs border cursor-pointer ${
+                  isSmartAssistantEnabled
+                    ? 'bg-amber-50 text-amber-900 border-amber-300 hover:bg-amber-100 ring-1 ring-amber-400/20'
+                    : 'bg-slate-100 text-slate-500 border-slate-300 hover:bg-slate-200'
+                }`}
+                title="Master Switch: Toggle Smart Assistant (Auto-Correct, Grammar & Validation)"
+              >
+                <Sparkles className={`w-3.5 h-3.5 ${isSmartAssistantEnabled ? 'text-amber-600 fill-amber-500' : 'text-slate-400'}`} />
+                <span>Smart Assistant: {isSmartAssistantEnabled ? 'ON' : 'OFF'}</span>
+              </button>
+              <button
+                type="button"
+                onClick={onClose}
+                className="p-1 text-slate-500 hover:text-black hover:bg-slate-200 rounded-lg transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
           </div>
 
           {/* Modal Body */}
@@ -679,6 +720,7 @@ export const QuestionBuilderModal: React.FC<QuestionBuilderModalProps> = ({
                 placeholder="Enter question statement (e.g. In the circuit shown below, determine the equivalent resistance...)"
                 className="w-full"
                 showPreview
+                smartAssistantEnabled={isSmartAssistantEnabled}
               />
 
               {diagramSvg && (
@@ -835,6 +877,7 @@ export const QuestionBuilderModal: React.FC<QuestionBuilderModalProps> = ({
                       placeholder={`Enter Option (${opt.key}) text or formula (e.g. H = \\frac{u^2}{2g})`}
                       className="w-full"
                       showPreview
+                      smartAssistantEnabled={isSmartAssistantEnabled}
                     />
 
                     {opt.diagramSvg && (
@@ -903,6 +946,7 @@ export const QuestionBuilderModal: React.FC<QuestionBuilderModalProps> = ({
                   onImagePasted={url => setImageUrls(prev => [...prev, url])}
                   placeholder="Detailed step-by-step solution or rationale..."
                   className="w-full"
+                  smartAssistantEnabled={isSmartAssistantEnabled}
                 />
               </div>
               <div>
