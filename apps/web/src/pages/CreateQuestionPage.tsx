@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Sparkles, AlertTriangle, AlertCircle } from 'lucide-react';
 import { Question, QuestionOption, QuestionDifficulty } from '@eduforge/shared';
 import { api } from '../services/api.js';
 import { RichTextEditor } from '../components/RichTextEditor.js';
@@ -192,6 +193,52 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [activeImageBlockId, setActiveImageBlockId] = useState<string | null>(null);
 
+  // Master Control: Single Button Toggle for Smart Assistant Features
+  const [isSmartAssistantEnabled, setIsSmartAssistantEnabled] = useState<boolean>(() => {
+    return localStorage.getItem('eduforge_smart_assistant') !== 'false';
+  });
+
+  // Duplicate Option Detector (Live Feature)
+  const duplicateOptionKeys = React.useMemo(() => {
+    if (!isSmartAssistantEnabled) return [];
+    const seen: Record<string, string> = {};
+    const dups = new Set<string>();
+
+    options.forEach(o => {
+      let raw = (o.rawText || (o as any).raw_text || '').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+      if (!raw && Array.isArray(o.content)) {
+        raw = o.content.map((c: any) => c.text || c.html || '').join(' ').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+      }
+      if (raw && raw.length > 0) {
+        if (seen[raw]) {
+          dups.add(seen[raw]);
+          dups.add(o.key);
+        } else {
+          seen[raw] = o.key;
+        }
+      }
+    });
+
+    return Array.from(dups).sort();
+  }, [options, isSmartAssistantEnabled]);
+
+  // Smart Punctuation Enforcer (Auto-appends ? to interrogative question statements)
+  const applySmartPunctuation = (text: string) => {
+    if (!isSmartAssistantEnabled || !text) return text;
+    let trimmed = text.trim();
+    const interrogativeRegex = /^\s*(?:<[^>]*>)*\s*(which|what|how|why|when|where|who|whom|whose|calculate|find|determine|select|name|state|identify|evaluate|explain|derive|describe|prove|compare)\b/i;
+    if (interrogativeRegex.test(trimmed)) {
+      const plainEnd = trimmed.replace(/<[^>]*>/g, '').trim();
+      if (plainEnd && !/[?.!:;]$/.test(plainEnd)) {
+        if (trimmed.endsWith('</p>')) {
+          return trimmed.replace(/<\/p>$/i, '?</p>');
+        }
+        return `${trimmed}?`;
+      }
+    }
+    return text;
+  };
+
   // Synchronize or Reset form fields whenever initialQuestion changes
   React.useEffect(() => {
     if (initialQuestion && (initialQuestion.id || initialQuestion.rawText)) {
@@ -323,11 +370,13 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
   const handleSaveDraft = async () => {
     if (isSaving) return false;
 
-    const rawStatement = blocks
-      .filter(b => b.type === 'text')
-      .map(b => b.text)
-      .filter(Boolean)
-      .join(' ');
+    const rawStatement = applySmartPunctuation(
+      blocks
+        .filter(b => b.type === 'text')
+        .map(b => b.text)
+        .filter(Boolean)
+        .join(' ')
+    );
 
     const correctOpt = options.find(o => o.isCorrect);
     const subToUse = userSubject !== 'All' ? userSubject : subject;
@@ -483,6 +532,23 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
         </div>
 
         <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => {
+              const nextState = !isSmartAssistantEnabled;
+              setIsSmartAssistantEnabled(nextState);
+              localStorage.setItem('eduforge_smart_assistant', String(nextState));
+            }}
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-2xs border cursor-pointer ${
+              isSmartAssistantEnabled
+                ? 'bg-amber-50 text-amber-900 border-amber-300 hover:bg-amber-100 ring-1 ring-amber-400/20'
+                : 'bg-slate-100 text-slate-500 border-slate-300 hover:bg-slate-200'
+            }`}
+            title="Master Switch: Toggle Smart Assistant (Auto-Correct, Grammar & Validation)"
+          >
+            <Sparkles className={`w-3.5 h-3.5 ${isSmartAssistantEnabled ? 'text-amber-600 fill-amber-500' : 'text-slate-400'}`} />
+            <span>Smart Assistant: {isSmartAssistantEnabled ? 'ON' : 'OFF'}</span>
+          </button>
           <span className="px-2.5 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-xs font-semibold">
             Autosaved ✓
           </span>
@@ -726,6 +792,7 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
                       value={b.text || ''}
                       onChange={txt => updateTextBlock(b.id, txt)}
                       placeholder="Enter text block content..."
+                      smartAssistantEnabled={isSmartAssistantEnabled}
                     />
                   ) : b.type === 'diagram' && b.diagramSvg ? (
                     <div className="py-4 text-center space-y-2 bg-slate-50 border border-slate-200 rounded-lg p-3">
@@ -768,6 +835,16 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
             <span className="font-bold text-xs text-slate-900">Multiple Choice Options</span>
             <span className="text-xs text-slate-400">Select one correct answer</span>
           </div>
+
+          {isSmartAssistantEnabled && duplicateOptionKeys.length > 0 && (
+            <div className="mx-5 mt-4 p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-900 text-xs font-medium flex items-center gap-2">
+              <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
+              <span>
+                <strong>Smart Assistant Warning:</strong> Option {duplicateOptionKeys.join(' and Option ')} contain identical text! Please ensure all MCQ options are distinct.
+              </span>
+            </div>
+          )}
+
           <div className="p-5 space-y-3">
             {options.map((opt, idx) => (
               <div key={opt.key || idx} className="grid grid-cols-[36px_1fr_28px] gap-2 items-start">
@@ -779,6 +856,7 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
                   value={opt.rawText || ''}
                   onChange={txt => updateOptionText(idx, txt)}
                   placeholder={`Option ${opt.key?.toUpperCase() || String.fromCharCode(65 + idx)}...`}
+                  smartAssistantEnabled={isSmartAssistantEnabled}
                 />
                 <button
                   type="button"
@@ -812,10 +890,19 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
 
           {isSolutionExpanded && (
             <div className="p-5 space-y-3">
+              {isSmartAssistantEnabled && (!solutionText.trim() || !options.some(o => o.isCorrect)) && (
+                <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 text-xs font-medium flex items-center gap-2 mb-2">
+                  <AlertCircle className="w-4 h-4 text-slate-500 shrink-0" />
+                  <span>
+                    <strong>Smart Assistant Reminder:</strong> {!options.some(o => o.isCorrect) ? 'Please mark one option as correct.' : ''} {!solutionText.trim() ? 'Adding explanation text helps students understand the step-by-step solution.' : ''}
+                  </span>
+                </div>
+              )}
               <RichTextEditor
                 value={solutionText}
                 onChange={setSolutionText}
                 placeholder="Solution explanation..."
+                smartAssistantEnabled={isSmartAssistantEnabled}
               />
             </div>
           )}

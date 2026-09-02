@@ -86,6 +86,7 @@ export interface RichTextEditorProps {
   autoFocus?: boolean;
   className?: string;
   showPreview?: boolean;
+  smartAssistantEnabled?: boolean;
   onImagePasted?: (url: string) => void;
   onBlur?: () => void;
   onKeyDown?: (e: React.KeyboardEvent) => void;
@@ -122,6 +123,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
   autoFocus = false,
   className = '',
   showPreview = false,
+  smartAssistantEnabled = true,
   onImagePasted,
   onBlur,
   onKeyDown
@@ -157,6 +159,13 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
     ],
     content: value || '',
     autofocus: autoFocus,
+    editorProps: {
+      attributes: {
+        spellcheck: smartAssistantEnabled ? 'true' : 'false',
+        autocorrect: smartAssistantEnabled ? 'on' : 'off',
+        autocapitalize: smartAssistantEnabled ? 'sentences' : 'off',
+      }
+    },
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
       onChange(html);
