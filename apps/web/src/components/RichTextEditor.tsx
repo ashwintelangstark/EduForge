@@ -10,12 +10,13 @@ import {
   Bold, Italic, Underline as UnderlineIcon, Subscript as SubscriptIcon,
   Superscript as SuperscriptIcon, List, ListOrdered, Sigma, Sparkles,
   RotateCcw, RotateCw, Eye, EyeOff, Image as ImageIcon, Loader2,
-  AlignLeft, AlignCenter, AlignRight, AlignJustify, Trash2, Move, Check
+  AlignLeft, AlignCenter, AlignRight, AlignJustify, Trash2, Move, Check, Crop, Wand2
 } from 'lucide-react';
 import { api } from '../services/api.js';
 import { MathTextRenderer } from '../equation/MathTextRenderer.js';
 import { MathTypeModal } from './MathTypeModal.js';
 import { ImageLibraryModal } from './ImageLibraryModal.js';
+import { ImageStudioModal } from './ImageStudioModal.js';
 
 export function autoCapitalizeSentences(text: string): string {
   if (!text) return '';
@@ -228,6 +229,8 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
   const [showMathMenu, setShowMathMenu] = useState(false);
   const [isMathTypeOpen, setIsMathTypeOpen] = useState(false);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+  const [isImageStudioOpen, setIsImageStudioOpen] = useState(false);
+  const [studioImageSrc, setStudioImageSrc] = useState('');
   const [previewOpen, setPreviewOpen] = useState(showPreview);
   const [isUploadingImage, setIsUploadingImage] = useState(false);
   const [selectedImageSrc, setSelectedImageSrc] = useState<string | null>(null);
@@ -507,6 +510,21 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
     }
   };
 
+  const openImageStudio = () => {
+    const src = selectedImageSrc || currentImageAttrs?.src;
+    if (src) {
+      setStudioImageSrc(src);
+      setIsImageStudioOpen(true);
+    }
+  };
+
+  const handleStudioSave = (newBase64: string) => {
+    if (editor) {
+      editor.chain().focus().updateAttributes('image', { src: newBase64 }).run();
+      setSelectedImageSrc(newBase64);
+    }
+  };
+
   const activeMinHeight = minHeight || (compact ? 'min-h-[44px]' : 'min-h-[220px]');
 
   return (
@@ -618,6 +636,19 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
               title="Adjust Image Width %"
             />
           </div>
+
+          <div className="h-4 w-px bg-indigo-200" />
+
+          {/* Launch Image Studio (Crop, Un-skew & Filters) */}
+          <button
+            type="button"
+            onClick={openImageStudio}
+            className="px-2 py-1 bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold rounded flex items-center gap-1 transition-all shadow-xs active:scale-95 cursor-pointer"
+            title="Open Image Studio for Perspective Smart Crop, Normal Crop & Document Scanner Filters"
+          >
+            <Wand2 className="w-3 h-3" />
+            <span>Crop, Filter & Enhance</span>
+          </button>
 
           <div className="h-4 w-px bg-indigo-200" />
 
@@ -924,6 +955,14 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
         isOpen={isImageModalOpen}
         onClose={() => setIsImageModalOpen(false)}
         onSelectImage={url => insertImageUrl(url)}
+      />
+
+      {/* Image Studio (Smart Perspective Crop, Normal Crop & Scanner Filters) */}
+      <ImageStudioModal
+        isOpen={isImageStudioOpen}
+        imageSrc={studioImageSrc}
+        onClose={() => setIsImageStudioOpen(false)}
+        onSave={handleStudioSave}
       />
     </div>
   );
