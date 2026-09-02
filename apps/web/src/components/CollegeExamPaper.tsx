@@ -1,10 +1,13 @@
 import React from 'react';
 import { MathTextRenderer, resolveImageUrl, stripQuestionCode } from '../equation/MathTextRenderer.js';
+import { formatQuestionCode } from '../utils/questionCode.js';
 import { Check } from 'lucide-react';
 
 export interface CollegeExamQuestion {
   id: string | number;
   questionNumber?: number;
+  questionCode?: string;
+  question_code?: string;
   rawText?: string;
   content?: any;
   options?: any[];
@@ -20,6 +23,7 @@ export interface CollegeExamQuestion {
   sectionName?: string;
   sectionId?: string;
   subject?: string;
+  chapter?: string;
   topic?: string;
   difficulty?: string;
 }
@@ -51,6 +55,7 @@ export interface CollegeExamPaperProps {
   showWatermark?: boolean;
   watermarkText?: string;
   columnLayout?: '2-column' | '1-column';
+  showQuestionCode?: boolean;
   fontSize?: 'compact' | 'normal' | 'spacious';
   logoUrl?: string;
   instructionsText?: string;
@@ -75,6 +80,7 @@ export const CollegeExamPaper: React.FC<CollegeExamPaperProps> = ({
   showWatermark = true,
   watermarkText = 'Test',
   columnLayout = '2-column',
+  showQuestionCode = false,
   fontSize = 'compact',
   logoUrl = '',
   instructionsText = '',
@@ -475,11 +481,21 @@ export const CollegeExamPaper: React.FC<CollegeExamPaperProps> = ({
                   const isUltraShort = !hasOptImages && maxOptLen <= 10 && sortedOpts.length === 4;
                   const isShort2x2 = hasOptImages || (maxOptLen <= 26 && sortedOpts.length === 4);
 
+                  // Extract question code if enabled
+                  const qCode = q.questionCode || (q as any).question_code || (q as any).code || formatQuestionCode(q);
+
                   return (
                     <div key={q.id || qIdx} className="exam-q-block mb-3 pl-0.5 text-black">
                       {/* Question Text */}
                       <div className="flex items-start gap-1.5 font-normal">
-                        <span className="font-bold shrink-0 select-none">({qNum})</span>
+                        <div className="flex items-center gap-1 shrink-0 select-none">
+                          <span className="font-bold">({qNum})</span>
+                          {showQuestionCode && qCode && (
+                            <span className="text-[9px] font-mono font-bold text-slate-700 bg-slate-100 border border-slate-300 px-1 py-0.5 rounded inline-block">
+                              [{qCode}]
+                            </span>
+                          )}
+                        </div>
                         <div className="flex-1 font-medium leading-relaxed">
                           <MathTextRenderer text={rawTextStr || 'Question Statement'} />
                         </div>

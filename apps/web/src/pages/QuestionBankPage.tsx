@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../services/api.js';
 import { Question, DocumentModel } from '@eduforge/shared';
-import { Search, Plus, Trash2, Edit3, Eye, Filter, BookOpen, Layers, Send, Bookmark, FileText, Download, Check, X, Settings, ZoomIn, ZoomOut, FileEdit, Printer, Columns, Square, Sparkles, SlidersHorizontal, ChevronDown, ChevronUp, RefreshCw, FileDown } from 'lucide-react';
+import { Search, Plus, Trash2, Edit3, Eye, Filter, BookOpen, Layers, Send, Bookmark, FileText, Download, Check, X, Settings, ZoomIn, ZoomOut, FileEdit, Printer, Columns, Square, Sparkles, SlidersHorizontal, ChevronDown, ChevronUp, RefreshCw, FileDown, Tag, Hash } from 'lucide-react';
 import { StudentPreviewDrawer } from '../components/StudentPreviewDrawer.js';
 import { CollegeExamPaper, HeaderPresetType } from '../components/CollegeExamPaper.js';
 import { formatQuestionCode } from '../utils/questionCode.js';
@@ -113,6 +113,7 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
   const [studioZoom, setStudioZoom] = useState<number>(100);
   const [studioShowWatermark, setStudioShowWatermark] = useState<boolean>(true);
   const [studioWatermarkText, setStudioWatermarkText] = useState<string>('NEET PREP');
+  const [studioShowQuestionCode, setStudioShowQuestionCode] = useState<boolean>(false);
   const [studioInstituteName, setStudioInstituteName] = useState<string>('NLE SOCIETYS Dr RB PATIL MAHESH PU COLLEGE');
   const [studioExamTitle, setStudioExamTitle] = useState<string>('QUESTION BANK ASSESSMENT TEST');
   const [studioSubtitle, setStudioSubtitle] = useState<string>('Department of Pre-University Education');
@@ -1255,6 +1256,20 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
                     </button>
                   )}
 
+                  {/* Question Code Toggle */}
+                  <button
+                    type="button"
+                    onClick={() => setStudioShowQuestionCode(!studioShowQuestionCode)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer flex items-center gap-1.5 shadow-2xs ${
+                      studioShowQuestionCode
+                        ? 'bg-indigo-50 border-indigo-300 text-indigo-900 shadow-xs'
+                        : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+                    }`}
+                    title="Toggle displaying question code in test paper & PDF export"
+                  >
+                    <Tag className="w-3.5 h-3.5 text-indigo-600" /> Q-Code {studioShowQuestionCode ? 'ON' : 'OFF'}
+                  </button>
+
                   {/* Customize Header Button */}
                   <button
                     type="button"
@@ -1398,6 +1413,18 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
                       className="flex-1 p-2 bg-white border border-slate-300 rounded-lg font-semibold text-slate-900 disabled:opacity-50 shadow-2xs"
                     />
                   </div>
+
+                  <div className="col-span-2 flex items-center gap-2 pt-3">
+                    <label className="flex items-center gap-1.5 font-bold text-slate-800 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={studioShowQuestionCode}
+                        onChange={e => setStudioShowQuestionCode(e.target.checked)}
+                        className="rounded text-indigo-700"
+                      />
+                      Show Question Code in Paper / PDF
+                    </label>
+                  </div>
                 </div>
               )}
 
@@ -1431,6 +1458,7 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
                     columnLayout={studioColumnLayout}
                     fontSize={studioFontSize}
                     instructionsText={studioInstructions}
+                    showQuestionCode={studioShowQuestionCode}
                   />
                 </div>
               </div>

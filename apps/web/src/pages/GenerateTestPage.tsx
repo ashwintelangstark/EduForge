@@ -4,7 +4,7 @@ import { Question, DocumentModel, DocumentSection } from '@eduforge/shared';
 import {
   Plus, Check, X, Printer, Download, Eye, FileText,
   HelpCircle, Shuffle, Award, Search, ArrowRight, ArrowLeft, Layers, CheckCircle2,
-  Columns, Droplet, Building2, Sparkles
+  Columns, Droplet, Building2, Sparkles, Tag, Hash
 } from 'lucide-react';
 import { formatQuestionCode } from '../utils/questionCode.js';
 import { MathTextRenderer } from '../equation/MathTextRenderer.js';
@@ -80,6 +80,7 @@ export const GenerateTestPage: React.FC<GenerateTestPageProps> = ({
   const [columnLayout, setColumnLayout] = useState<'2-column' | '1-column'>('2-column');
   const [showWatermark, setShowWatermark] = useState<boolean>(true);
   const [watermarkText, setWatermarkText] = useState<string>('Test');
+  const [showQuestionCode, setShowQuestionCode] = useState<boolean>(false);
   
   // ==========================================
   // Marking Scheme Configuration State
@@ -1825,6 +1826,17 @@ export const GenerateTestPage: React.FC<GenerateTestPageProps> = ({
                 <Download className="w-3.5 h-3.5 text-teal-700" /> Export as PDF
               </button>
 
+              {/* Question Code Quick Toggle */}
+              <label className="flex items-center gap-2 text-xs font-semibold text-slate-700 cursor-pointer pt-0.5 select-none hover:text-slate-900">
+                <input
+                  type="checkbox"
+                  checked={showQuestionCode}
+                  onChange={e => setShowQuestionCode(e.target.checked)}
+                  className="w-4 h-4 text-teal-600 rounded border-slate-300 cursor-pointer"
+                />
+                <span>Show Question Code in PDF</span>
+              </label>
+
               <button
                 type="button"
                 onClick={() => {
@@ -1898,6 +1910,21 @@ export const GenerateTestPage: React.FC<GenerateTestPageProps> = ({
                 >
                   <Droplet className="w-3.5 h-3.5" />
                   <span>Watermark {showWatermark ? 'ON' : 'OFF'}</span>
+                </button>
+
+                {/* Question Code Toggle */}
+                <button
+                  type="button"
+                  onClick={() => setShowQuestionCode(prev => !prev)}
+                  className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all border flex items-center gap-1.5 cursor-pointer ${
+                    showQuestionCode
+                      ? 'bg-indigo-50 text-indigo-800 border-indigo-300 shadow-2xs'
+                      : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                  }`}
+                  title="Toggle displaying question codes (e.g. BIO-ANI-001) in test paper & PDF export"
+                >
+                  <Tag className="w-3.5 h-3.5" />
+                  <span>Q-Code {showQuestionCode ? 'ON' : 'OFF'}</span>
                 </button>
 
                 {/* Edit Institute Header Toggle */}
@@ -2042,7 +2069,9 @@ export const GenerateTestPage: React.FC<GenerateTestPageProps> = ({
                           solution: q.explanationText || (q as any).solution || (q as any).explanation || '',
                           sectionId: sec.id,
                           sectionName: sec.name || 'Section',
-                          subject: (sec as any).subject || q.subject || selectedSubject
+                          subject: (sec as any).subject || q.subject || selectedSubject,
+                          chapter: q.chapter,
+                          questionCode: q.questionCode || (q as any).question_code || formatQuestionCode(q)
                         });
                       });
                     });
@@ -2052,6 +2081,7 @@ export const GenerateTestPage: React.FC<GenerateTestPageProps> = ({
                   showWatermark={showWatermark}
                   watermarkText={watermarkText}
                   columnLayout={columnLayout}
+                  showQuestionCode={showQuestionCode}
                 />
               </div>
             </div>

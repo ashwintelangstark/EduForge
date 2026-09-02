@@ -12,6 +12,7 @@
     "dev:server": "npm run dev --workspace=apps/server",
     "dev:web": "npm run dev --workspace=apps/web",
     "build": "npm run build --workspace=packages/shared && npm run build --workspace=apps/server && npm run build --workspace=apps/web && node -e \"const fs=require('fs'); fs.cpSync('apps/web/dist', 'dist', {recursive: true});\"",
+    "build:cpanel": "node scripts/build-cpanel-change-zips.js",
     "test": "npm run test --workspaces --if-present",
     "typecheck": "npm run build",
     "supabase:start": "supabase start",

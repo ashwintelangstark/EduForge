@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Trash2, Eye, Copy, Edit3, X, Save, Printer, FileText, Download, Columns, Droplet, Building2, CheckCircle2 } from 'lucide-react';
+import { Plus, Trash2, Eye, Copy, Edit3, X, Save, Printer, FileText, Download, Columns, Droplet, Building2, CheckCircle2, Tag, Hash } from 'lucide-react';
 import { DocumentModel } from '@eduforge/shared';
 import { api } from '../services/api.js';
 import { MathTextRenderer } from '../equation/MathTextRenderer.js';
@@ -57,6 +57,7 @@ export const TestsPage: React.FC<TestsPageProps> = ({
   const [showWatermark, setShowWatermark] = useState<boolean>(true);
   const [watermarkText, setWatermarkText] = useState<string>('Test');
   const [isAnswerKeyMode, setIsAnswerKeyMode] = useState<boolean>(false);
+  const [showQuestionCode, setShowQuestionCode] = useState<boolean>(false);
 
   const previewExamQuestions = React.useMemo(() => {
     if (!previewDoc || !previewDoc.sections) return [];
@@ -84,7 +85,9 @@ export const TestsPage: React.FC<TestsPageProps> = ({
             solution: qObj?.explanationText || qObj?.solution || qObj?.explanation || '',
             sectionId: sec.id,
             sectionName: sec.title || 'Section A (MCQ)',
-            subject: previewDoc.metadata?.subject || 'Physics'
+            subject: previewDoc.metadata?.subject || 'Physics',
+            chapter: qObj?.chapter || qObj?.chapter_name || (sec as any)?.chapter || '',
+            questionCode: qObj?.questionCode || qObj?.question_code || (qObj as any)?.code || ''
           });
           qIdx++;
         });
@@ -574,6 +577,21 @@ export const TestsPage: React.FC<TestsPageProps> = ({
                   <span>Watermark {showWatermark ? 'ON' : 'OFF'}</span>
                 </button>
 
+                {/* Question Code Toggle */}
+                <button
+                  type="button"
+                  onClick={() => setShowQuestionCode(prev => !prev)}
+                  className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all border flex items-center gap-1.5 cursor-pointer ${
+                    showQuestionCode
+                      ? 'bg-indigo-50 text-indigo-800 border-indigo-300 shadow-2xs'
+                      : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                  }`}
+                  title="Toggle displaying question codes (e.g. BIO-ANI-001) in test paper & PDF export"
+                >
+                  <Tag className="w-3.5 h-3.5" />
+                  <span>Q-Code {showQuestionCode ? 'ON' : 'OFF'}</span>
+                </button>
+
                 {/* Edit Institute Header Toggle */}
                 <button
                   type="button"
@@ -677,6 +695,7 @@ export const TestsPage: React.FC<TestsPageProps> = ({
                   showWatermark={showWatermark}
                   watermarkText={watermarkText}
                   columnLayout={columnLayout}
+                  showQuestionCode={showQuestionCode}
                 />
               </div>
             </div>

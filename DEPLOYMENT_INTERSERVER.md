@@ -58,7 +58,8 @@ Complete step-by-step documentation for building, packaging, and deploying the *
 To build both production packages simultaneously, run the included packaging script from the project root:
 
 ```bash
-node scripts/build-deployment-zips.js
+npm run build:cpanel
+# or: node scripts/build-cpanel-change-zips.js
 ```
 
 ### What this script does:
@@ -66,8 +67,8 @@ node scripts/build-deployment-zips.js
 2. Compiles `@eduforge/web` into production assets (`apps/web/dist/`).
 3. Bundles `@eduforge/server` into a self-contained `apps/server/dist/server.js` (2.2 MB).
 4. Generates two clean deployment zip archives in the root directory:
-   - 📦 `frontend_build.zip` (~5.1 MB)
-   - 📦 `backend_build.zip` (~0.48 MB)
+   - 📦 `frontend_change_build.zip` (~5.1 MB)
+   - 📦 `backend_change_build.zip` (~0.49 MB)
 
 ---
 
@@ -75,8 +76,8 @@ node scripts/build-deployment-zips.js
 
 | Package | Local Output Path | Target cPanel Directory | Key Files Included |
 | :--- | :--- | :--- | :--- |
-| **Frontend** | `frontend_build.zip` | `/home/agrikart/eduforge.haegl.in/` | `index.html`, `assets/`, `.htaccess`, icons, fonts |
-| **Backend** | `backend_build.zip` | `/home/agrikart/eduforge.haegl.in/api/` | `server.js`, `package.json`, `.env` |
+| **Frontend** | `frontend_change_build.zip` | `/home/agrikart/eduforge.haegl.in/` | `index.html`, `assets/`, `.htaccess`, icons, fonts |
+| **Backend** | `backend_change_build.zip` | `/home/agrikart/eduforge.haegl.in/api/` | `server.js`, `package.json`, `.env` |
 
 ---
 
@@ -89,10 +90,10 @@ node scripts/build-deployment-zips.js
    /home/agrikart/eduforge.haegl.in
    ```
 3. Click **Upload** in the top navigation bar.
-4. Upload `frontend_build.zip`.
+4. Upload `frontend_change_build.zip`.
 5. Once the upload finishes with a green 100% bar, return to `/home/agrikart/eduforge.haegl.in`.
-6. Right-click `frontend_build.zip` $\rightarrow$ select **Extract** $\rightarrow$ extract to `/home/agrikart/eduforge.haegl.in`.
-7. Verify that `index.html` and the `assets/` folder have been updated.
+6. Right-click `frontend_change_build.zip` $\rightarrow$ select **Extract** $\rightarrow$ extract to `/home/agrikart/eduforge.haegl.in`.
+7. Verify that `index.html`, `.htaccess`, and the `assets/` folder have been updated.
 
 ---
 
@@ -102,12 +103,12 @@ node scripts/build-deployment-zips.js
    /home/agrikart/eduforge.haegl.in/api
    ```
 2. Click **Upload** in the top navigation bar.
-3. Upload `backend_build.zip`.
-4. Right-click `backend_build.zip` $\rightarrow$ select **Extract** $\rightarrow$ extract into `/home/agrikart/eduforge.haegl.in/api`.
-5. Verify that `server.js` (timestamped with the current time) and `package.json` are present.
+3. Upload `backend_change_build.zip`.
+4. Right-click `backend_change_build.zip` $\rightarrow$ select **Extract** $\rightarrow$ extract into `/home/agrikart/eduforge.haegl.in/api`.
+5. Verify that `server.js` (timestamped with the current time), `package.json`, and `.env` are present.
 
 > [!IMPORTANT]
-> Do NOT overwrite the `.htaccess` file inside `/api` with a custom file. cPanel's **Setup Node.js App** manages `/api/.htaccess` with internal Passenger socket paths. `backend_build.zip` is intentionally configured to preserve cPanel's `.htaccess`.
+> Do NOT overwrite the `.htaccess` file inside `/api` with a custom file. cPanel's **Setup Node.js App** manages `/api/.htaccess` with internal Passenger socket paths. `backend_change_build.zip` is intentionally configured to preserve cPanel's `.htaccess`.
 
 ---
 
@@ -157,7 +158,7 @@ The root `/home/agrikart/eduforge.haegl.in/.htaccess` ensures React Router clien
 | :--- | :--- | :--- |
 | **500 Internal Server Error on `/api`** | `.htaccess` inside `/api` was damaged or Node.js server crashed. | Go to cPanel **Setup Node.js App**, verify startup file is `server.js`, and click **Restart Application**. |
 | **Questions showing "..." indefinitely** | Frontend cannot reach Supabase or local browser cache is stale. | Perform a hard refresh (**`Ctrl + F5`** on Windows or **`Cmd + Shift + R`** on Mac). |
-| **Page refresh gives 404 on sub-routes (e.g. `/questions`)** | Root `.htaccess` is missing. | Re-extract `frontend_build.zip` to ensure the root `.htaccess` is present. |
+| **Page refresh gives 404 on sub-routes (e.g. `/questions`)** | Root `.htaccess` is missing. | Re-extract `frontend_change_build.zip` to ensure the root `.htaccess` is present. |
 | **Node.js app won't start in cPanel** | Startup file mismatch in cPanel settings. | Ensure **Application startup file** is set to exactly `server.js`. |
 
 ---
