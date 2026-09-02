@@ -161,7 +161,7 @@ const AppContent: React.FC = () => {
     try {
       const target = subjectsList.find(s => s.code === originalCode);
       if (target?.id) {
-        await api.updateSubject(target.id, updatedSub);
+        await api.updateSubject(String(target.id), updatedSub);
       }
     } catch (err) {
       console.error('Failed to edit subject in Supabase:', err);
@@ -399,6 +399,7 @@ const AppContent: React.FC = () => {
               mode="all"
               onBackToDashboard={() => setCurrentPage('dashboard')}
               onOpenCreateQuestion={q => handleOpenCreatePage(q)}
+              onOpenDocument={handleOpenDocument}
               selectedChapter={activeChapterFilter}
               onClearChapterFilter={() => setActiveChapterFilter(null)}
             />
@@ -409,6 +410,7 @@ const AppContent: React.FC = () => {
               mode="saved"
               onBackToDashboard={() => setCurrentPage('dashboard')}
               onOpenCreateQuestion={q => handleOpenCreatePage(q)}
+              onOpenDocument={handleOpenDocument}
               selectedChapter={activeChapterFilter}
               onClearChapterFilter={() => setActiveChapterFilter(null)}
             />
@@ -419,6 +421,7 @@ const AppContent: React.FC = () => {
               mode="approvals"
               onBackToDashboard={() => setCurrentPage('dashboard')}
               onOpenCreateQuestion={q => handleOpenCreatePage(q)}
+              onOpenDocument={handleOpenDocument}
               selectedChapter={activeChapterFilter}
               onClearChapterFilter={() => setActiveChapterFilter(null)}
             />
@@ -429,6 +432,7 @@ const AppContent: React.FC = () => {
               mode="published"
               onBackToDashboard={() => setCurrentPage('dashboard')}
               onOpenCreateQuestion={q => handleOpenCreatePage(q)}
+              onOpenDocument={handleOpenDocument}
               selectedChapter={activeChapterFilter}
               onClearChapterFilter={() => setActiveChapterFilter(null)}
             />

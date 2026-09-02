@@ -35,21 +35,30 @@ export async function fetchApi<T>(endpoint: string, options?: RequestInit): Prom
     authHeaders['x-user-role'] = user.role;
   }
 
-  const res = await fetch(url, {
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...authHeaders,
-      ...(options?.headers || {})
+  // 6-second timeout so requests to slow/sleeping hosts fail over swiftly
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 6000);
+
+  try {
+    const res = await fetch(url, {
+      ...options,
+      signal: options?.signal || controller.signal,
+      headers: {
+        'Content-Type': 'application/json',
+        ...authHeaders,
+        ...(options?.headers || {})
+      }
+    });
+
+    if (!res.ok) {
+      const errData = await res.json().catch(() => ({ error: { message: res.statusText } }));
+      const message = errData.error?.message || errData.error || `HTTP ${res.status}: ${res.statusText}`;
+      throw new Error(message);
     }
-  });
 
-  if (!res.ok) {
-    const errData = await res.json().catch(() => ({ error: { message: res.statusText } }));
-    const message = errData.error?.message || errData.error || `HTTP ${res.status}: ${res.statusText}`;
-    throw new Error(message);
+    const json = await res.json();
+    return json.data !== undefined ? json.data : json;
+  } finally {
+    clearTimeout(timeoutId);
   }
-
-  const json = await res.json();
-  return json.data !== undefined ? json.data : json;
 }

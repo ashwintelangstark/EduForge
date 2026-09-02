@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../services/api.js';
-import { Question } from '@eduforge/shared';
-import { Search, Plus, Trash2, Edit3, Eye, Filter, BookOpen, Layers, Send, Bookmark, FileText, Download, Check, X } from 'lucide-react';
+import { Question, DocumentModel } from '@eduforge/shared';
+import { Search, Plus, Trash2, Edit3, Eye, Filter, BookOpen, Layers, Send, Bookmark, FileText, Download, Check, X, Settings, ZoomIn, ZoomOut, FileEdit, Printer, Columns, Square, Sparkles, SlidersHorizontal, ChevronDown, ChevronUp, RefreshCw, FileDown } from 'lucide-react';
 import { StudentPreviewDrawer } from '../components/StudentPreviewDrawer.js';
-import { CollegeExamPaper } from '../components/CollegeExamPaper.js';
+import { CollegeExamPaper, HeaderPresetType } from '../components/CollegeExamPaper.js';
 import { formatQuestionCode } from '../utils/questionCode.js';
 import { MathTextRenderer } from '../equation/MathTextRenderer.js';
 import { getUserProfile } from '../utils/userProfile.js';
@@ -67,6 +67,7 @@ interface QuestionBankPageProps {
   mode?: 'all' | 'saved' | 'published' | 'approvals';
   onBackToDashboard?: () => void;
   onOpenCreateQuestion?: (q?: Question) => void;
+  onOpenDocument?: (docId: string) => void;
   selectedChapter?: { id?: string; title?: string; subject?: string } | null;
   onClearChapterFilter?: () => void;
 }
@@ -74,6 +75,7 @@ interface QuestionBankPageProps {
 export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
   mode = 'all',
   onOpenCreateQuestion,
+  onOpenDocument,
   selectedChapter,
   onClearChapterFilter
 }) => {
@@ -101,8 +103,36 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
   // Admin Approvals Tab State
   const [adminApprovalTab, setAdminApprovalTab] = useState<'sent' | 'received'>('sent');
 
-  // PDF Modal State
+  // PDF / Exam Studio Modal State & Controls
   const [isPdfModalOpen, setIsPdfModalOpen] = useState(false);
+  const [studioMode, setStudioMode] = useState<'student' | 'teacher_key'>('student');
+  const [studioColumnLayout, setStudioColumnLayout] = useState<'2-column' | '1-column'>('2-column');
+  const [studioHeaderPreset, setStudioHeaderPreset] = useState<HeaderPresetType>('classic_boxed');
+  const [studioFontSize, setStudioFontSize] = useState<'compact' | 'normal' | 'spacious'>('compact');
+  const [studioGroupBySubject, setStudioGroupBySubject] = useState<boolean>(true);
+  const [studioZoom, setStudioZoom] = useState<number>(100);
+  const [studioShowWatermark, setStudioShowWatermark] = useState<boolean>(true);
+  const [studioWatermarkText, setStudioWatermarkText] = useState<string>('NEET PREP');
+  const [studioInstituteName, setStudioInstituteName] = useState<string>('NLE SOCIETYS Dr RB PATIL MAHESH PU COLLEGE');
+  const [studioExamTitle, setStudioExamTitle] = useState<string>('QUESTION BANK ASSESSMENT TEST');
+  const [studioSubtitle, setStudioSubtitle] = useState<string>('Department of Pre-University Education');
+  const [studioStandard, setStudioStandard] = useState<string>('11 / PUC 1');
+  const [studioPaperSet, setStudioPaperSet] = useState<string>('SET 1');
+  const [studioDate, setStudioDate] = useState<string>(() => new Date().toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-'));
+  const [studioDuration, setStudioDuration] = useState<number>(180);
+  const [studioInstructions, setStudioInstructions] = useState<string>('Read all questions carefully. Each question carries equal marks.');
+  const [isStudioSettingsOpen, setIsStudioSettingsOpen] = useState<boolean>(false);
+
+  // Keyboard shortcut listener to clear selection on Escape
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && selectedIds.length > 0 && !isPdfModalOpen && !isPreviewOpen) {
+        setSelectedIds([]);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedIds.length, isPdfModalOpen, isPreviewOpen]);
 
   useEffect(() => {
     loadMetadataAndQuestions();
@@ -359,8 +389,17 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
 
     const printRoot = document.createElement('div');
     printRoot.id = 'print-paper-export-root';
-    printRoot.innerHTML = paperElem.outerHTML;
-
+    
+    // Deep clone the paper node and remove any interactive zoom/transform
+    const clonedEl = paperElem.cloneNode(true) as HTMLElement;
+    clonedEl.style.transform = 'none';
+    clonedEl.style.margin = '0 auto';
+    clonedEl.style.boxShadow = 'none';
+    clonedEl.style.border = 'none';
+    clonedEl.style.maxWidth = '100%';
+    clonedEl.style.width = '100%';
+    
+    printRoot.appendChild(clonedEl);
     document.body.appendChild(printRoot);
 
     setTimeout(() => {
@@ -368,8 +407,8 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
       setTimeout(() => {
         const cleanupRoot = document.getElementById('print-paper-export-root');
         if (cleanupRoot) cleanupRoot.remove();
-      }, 500);
-    }, 100);
+      }, 1000);
+    }, 200);
   };
 
   const getCleanQuestionText = (htmlText?: string) => {
@@ -513,99 +552,70 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center justify-end gap-2 shrink-0 max-w-full">
-          {mode === 'saved' && selectedIds.length > 0 && (
-            <button
-              type="button"
-              onClick={handleSendForApproval}
-              className="px-3.5 sm:px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-lg flex items-center gap-1.5 shadow-sm hover:shadow-md transition-all active:scale-[0.98] cursor-pointer font-sans"
-            >
-              <Send className="w-3.5 h-3.5" /> Send for Approval ({selectedIds.length})
-            </button>
-          )}
-
-          {mode === 'saved' && selectedIds.length > 0 && (
-            <button
-              type="button"
-              onClick={handleBulkPublish}
-              className="px-3.5 sm:px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg flex items-center gap-1.5 shadow-sm hover:shadow-md transition-all active:scale-[0.98] cursor-pointer font-sans"
-            >
-              <Check className="w-3.5 h-3.5" /> Publish Selected ({selectedIds.length})
-            </button>
-          )}
-
+        <div className="flex items-center justify-end gap-3 shrink-0">
           {selectedIds.length > 0 && (
-            <button
-              type="button"
-              onClick={() => setIsPdfModalOpen(true)}
-              className="px-3.5 sm:px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded-lg flex items-center gap-1.5 shadow-sm hover:shadow-md transition-all active:scale-[0.98] cursor-pointer font-sans"
-            >
-              <FileText className="w-3.5 h-3.5" /> Create PDF ({selectedIds.length})
-            </button>
+            <div className="hidden sm:flex items-center gap-2 bg-teal-50/90 border border-teal-200/80 px-3 py-1.5 rounded-xl text-xs font-bold text-teal-900 shadow-2xs animate-in fade-in duration-150">
+              <span className="w-2 h-2 rounded-full bg-teal-600 animate-pulse"></span>
+              <span>{selectedIds.length} Selected</span>
+              <button
+                type="button"
+                onClick={() => setSelectedIds([])}
+                className="text-teal-700 hover:text-teal-950 underline ml-1 cursor-pointer"
+              >
+                Clear
+              </button>
+            </div>
           )}
 
-          {mode === 'approvals' && selectedIds.length > 0 && (
-            <button
-              type="button"
-              onClick={handleBulkPublish}
-              className="px-3.5 sm:px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg flex items-center gap-1.5 shadow-sm hover:shadow-md transition-all active:scale-[0.98] cursor-pointer font-sans"
-            >
-              <Send className="w-3.5 h-3.5" /> Publish Selected ({selectedIds.length})
-            </button>
-          )}
-
-          {mode === 'published' && selectedIds.length > 0 && (
-            <button
-              type="button"
-              onClick={handleBulkUnpublish}
-              className="px-3.5 sm:px-4 py-2 bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold rounded-lg flex items-center gap-1.5 shadow-sm hover:shadow-md transition-all active:scale-[0.98] cursor-pointer font-sans"
-            >
-              <Bookmark className="w-3.5 h-3.5" /> Save Question (Move to Saved) ({selectedIds.length})
-            </button>
-          )}
-
-          {selectedIds.length > 0 && (
-            <button
-              type="button"
-              onClick={handleBulkDelete}
-              className="px-3.5 sm:px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-lg flex items-center gap-1.5 shadow-sm hover:shadow-md transition-all active:scale-[0.98] cursor-pointer font-sans"
-            >
-              <Trash2 className="w-3.5 h-3.5" /> Delete Selected ({selectedIds.length})
-            </button>
-          )}
-
+          {/* Primary Create Question Button */}
           <button
             type="button"
             onClick={() => onOpenCreateQuestion && onOpenCreateQuestion()}
-            className="px-3.5 sm:px-4 py-2 bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold rounded-lg flex items-center gap-1.5 shadow-sm hover:shadow-md transition-all active:scale-[0.98] cursor-pointer font-sans"
+            className="px-4 py-2.5 bg-teal-700 hover:bg-teal-800 text-white text-xs sm:text-sm font-bold rounded-xl flex items-center gap-2 shadow-sm hover:shadow-md transition-all active:scale-[0.98] cursor-pointer font-sans"
           >
-            <Plus className="w-3.5 h-3.5" /> Create Question
+            <Plus className="w-4 h-4" />
+            <span>Create Question</span>
           </button>
         </div>
       </div>
 
-      {/* Admin Approvals Tabs */}
+      {/* Admin Approvals Executive Segmented Card Tabs */}
       {mode === 'approvals' && user.role === 'admin' && (
-        <div className="flex border-b border-slate-200 gap-6 mt-2">
+        <div className="bg-slate-100/90 p-1.5 rounded-2xl border border-slate-200/80 inline-flex flex-wrap items-center gap-1.5 shadow-2xs">
           <button
             type="button"
-            className={`pb-2.5 font-bold text-xs sm:text-sm transition-colors ${adminApprovalTab === 'sent' ? 'text-teal-700 border-b-2 border-teal-600' : 'text-slate-500 hover:text-slate-700'}`}
+            className={`px-4 py-2 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center gap-2 cursor-pointer ${
+              adminApprovalTab === 'sent'
+                ? 'bg-white text-teal-900 shadow-xs border border-slate-200/80'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
+            }`}
             onClick={() => {
               setAdminApprovalTab('sent');
               setSelectedIds([]);
             }}
           >
-            Sent (Pending Faculty Approval)
+            <span>Sent (Pending Faculty Approval)</span>
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-amber-100 text-amber-900 border border-amber-200">
+              {questions.filter(q => typeof q.source === 'string' && q.source.startsWith('pending:')).length || filteredList.length}
+            </span>
           </button>
+
           <button
             type="button"
-            className={`pb-2.5 font-bold text-xs sm:text-sm transition-colors ${adminApprovalTab === 'received' ? 'text-teal-700 border-b-2 border-teal-600' : 'text-slate-500 hover:text-slate-700'}`}
+            className={`px-4 py-2 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center gap-2 cursor-pointer ${
+              adminApprovalTab === 'received'
+                ? 'bg-white text-teal-900 shadow-xs border border-slate-200/80'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
+            }`}
             onClick={() => {
               setAdminApprovalTab('received');
               setSelectedIds([]);
             }}
           >
-            Received (Published by Faculty)
+            <span>Received (Published by Faculty)</span>
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-900 border border-emerald-200">
+              {questions.filter(q => typeof q.source === 'string' && q.source.startsWith('published:')).length}
+            </span>
           </button>
         </div>
       )}
@@ -648,7 +658,7 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
               placeholder="Search by code, keyword, or statement..."
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2.5 text-xs font-medium border border-slate-300 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-teal-600 bg-white text-slate-900"
+              className="w-full pl-9 pr-4 py-2.5 text-xs font-medium border border-slate-300 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-teal-600 bg-white text-slate-900 shadow-2xs"
             />
           </div>
 
@@ -661,7 +671,7 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
                 setSelectedChapterFilter('all');
               }}
               disabled={userSubject !== 'All'}
-              className="w-full py-2.5 px-3 text-xs border border-slate-300 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-teal-600 bg-white text-slate-900 font-semibold cursor-pointer disabled:bg-slate-100 disabled:cursor-not-allowed"
+              className="w-full py-2.5 px-3 text-xs border border-slate-300 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-teal-600 bg-white text-slate-900 font-semibold cursor-pointer disabled:bg-slate-100 disabled:cursor-not-allowed shadow-2xs"
             >
               {userSubject === 'All' && <option value="all">All Subjects</option>}
               {subjects.map(s => (
@@ -677,7 +687,7 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
             <select
               value={selectedChapterFilter}
               onChange={e => setSelectedChapterFilter(e.target.value)}
-              className="w-full py-2.5 px-3 text-xs border border-slate-300 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-teal-600 bg-white text-slate-900 font-semibold cursor-pointer"
+              className="w-full py-2.5 px-3 text-xs border border-slate-300 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-teal-600 bg-white text-slate-900 font-semibold cursor-pointer shadow-2xs"
             >
               <option value="all">All Chapters</option>
               {availableChapters.map(c => (
@@ -693,7 +703,7 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
             <select
               value={difficultyFilter}
               onChange={e => setDifficultyFilter(e.target.value)}
-              className="w-full py-2.5 px-3 text-xs border border-slate-300 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-teal-600 bg-white text-slate-900 font-semibold cursor-pointer"
+              className="w-full py-2.5 px-3 text-xs border border-slate-300 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-teal-600 bg-white text-slate-900 font-semibold cursor-pointer shadow-2xs"
             >
               <option value="all">All Difficulty</option>
               <option value="Easy">Easy</option>
@@ -726,9 +736,40 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
                 setSearch('');
                 if (onClearChapterFilter) onClearChapterFilter();
               }}
-              className="text-teal-700 hover:text-teal-900 hover:underline cursor-pointer self-start sm:self-auto"
+              className="text-teal-700 hover:text-teal-900 hover:underline cursor-pointer self-start sm:self-auto font-bold"
             >
               Reset All Filters
+            </button>
+          </div>
+        )}
+
+        {/* Selection Feedback & Select All Bar */}
+        {selectedIds.length > 0 && (
+          <div className="bg-teal-50/90 border border-teal-200/80 rounded-xl px-4 py-2.5 flex flex-wrap items-center justify-between gap-2 text-xs text-teal-950 shadow-2xs animate-in fade-in duration-150">
+            <div className="flex items-center gap-2 font-medium">
+              <span className="w-5 h-5 rounded-full bg-teal-700 text-white flex items-center justify-center font-bold text-[10px]">
+                ✓
+              </span>
+              <span>
+                <b>{selectedIds.length}</b> question{selectedIds.length > 1 ? 's' : ''} selected.
+              </span>
+              {selectedIds.length < filteredList.length && (
+                <button
+                  type="button"
+                  onClick={toggleSelectAll}
+                  className="ml-2 font-bold text-teal-800 hover:text-teal-950 underline cursor-pointer"
+                >
+                  Select all {filteredList.length} questions
+                </button>
+              )}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setSelectedIds([])}
+              className="text-teal-800 hover:text-teal-950 font-bold underline cursor-pointer"
+            >
+              Clear Selection
             </button>
           </div>
         )}
@@ -808,20 +849,20 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
 
                       {/* Subject & Chapter Badges */}
                       <td className="px-5 py-3.5">
-                        <div className="space-y-0.5 flex flex-col items-start">
-                          <span className="inline-block font-bold text-[11px] text-teal-800 bg-teal-50 border border-teal-200 px-2 py-0.5 rounded">
+                        <div className="space-y-1 flex flex-col items-start">
+                          <span className="inline-block font-bold text-[11px] text-teal-800 bg-teal-50 border border-teal-200/80 px-2 py-0.5 rounded-md">
                             {q.subject || 'General'}
                           </span>
-                          <p className="text-[10px] text-slate-400 font-medium truncate max-w-[140px]">
+                          <p className="text-[10px] text-slate-500 font-medium truncate max-w-[150px]">
                             {qChapterName}
                           </p>
                           {typeof q.source === 'string' && q.source.startsWith('published:') && (
-                            <span className="inline-block font-bold text-[10px] text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded mt-1 whitespace-nowrap">
+                            <span className="inline-block font-black text-[9.5px] text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full whitespace-nowrap">
                               Published by {q.source.replace('published:', '')}
                             </span>
                           )}
                           {typeof q.source === 'string' && q.source.startsWith('pending:') && (
-                            <span className="inline-block font-bold text-[10px] text-amber-700 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded mt-1 whitespace-nowrap">
+                            <span className="inline-block font-black text-[9.5px] text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full whitespace-nowrap">
                               Pending Approval
                             </span>
                           )}
@@ -835,7 +876,7 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
                             (q.difficulty || '').toLowerCase() === 'easy'
                               ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                               : (q.difficulty || '').toLowerCase() === 'hard'
-                              ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                              ? 'bg-rose-50 text-rose-700 border border-rose-200'
                               : 'bg-sky-50 text-sky-700 border border-sky-200'
                           }`}
                         >
@@ -844,8 +885,10 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
                       </td>
 
                       {/* Marks */}
-                      <td className="px-5 py-3.5 font-extrabold text-slate-900">
-                        +{q.marks || 4} / -{q.negativeMarks || 1}
+                      <td className="px-5 py-3.5">
+                        <span className="px-2.5 py-1 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-800 font-mono">
+                          +{q.marks || 4} / -{q.negativeMarks || 1}
+                        </span>
                       </td>
 
                       {/* Actions */}
@@ -866,7 +909,7 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
                           <button
                             type="button"
                             onClick={e => handleEditQuestion(q as Question, e)}
-                            className="p-1.5 border border-slate-200 bg-white hover:bg-slate-100 text-slate-700 rounded-lg transition-colors cursor-pointer"
+                            className="p-1.5 border border-slate-200 bg-white hover:bg-slate-100 text-slate-700 rounded-lg transition-colors cursor-pointer shadow-2xs"
                             title="Edit Question"
                           >
                             <Edit3 className="w-3.5 h-3.5" />
@@ -876,7 +919,7 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
                           <button
                             type="button"
                             onClick={e => q.id && handleFastDelete(q.id, e)}
-                            className="p-1.5 border border-slate-200 bg-white hover:bg-red-50 text-slate-400 hover:text-red-600 rounded-lg transition-colors cursor-pointer"
+                            className="p-1.5 border border-slate-200 bg-white hover:bg-rose-50 text-slate-400 hover:text-rose-600 rounded-lg transition-colors cursor-pointer shadow-2xs"
                             title="Instant Fast Delete"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
@@ -901,85 +944,525 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
         onPrevious={currentPreviewIndex > 0 ? handlePrevQuestion : undefined}
       />
 
-      {/* Full Screen PDF Preview Modal */}
-      {isPdfModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-6xl max-h-[95vh] flex flex-col overflow-hidden ring-1 ring-slate-900/5">
-            {/* Modal Header */}
-            <div className="px-5 py-4 border-b border-slate-200 flex justify-between items-center bg-slate-50/50">
-              <div>
-                <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wide">
-                  Export PDF
-                </h3>
-                <p className="text-xs text-slate-500 font-medium mt-0.5">
-                  {selectedIds.length} Question(s) selected
-                </p>
-              </div>
+      {/* ========================================================================= */}
+      {/* FLOATING ACTION DOCK (Light Glassmorphism matching EduForge brand)       */}
+      {/* ========================================================================= */}
+      {selectedIds.length > 0 && !isPdfModalOpen && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 max-w-[95vw] animate-in slide-in-from-bottom-5 fade-in zoom-in-95 duration-300 pointer-events-auto">
+          <div className="bg-white/95 backdrop-blur-xl border border-slate-200/90 shadow-2xl shadow-slate-900/15 rounded-2xl px-4 sm:px-5 py-2.5 sm:py-3 flex flex-wrap items-center justify-between gap-3 sm:gap-4 text-slate-800 ring-1 ring-slate-900/5">
+            {/* Left Status & Selection Count */}
+            <div className="flex items-center gap-2.5">
+              <span className="px-3 py-1 bg-teal-50 text-teal-800 border border-teal-200/80 text-xs font-black rounded-full font-mono flex items-center gap-1.5 shadow-2xs">
+                <span className="w-2 h-2 rounded-full bg-teal-600 animate-pulse"></span>
+                {selectedIds.length} Selected
+              </span>
               <button
-                onClick={() => setIsPdfModalOpen(false)}
-                className="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+                type="button"
+                onClick={() => setSelectedIds([])}
+                className="text-xs font-bold text-slate-400 hover:text-slate-800 underline cursor-pointer transition-colors"
+                title="Clear selection (Esc)"
               >
-                <X className="w-5 h-5" />
+                Clear
               </button>
             </div>
 
-            {/* Modal Body: Printable Document Paper */}
-            <div className="p-3 sm:p-6 overflow-y-auto flex-1 bg-slate-200/80">
-              <div className="printable-paper-sheet max-w-[850px] mx-auto bg-white border border-slate-300 rounded-lg shadow-lg overflow-hidden">
-                <CollegeExamPaper
-                  examTitle={`Question Bank Export`}
-                  subjectNames={Array.from(new Set(questions.filter(q => selectedIds.includes(q.id)).map(q => q.subject || 'Mixed').filter(Boolean))).join(', ')}
-                  totalMarks={questions.filter(q => selectedIds.includes(q.id)).reduce((acc, q) => acc + (q.marks || 4), 0)}
-                  sections={[{
-                    id: 'sec-1',
-                    name: 'Selected Questions'
-                  }]}
-                  allQuestions={(() => {
-                    let globalIdx = 1;
-                    return questions.filter(q => selectedIds.includes(q.id)).map(q => ({
-                      id: q.id,
-                      questionNumber: globalIdx++,
-                      rawText: q.rawText || (typeof q.content === 'string' ? q.content : '') || '',
-                      content: q.content,
-                      options: q.options || [],
-                      correctOption: (q as any).correct_option || (q as any).correctOption || q.correctAnswer || 'A',
-                      correctAnswer: (q as any).correct_option || (q as any).correctOption || q.correctAnswer || 'A',
-                      marks: q.marks || 4,
-                      negativeMarks: q.negativeMarks || 1,
-                      diagramSvg: q.diagramSvg || (q as any).diagram_svg,
-                      imageUrl: q.imageUrl || q.diagramUrl,
-                      explanationText: q.explanationText || (q as any).solution || (q as any).explanation || '',
-                      solution: q.explanationText || (q as any).solution || (q as any).explanation || '',
-                      sectionId: 'sec-1',
-                      sectionName: 'Selected Questions',
-                      subject: q.subject || 'General'
-                    }));
-                  })()}
-                />
-              </div>
-            </div>
+            <div className="h-5 w-px bg-slate-200 hidden sm:block"></div>
 
-            {/* Modal Footer Controls */}
-            <div className="px-5 py-3.5 border-t border-slate-200 flex items-center justify-between bg-slate-50">
+            {/* Middle Contextual Action Buttons */}
+            <div className="flex items-center gap-2">
+              {mode === 'saved' && (
+                <>
+                  <button
+                    type="button"
+                    onClick={handleSendForApproval}
+                    className="px-3.5 py-2 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 text-xs font-bold rounded-xl flex items-center gap-1.5 transition-all shadow-2xs hover:shadow-xs active:scale-95 cursor-pointer"
+                  >
+                    <Send className="w-3.5 h-3.5 text-amber-600" />
+                    <span>Send for Approval</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleBulkPublish}
+                    className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition-all shadow-sm hover:shadow-md active:scale-95 cursor-pointer"
+                  >
+                    <Check className="w-3.5 h-3.5" />
+                    <span>Publish Selected</span>
+                  </button>
+                </>
+              )}
+
+              {mode === 'approvals' && (
+                <button
+                  type="button"
+                  onClick={handleBulkPublish}
+                  className="px-4 py-2 bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition-all shadow-sm hover:shadow-md active:scale-95 cursor-pointer"
+                >
+                  <Send className="w-3.5 h-3.5" />
+                  <span>Approve & Publish</span>
+                </button>
+              )}
+
+              {mode === 'published' && (
+                <button
+                  type="button"
+                  onClick={handleBulkUnpublish}
+                  className="px-3.5 py-2 bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-200 text-xs font-bold rounded-xl flex items-center gap-1.5 transition-all shadow-2xs hover:shadow-xs active:scale-95 cursor-pointer"
+                >
+                  <Bookmark className="w-3.5 h-3.5 text-teal-600" />
+                  <span>Move to Saved</span>
+                </button>
+              )}
+
+              {/* PDF Generator Button (White Card Style) */}
               <button
                 type="button"
-                onClick={() => setIsPdfModalOpen(false)}
-                className="px-4 py-2 border border-slate-200 bg-white hover:bg-slate-100 text-slate-800 text-xs font-bold rounded-lg transition-all cursor-pointer"
+                onClick={() => setIsPdfModalOpen(true)}
+                className="px-4 py-2 bg-white hover:bg-teal-50 text-slate-800 hover:text-teal-900 border border-slate-300 text-xs font-bold rounded-xl flex items-center gap-1.5 transition-all shadow-2xs hover:shadow-xs active:scale-95 cursor-pointer"
               >
-                Close
+                <Printer className="w-3.5 h-3.5 text-teal-700" />
+                <span>Create PDF</span>
               </button>
 
+              {/* Delete Button */}
               <button
                 type="button"
-                onClick={handleGeneratePdfStream}
-                className="px-5 py-2 bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold rounded-lg flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs"
+                onClick={handleBulkDelete}
+                className="px-3.5 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold rounded-xl flex items-center gap-1.5 transition-all shadow-2xs hover:shadow-xs active:scale-95 cursor-pointer"
               >
-                <Download className="w-3.5 h-3.5" /> Export PDF / Print
+                <Trash2 className="w-3.5 h-3.5 text-rose-600" />
+                <span>Delete</span>
+              </button>
+            </div>
+
+            <div className="h-5 w-px bg-slate-200 hidden sm:block"></div>
+
+            {/* Quick Esc Helper & Close */}
+            <div className="flex items-center gap-1.5 text-slate-400 text-[11px]">
+              <span className="hidden md:inline font-mono opacity-70 bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded text-[10px] text-slate-600 font-bold">ESC</span>
+              <button
+                type="button"
+                onClick={() => setSelectedIds([])}
+                className="p-1 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+                title="Dismiss selection (Esc)"
+              >
+                <X className="w-4 h-4" />
               </button>
             </div>
           </div>
         </div>
       )}
+
+      {/* ========================================================================= */}
+      {/* NEXT-GEN EXAM PAPER STUDIO & PDF EXPORTER MODAL                            */}
+      {/* ========================================================================= */}
+      {isPdfModalOpen && (() => {
+        const selectedQuestions = questions.filter(q => selectedIds.includes(q.id));
+        const distinctSubjects = Array.from(new Set(selectedQuestions.map(q => q.subject || 'General').filter(Boolean)));
+        const selectedSubjectNames = distinctSubjects.join(', ') || 'Mixed Subjects';
+        const computedTotalMarks = selectedQuestions.reduce((acc, q) => acc + (q.marks || 4), 0);
+
+        // Build Sections: either grouped by subject or unified
+        let computedSections: any[] = [];
+        let globalQIndex = 1;
+        const allComputedQuestions: any[] = [];
+
+        if (studioGroupBySubject && distinctSubjects.length > 1) {
+          computedSections = distinctSubjects.map((sub, idx) => {
+            const secQs = selectedQuestions.filter(q => (q.subject || 'General') === sub);
+            const mappedSecQs = secQs.map(q => {
+              const qObj = {
+                id: q.id,
+                questionNumber: globalQIndex++,
+                rawText: q.rawText || (typeof q.content === 'string' ? q.content : '') || '',
+                content: q.content,
+                options: q.options || [],
+                correctOption: (q as any).correct_option || (q as any).correctOption || q.correctAnswer || 'A',
+                correctAnswer: (q as any).correct_option || (q as any).correctOption || q.correctAnswer || 'A',
+                marks: q.marks || 4,
+                negativeMarks: q.negativeMarks || 1,
+                diagramSvg: q.diagramSvg || (q as any).diagram_svg,
+                imageUrl: q.imageUrl || q.diagramUrl,
+                explanationText: q.explanationText || (q as any).solution || (q as any).explanation || '',
+                solution: q.explanationText || (q as any).solution || (q as any).explanation || '',
+                sectionId: `sec-${idx + 1}`,
+                sectionName: `Part ${String.fromCharCode(65 + idx)}: ${sub.toUpperCase()} (MCQ)`,
+                subject: sub
+              };
+              allComputedQuestions.push(qObj);
+              return qObj;
+            });
+
+            return {
+              id: `sec-${idx + 1}`,
+              name: `Part ${String.fromCharCode(65 + idx)}: ${sub.toUpperCase()} (MCQ)`,
+              instructions: `All questions are compulsory in this section.`,
+              subject: sub,
+              questions: mappedSecQs
+            };
+          });
+        } else {
+          const mappedQs = selectedQuestions.map(q => {
+            const qObj = {
+              id: q.id,
+              questionNumber: globalQIndex++,
+              rawText: q.rawText || (typeof q.content === 'string' ? q.content : '') || '',
+              content: q.content,
+              options: q.options || [],
+              correctOption: (q as any).correct_option || (q as any).correctOption || q.correctAnswer || 'A',
+              correctAnswer: (q as any).correct_option || (q as any).correctOption || q.correctAnswer || 'A',
+              marks: q.marks || 4,
+              negativeMarks: q.negativeMarks || 1,
+              diagramSvg: q.diagramSvg || (q as any).diagram_svg,
+              imageUrl: q.imageUrl || q.diagramUrl,
+              explanationText: q.explanationText || (q as any).solution || (q as any).explanation || '',
+              solution: q.explanationText || (q as any).solution || (q as any).explanation || '',
+              sectionId: 'sec-1',
+              sectionName: 'Comprehensive Question Paper',
+              subject: q.subject || 'General'
+            };
+            allComputedQuestions.push(qObj);
+            return qObj;
+          });
+
+          computedSections = [{
+            id: 'sec-1',
+            name: 'Selected Questions',
+            questions: mappedQs
+          }];
+        }
+
+        const estPageCount = Math.max(1, Math.ceil(selectedQuestions.length / (studioColumnLayout === '2-column' ? (studioFontSize === 'compact' ? 14 : 10) : 6)));
+
+        return (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-200">
+            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-[1380px] h-[95vh] flex flex-col overflow-hidden ring-1 ring-slate-900/10">
+              
+              {/* ================================================================= */}
+              {/* TOP STUDIO TOOLBAR (Clean EduForge Aesthetic)                    */}
+              {/* ================================================================= */}
+              <div className="px-5 py-3.5 bg-white border-b border-slate-200 flex flex-wrap items-center justify-between gap-3 select-none">
+                {/* Left Brand & Details */}
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-teal-50 border border-teal-200/80 flex items-center justify-center text-teal-700 shadow-2xs">
+                    <Sparkles className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-sm sm:text-base font-extrabold text-slate-900 tracking-tight">
+                        Exam Paper Studio
+                      </h3>
+                      <span className="px-2.5 py-0.5 bg-teal-50 text-teal-800 border border-teal-200 text-[10px] font-bold rounded-full">
+                        {selectedQuestions.length} Questions Selected
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-slate-500 font-medium mt-0.5">
+                      Est. ~{estPageCount} A4 Pages • Total Marks: {computedTotalMarks} • {selectedSubjectNames}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Center Quick Switchers (Mode, Layout, Presets) */}
+                <div className="flex flex-wrap items-center gap-2.5">
+                  {/* Mode Switcher (Student vs Answer Key) */}
+                  <div className="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs shadow-inner">
+                    <button
+                      type="button"
+                      onClick={() => setStudioMode('student')}
+                      className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
+                        studioMode === 'student'
+                          ? 'bg-teal-700 text-white shadow-xs'
+                          : 'text-slate-600 hover:text-slate-900'
+                      }`}
+                      title="Student Question Paper (No Answers Marked)"
+                    >
+                      Student Paper
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setStudioMode('teacher_key')}
+                      className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
+                        studioMode === 'teacher_key'
+                          ? 'bg-teal-700 text-white shadow-xs'
+                          : 'text-slate-600 hover:text-slate-900'
+                      }`}
+                      title="Teacher Master Key (With Answer Grid)"
+                    >
+                      Answer Key
+                    </button>
+                  </div>
+
+                  {/* Layout Columns Toggle */}
+                  <div className="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs shadow-inner">
+                    <button
+                      type="button"
+                      onClick={() => setStudioColumnLayout('2-column')}
+                      className={`px-2.5 py-1.5 rounded-lg font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
+                        studioColumnLayout === '2-column'
+                          ? 'bg-white text-teal-800 shadow-xs border border-slate-200/80'
+                          : 'text-slate-600 hover:text-slate-900'
+                      }`}
+                      title="2-Column Layout (Dense Authentic Exam Paper)"
+                    >
+                      <Columns className="w-3.5 h-3.5" /> 2-Col
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setStudioColumnLayout('1-column')}
+                      className={`px-2.5 py-1.5 rounded-lg font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
+                        studioColumnLayout === '1-column'
+                          ? 'bg-white text-teal-800 shadow-xs border border-slate-200/80'
+                          : 'text-slate-600 hover:text-slate-900'
+                      }`}
+                      title="1-Column Layout (Spacious Single Column)"
+                    >
+                      <Square className="w-3.5 h-3.5" /> 1-Col
+                    </button>
+                  </div>
+
+                  {/* Header Preset Dropdown */}
+                  <div className="flex items-center bg-white px-3 py-1.5 rounded-xl border border-slate-200 shadow-2xs text-xs">
+                    <span className="text-[10px] font-bold text-slate-400 mr-1.5 uppercase tracking-wider">Style:</span>
+                    <select
+                      value={studioHeaderPreset}
+                      onChange={e => setStudioHeaderPreset(e.target.value as HeaderPresetType)}
+                      className="bg-transparent text-slate-800 font-bold outline-hidden cursor-pointer text-xs"
+                    >
+                      <option value="classic_boxed">Classic College Boxed</option>
+                      <option value="modern_elite">Modern Elite</option>
+                      <option value="nta_neet_jee">NTA NEET / JEE Booklet</option>
+                      <option value="minimal">Minimal Academic</option>
+                    </select>
+                  </div>
+
+                  {/* Subject Auto-Group Toggle */}
+                  {distinctSubjects.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => setStudioGroupBySubject(!studioGroupBySubject)}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer flex items-center gap-1.5 shadow-2xs ${
+                        studioGroupBySubject
+                          ? 'bg-teal-50 border-teal-300 text-teal-800'
+                          : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                      }`}
+                      title="Automatically split into Subject Sections"
+                    >
+                      <Layers className="w-3.5 h-3.5 text-teal-600" /> Subject Split: {studioGroupBySubject ? 'ON' : 'OFF'}
+                    </button>
+                  )}
+
+                  {/* Customize Header Button */}
+                  <button
+                    type="button"
+                    onClick={() => setIsStudioSettingsOpen(!isStudioSettingsOpen)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer flex items-center gap-1.5 shadow-2xs ${
+                      isStudioSettingsOpen
+                        ? 'bg-amber-50 border-amber-300 text-amber-900 shadow-xs'
+                        : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+                    }`}
+                  >
+                    <SlidersHorizontal className="w-3.5 h-3.5 text-amber-600" /> Customize Details {isStudioSettingsOpen ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                  </button>
+                </div>
+
+                {/* Right Zoom & Close */}
+                <div className="flex items-center gap-2">
+                  <div className="hidden sm:flex items-center bg-slate-100 rounded-xl border border-slate-200 p-1 text-xs">
+                    <button
+                      type="button"
+                      onClick={() => setStudioZoom(Math.max(60, studioZoom - 10))}
+                      className="p-1 text-slate-500 hover:text-slate-900 rounded cursor-pointer"
+                      title="Zoom Out"
+                    >
+                      <ZoomOut className="w-3.5 h-3.5" />
+                    </button>
+                    <span className="px-2 font-mono text-[11px] text-slate-700 font-bold">{studioZoom}%</span>
+                    <button
+                      type="button"
+                      onClick={() => setStudioZoom(Math.min(140, studioZoom + 10))}
+                      className="p-1 text-slate-500 hover:text-slate-900 rounded cursor-pointer"
+                      title="Zoom In"
+                    >
+                      <ZoomIn className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+
+                  <button
+                    onClick={() => setIsPdfModalOpen(false)}
+                    className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
+                    title="Close"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* ================================================================= */}
+              {/* COLLAPSIBLE LIVE CUSTOMIZATION DRAWER                             */}
+              {/* ================================================================= */}
+              {isStudioSettingsOpen && (
+                <div className="px-6 py-4 bg-slate-50/90 border-b border-slate-200 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3.5 animate-in slide-in-from-top-2 duration-200 text-xs">
+                  <div className="col-span-2">
+                    <label className="block text-[10px] font-bold uppercase text-slate-600 mb-1">Institution / College Name</label>
+                    <input
+                      type="text"
+                      value={studioInstituteName}
+                      onChange={e => setStudioInstituteName(e.target.value)}
+                      className="w-full p-2 bg-white border border-slate-300 rounded-lg font-semibold text-slate-900 shadow-2xs focus:ring-1 focus:ring-teal-600 outline-hidden"
+                    />
+                  </div>
+
+                  <div className="col-span-2">
+                    <label className="block text-[10px] font-bold uppercase text-slate-600 mb-1">Exam Title</label>
+                    <input
+                      type="text"
+                      value={studioExamTitle}
+                      onChange={e => setStudioExamTitle(e.target.value)}
+                      className="w-full p-2 bg-white border border-slate-300 rounded-lg font-semibold text-slate-900 shadow-2xs focus:ring-1 focus:ring-teal-600 outline-hidden"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase text-slate-600 mb-1">Standard / Grade</label>
+                    <input
+                      type="text"
+                      value={studioStandard}
+                      onChange={e => setStudioStandard(e.target.value)}
+                      className="w-full p-2 bg-white border border-slate-300 rounded-lg font-semibold text-slate-900 shadow-2xs focus:ring-1 focus:ring-teal-600 outline-hidden"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase text-slate-600 mb-1">Paper Set Code</label>
+                    <input
+                      type="text"
+                      value={studioPaperSet}
+                      onChange={e => setStudioPaperSet(e.target.value)}
+                      className="w-full p-2 bg-white border border-slate-300 rounded-lg font-semibold text-slate-900 shadow-2xs focus:ring-1 focus:ring-teal-600 outline-hidden"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase text-slate-600 mb-1">Exam Date</label>
+                    <input
+                      type="text"
+                      value={studioDate}
+                      onChange={e => setStudioDate(e.target.value)}
+                      className="w-full p-2 bg-white border border-slate-300 rounded-lg font-semibold text-slate-900 shadow-2xs focus:ring-1 focus:ring-teal-600 outline-hidden"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase text-slate-600 mb-1">Duration (Minutes)</label>
+                    <input
+                      type="number"
+                      value={studioDuration}
+                      onChange={e => setStudioDuration(Number(e.target.value) || 60)}
+                      className="w-full p-2 bg-white border border-slate-300 rounded-lg font-semibold text-slate-900 shadow-2xs focus:ring-1 focus:ring-teal-600 outline-hidden"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase text-slate-600 mb-1">Font Density</label>
+                    <select
+                      value={studioFontSize}
+                      onChange={e => setStudioFontSize(e.target.value as any)}
+                      className="w-full p-2 bg-white border border-slate-300 rounded-lg font-semibold text-slate-900 shadow-2xs focus:ring-1 focus:ring-teal-600 outline-hidden cursor-pointer"
+                    >
+                      <option value="compact">Compact (Paper Saver)</option>
+                      <option value="normal">Balanced Standard</option>
+                      <option value="spacious">Spacious</option>
+                    </select>
+                  </div>
+
+                  <div className="col-span-2 flex items-center gap-2 pt-3">
+                    <label className="flex items-center gap-1.5 font-bold text-slate-800 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={studioShowWatermark}
+                        onChange={e => setStudioShowWatermark(e.target.checked)}
+                        className="rounded text-teal-700"
+                      />
+                      Watermark:
+                    </label>
+                    <input
+                      type="text"
+                      value={studioWatermarkText}
+                      disabled={!studioShowWatermark}
+                      onChange={e => setStudioWatermarkText(e.target.value)}
+                      placeholder="e.g. NEET PREP"
+                      className="flex-1 p-2 bg-white border border-slate-300 rounded-lg font-semibold text-slate-900 disabled:opacity-50 shadow-2xs"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* ================================================================= */}
+              {/* MAIN STUDIO CANVAS AREA (Realistic A4 Simulation)                */}
+              {/* ================================================================= */}
+              <div className="p-3 sm:p-8 overflow-y-auto flex-1 bg-slate-100/90 relative flex justify-center items-start">
+                <div
+                  className="printable-paper-sheet w-full max-w-[860px] mx-auto bg-white border border-slate-300/80 rounded-lg shadow-xl overflow-hidden transition-transform duration-150 origin-top"
+                  style={{
+                    transform: studioZoom !== 100 ? `scale(${studioZoom / 100})` : 'none',
+                    marginBottom: studioZoom > 100 ? `${(studioZoom - 100) * 10}px` : '0px'
+                  }}
+                >
+                  <CollegeExamPaper
+                    instituteName={studioInstituteName}
+                    examTitle={studioExamTitle}
+                    subtitle={studioSubtitle}
+                    subjectNames={selectedSubjectNames}
+                    standard={studioStandard}
+                    paperSet={studioPaperSet}
+                    date={studioDate}
+                    duration={studioDuration}
+                    totalMarks={computedTotalMarks}
+                    sections={computedSections}
+                    allQuestions={allComputedQuestions}
+                    headerPreset={studioHeaderPreset}
+                    isAnswerKeyMode={studioMode === 'teacher_key'}
+                    showWatermark={studioShowWatermark}
+                    watermarkText={studioWatermarkText}
+                    columnLayout={studioColumnLayout}
+                    fontSize={studioFontSize}
+                    instructionsText={studioInstructions}
+                  />
+                </div>
+              </div>
+
+              {/* ================================================================= */}
+              {/* STUDIO FOOTER ACTION BAR                                          */}
+              {/* ================================================================= */}
+              <div className="px-6 py-3.5 border-t border-slate-200 flex flex-wrap items-center justify-between bg-white gap-3">
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setIsPdfModalOpen(false)}
+                    className="px-4 py-2 border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 text-xs font-bold rounded-xl transition-all cursor-pointer shadow-2xs"
+                  >
+                    Close
+                  </button>
+
+                  <span className="hidden sm:inline text-xs text-slate-500 font-medium">
+                    Layout: <b className="text-slate-800 capitalize">{studioColumnLayout}</b> • Mode: <b className="text-slate-800 capitalize">{studioMode === 'teacher_key' ? 'Answer Key' : 'Student Paper'}</b>
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-2.5">
+                  <button
+                    type="button"
+                    onClick={handleGeneratePdfStream}
+                    className="px-6 py-2.5 bg-teal-700 hover:bg-teal-800 text-white text-xs sm:text-sm font-bold rounded-xl flex items-center gap-2 transition-all cursor-pointer shadow-sm hover:shadow-md active:scale-95"
+                  >
+                    <Printer className="w-4 h-4" /> Export PDF / Print Paper
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 };

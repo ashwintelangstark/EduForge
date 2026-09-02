@@ -20,18 +20,24 @@ export interface CollegeExamQuestion {
   sectionName?: string;
   sectionId?: string;
   subject?: string;
+  topic?: string;
+  difficulty?: string;
 }
 
 export interface CollegeExamSection {
   id: string;
   name: string;
   instructions?: string;
+  subject?: string;
   questions?: CollegeExamQuestion[];
 }
+
+export type HeaderPresetType = 'classic_boxed' | 'modern_elite' | 'nta_neet_jee' | 'minimal';
 
 export interface CollegeExamPaperProps {
   instituteName?: string;
   examTitle?: string;
+  subtitle?: string;
   subjectNames?: string;
   standard?: string;
   paperSet?: string;
@@ -40,11 +46,14 @@ export interface CollegeExamPaperProps {
   totalMarks?: number;
   sections: CollegeExamSection[];
   allQuestions: CollegeExamQuestion[];
+  headerPreset?: HeaderPresetType;
   isAnswerKeyMode?: boolean;
   showWatermark?: boolean;
   watermarkText?: string;
   columnLayout?: '2-column' | '1-column';
   fontSize?: 'compact' | 'normal' | 'spacious';
+  logoUrl?: string;
+  instructionsText?: string;
   className?: string;
   onEditInstituteName?: (name: string) => void;
 }
@@ -52,6 +61,7 @@ export interface CollegeExamPaperProps {
 export const CollegeExamPaper: React.FC<CollegeExamPaperProps> = ({
   instituteName = 'NLE SOCIETYS Dr RB PATIL MAHESH PU COLLEGE',
   examTitle = 'NEET WEEKLY TEST (PCBM) PUC 1',
+  subtitle = '',
   subjectNames = 'Biology, Physics, Chemistry, Mathematics',
   standard = '11 / PUC',
   paperSet = '1',
@@ -60,14 +70,17 @@ export const CollegeExamPaper: React.FC<CollegeExamPaperProps> = ({
   totalMarks = 720,
   sections = [],
   allQuestions = [],
+  headerPreset = 'classic_boxed',
   isAnswerKeyMode = false,
   showWatermark = true,
   watermarkText = 'Test',
   columnLayout = '2-column',
   fontSize = 'compact',
+  logoUrl = '',
+  instructionsText = '',
   className = ''
 }) => {
-  // Format duration
+  // Format duration nicely
   const formattedDuration = typeof duration === 'number'
     ? (duration >= 60 ? `${Math.floor(duration / 60)}H:${String(duration % 60).padStart(2, '0')}M` : `${duration} Mins`)
     : String(duration);
@@ -84,7 +97,7 @@ export const CollegeExamPaper: React.FC<CollegeExamPaperProps> = ({
     }
 
     return sections.map((sec, sIdx) => {
-      const secQs = allQuestions.filter(q => q.sectionId === sec.id || q.sectionName === sec.name);
+      const secQs = allQuestions.filter(q => q.sectionId === sec.id || q.sectionName === sec.name || (sec.subject && q.subject === sec.subject));
       return {
         id: sec.id || `sec-${sIdx}`,
         name: sec.name || `Section ${String.fromCharCode(65 + sIdx)} (MCQ)`,
@@ -94,10 +107,44 @@ export const CollegeExamPaper: React.FC<CollegeExamPaperProps> = ({
     });
   }, [sections, allQuestions, subjectNames]);
 
+  // Font size configuration class
+  const fontSizeClasses = {
+    compact: 'text-[11px] sm:text-[11.5px] leading-snug',
+    normal: 'text-[12px] sm:text-[12.5px] leading-normal',
+    spacious: 'text-[13px] sm:text-[13.5px] leading-relaxed'
+  }[fontSize] || 'text-[11px] sm:text-[11.5px] leading-snug';
+
   return (
-    <div className={`college-exam-sheet relative bg-white text-black font-sans leading-snug ${className}`} style={{ minHeight: '100%' }}>
-      {/* Print Specific CSS Rules */}
+    <div className={`college-exam-sheet relative bg-white text-black font-sans ${fontSizeClasses} ${className}`} style={{ minHeight: '100%' }}>
+      {/* Print & Screen Column Balancing CSS Rules */}
       <style>{`
+        /* Screen Multi-Column Layout (Critical for balanced 2-column rendering) */
+        .exam-columns-container {
+          column-count: ${columnLayout === '2-column' ? 2 : 1};
+          column-gap: 20px;
+          column-rule: ${columnLayout === '2-column' ? '1px solid #cbd5e1' : 'none'};
+          column-fill: balance !important;
+          width: 100%;
+        }
+        .exam-sec-divider {
+          column-span: ${columnLayout === '2-column' ? 'all' : 'none'};
+          -webkit-column-span: ${columnLayout === '2-column' ? 'all' : 'none'};
+          display: inline-block;
+          width: 100%;
+          break-inside: avoid;
+          page-break-after: avoid;
+        }
+        .exam-q-block {
+          break-inside: avoid;
+          page-break-inside: avoid;
+          -webkit-column-break-inside: avoid;
+          display: inline-block;
+          width: 100%;
+          contain: layout style;
+          box-sizing: border-box;
+        }
+
+        /* Print Specific CSS Rules */
         @media print {
           @page {
             size: A4 portrait;
@@ -127,28 +174,12 @@ export const CollegeExamPaper: React.FC<CollegeExamPaperProps> = ({
             column-count: ${columnLayout === '2-column' ? 2 : 1} !important;
             column-gap: 16px !important;
             column-rule: ${columnLayout === '2-column' ? '1px solid #94a3b8' : 'none'} !important;
-            column-fill: auto !important; /* CRITICAL: fills column sequentially to prevent splitting blocks across pages */
+            column-fill: auto !important;
             width: 100% !important;
-          }
-          .exam-q-block {
-            break-inside: avoid !important;
-            page-break-inside: avoid !important;
-            -webkit-column-break-inside: avoid !important;
-            break-inside: avoid-column !important;
-            break-inside: avoid-page !important;
-            display: inline-block !important; /* Forces atomic block formatting context that will not split */
-            width: 100% !important;
-            margin-bottom: 12px !important;
-            padding-bottom: 2px !important;
-            box-sizing: border-box !important;
-            contain: layout style !important;
-          }
-          .exam-q-block * {
-            -webkit-column-break-inside: avoid !important;
-            page-break-inside: avoid !important;
-            break-inside: avoid !important;
           }
           .exam-sec-divider {
+            column-span: ${columnLayout === '2-column' ? 'all' : 'none'} !important;
+            -webkit-column-span: ${columnLayout === '2-column' ? 'all' : 'none'} !important;
             break-inside: avoid !important;
             break-after: avoid !important;
             page-break-after: avoid !important;
@@ -157,6 +188,24 @@ export const CollegeExamPaper: React.FC<CollegeExamPaperProps> = ({
             width: 100% !important;
             margin-top: 10px !important;
             margin-bottom: 6px !important;
+          }
+          .exam-q-block {
+            break-inside: avoid !important;
+            page-break-inside: avoid !important;
+            -webkit-column-break-inside: avoid !important;
+            break-inside: avoid-column !important;
+            break-inside: avoid-page !important;
+            display: inline-block !important;
+            width: 100% !important;
+            margin-bottom: 11px !important;
+            padding-bottom: 2px !important;
+            box-sizing: border-box !important;
+            contain: layout style !important;
+          }
+          .exam-q-block * {
+            -webkit-column-break-inside: avoid !important;
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
           }
           .exam-master-key-block {
             break-inside: avoid !important;
@@ -183,38 +232,14 @@ export const CollegeExamPaper: React.FC<CollegeExamPaperProps> = ({
             object-fit: contain !important;
           }
         }
-
-        /* Screen 2-column styles */
-        .exam-columns-container {
-          column-count: ${columnLayout === '2-column' ? 2 : 1};
-          column-gap: 20px;
-          column-rule: ${columnLayout === '2-column' ? '1px solid #cbd5e1' : 'none'};
-          column-fill: auto;
-        }
-        .exam-q-block {
-          break-inside: avoid;
-          page-break-inside: avoid;
-          -webkit-column-break-inside: avoid;
-          display: inline-block;
-          width: 100%;
-          contain: layout style;
-          box-sizing: border-box;
-        }
-        .exam-sec-divider {
-          break-after: avoid;
-          page-break-after: avoid;
-          -webkit-column-break-inside: avoid;
-          display: inline-block;
-          width: 100%;
-        }
       `}</style>
 
       {/* Subtle Diagonal Watermark */}
       {showWatermark && (
         <div className="pointer-events-none absolute inset-0 overflow-hidden flex items-center justify-center select-none z-0">
           <div
-            className="text-[120px] font-black text-slate-300/40 uppercase tracking-widest rotate-[-35deg] select-none"
-            style={{ opacity: 0.15, userSelect: 'none' }}
+            className="text-[100px] sm:text-[120px] font-black text-slate-400/25 uppercase tracking-widest rotate-[-35deg] select-none text-center"
+            style={{ opacity: 0.12, userSelect: 'none' }}
           >
             {watermarkText}
           </div>
@@ -223,67 +248,162 @@ export const CollegeExamPaper: React.FC<CollegeExamPaperProps> = ({
 
       <div className="relative z-10 p-4 sm:p-6 text-black">
         {/* ========================================================================= */}
-        {/* 1. AUTHENTIC COLLEGE EXAM HEADER (Border Box with 2-Column Metadata)      */}
+        {/* 1. AUTHENTIC EXAMINATION HEADERS (4 Switchable Presets)                    */}
         {/* ========================================================================= */}
-        <div className="border border-black p-3 mb-3 bg-white">
-          {/* Institution / College Name (Large Bold Centered) */}
-          <div className="text-center pb-2 border-b border-black">
-            <h1 className="text-base sm:text-lg md:text-xl font-black uppercase tracking-tight text-black font-sans">
-              {instituteName}
-            </h1>
-          </div>
 
-          {/* Exam Title & Metadata Grid */}
-          <div className="pt-2 grid grid-cols-2 gap-x-4 text-[11px] sm:text-xs font-semibold leading-tight text-black">
-            {/* Left Column */}
-            <div className="space-y-1">
-              <div className="flex">
-                <span className="w-20 font-bold shrink-0">Subject</span>
-                <span className="font-bold">:</span>
-                <span className="ml-1.5 font-medium truncate">{subjectNames}</span>
+        {/* Preset A: Classic College Boxed Header (PUC / State Board Format) */}
+        {headerPreset === 'classic_boxed' && (
+          <div className="border-2 border-black p-3 mb-3 bg-white">
+            {/* Institution / College Name (Large Bold Centered) */}
+            <div className="text-center pb-2 border-b-2 border-black">
+              {logoUrl && <img src={logoUrl} alt="" className="h-8 max-h-8 mx-auto mb-1 object-contain" />}
+              <h1 className="text-base sm:text-lg md:text-xl font-black uppercase tracking-tight text-black font-sans">
+                {instituteName}
+              </h1>
+              {subtitle && <p className="text-[11px] font-semibold text-slate-700 mt-0.5">{subtitle}</p>}
+            </div>
+
+            {/* Exam Title & Metadata Grid */}
+            <div className="pt-2 grid grid-cols-2 gap-x-4 text-[11px] sm:text-xs font-semibold leading-tight text-black">
+              {/* Left Column */}
+              <div className="space-y-1">
+                <div className="flex">
+                  <span className="w-20 font-bold shrink-0">Subject</span>
+                  <span className="font-bold">:</span>
+                  <span className="ml-1.5 font-medium truncate">{subjectNames}</span>
+                </div>
+                <div className="flex">
+                  <span className="w-20 font-bold shrink-0">Standard</span>
+                  <span className="font-bold">:</span>
+                  <span className="ml-1.5 font-medium">{standard}</span>
+                </div>
+                <div className="flex">
+                  <span className="w-20 font-bold shrink-0">Total Mark</span>
+                  <span className="font-bold">:</span>
+                  <span className="ml-1.5 font-bold">{totalMarks}</span>
+                </div>
               </div>
-              <div className="flex">
-                <span className="w-20 font-bold shrink-0">Standard</span>
-                <span className="font-bold">:</span>
-                <span className="ml-1.5 font-medium">{standard}</span>
+
+              {/* Right Column with Exam Title */}
+              <div className="space-y-1">
+                <div className="text-center sm:text-left font-black text-xs sm:text-sm uppercase tracking-wide pb-0.5">
+                  {examTitle}
+                </div>
+                <div className="flex justify-between sm:justify-start gap-4">
+                  <div className="flex">
+                    <span className="w-18 font-bold shrink-0">Paper Set</span>
+                    <span className="font-bold">:</span>
+                    <span className="ml-1.5 font-bold">{paperSet}</span>
+                  </div>
+                  <div className="flex">
+                    <span className="w-12 font-bold shrink-0">Date</span>
+                    <span className="font-bold">:</span>
+                    <span className="ml-1.5 font-medium">{date}</span>
+                  </div>
+                </div>
+                <div className="flex">
+                  <span className="w-18 font-bold shrink-0">Time</span>
+                  <span className="font-bold">:</span>
+                  <span className="ml-1.5 font-medium">{formattedDuration}</span>
+                </div>
               </div>
-              <div className="flex">
-                <span className="w-20 font-bold shrink-0">Total Mark</span>
-                <span className="font-bold">:</span>
-                <span className="ml-1.5 font-bold">{totalMarks}</span>
+            </div>
+          </div>
+        )}
+
+        {/* Preset B: Modern Elite Header (Sleek contemporary design) */}
+        {headerPreset === 'modern_elite' && (
+          <div className="border border-slate-300 rounded-lg p-3.5 mb-3.5 bg-gradient-to-r from-slate-50 to-white shadow-2xs">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2.5 border-b border-slate-200">
+              <div>
+                <span className="inline-block px-2 py-0.5 bg-teal-800 text-white text-[9px] font-black uppercase tracking-wider rounded-sm mb-1">
+                  Official Examination
+                </span>
+                <h1 className="text-base sm:text-lg font-black uppercase text-slate-950 tracking-tight">
+                  {instituteName}
+                </h1>
+                {subtitle && <p className="text-[10.5px] font-medium text-slate-600">{subtitle}</p>}
+              </div>
+              <div className="text-right sm:text-right">
+                <span className="text-xs sm:text-sm font-black text-slate-900 uppercase block">{examTitle}</span>
+                <span className="text-[10px] font-bold text-teal-800 bg-teal-50 px-2 py-0.5 rounded border border-teal-200 inline-block mt-0.5">
+                  Set {paperSet} • Date: {date}
+                </span>
               </div>
             </div>
 
-            {/* Right Column with Exam Title */}
-            <div className="space-y-1">
-              <div className="text-center sm:text-left font-black text-xs sm:text-sm uppercase tracking-wide pb-0.5">
-                {examTitle}
-              </div>
-              <div className="flex justify-between sm:justify-start gap-4">
-                <div className="flex">
-                  <span className="w-18 font-bold shrink-0">Paper Set</span>
-                  <span className="font-bold">:</span>
-                  <span className="ml-1.5 font-bold">{paperSet}</span>
+            <div className="pt-2 grid grid-cols-3 gap-2 text-[10.5px] sm:text-[11px] font-medium text-slate-700">
+              <div><span className="font-bold text-slate-900">Subject:</span> {subjectNames}</div>
+              <div className="text-center"><span className="font-bold text-slate-900">Class:</span> {standard}</div>
+              <div className="text-right"><span className="font-bold text-slate-900">Time:</span> {formattedDuration} | <span className="font-bold text-slate-900">Marks:</span> {totalMarks}</div>
+            </div>
+          </div>
+        )}
+
+        {/* Preset C: National Board NTA NEET / JEE Booklet Header */}
+        {headerPreset === 'nta_neet_jee' && (
+          <div className="border-2 border-black p-3 mb-3 bg-white space-y-2">
+            <div className="text-center border-b border-black pb-1.5">
+              <div className="text-[10px] font-bold uppercase tracking-wider text-slate-700">National Standard Assessment Test</div>
+              <h1 className="text-base sm:text-lg font-black uppercase tracking-tight">{instituteName}</h1>
+              <div className="font-black text-xs sm:text-sm uppercase tracking-wide mt-0.5">{examTitle}</div>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10.5px] font-bold border-b border-black pb-1.5">
+              <div>Subject: <span className="font-normal">{subjectNames}</span></div>
+              <div>Duration: <span className="font-normal">{formattedDuration}</span></div>
+              <div>Max Marks: <span className="font-bold">{totalMarks}</span></div>
+              <div>Test Booklet Code: <span className="font-mono font-black">{paperSet}</span></div>
+            </div>
+
+            {/* Candidate Info Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[10px] bg-slate-50 p-2 border border-black/60 rounded-xs">
+              <div className="space-y-1">
+                <div>Candidate's Name (in Capital): _______________________</div>
+                <div className="flex items-center gap-1">
+                  <span>Roll No:</span>
+                  <div className="inline-flex border border-black text-center font-mono">
+                    {[1, 2, 3, 4, 5, 6, 7, 8].map(n => (
+                      <span key={n} className="w-4 h-4 border-r border-black last:border-r-0 inline-block"></span>
+                    ))}
+                  </div>
                 </div>
-                <div className="flex">
-                  <span className="w-12 font-bold shrink-0">Date</span>
-                  <span className="font-bold">:</span>
-                  <span className="ml-1.5 font-medium">{date}</span>
-                </div>
               </div>
-              <div className="flex">
-                <span className="w-18 font-bold shrink-0">Time</span>
-                <span className="font-bold">:</span>
-                <span className="ml-1.5 font-medium">{formattedDuration}</span>
+              <div className="space-y-1">
+                <div>Examination Centre: _______________________________</div>
+                <div>Candidate's Signature: ____________ Invigilator: _______</div>
               </div>
             </div>
           </div>
-        </div>
+        )}
+
+        {/* Preset D: Minimal Academic Header */}
+        {headerPreset === 'minimal' && (
+          <div className="pb-3 mb-3 border-b-2 border-black">
+            <div className="flex justify-between items-end">
+              <div>
+                <h1 className="text-base sm:text-lg font-black uppercase tracking-tight">{instituteName}</h1>
+                <div className="text-xs font-bold text-slate-800 uppercase mt-0.5">{examTitle}</div>
+              </div>
+              <div className="text-right text-[11px] font-medium space-y-0.5">
+                <div><b>Date:</b> {date} | <b>Time:</b> {formattedDuration}</div>
+                <div><b>Subject:</b> {subjectNames} | <b>Marks:</b> {totalMarks}</div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Optional Custom Instructions Box */}
+        {instructionsText && (
+          <div className="mb-3 p-2 border border-slate-400 bg-slate-50 text-[10px] text-slate-700 italic">
+            <b>General Instructions:</b> {instructionsText}
+          </div>
+        )}
 
         {/* ========================================================================= */}
-        {/* 2. DENSE 2-COLUMN QUESTION BODY (High-Efficiency Paper Saver)             */}
+        {/* 2. BALANCED 2-COLUMN / 1-COLUMN QUESTION BODY                             */}
         {/* ========================================================================= */}
-        <div className="exam-columns-container text-[11px] sm:text-[11.5px] leading-snug">
+        <div className="exam-columns-container">
           {sectionGroups.map((sec, sIdx) => {
             const secQuestions = sec.questions && sec.questions.length > 0
               ? sec.questions
@@ -320,6 +440,21 @@ export const CollegeExamPaper: React.FC<CollegeExamPaperProps> = ({
                         { key: 'D', rawText: 'Option D' }
                       ];
 
+                  // Deterministically sort options by Key (A, B, C, D) or sort_order
+                  const sortedOpts = [...rawOpts].sort((a, b) => {
+                    const orderMap: Record<string, number> = {
+                      'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5,
+                      '1': 1, '2': 2, '3': 3, '4': 4, '5': 5,
+                      'I': 1, 'II': 2, 'III': 3, 'IV': 4
+                    };
+                    const keyA = (a.key || (a as any).option_key || '').toString().toUpperCase().trim();
+                    const keyB = (b.key || (b as any).option_key || '').toString().toUpperCase().trim();
+                    const valA = orderMap[keyA] ?? (a.sort_order ?? 99);
+                    const valB = orderMap[keyB] ?? (b.sort_order ?? 99);
+                    if (valA !== valB) return valA - valB;
+                    return keyA.localeCompare(keyB);
+                  });
+
                   // Question Text & Diagrams
                   const rawTextStr = stripQuestionCode(q.rawText || (typeof q.content === 'string' ? q.content : '') || '');
                   const hasEmbeddedImg = /<img\s+/i.test(rawTextStr);
@@ -330,18 +465,18 @@ export const CollegeExamPaper: React.FC<CollegeExamPaperProps> = ({
                   const qImg = q.imageUrl || q.diagramUrl || contentArr.find((b: any) => b.type === 'image' || b.imageUrl || b.url)?.url;
 
                   // Check if options contain images or diagrams
-                  const hasOptImages = rawOpts.some(o => {
+                  const hasOptImages = sortedOpts.some(o => {
                     const t = String(o.rawText || o.text || o.label || o.imageUrl || '');
                     return /<img|data:image|\.png|\.jpg|\.jpeg|\.svg|\/assets\//i.test(t) || Boolean(o.imageUrl || (o as any).diagramUrl);
                   });
 
                   // Determine optimal option layout (2x2 vs 1-col vs inline 4)
-                  const maxOptLen = Math.max(...rawOpts.map(o => String(o.rawText || o.text || o.label || '').length));
-                  const isUltraShort = !hasOptImages && maxOptLen <= 10 && rawOpts.length === 4;
-                  const isShort2x2 = hasOptImages || (maxOptLen <= 26 && rawOpts.length === 4);
+                  const maxOptLen = Math.max(...sortedOpts.map(o => String(o.rawText || o.text || o.label || '').length));
+                  const isUltraShort = !hasOptImages && maxOptLen <= 10 && sortedOpts.length === 4;
+                  const isShort2x2 = hasOptImages || (maxOptLen <= 26 && sortedOpts.length === 4);
 
                   return (
-                    <div key={q.id || qIdx} className="exam-q-block mb-3.5 pl-0.5 text-black">
+                    <div key={q.id || qIdx} className="exam-q-block mb-3 pl-0.5 text-black">
                       {/* Question Text */}
                       <div className="flex items-start gap-1.5 font-normal">
                         <span className="font-bold shrink-0 select-none">({qNum})</span>
@@ -350,7 +485,7 @@ export const CollegeExamPaper: React.FC<CollegeExamPaperProps> = ({
                         </div>
                       </div>
 
-                      {/* Embedded Diagram / Image (Only if rawText does not already embed an image) */}
+                      {/* Embedded Diagram / Image */}
                       {!hasEmbeddedImg && (qSvg || (qImg && qImg !== 'undefined' && qImg !== 'null' && String(qImg).trim() !== '')) && (
                         <div className="my-1.5 flex justify-center max-h-32 overflow-hidden">
                           {qSvg ? (
@@ -373,11 +508,11 @@ export const CollegeExamPaper: React.FC<CollegeExamPaperProps> = ({
                       )}
 
                       {/* MCQ Options with College Exam Format */}
-                      <div className="mt-1 pl-4">
+                      <div className="mt-1 pl-3.5">
                         {isUltraShort ? (
                           // Ultra-compact 4 in one line: (A) ... (B) ... (C) ... (D) ...
                           <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
-                            {rawOpts.map((opt, oIdx) => {
+                            {sortedOpts.map((opt, oIdx) => {
                               const key = (opt.key || String.fromCharCode(65 + oIdx)).toUpperCase();
                               const isCorrect = isAnswerKeyMode && (key === targetOptKey || opt.isCorrect);
                               const optText = opt.rawText || opt.text || opt.label || '';
@@ -394,13 +529,13 @@ export const CollegeExamPaper: React.FC<CollegeExamPaperProps> = ({
                         ) : isShort2x2 ? (
                           // 2x2 Grid (Ideal for diagram options and short options)
                           <div className="grid grid-cols-2 gap-x-3 gap-y-1">
-                            {rawOpts.map((opt, oIdx) => {
+                            {sortedOpts.map((opt, oIdx) => {
                               const key = (opt.key || String.fromCharCode(65 + oIdx)).toUpperCase();
                               const isCorrect = isAnswerKeyMode && (key === targetOptKey || opt.isCorrect);
                               const optText = opt.rawText || opt.text || opt.label || '';
 
                               return (
-                                <div key={opt.id || oIdx} className={`flex items-start gap-1 ${hasOptImages ? 'p-1 border border-slate-200 rounded-sm bg-white' : 'truncate'} ${isCorrect ? 'font-bold text-emerald-800 bg-emerald-50' : ''}`}>
+                                <div key={opt.id || oIdx} className={`flex items-start gap-1 ${hasOptImages ? 'p-1 border border-slate-200 rounded-sm bg-white' : 'truncate'} ${isCorrect ? 'font-bold text-emerald-800 bg-emerald-50 px-1 rounded-xs' : ''}`}>
                                   <span className="font-bold shrink-0">({key})</span>
                                   <div className={`flex-1 ${hasOptImages ? 'flex justify-center items-center max-h-20 overflow-hidden' : 'truncate'}`}>
                                     <MathTextRenderer text={optText} />
@@ -413,13 +548,13 @@ export const CollegeExamPaper: React.FC<CollegeExamPaperProps> = ({
                         ) : (
                           // Stacked 1 per line: (A) ... \n (B) ...
                           <div className="space-y-0.5">
-                            {rawOpts.map((opt, oIdx) => {
+                            {sortedOpts.map((opt, oIdx) => {
                               const key = (opt.key || String.fromCharCode(65 + oIdx)).toUpperCase();
                               const isCorrect = isAnswerKeyMode && (key === targetOptKey || opt.isCorrect);
                               const optText = opt.rawText || opt.text || opt.label || '';
 
                               return (
-                                <div key={opt.id || oIdx} className={`flex items-start gap-1.5 ${isCorrect ? 'font-bold text-emerald-800 bg-emerald-50/60 px-1 rounded' : ''}`}>
+                                <div key={opt.id || oIdx} className={`flex items-start gap-1.5 ${isCorrect ? 'font-bold text-emerald-800 bg-emerald-50/70 px-1 rounded' : ''}`}>
                                   <span className="font-bold shrink-0">({key})</span>
                                   <div className="flex-1">
                                     <MathTextRenderer text={optText} />
@@ -431,14 +566,6 @@ export const CollegeExamPaper: React.FC<CollegeExamPaperProps> = ({
                           </div>
                         )}
                       </div>
-
-                      {/* Detailed Solution (Answer Key Mode Only) */}
-                      {isAnswerKeyMode && (q.explanationText || q.solution || (q as any).explanation) && (
-                        <div className="mt-1.5 pl-4 pr-1 py-1 bg-emerald-50 border-l-2 border-emerald-600 text-[10.5px] text-emerald-950 font-normal">
-                          <span className="font-bold mr-1">Sol:</span>
-                          <MathTextRenderer text={q.explanationText || q.solution || (q as any).explanation || ''} />
-                        </div>
-                      )}
                     </div>
                   );
                 })}
@@ -459,7 +586,7 @@ export const CollegeExamPaper: React.FC<CollegeExamPaperProps> = ({
             <div className="overflow-x-auto">
               <table className="w-full border-collapse border border-black text-[10px] text-center font-mono font-bold">
                 <tbody>
-                  {/* Split questions into rows of 15 or 20 */}
+                  {/* Split questions into rows of 15 */}
                   {(() => {
                     const rowSize = 15;
                     const rows: CollegeExamQuestion[][] = [];
@@ -484,7 +611,7 @@ export const CollegeExamPaper: React.FC<CollegeExamPaperProps> = ({
                           {rowQs.map((q, cIdx) => {
                             const correct = (q.correctOption || q.correctAnswer || (q as any).correct_option || (q as any).correct_answer || 'A').toString().toUpperCase().trim();
                             return (
-                              <td key={cIdx} className="border border-black px-1 py-0.5 text-emerald-900 bg-emerald-50">
+                              <td key={cIdx} className="border border-black px-1 py-0.5 text-emerald-900 bg-emerald-50 font-bold">
                                 {correct}
                               </td>
                             );
@@ -500,8 +627,8 @@ export const CollegeExamPaper: React.FC<CollegeExamPaperProps> = ({
         )}
 
         {/* Footer Page Number */}
-        <div className="mt-4 pt-2 text-center text-[10px] text-slate-500 font-mono select-none">
-          — Page 1 —
+        <div className="mt-4 pt-2 text-center text-[10px] text-slate-500 font-mono select-none border-t border-slate-200">
+          — End of Question Paper —
         </div>
       </div>
     </div>

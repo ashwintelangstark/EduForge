@@ -91,7 +91,7 @@ export const SubjectsPage: React.FC<SubjectsPageProps> = ({
         if (onDeleteSubject) {
           onDeleteSubject(s.code);
         }
-        await api.deleteSubject(targetId);
+        await api.deleteSubject(String(targetId));
       } catch (err) {
         console.error('Failed deleting subject:', err);
       } finally {
@@ -120,7 +120,7 @@ export const SubjectsPage: React.FC<SubjectsPageProps> = ({
       } else {
         const subToEdit = subjects.find(s => s.code === editingCode);
         if (subToEdit?.id) {
-          await api.updateSubject(subToEdit.id, updatedSub);
+          await api.updateSubject(String(subToEdit.id), updatedSub);
         }
         setSubjects(prev => prev.map(s => (s.code === editingCode ? updatedSub : s)));
       }
