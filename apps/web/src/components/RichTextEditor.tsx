@@ -511,7 +511,18 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
   };
 
   const openImageStudio = () => {
-    const src = selectedImageSrc || currentImageAttrs?.src;
+    let src = selectedImageSrc || currentImageAttrs?.src;
+    if (!src && editor) {
+      const { selection } = editor.state;
+      const selectedNode = (selection as any)?.node;
+      if (selectedNode?.type?.name === 'image') {
+        src = selectedNode.attrs?.src;
+      }
+    }
+    if (!src) {
+      const selectedImgEl = document.querySelector('img.selected-img, img[data-selected="true"], img') as HTMLImageElement;
+      if (selectedImgEl) src = selectedImgEl.src;
+    }
     if (src) {
       setStudioImageSrc(src);
       setIsImageStudioOpen(true);
@@ -519,8 +530,14 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
   };
 
   const handleStudioSave = (newBase64: string) => {
+    if (!newBase64 || newBase64.length < 50) return;
     if (editor) {
-      editor.chain().focus().updateAttributes('image', { src: newBase64 }).run();
+      const { selection } = editor.state;
+      if (selection && (selection as any).node && (selection as any).node.type.name === 'image') {
+        editor.chain().focus().setNodeSelection(selection.from).updateAttributes('image', { src: newBase64 }).run();
+      } else {
+        editor.chain().focus().updateAttributes('image', { src: newBase64 }).run();
+      }
       setSelectedImageSrc(newBase64);
     }
   };
@@ -642,7 +659,15 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
           {/* Launch Image Studio (Crop, Un-skew & Filters) */}
           <button
             type="button"
-            onClick={openImageStudio}
+            onMouseDown={e => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+            onClick={e => {
+              e.preventDefault();
+              e.stopPropagation();
+              openImageStudio();
+            }}
             className="px-2 py-1 bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold rounded flex items-center gap-1 transition-all shadow-xs active:scale-95 cursor-pointer"
             title="Open Image Studio for Perspective Smart Crop, Normal Crop & Document Scanner Filters"
           >

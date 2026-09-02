@@ -295,7 +295,10 @@ export const ImageStudioModal: React.FC<ImageStudioModalProps> = ({
   };
 
   const handleSave = () => {
-    const result = processAndGenerateOutput();
+    let result = processAndGenerateOutput();
+    if (!result || result.length < 50) {
+      result = imageSrc;
+    }
     onSave(result);
     onClose();
   };
