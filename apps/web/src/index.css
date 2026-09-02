@@ -55,6 +55,21 @@ body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, nav, header {
   color: #042f2e !important;
 }
 
+/* ProseMirror Clean Direct Focus & Outline Reset */
+.ProseMirror,
+.ProseMirror *,
+.ProseMirror:focus,
+.ProseMirror *:focus,
+.ProseMirror-focused,
+.ProseMirror p,
+.ProseMirror p:focus,
+.ProseMirror div,
+.ProseMirror div:focus {
+  outline: 0 !important;
+  outline-style: none !important;
+  box-shadow: none !important;
+}
+
 /* ProseMirror Node & Image Selection Outlines */
 .ProseMirror-selectednode {
   outline: 3px solid #0f766e !important;

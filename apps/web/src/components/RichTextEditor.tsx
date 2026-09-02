@@ -258,6 +258,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
     autofocus: autoFocus,
     editorProps: {
       attributes: {
+        class: 'outline-none focus:outline-none prose prose-sm max-w-none text-black font-sans text-sm',
         spellcheck: smartAssistantEnabled ? 'true' : 'false',
         autocorrect: smartAssistantEnabled ? 'on' : 'off',
         autocapitalize: smartAssistantEnabled ? 'sentences' : 'off',
@@ -517,7 +518,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
       onDrop={handleDrop}
       onPaste={handlePaste}
       onClick={handleEditorClick}
-      className={`rounded-lg border border-slate-300 bg-white transition-all focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600 overflow-hidden shadow-2xs relative ${className}`}
+      className={`rounded-lg border border-slate-300 bg-white transition-all focus-within:border-teal-600 focus-within:ring-1 focus-within:ring-teal-500/20 overflow-hidden shadow-2xs relative ${className}`}
     >
       {/* Hidden File Input for Image Upload */}
       <input
