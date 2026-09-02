@@ -98,9 +98,24 @@ questionsRouter.get('/', async (req: Request, res: Response, next: NextFunction)
       };
     });
 
-    const userSubject = (req.query.userSubject || req.query.subject || req.headers['x-user-subject'] || 'All') as string;
-    if (userSubject && userSubject !== 'All') {
-      formattedList = formattedList.filter((q: any) => (q.subject || '').toLowerCase() === userSubject.toLowerCase());
+    if (subject && subject !== 'all') {
+      const subStr = String(subject).toLowerCase();
+      formattedList = formattedList.filter((q: any) =>
+        (q.subject || '').toLowerCase() === subStr ||
+        (q.subject_name || '').toLowerCase() === subStr ||
+        (q.subject || '').toLowerCase().includes(subStr) ||
+        String(q.subject_id || '') === String(subject)
+      );
+    }
+
+    if (chapter && chapter !== 'all') {
+      const chStr = String(chapter).toLowerCase();
+      formattedList = formattedList.filter((q: any) =>
+        (q.chapter || '').toLowerCase() === chStr ||
+        (q.chapter_name || '').toLowerCase() === chStr ||
+        (q.chapter || '').toLowerCase().includes(chStr) ||
+        String(q.chapter_id || '') === String(chapter)
+      );
     }
 
     res.json({ success: true, data: formattedList });

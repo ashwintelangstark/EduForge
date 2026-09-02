@@ -90,16 +90,13 @@ questionBankRouter.get('/', async (req: Request, res: Response, next: NextFuncti
     });
 
     let filtered = formatted;
-    const userSubject = (req.query.userSubject || req.headers['x-user-subject'] || 'All') as string;
-    if (userSubject && userSubject !== 'All') {
-      filtered = filtered.filter((q: any) => (q.subject || '').toLowerCase() === userSubject.toLowerCase());
-    }
 
     if (subject && subject !== 'all') {
       const subStr = String(subject).toLowerCase();
       filtered = filtered.filter((q: any) =>
         (q.subject || '').toLowerCase() === subStr ||
         (q.subject_name || '').toLowerCase() === subStr ||
+        (q.subject || '').toLowerCase().includes(subStr) ||
         String(q.subject_id || '') === String(subject)
       );
     }
@@ -109,6 +106,7 @@ questionBankRouter.get('/', async (req: Request, res: Response, next: NextFuncti
       filtered = filtered.filter((q: any) =>
         (q.chapter || '').toLowerCase() === chStr ||
         (q.chapter_name || '').toLowerCase() === chStr ||
+        (q.chapter || '').toLowerCase().includes(chStr) ||
         String(q.chapter_id || '') === String(chapter)
       );
     }

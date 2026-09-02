@@ -90,7 +90,7 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
 
   // Filters
   const [search, setSearch] = useState('');
-  const [selectedSubject, setSelectedSubject] = useState<string>(userSubject !== 'All' ? userSubject : 'all');
+  const [selectedSubject, setSelectedSubject] = useState<string>('all');
   const [selectedChapterFilter, setSelectedChapterFilter] = useState<string>('all');
   const [difficultyFilter, setDifficultyFilter] = useState<string>('all');
   const [statusFilter, setStatusFilter] = useState<string>('all');
@@ -165,18 +165,9 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
         api.getChapters()
       ]);
 
-      let filteredSubs = subData || [];
-      let filteredChs = chData || [];
-
-      if (userSubject !== 'All') {
-        const uSubLower = userSubject.toLowerCase();
-        filteredSubs = filteredSubs.filter((s: any) => (s.name || '').toLowerCase().includes(uSubLower));
-        filteredChs = filteredChs.filter((c: any) => ((c.subject_name || c.subject || '')).toLowerCase().includes(uSubLower));
-      }
-
       setQuestions(qData || []);
-      setSubjects(filteredSubs);
-      setChapters(filteredChs);
+      setSubjects(subData || []);
+      setChapters(chData || []);
     } catch (err) {
       console.error('Failed to load questions or metadata:', err);
     } finally {
@@ -422,13 +413,12 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
     return clean || 'Question statement text';
   };
 
-  // Available chapters filtered by selected subject or faculty assigned subject
+  // Available chapters filtered by selected subject
   const availableChapters = chapters.filter(c => {
-    const effectiveSubject = userSubject !== 'All' ? userSubject : selectedSubject;
-    if (effectiveSubject === 'all') return true;
+    if (selectedSubject === 'all') return true;
     const subName = (c.subject_name || c.subject || c.subjects?.name || '').toLowerCase();
     const subId = (c.subject_id || c.subjectId || '').toLowerCase();
-    const targetSubLower = effectiveSubject.toLowerCase();
+    const targetSubLower = selectedSubject.toLowerCase();
     return subName === targetSubLower || subName.includes(targetSubLower) || targetSubLower.includes(subName) || subId === targetSubLower;
   });
 
@@ -454,26 +444,20 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
       }
     }
 
-    // 1. Role-based user scoping
-    if (userSubject !== 'All') {
-      const userSubLower = userSubject.toLowerCase();
-      const qSubLower = (q.subject || '').toLowerCase();
-      if (qSubLower && !qSubLower.includes(userSubLower) && !userSubLower.includes(qSubLower)) {
-        return false;
-      }
-    }
-
-    // 2. Subject Filter
+    // 1. Subject Filter (when selected by user)
     if (selectedSubject !== 'all') {
       const targetSubLower = selectedSubject.toLowerCase();
-      const qSubLower = (q.subject || '').toLowerCase();
-      const qSubId = ((q as any).subject_id || (q as any).subjectId || '').toLowerCase();
-      if (qSubLower !== targetSubLower && !qSubLower.includes(targetSubLower) && qSubId !== targetSubLower) {
-        return false;
-      }
+      const qSubLower = (q.subject || (q as any).subject_name || '').toLowerCase();
+      const qSubId = String((q as any).subject_id || (q as any).subjectId || '').toLowerCase();
+      const matches =
+        qSubLower === targetSubLower ||
+        qSubLower.includes(targetSubLower) ||
+        targetSubLower.includes(qSubLower) ||
+        qSubId === targetSubLower;
+      if (!matches) return false;
     }
 
-    // 3. Chapter Filter Dropdown or Active Selected Chapter
+    // 2. Chapter Filter Dropdown or Active Selected Chapter
     const activeChapterId = selectedChapterFilter !== 'all' ? selectedChapterFilter : (selectedChapter?.id || '');
     const activeChapterTitle = selectedChapterFilter !== 'all' ? '' : (selectedChapter?.title || '');
 
@@ -501,7 +485,7 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
       if (!matches) return false;
     }
 
-    // 5. Search Text Filter
+    // 3. Search Text Filter
     if (search.trim()) {
       const s = search.toLowerCase();
       const code = formatQuestionCode(q).toLowerCase();
@@ -511,7 +495,7 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
       if (!code.includes(s) && !statement.includes(s) && !qSub.includes(s) && !qCh.includes(s)) return false;
     }
 
-    // 6. Status Filter
+    // 4. Status Filter
     if (statusFilter === 'Draft' && q.isSystem) return false;
     if (statusFilter === 'Published' && !q.isSystem) return false;
 

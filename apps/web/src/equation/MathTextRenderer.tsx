@@ -188,7 +188,9 @@ export function autoDetectAndWrapLatex(str: string): string {
 function RenderSingleMathTextChunk({ text, block, className }: { text: string; block?: boolean; className?: string }) {
   if (!text) return null;
   const tokens = parseAndTokenizeMath(text, block);
-  if (tokens.length === 0) return null;
+  if (tokens.length === 0) {
+    return text ? <span className={className}>{text}</span> : null;
+  }
 
   return (
     <span className={className}>
