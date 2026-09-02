@@ -20,11 +20,10 @@ app.use(cors());
 app.use(express.json({ limit: '20mb' }));
 app.use(express.urlencoded({ extended: true, limit: '20mb' }));
 
-// Healthcheck & Root Status Endpoints
-app.get('/', (req, res) => {
-  res.json({ status: 'ok', message: 'EduForge API Server Running', timestamp: new Date().toISOString() });
-});
+import path from 'path';
+import fs from 'fs';
 
+// Healthcheck & API Status Endpoints
 app.get('/api', (req, res) => {
   res.json({ status: 'ok', message: 'EduForge API Server Running', timestamp: new Date().toISOString() });
 });
@@ -36,6 +35,17 @@ app.get('/health', (req, res) => {
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
+
+// Serve frontend static assets from public/ or dist/ if available
+const publicPath = path.join(process.cwd(), 'public');
+const distStaticPath = path.join(process.cwd(), 'dist');
+
+if (fs.existsSync(publicPath)) {
+  app.use(express.static(publicPath));
+}
+if (fs.existsSync(distStaticPath)) {
+  app.use(express.static(distStaticPath));
+}
 
 // Auth Endpoints
 app.use('/auth', authRouter);
@@ -98,6 +108,35 @@ app.use('/api/api/settings', settingsRouter);
 app.use('/', scienceRouter);
 app.use('/api', scienceRouter);
 app.use('/api/api', scienceRouter);
+
+// SPA Routing Fallback for Frontend Single-Page App
+app.get('*', (req, res, next) => {
+  if (
+    req.path.startsWith('/api') ||
+    req.path.startsWith('/auth') ||
+    req.path.startsWith('/questions') ||
+    req.path.startsWith('/question-bank') ||
+    req.path.startsWith('/subjects') ||
+    req.path.startsWith('/chapters') ||
+    req.path.startsWith('/templates') ||
+    req.path.startsWith('/assets') ||
+    req.path.startsWith('/media') ||
+    req.path.startsWith('/papers')
+  ) {
+    return next();
+  }
+
+  const indexInPublic = path.join(publicPath, 'index.html');
+  const indexInDist = path.join(distStaticPath, 'index.html');
+
+  if (fs.existsSync(indexInPublic)) {
+    return res.sendFile(indexInPublic);
+  } else if (fs.existsSync(indexInDist)) {
+    return res.sendFile(indexInDist);
+  }
+
+  next();
+});
 
 // Global Error Handler
 app.use(errorHandler);
