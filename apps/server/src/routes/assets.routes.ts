@@ -27,10 +27,10 @@ async function ensureBucketExists() {
   }
 }
 
-// GET /api/assets - List assets scoped to subject for faculty, or all for admin
+// GET /api/assets - List all assets from Supabase Storage bucket & Database
 assetsRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const userSubject = (req.query.subject || req.query.userSubject || req.headers['x-user-subject'] || 'All') as string;
+    const requestedSubject = (req.query.subject || req.query.userSubject) as string;
 
     const { data, error } = await supabase.from('assets').select('*').order('created_at', { ascending: false });
     
@@ -51,23 +51,36 @@ assetsRouter.get('/', async (req: Request, res: Response, next: NextFunction) =>
       }));
     }
 
-    // Also scan Supabase Storage bucket folders (biology, physics, chemistry) to ensure cropped diagram assets are included
+    // Scan Supabase Storage bucket root and subfolders
     try {
-      const subjectFolders = ['biology', 'physics', 'chemistry', 'mathematics'];
-      for (const folder of subjectFolders) {
+      await ensureBucketExists();
+
+      // Get root items to discover subfolders dynamically
+      const { data: rootItems } = await supabase.storage.from(BUCKET_NAME).list('', { limit: 100 });
+      const foldersToScan = new Set(['', 'biology', 'physics', 'chemistry', 'mathematics', 'general', 'uploads', 'questions']);
+
+      if (rootItems) {
+        rootItems.forEach(item => {
+          if (!item.id && item.name && item.name !== '.emptyFolderPlaceholder') {
+            foldersToScan.add(item.name);
+          }
+        });
+      }
+
+      for (const folder of Array.from(foldersToScan)) {
         const { data: files } = await supabase.storage.from(BUCKET_NAME).list(folder, { limit: 100 });
         if (files && files.length > 0) {
           for (const f of files) {
-            if (f.name && f.name !== '.emptyFolderPlaceholder') {
-              const storagePath = `${folder}/${f.name}`;
-              const existsInDb = assetsList.some(a => a.storagePath === storagePath || a.url.includes(f.name));
+            if (f.name && f.name !== '.emptyFolderPlaceholder' && f.id) {
+              const storagePath = folder ? `${folder}/${f.name}` : f.name;
+              const existsInDb = assetsList.some(a => a.storagePath === storagePath || (a.url && a.url.includes(f.name)));
               if (!existsInDb) {
                 const { data: urlData } = supabase.storage.from(BUCKET_NAME).getPublicUrl(storagePath);
                 assetsList.push({
-                  id: `storage-${folder}-${f.name}`,
+                  id: `storage-${folder || 'root'}-${f.name}`,
                   name: f.name,
                   filename: f.name,
-                  label: folder.toUpperCase(),
+                  label: folder ? folder.toUpperCase() : 'FIGURE',
                   url: urlData.publicUrl,
                   public_url: urlData.publicUrl,
                   storagePath,
@@ -85,20 +98,51 @@ assetsRouter.get('/', async (req: Request, res: Response, next: NextFunction) =>
       console.warn('Storage bucket scan note:', storageErr);
     }
 
-    // Filter by user subject scope if faculty
-    if (userSubject && userSubject !== 'All') {
-      const subLower = userSubject.toLowerCase().trim();
+    // Also scan questions table for images to ensure Media Library displays all question diagrams
+    try {
+      const { data: qData } = await supabase.from('questions').select('id, image_url, diagram_url, content');
+      if (qData && qData.length > 0) {
+        qData.forEach((q: any, idx: number) => {
+          const imgUrls: string[] = [q.image_url, q.diagram_url].filter(Boolean);
+          if (Array.isArray(q.content)) {
+            q.content.forEach((blk: any) => {
+              if (blk.url) imgUrls.push(blk.url);
+              if (blk.src) imgUrls.push(blk.src);
+              if (blk.imageUrl) imgUrls.push(blk.imageUrl);
+              if (blk.diagramUrl) imgUrls.push(blk.diagramUrl);
+            });
+          }
+          imgUrls.forEach((url: string, uIdx: number) => {
+            if (url && (url.startsWith('http') || url.startsWith('data:')) && !assetsList.some(a => a.url === url)) {
+              assetsList.push({
+                id: `q-img-${q.id || idx}-${uIdx}`,
+                name: `Question Image ${idx + 1}`,
+                filename: `question_img_${idx + 1}`,
+                label: 'QUESTION DIAGRAM',
+                url: url,
+                public_url: url,
+                storagePath: '',
+                mimeType: 'image/png',
+                sizeBytes: 0,
+                usesCount: 1,
+                createdAt: new Date().toISOString()
+              });
+            }
+          });
+        });
+      }
+    } catch (qErr) {
+      console.warn('Questions image scan note:', qErr);
+    }
+
+    // Filter by subject only if specifically requested via query parameter
+    if (requestedSubject && requestedSubject !== 'All' && requestedSubject !== 'all') {
+      const subLower = requestedSubject.toLowerCase().trim();
       assetsList = assetsList.filter((a: any) => {
         const pathLower = (a.storagePath || '').toLowerCase();
         const nameLower = (a.name || '').toLowerCase();
         const urlLower = (a.url || '').toLowerCase();
-        return pathLower.startsWith(subLower + '/') ||
-               pathLower.includes(subLower) ||
-               nameLower.includes(subLower) ||
-               urlLower.includes(subLower) ||
-               (subLower === 'biology' && (nameLower.includes('bio') || pathLower.includes('bio'))) ||
-               (subLower === 'physics' && (nameLower.includes('phy') || pathLower.includes('phy'))) ||
-               (subLower === 'chemistry' && (nameLower.includes('che') || pathLower.includes('che')));
+        return pathLower.includes(subLower) || nameLower.includes(subLower) || urlLower.includes(subLower);
       });
     }
 

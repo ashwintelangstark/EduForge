@@ -521,5 +521,153 @@ export const supabaseDirect = {
     } catch {
       return [];
     }
+  },
+
+  // Assets & Media Library
+  async getMedia(subject?: string): Promise<any[]> {
+    try {
+      const BUCKET_NAME = import.meta.env.VITE_SUPABASE_STORAGE_BUCKET || 'question-assets';
+      const assetsList: any[] = [];
+      const folders = ['', 'biology', 'physics', 'chemistry', 'mathematics', 'general', 'uploads', 'questions'];
+
+      // Scan Database assets table
+      const { data: dbData } = await supabase.from('assets').select('*').order('created_at', { ascending: false });
+      if (dbData && dbData.length > 0) {
+        dbData.forEach((a: any) => {
+          assetsList.push({
+            id: a.id,
+            name: a.filename || 'Untitled Asset',
+            filename: a.filename,
+            label: (a.storage_path && a.storage_path.includes('/')) ? a.storage_path.split('/')[0].toUpperCase() : 'FIGURE',
+            url: a.public_url || '',
+            public_url: a.public_url || '',
+            storagePath: a.storage_path,
+            mimeType: a.mime_type,
+            sizeBytes: a.size_bytes,
+            usesCount: 0,
+            createdAt: a.created_at
+          });
+        });
+      }
+
+      // Scan Supabase storage bucket folders & root
+      for (const folder of folders) {
+        try {
+          const { data: files } = await supabase.storage.from(BUCKET_NAME).list(folder, { limit: 100 });
+          if (files && files.length > 0) {
+            for (const f of files) {
+              if (f.name && f.name !== '.emptyFolderPlaceholder') {
+                const storagePath = folder ? `${folder}/${f.name}` : f.name;
+                const existsInDb = assetsList.some(a => a.storagePath === storagePath || (a.url && a.url.includes(f.name)));
+                if (!existsInDb) {
+                  const { data: urlData } = supabase.storage.from(BUCKET_NAME).getPublicUrl(storagePath);
+                  assetsList.push({
+                    id: `storage-${folder || 'root'}-${f.name}`,
+                    name: f.name,
+                    filename: f.name,
+                    label: folder ? folder.toUpperCase() : 'FIGURE',
+                    url: urlData.publicUrl,
+                    public_url: urlData.publicUrl,
+                    storagePath,
+                    mimeType: 'image/png',
+                    sizeBytes: f.metadata?.size || 0,
+                    usesCount: 0,
+                    createdAt: f.created_at || new Date().toISOString()
+                  });
+                }
+              }
+            }
+          }
+        } catch {}
+      }
+
+      // Scan questions table for images
+      try {
+        const { data: qData } = await supabase.from('questions').select('id, image_url, diagram_url, content');
+        if (qData && qData.length > 0) {
+          qData.forEach((q: any, idx: number) => {
+            const imgUrls: string[] = [q.image_url, q.diagram_url].filter(Boolean);
+            if (Array.isArray(q.content)) {
+              q.content.forEach((blk: any) => {
+                if (blk.url) imgUrls.push(blk.url);
+                if (blk.src) imgUrls.push(blk.src);
+                if (blk.imageUrl) imgUrls.push(blk.imageUrl);
+                if (blk.diagramUrl) imgUrls.push(blk.diagramUrl);
+              });
+            }
+            imgUrls.forEach((url: string, uIdx: number) => {
+              if (url && (url.startsWith('http') || url.startsWith('data:')) && !assetsList.some(a => a.url === url)) {
+                assetsList.push({
+                  id: `q-img-${q.id || idx}-${uIdx}`,
+                  name: `Question Image ${idx + 1}`,
+                  filename: `question_img_${idx + 1}`,
+                  label: 'QUESTION DIAGRAM',
+                  url: url,
+                  public_url: url,
+                  storagePath: '',
+                  mimeType: 'image/png',
+                  sizeBytes: 0,
+                  usesCount: 1,
+                  createdAt: new Date().toISOString()
+                });
+              }
+            });
+          });
+        }
+      } catch {}
+
+      if (subject && subject !== 'All' && subject !== 'all') {
+        const subLower = subject.toLowerCase().trim();
+        return assetsList.filter(a => {
+          const pathLower = (a.storagePath || '').toLowerCase();
+          const nameLower = (a.name || '').toLowerCase();
+          const urlLower = (a.url || '').toLowerCase();
+          return pathLower.includes(subLower) || nameLower.includes(subLower) || urlLower.includes(subLower);
+        });
+      }
+
+      return assetsList;
+    } catch (err) {
+      console.error('[SupabaseDirect] getMedia error:', err);
+      return [];
+    }
+  },
+
+  async uploadAsset(file: File, subject?: string): Promise<{ id: string; url: string; originalName: string }> {
+    const BUCKET_NAME = import.meta.env.VITE_SUPABASE_STORAGE_BUCKET || 'question-assets';
+    const folder = (subject || 'general').toLowerCase().trim();
+    const fileName = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`;
+    const storagePath = `${folder}/${fileName}`;
+
+    const { data: storageData, error: storageError } = await supabase.storage
+      .from(BUCKET_NAME)
+      .upload(storagePath, file, { upsert: true });
+
+    if (!storageError && storageData) {
+      const { data: urlData } = supabase.storage.from(BUCKET_NAME).getPublicUrl(storagePath);
+      return {
+        id: `asset-${Date.now()}`,
+        url: urlData.publicUrl,
+        originalName: file.name
+      };
+    }
+
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        resolve({
+          id: `asset-${Date.now()}`,
+          url: reader.result as string,
+          originalName: file.name
+        });
+      };
+      reader.readAsDataURL(file);
+    });
+  },
+
+  async deleteMedia(id: string): Promise<void> {
+    try {
+      await supabase.from('assets').delete().eq('id', id);
+    } catch {}
   }
 };

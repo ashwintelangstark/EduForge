@@ -78,10 +78,10 @@ export const api = {
   deleteTemplate: templatesApi.deleteTemplate.bind(templatesApi),
 
   // Assets & Media
-  getMedia: assetsApi.getMedia.bind(assetsApi),
-  uploadAsset: assetsApi.uploadAsset.bind(assetsApi),
-  uploadImage: assetsApi.uploadImage.bind(assetsApi),
-  deleteMedia: assetsApi.deleteMedia.bind(assetsApi),
+  getMedia: (subject?: string) => withFallback(() => assetsApi.getMedia(subject), () => supabaseDirect.getMedia(subject)),
+  uploadAsset: (file: File, subject?: string) => withFallback(() => assetsApi.uploadAsset(file, subject), () => supabaseDirect.uploadAsset(file, subject)),
+  uploadImage: (file: File, subject?: string) => withFallback(() => assetsApi.uploadImage(file, subject), () => supabaseDirect.uploadAsset(file, subject)),
+  deleteMedia: (id: string) => withFallback(() => assetsApi.deleteMedia(id), () => supabaseDirect.deleteMedia(id)),
 
   // Symbols & Science
   getSymbols: symbolsApi.getSymbols.bind(symbolsApi),
