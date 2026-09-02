@@ -54,7 +54,9 @@ export const StudentPreviewDrawer: React.FC<StudentPreviewDrawerProps> = ({
   const diagSvg = question?.diagramSvg || (question as any)?.diagram_svg || contentArr.find((b: any) => b.type === 'diagram' || b.diagramSvg || b.svg)?.diagramSvg || contentArr.find((b: any) => b.type === 'diagram' || b.diagramSvg || b.svg)?.svg;
   const imageSrc = question?.imageUrl || (question as any)?.diagramUrl || question?.imageUrls?.[0] || contentArr.find((b: any) => b.type === 'image' || b.imageUrl || b.url)?.url;
 
-  const showNavigation = onPrevious || onNext || currentIndex !== undefined;
+  const showNavigation = Boolean(onPrevious || onNext || currentIndex !== undefined);
+  const canPrev = hasPrevious !== undefined ? hasPrevious : Boolean(onPrevious);
+  const canNext = hasNext !== undefined ? hasNext : Boolean(onNext);
 
   return (
     <>
@@ -78,7 +80,7 @@ export const StudentPreviewDrawer: React.FC<StudentPreviewDrawerProps> = ({
               <button
                 type="button"
                 onClick={onPrevious}
-                disabled={!hasPrevious}
+                disabled={!canPrev}
                 className="px-2.5 py-1 text-xs font-bold text-slate-700 hover:text-slate-900 hover:bg-white rounded-lg transition-all shadow-2xs disabled:opacity-30 disabled:hover:bg-transparent disabled:cursor-not-allowed flex items-center gap-1 cursor-pointer"
                 title="Previous Question (Left Arrow)"
               >
@@ -95,7 +97,7 @@ export const StudentPreviewDrawer: React.FC<StudentPreviewDrawerProps> = ({
               <button
                 type="button"
                 onClick={onNext}
-                disabled={!hasNext}
+                disabled={!canNext}
                 className="px-2.5 py-1 text-xs font-bold text-slate-700 hover:text-slate-900 hover:bg-white rounded-lg transition-all shadow-2xs disabled:opacity-30 disabled:hover:bg-transparent disabled:cursor-not-allowed flex items-center gap-1 cursor-pointer"
                 title="Next Question (Right Arrow)"
               >

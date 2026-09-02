@@ -940,8 +940,12 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
         isOpen={isPreviewOpen}
         onClose={() => setIsPreviewOpen(false)}
         question={previewQuestion}
-        onNext={currentPreviewIndex < filteredList.length - 1 ? handleNextQuestion : undefined}
-        onPrevious={currentPreviewIndex > 0 ? handlePrevQuestion : undefined}
+        onNext={handleNextQuestion}
+        onPrevious={handlePrevQuestion}
+        hasPrevious={currentPreviewIndex > 0}
+        hasNext={currentPreviewIndex >= 0 && currentPreviewIndex < filteredList.length - 1}
+        currentIndex={currentPreviewIndex >= 0 ? currentPreviewIndex : undefined}
+        totalQuestions={filteredList.length}
       />
 
       {/* ========================================================================= */}
