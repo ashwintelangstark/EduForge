@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../services/api.js';
+import { apiCache } from '../services/apiCache.js';
 import { Question, DocumentModel, DocumentSection } from '@eduforge/shared';
 import {
   Plus, Check, X, Printer, Download, Eye, FileText,
   HelpCircle, Shuffle, Award, Search, ArrowRight, ArrowLeft, Layers, CheckCircle2,
-  Columns, Droplet, Building2, Sparkles, Tag, Hash
+  Columns, Droplet, Building2, Sparkles, Tag, Hash, RotateCw, RefreshCw
 } from 'lucide-react';
 import { formatQuestionCode } from '../utils/questionCode.js';
 import { MathTextRenderer } from '../equation/MathTextRenderer.js';
@@ -57,6 +58,7 @@ export const GenerateTestPage: React.FC<GenerateTestPageProps> = ({
   const [subjects, setSubjects] = useState<any[]>([]); // Subjects fetched from backend
   const [chapters, setChapters] = useState<any[]>([]); // Chapters fetched from backend
   const [loading, setLoading] = useState<boolean>(true); // Loading indicator during API fetch
+  const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
 
   // Wizard active step (1: Configure, 2: Select Questions, 3: Preview, 4: Publish)
   const [currentStep, setCurrentStep] = useState<number>(1);
@@ -264,15 +266,21 @@ export const GenerateTestPage: React.FC<GenerateTestPageProps> = ({
    * Fetches questions, subjects, and chapters from the Supabase backend.
    * If an initialDocument is provided (editing mode), populates ALL fields, sections, questions and options accordingly.
    */
-  const loadBackendData = async () => {
+  const loadBackendData = async (force = false) => {
     try {
-      setLoading(true);
+      if (force) {
+        setIsRefreshing(true);
+        apiCache.invalidate('questions');
+      } else {
+        setLoading(true);
+      }
       const [qList, subList, chList] = await Promise.all([
-        api.getQuestions(),
+        api.getQuestions(undefined, force),
         api.getSubjects(),
         api.getChapters()
       ]);
       const initialQuestions = qList || [];
+      setQuestions(initialQuestions);
       setSubjects(subList || []);
       setChapters(chList || []);
 
@@ -431,6 +439,7 @@ export const GenerateTestPage: React.FC<GenerateTestPageProps> = ({
       console.error('Failed to load test generator data:', err);
     } finally {
       setLoading(false);
+      setIsRefreshing(false);
     }
   };
 
@@ -1569,6 +1578,16 @@ export const GenerateTestPage: React.FC<GenerateTestPageProps> = ({
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => loadBackendData(true)}
+                    disabled={isRefreshing || loading}
+                    className="px-3 py-1.5 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-xs font-bold rounded-lg transition-all active:scale-95 cursor-pointer shadow-2xs flex items-center gap-1.5 disabled:opacity-50"
+                    title="Refresh Question Bank"
+                  >
+                    <RotateCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-teal-700' : ''}`} />
+                    <span>Refresh</span>
+                  </button>
                   <button
                     type="button"
                     onClick={handleSelectAll}

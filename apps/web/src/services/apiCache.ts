@@ -5,7 +5,7 @@ interface CacheEntry<T> {
 }
 
 const memoryCache = new Map<string, CacheEntry<any>>();
-const DEFAULT_TTL_MS = 3 * 60 * 1000; // 3 minutes default TTL
+const DEFAULT_TTL_MS = 10 * 1000; // 10 seconds default TTL for real-time reactivity
 
 export const apiCache = {
   get<T>(key: string, maxAgeMs = DEFAULT_TTL_MS): T | null {
@@ -76,15 +76,18 @@ export const apiCache = {
   async fetchWithCache<T>(
     key: string,
     fetchFn: () => Promise<T>,
-    ttlMs = DEFAULT_TTL_MS
+    ttlMs = DEFAULT_TTL_MS,
+    forceRefresh = false
   ): Promise<T> {
-    const cached = this.get<T>(key, ttlMs);
-    if (cached) {
-      // Background revalidation to keep cache fresh without blocking UI
-      fetchFn().then(fresh => {
-        if (fresh) this.set(key, fresh);
-      }).catch(() => {});
-      return cached;
+    if (!forceRefresh) {
+      const cached = this.get<T>(key, ttlMs);
+      if (cached) {
+        // Background revalidation to keep cache fresh without blocking UI
+        fetchFn().then(fresh => {
+          if (fresh) this.set(key, fresh);
+        }).catch(() => {});
+        return cached;
+      }
     }
 
     const data = await fetchFn();

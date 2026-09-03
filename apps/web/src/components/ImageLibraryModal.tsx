@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, Upload, Image as ImageIcon, X, Check, Loader2 } from 'lucide-react';
+import { Search, Upload, Image as ImageIcon, X, Check, Loader2, RotateCw, ZoomIn, Eye } from 'lucide-react';
 import { api } from '../services/api.js';
+import { apiCache } from '../services/apiCache.js';
+import { resolveImageUrl } from '../equation/MathTextRenderer.js';
 
 interface MediaAsset {
   id: string;
   name: string;
   label: string;
   url: string;
+  storagePath?: string;
   usesCount?: number;
 }
 
@@ -26,8 +29,10 @@ export const ImageLibraryModal: React.FC<ImageLibraryModalProps> = ({
   const [activeTab, setActiveTab] = useState<'library' | 'upload'>('library');
   const [assets, setAssets] = useState<MediaAsset[]>([]);
   const [loading, setLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedUrl, setSelectedUrl] = useState<string | null>(null);
+  const [lightboxUrl, setLightboxUrl] = useState<string | null>(null);
 
   // Upload Tab state
   const [uploading, setUploading] = useState(false);
@@ -35,23 +40,31 @@ export const ImageLibraryModal: React.FC<ImageLibraryModalProps> = ({
   const [previewFile, setPreviewFile] = useState<{ file: File; url: string } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const fetchMedia = async () => {
-    setLoading(true);
+  const fetchMedia = async (force = false) => {
+    if (force) {
+      setIsRefreshing(true);
+      apiCache.invalidate('media');
+    } else {
+      setLoading(true);
+    }
+
     try {
-      const items = await api.getMedia(subject);
+      const items = await api.getMedia(subject, force);
       setAssets(items || []);
     } catch (err) {
       console.error('Failed to load media assets:', err);
     } finally {
       setLoading(false);
+      setIsRefreshing(false);
     }
   };
 
   useEffect(() => {
     if (isOpen) {
-      fetchMedia();
+      fetchMedia(true);
       setSelectedUrl(null);
       setPreviewFile(null);
+      setLightboxUrl(null);
       setActiveTab('library');
     }
   }, [isOpen]);
@@ -63,12 +76,14 @@ export const ImageLibraryModal: React.FC<ImageLibraryModalProps> = ({
     if (!query) return true;
     return (
       (a.name || '').toLowerCase().includes(query) ||
-      (a.label || '').toLowerCase().includes(query)
+      (a.label || '').toLowerCase().includes(query) ||
+      (a.storagePath || '').toLowerCase().includes(query)
     );
   });
 
   const handleSelectAndConfirm = (url: string) => {
-    onSelectImage(url);
+    const finalUrl = resolveImageUrl(url);
+    onSelectImage(finalUrl);
     onClose();
   };
 
@@ -102,7 +117,8 @@ export const ImageLibraryModal: React.FC<ImageLibraryModalProps> = ({
       } catch {
         finalUrl = previewFile.url;
       }
-      onSelectImage(finalUrl);
+      const resolved = resolveImageUrl(finalUrl);
+      onSelectImage(resolved);
       onClose();
     } catch (err) {
       console.error('Failed uploading asset:', err);
@@ -121,32 +137,31 @@ export const ImageLibraryModal: React.FC<ImageLibraryModalProps> = ({
               <ImageIcon className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-sm font-black text-slate-900 uppercase tracking-wide">Image Library</h2>
-              <p className="text-[11px] text-slate-500 font-medium">Select an image from Media Library or upload a new diagram</p>
+              <h2 className="text-sm font-bold text-slate-800">Media & Image Library</h2>
+              <p className="text-[11px] text-slate-500">Insert diagrams, figures, and question assets ({assets.length} available)</p>
             </div>
           </div>
-
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
+            className="w-8 h-8 rounded-full hover:bg-slate-200/60 flex items-center justify-center text-slate-400 hover:text-slate-700 transition-colors cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
-        {/* Tab Navigation */}
-        <div className="flex items-center border-b border-slate-200 px-6 gap-6 text-xs font-bold bg-white">
+        {/* Navigation Tabs */}
+        <div className="flex border-b border-slate-200 px-6 gap-6 text-xs font-bold">
           <button
             type="button"
             onClick={() => setActiveTab('library')}
-            className={`py-3 border-b-2 transition-colors cursor-pointer ${
+            className={`py-3 border-b-2 transition-colors cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'library'
                 ? 'border-teal-700 text-teal-800'
                 : 'border-transparent text-slate-500 hover:text-slate-900'
             }`}
           >
-            Select from Library ({assets.length})
+            <ImageIcon className="w-3.5 h-3.5" /> Browse Library ({assets.length})
           </button>
 
           <button
@@ -166,16 +181,28 @@ export const ImageLibraryModal: React.FC<ImageLibraryModalProps> = ({
         <div className="flex-1 overflow-y-auto p-6 bg-slate-50/30">
           {activeTab === 'library' ? (
             <div className="space-y-4">
-              {/* Search Bar */}
-              <div className="relative">
-                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
-                <input
-                  type="text"
-                  placeholder="Search image by name or label (e.g. Figure, Cell, Chemistry)..."
-                  value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2 border border-slate-300 rounded-xl text-xs bg-white text-slate-900 font-medium focus:outline-hidden focus:ring-2 focus:ring-teal-700"
-                />
+              {/* Search Bar & Live Refresh */}
+              <div className="flex items-center gap-2">
+                <div className="relative flex-1">
+                  <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+                  <input
+                    type="text"
+                    placeholder="Search image by name or label (e.g. Figure, Cell, Chemistry)..."
+                    value={searchQuery}
+                    onChange={e => setSearchQuery(e.target.value)}
+                    className="w-full pl-9 pr-4 py-2 border border-slate-300 rounded-xl text-xs bg-white text-slate-900 font-medium focus:outline-hidden focus:ring-2 focus:ring-teal-700"
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={() => fetchMedia(true)}
+                  disabled={isRefreshing || loading}
+                  className="px-3 py-2 bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-2xs cursor-pointer transition-all active:scale-95 disabled:opacity-50"
+                  title="Refresh Images from Database"
+                >
+                  <RotateCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-teal-700' : ''}`} />
+                  <span className="hidden sm:inline">Refresh</span>
+                </button>
               </div>
 
               {loading ? (
@@ -198,26 +225,43 @@ export const ImageLibraryModal: React.FC<ImageLibraryModalProps> = ({
               ) : (
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                   {filteredAssets.map(asset => {
-                    const isSelected = selectedUrl === asset.url;
+                    const resolved = resolveImageUrl(asset.url);
+                    const isSelected = selectedUrl === resolved || selectedUrl === asset.url;
                     return (
                       <div
                         key={asset.id}
-                        onClick={() => setSelectedUrl(asset.url)}
+                        onClick={() => setSelectedUrl(resolved)}
+                        onDoubleClick={() => handleSelectAndConfirm(resolved)}
                         className={`group relative bg-white border rounded-xl overflow-hidden shadow-2xs hover:shadow-md transition-all cursor-pointer flex flex-col ${
                           isSelected ? 'border-teal-600 ring-2 ring-teal-600' : 'border-slate-200 hover:border-slate-300'
                         }`}
                       >
                         <div className="h-32 bg-slate-100 relative flex items-center justify-center p-2 overflow-hidden">
                           <img
-                            src={asset.url}
+                            src={resolved}
                             alt={asset.name}
                             className="max-h-full max-w-full object-contain transition-transform duration-200 group-hover:scale-105"
+                            onError={(e) => {
+                              (e.target as HTMLElement).style.opacity = '0.5';
+                            }}
                           />
                           {isSelected && (
                             <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-teal-600 text-white flex items-center justify-center shadow-md">
                               <Check className="w-3.5 h-3.5 stroke-[3]" />
                             </div>
                           )}
+
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setLightboxUrl(resolved);
+                            }}
+                            className="absolute bottom-2 right-2 p-1.5 rounded-lg bg-black/60 hover:bg-black/80 text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                            title="Preview Full Image"
+                          >
+                            <ZoomIn className="w-3.5 h-3.5" />
+                          </button>
                         </div>
 
                         <div className="p-2.5 bg-white border-t border-slate-100 space-y-0.5">
@@ -312,6 +356,44 @@ export const ImageLibraryModal: React.FC<ImageLibraryModalProps> = ({
           )}
         </div>
       </div>
+
+      {/* Lightbox / High-Res Image Preview Modal */}
+      {lightboxUrl && (
+        <div
+          onClick={() => setLightboxUrl(null)}
+          className="fixed inset-0 z-60 bg-black/80 flex items-center justify-center p-4 backdrop-blur-xs animate-in fade-in"
+        >
+          <div className="relative max-w-4xl max-h-[90vh] bg-white rounded-2xl overflow-hidden shadow-2xl p-4 flex flex-col items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setLightboxUrl(null)}
+              className="absolute top-3 right-3 p-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors cursor-pointer"
+            >
+              <X className="w-4 h-4" />
+            </button>
+            <img src={lightboxUrl} alt="Preview" className="max-h-[75vh] max-w-full object-contain rounded-lg" />
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => {
+                  handleSelectAndConfirm(lightboxUrl);
+                  setLightboxUrl(null);
+                }}
+                className="px-4 py-1.5 bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold rounded-lg shadow-xs"
+              >
+                Insert This Image
+              </button>
+              <button
+                type="button"
+                onClick={() => setLightboxUrl(null)}
+                className="px-4 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-lg"
+              >
+                Close Preview
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -235,6 +235,9 @@ export const supabaseDirect = {
       await supabase.from('question_options').insert(formattedOpts);
     }
 
+    // Auto-sync images into media library
+    syncQuestionImagesToAssetsDirect(newQ.id, question).catch(() => {});
+
     return { ...question, id: newQ.id, questionCode } as Question;
   },
 
@@ -297,6 +300,9 @@ export const supabaseDirect = {
       });
       await supabase.from('question_options').insert(formattedOpts);
     }
+
+    // Auto-sync images into media library
+    syncQuestionImagesToAssetsDirect(id, question).catch(() => {});
 
     return { ...question, id } as Question;
   },
@@ -551,27 +557,30 @@ export const supabaseDirect = {
       const assetsList: any[] = [];
       const folders = ['', 'biology', 'physics', 'chemistry', 'mathematics', 'general', 'uploads', 'questions'];
 
-      // Scan Database assets table
+      // 1. Scan Database assets table
       const { data: dbData } = await supabase.from('assets').select('*').order('created_at', { ascending: false });
       if (dbData && dbData.length > 0) {
         dbData.forEach((a: any) => {
-          assetsList.push({
-            id: a.id,
-            name: a.filename || 'Untitled Asset',
-            filename: a.filename,
-            label: (a.storage_path && a.storage_path.includes('/')) ? a.storage_path.split('/')[0].toUpperCase() : 'FIGURE',
-            url: a.public_url || '',
-            public_url: a.public_url || '',
-            storagePath: a.storage_path,
-            mimeType: a.mime_type,
-            sizeBytes: a.size_bytes,
-            usesCount: 0,
-            createdAt: a.created_at
-          });
+          const publicUrl = a.public_url || '';
+          if (publicUrl) {
+            assetsList.push({
+              id: a.id,
+              name: a.filename || 'Untitled Asset',
+              filename: a.filename,
+              label: (a.storage_path && a.storage_path.includes('/')) ? a.storage_path.split('/')[0].toUpperCase() : 'FIGURE',
+              url: publicUrl,
+              public_url: publicUrl,
+              storagePath: a.storage_path,
+              mimeType: a.mime_type || 'image/png',
+              sizeBytes: a.size_bytes || 0,
+              usesCount: 0,
+              createdAt: a.created_at
+            });
+          }
         });
       }
 
-      // Scan Supabase storage bucket folders & root
+      // 2. Scan Supabase storage bucket folders & root
       for (const folder of folders) {
         try {
           const { data: files } = await supabase.storage.from(BUCKET_NAME).list(folder, { limit: 100 });
@@ -602,29 +611,67 @@ export const supabaseDirect = {
         } catch {}
       }
 
-      // Scan questions table for images
+      // 3. Scan questions table for attached images, diagrams, raw_text images, and options
       try {
-        const { data: qData } = await supabase.from('questions').select('id, image_url, diagram_url, content');
+        const { data: qData } = await supabase
+          .from('questions')
+          .select('id, question_code, image_url, diagram_url, content, raw_text, question_options(id, option_key, content, raw_text)');
         if (qData && qData.length > 0) {
           qData.forEach((q: any, idx: number) => {
-            const imgUrls: string[] = [q.image_url, q.diagram_url].filter(Boolean);
+            const imgUrls: Array<{ url: string; label: string; name: string }> = [];
+            if (q.image_url) imgUrls.push({ url: q.image_url, label: 'QUESTION IMAGE', name: `Question ${q.question_code || idx + 1} Image` });
+            if (q.diagram_url) imgUrls.push({ url: q.diagram_url, label: 'QUESTION DIAGRAM', name: `Question ${q.question_code || idx + 1} Diagram` });
+
             if (Array.isArray(q.content)) {
               q.content.forEach((blk: any) => {
-                if (blk.url) imgUrls.push(blk.url);
-                if (blk.src) imgUrls.push(blk.src);
-                if (blk.imageUrl) imgUrls.push(blk.imageUrl);
-                if (blk.diagramUrl) imgUrls.push(blk.diagramUrl);
+                const u = blk.url || blk.src || blk.imageUrl || blk.diagramUrl;
+                if (u) imgUrls.push({ url: u, label: 'QUESTION BLOCK', name: `Question ${q.question_code || idx + 1} Figure` });
               });
             }
-            imgUrls.forEach((url: string, uIdx: number) => {
-              if (url && (url.startsWith('http') || url.startsWith('data:')) && !assetsList.some(a => a.url === url)) {
+
+            if (typeof q.raw_text === 'string') {
+              const matches = q.raw_text.match(/<img[^>]*src=["']([^"']+)["']/gi);
+              if (matches) {
+                matches.forEach((m: string) => {
+                  const srcMatch = m.match(/src=["']([^"']+)["']/i);
+                  if (srcMatch && srcMatch[1]) {
+                    imgUrls.push({ url: srcMatch[1], label: 'STATEMENT IMAGE', name: `Question ${q.question_code || idx + 1} Statement Image` });
+                  }
+                });
+              }
+            }
+
+            if (Array.isArray(q.question_options)) {
+              q.question_options.forEach((opt: any) => {
+                if (Array.isArray(opt.content)) {
+                  opt.content.forEach((blk: any) => {
+                    const u = blk.url || blk.src || blk.imageUrl;
+                    if (u) imgUrls.push({ url: u, label: 'OPTION FIGURE', name: `Question ${q.question_code || idx + 1} Option ${opt.option_key?.toUpperCase()} Image` });
+                  });
+                }
+                if (typeof opt.raw_text === 'string') {
+                  const matches = opt.raw_text.match(/<img[^>]*src=["']([^"']+)["']/gi);
+                  if (matches) {
+                    matches.forEach((m: string) => {
+                      const srcMatch = m.match(/src=["']([^"']+)["']/i);
+                      if (srcMatch && srcMatch[1]) {
+                        imgUrls.push({ url: srcMatch[1], label: 'OPTION FIGURE', name: `Question ${q.question_code || idx + 1} Option ${opt.option_key?.toUpperCase()} Image` });
+                      }
+                    });
+                  }
+                }
+              });
+            }
+
+            imgUrls.forEach((img, uIdx) => {
+              if (img.url && (img.url.startsWith('http') || img.url.startsWith('data:') || img.url.startsWith('/')) && !assetsList.some(a => a.url === img.url)) {
                 assetsList.push({
                   id: `q-img-${q.id || idx}-${uIdx}`,
-                  name: `Question Image ${idx + 1}`,
-                  filename: `question_img_${idx + 1}`,
-                  label: 'QUESTION DIAGRAM',
-                  url: url,
-                  public_url: url,
+                  name: img.name,
+                  filename: img.name,
+                  label: img.label,
+                  url: img.url,
+                  public_url: img.url,
                   storagePath: '',
                   mimeType: 'image/png',
                   sizeBytes: 0,
@@ -635,7 +682,9 @@ export const supabaseDirect = {
             });
           });
         }
-      } catch {}
+      } catch (qErr) {
+        console.warn('[SupabaseDirect] Questions image scan note:', qErr);
+      }
 
       if (subject && subject !== 'All' && subject !== 'all') {
         const subLower = subject.toLowerCase().trim();
@@ -660,35 +709,134 @@ export const supabaseDirect = {
     const fileName = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`;
     const storagePath = `${folder}/${fileName}`;
 
+    let publicUrl = '';
     const { data: storageData, error: storageError } = await supabase.storage
       .from(BUCKET_NAME)
       .upload(storagePath, file, { upsert: true });
 
     if (!storageError && storageData) {
       const { data: urlData } = supabase.storage.from(BUCKET_NAME).getPublicUrl(storagePath);
-      return {
-        id: `asset-${Date.now()}`,
-        url: urlData.publicUrl,
-        originalName: file.name
-      };
+      publicUrl = urlData.publicUrl;
+    } else {
+      // Data URL fallback if storage is unconfigured
+      publicUrl = await new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result as string);
+        reader.readAsDataURL(file);
+      });
     }
 
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        resolve({
-          id: `asset-${Date.now()}`,
-          url: reader.result as string,
-          originalName: file.name
-        });
-      };
-      reader.readAsDataURL(file);
-    });
+    // Save record into assets table
+    let assetId = `asset-${Date.now()}`;
+    try {
+      const { data: dbData } = await supabase
+        .from('assets')
+        .insert({
+          storage_path: storagePath,
+          public_url: publicUrl,
+          filename: file.name,
+          mime_type: file.type || 'image/png',
+          size_bytes: file.size
+        })
+        .select('id')
+        .maybeSingle();
+      if (dbData?.id) assetId = dbData.id;
+    } catch (dbErr) {
+      console.warn('[SupabaseDirect] asset table insert note:', dbErr);
+    }
+
+    return {
+      id: assetId,
+      url: publicUrl,
+      originalName: file.name
+    };
   },
 
   async deleteMedia(id: string): Promise<void> {
     try {
+      const { data: asset } = await supabase.from('assets').select('storage_path').eq('id', id).maybeSingle();
+      if (asset?.storage_path) {
+        const BUCKET_NAME = import.meta.env.VITE_SUPABASE_STORAGE_BUCKET || 'question-assets';
+        await supabase.storage.from(BUCKET_NAME).remove([asset.storage_path]);
+      }
       await supabase.from('assets').delete().eq('id', id);
-    } catch {}
+    } catch (err) {
+      console.warn('[SupabaseDirect] deleteMedia error:', err);
+    }
   }
 };
+
+// Helper to automatically register attached images into the assets media library
+async function syncQuestionImagesToAssetsDirect(questionId: string, question: any) {
+  try {
+    const urls: Array<{ url: string; name?: string }> = [];
+    const qAny = question as any;
+
+    if (qAny.imageUrl && (qAny.imageUrl.startsWith('http') || qAny.imageUrl.startsWith('data:'))) {
+      urls.push({ url: qAny.imageUrl, name: `Question ${qAny.questionCode || questionId} Image` });
+    }
+    if (qAny.diagramUrl && (qAny.diagramUrl.startsWith('http') || qAny.diagramUrl.startsWith('data:'))) {
+      urls.push({ url: qAny.diagramUrl, name: `Question ${qAny.questionCode || questionId} Diagram` });
+    }
+
+    const raw = qAny.rawText || '';
+    if (typeof raw === 'string') {
+      const matches = raw.match(/<img[^>]*src=["']([^"']+)["']/gi);
+      if (matches) {
+        matches.forEach((m: string) => {
+          const srcMatch = m.match(/src=["']([^"']+)["']/i);
+          if (srcMatch && (srcMatch[1].startsWith('http') || srcMatch[1].startsWith('data:'))) {
+            urls.push({ url: srcMatch[1], name: `Question ${qAny.questionCode || questionId} Statement Image` });
+          }
+        });
+      }
+    }
+
+    if (Array.isArray(qAny.content)) {
+      qAny.content.forEach((b: any) => {
+        const u = b.url || b.imageUrl || b.src;
+        if (u && (u.startsWith('http') || u.startsWith('data:'))) {
+          urls.push({ url: u, name: `Question ${qAny.questionCode || questionId} Block Image` });
+        }
+      });
+    }
+
+    if (Array.isArray(qAny.options)) {
+      qAny.options.forEach((o: any, idx: number) => {
+        const u = o.imageUrl;
+        if (u && (u.startsWith('http') || u.startsWith('data:'))) {
+          urls.push({ url: u, name: `Option ${o.key || String.fromCharCode(65 + idx)} Image` });
+        }
+        if (typeof o.rawText === 'string') {
+          const matches = o.rawText.match(/<img[^>]*src=["']([^"']+)["']/gi);
+          if (matches) {
+            matches.forEach((m: string) => {
+              const srcMatch = m.match(/src=["']([^"']+)["']/i);
+              if (srcMatch && (srcMatch[1].startsWith('http') || srcMatch[1].startsWith('data:'))) {
+                urls.push({ url: srcMatch[1], name: `Option ${o.key || String.fromCharCode(65 + idx)} Image` });
+              }
+            });
+          }
+        }
+      });
+    }
+
+    const uniqueUrls = urls.filter((item, index, self) => index === self.findIndex(t => t.url === item.url));
+
+    for (const item of uniqueUrls) {
+      const { data: existing } = await supabase.from('assets').select('id').eq('public_url', item.url).maybeSingle();
+      if (!existing) {
+        const subjectFolder = (qAny.subject || 'general').toLowerCase().trim();
+        await supabase.from('assets').insert({
+          storage_path: `${subjectFolder}/q_${questionId}_${Date.now()}.png`,
+          public_url: item.url,
+          filename: item.name || `question_asset_${Date.now()}`,
+          mime_type: 'image/png',
+          size_bytes: item.url.length
+        });
+      }
+    }
+  } catch (err) {
+    console.warn('[SupabaseDirect] syncQuestionImagesToAssetsDirect error:', err);
+  }
+}

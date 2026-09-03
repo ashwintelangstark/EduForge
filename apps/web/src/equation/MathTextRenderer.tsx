@@ -16,6 +16,25 @@ export function resolveImageUrl(src: string | undefined): string {
     return imgSrc;
   }
 
+  const supabaseUrl = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_SUPABASE_URL) || '';
+  const bucketName = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_SUPABASE_STORAGE_BUCKET) || 'question-assets';
+
+  if (supabaseUrl && (
+    imgSrc.startsWith('biology/') ||
+    imgSrc.startsWith('physics/') ||
+    imgSrc.startsWith('chemistry/') ||
+    imgSrc.startsWith('mathematics/') ||
+    imgSrc.startsWith('general/') ||
+    imgSrc.startsWith('uploads/') ||
+    imgSrc.startsWith('questions/')
+  )) {
+    return `${supabaseUrl.replace(/\/$/, '')}/storage/v1/object/public/${bucketName}/${imgSrc}`;
+  }
+
+  if (supabaseUrl && imgSrc.startsWith('storage/v1/object/public/')) {
+    return `${supabaseUrl.replace(/\/$/, '')}/${imgSrc}`;
+  }
+
   if (!imgSrc.startsWith('/')) {
     imgSrc = `/${imgSrc}`;
   }

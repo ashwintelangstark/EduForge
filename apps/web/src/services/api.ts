@@ -89,55 +89,61 @@ export const api = {
   },
 
   // Questions
-  getQuestions: (filters?: Record<string, any>) => {
+  getQuestions: (filters?: Record<string, any>, forceRefresh = false) => {
     const key = `questions-${JSON.stringify(filters || {})}`;
-    return apiCache.fetchWithCache(key, () => withFallback(() => questionsApi.getQuestions(filters), () => supabaseDirect.getQuestions(filters)));
+    return apiCache.fetchWithCache(key, () => withFallback(() => questionsApi.getQuestions(filters), () => supabaseDirect.getQuestions(filters)), 10000, forceRefresh);
   },
-  getQuestionSummaries: (filters?: Record<string, any>) => {
+  getQuestionSummaries: (filters?: Record<string, any>, forceRefresh = false) => {
     const key = `qsummaries-${JSON.stringify(filters || {})}`;
-    return apiCache.fetchWithCache(key, () => withFallback(() => questionsApi.getQuestionSummaries(filters), () => supabaseDirect.getQuestions(filters)));
+    return apiCache.fetchWithCache(key, () => withFallback(() => questionsApi.getQuestionSummaries(filters), () => supabaseDirect.getQuestions(filters)), 10000, forceRefresh);
   },
   getQuestion: (id: string) => withFallback(() => questionsApi.getQuestion(id), () => supabaseDirect.getQuestion(id) as any),
   createQuestion: async (question: any) => {
     apiCache.invalidate('questions');
     apiCache.invalidate('qsummaries');
+    apiCache.invalidate('media');
     return withFallback(() => questionsApi.createQuestion(question), () => supabaseDirect.createQuestion(question));
   },
   updateQuestion: async (id: string, question: any) => {
     apiCache.invalidate('questions');
     apiCache.invalidate('qsummaries');
+    apiCache.invalidate('media');
     return withFallback(() => questionsApi.updateQuestion(id, question), () => supabaseDirect.updateQuestion(id, question));
   },
   duplicateQuestion: async (id: string) => {
     apiCache.invalidate('questions');
     apiCache.invalidate('qsummaries');
+    apiCache.invalidate('media');
     return questionsApi.duplicateQuestion(id);
   },
   deleteQuestion: async (id: string) => {
     apiCache.invalidate('questions');
     apiCache.invalidate('qsummaries');
+    apiCache.invalidate('media');
     return withFallback(() => questionsApi.deleteQuestion(id), () => supabaseDirect.deleteQuestion(id));
   },
   deleteMultipleQuestions: async (ids: string[]) => {
     apiCache.invalidate('questions');
     apiCache.invalidate('qsummaries');
+    apiCache.invalidate('media');
     return withFallback(() => questionsApi.deleteMultipleQuestions(ids), () => supabaseDirect.deleteMultipleQuestions(ids));
   },
   importQuestions: async (data: any) => {
     apiCache.invalidate('questions');
     apiCache.invalidate('qsummaries');
+    apiCache.invalidate('media');
     return questionsApi.importQuestions(data);
   },
   getQuestionBankExportUrl: () => '/api/question-bank/export',
 
   // Templates
-  getTemplates: () => apiCache.fetchWithCache('templates', () => withFallback(() => templatesApi.getTemplates(), () => supabaseDirect.getTemplates()), 120000),
+  getTemplates: (forceRefresh = false) => apiCache.fetchWithCache('templates', () => withFallback(() => templatesApi.getTemplates(), () => supabaseDirect.getTemplates()), 30000, forceRefresh),
   getTemplate: templatesApi.getTemplate.bind(templatesApi),
   createTemplate: (t: any) => templatesApi.createTemplate(t),
   deleteTemplate: (id: string) => templatesApi.deleteTemplate(id),
 
   // Assets & Media
-  getMedia: (subject?: string) => apiCache.fetchWithCache(`media-${subject || 'all'}`, () => withFallback(() => assetsApi.getMedia(subject), () => supabaseDirect.getMedia(subject))),
+  getMedia: (subject?: string, forceRefresh = false) => apiCache.fetchWithCache(`media-${subject || 'all'}`, () => withFallback(() => assetsApi.getMedia(subject), () => supabaseDirect.getMedia(subject)), 10000, forceRefresh),
   uploadAsset: async (file: File, subject?: string) => {
     apiCache.invalidate('media');
     return withFallback(() => assetsApi.uploadAsset(file, subject), () => supabaseDirect.uploadAsset(file, subject));

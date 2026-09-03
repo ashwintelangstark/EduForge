@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Upload, Edit3, Trash2, Image as ImageIcon, Check, Search, X } from 'lucide-react';
+import { Upload, Edit3, Trash2, Image as ImageIcon, Check, Search, X, RotateCw, ZoomIn, Eye, Loader2 } from 'lucide-react';
 import { api } from '../services/api.js';
+import { apiCache } from '../services/apiCache.js';
+import { resolveImageUrl } from '../equation/MathTextRenderer.js';
 
 interface MediaAsset {
   id: string;
@@ -14,29 +16,41 @@ interface MediaAsset {
 export const MediaLibraryPage: React.FC = () => {
   const [assets, setAssets] = useState<MediaAsset[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const [isUploadOpen, setIsUploadOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [editingAsset, setEditingAsset] = useState<MediaAsset | null>(null);
   const [editName, setEditName] = useState('');
   const [editLabel, setEditLabel] = useState('');
+  const [lightboxAsset, setLightboxAsset] = useState<MediaAsset | null>(null);
 
   // Selected file state for upload modal
   const [selectedFiles, setSelectedFiles] = useState<{ file: File; url: string }[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const loadData = async () => {
+  const loadData = async (force = false) => {
+    if (force) {
+      setIsRefreshing(true);
+      apiCache.invalidate('media');
+    } else {
+      setIsLoading(true);
+    }
     try {
-      const mediaItems = await api.getMedia();
+      const mediaItems = await api.getMedia(undefined, force);
       setAssets(mediaItems || []);
     } catch (err) {
       console.error('Failed to load media assets:', err);
+    } finally {
+      setIsLoading(false);
+      setIsRefreshing(false);
     }
   };
 
   useEffect(() => {
-    loadData();
+    loadData(true);
   }, []);
 
   const handleOpenEdit = (asset: MediaAsset) => {
@@ -50,7 +64,7 @@ export const MediaLibraryPage: React.FC = () => {
     if (confirm('Are you sure you want to delete this media asset?')) {
       setAssets(prev => prev.filter(a => a.id !== id));
       await api.deleteMedia(id);
-      loadData();
+      loadData(true);
     }
   };
 
@@ -107,7 +121,7 @@ export const MediaLibraryPage: React.FC = () => {
       }
       setSelectedFiles([]);
       setIsUploadOpen(false);
-      await loadData();
+      await loadData(true);
     } catch (err) {
       console.error('Failed to upload image:', err);
     } finally {
@@ -139,16 +153,28 @@ export const MediaLibraryPage: React.FC = () => {
             Manage diagrams, question illustrations, and figure images ({filteredAssets.length} image assets accessible).
           </p>
         </div>
-        <button
-          type="button"
-          onClick={() => {
-            setSelectedFiles([]);
-            setIsUploadOpen(true);
-          }}
-          className="px-4 py-2 bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold rounded-xl flex items-center gap-2 shadow-sm hover:shadow-md transition-all active:scale-[0.98] cursor-pointer"
-        >
-          <Upload className="w-3.5 h-3.5" /> Upload Images
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => loadData(true)}
+            disabled={isRefreshing || isLoading}
+            className="px-3 py-2 bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-2xs transition-all active:scale-95 cursor-pointer disabled:opacity-50"
+            title="Refresh Image Library"
+          >
+            <RotateCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-teal-700' : ''}`} />
+            <span>Refresh</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setSelectedFiles([]);
+              setIsUploadOpen(true);
+            }}
+            className="px-4 py-2 bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold rounded-xl flex items-center gap-2 shadow-sm hover:shadow-md transition-all active:scale-[0.98] cursor-pointer"
+          >
+            <Upload className="w-3.5 h-3.5" /> Upload Images
+          </button>
+        </div>
       </div>
 
       {/* Search Bar Row */}
@@ -169,7 +195,12 @@ export const MediaLibraryPage: React.FC = () => {
       </div>
 
       {/* Grid of Images */}
-      {filteredAssets.length === 0 ? (
+      {isLoading ? (
+        <div className="py-20 text-center text-xs font-bold text-slate-400 flex flex-col items-center gap-2">
+          <Loader2 className="w-6 h-6 animate-spin text-teal-700" />
+          <span>Loading Media Library...</span>
+        </div>
+      ) : filteredAssets.length === 0 ? (
         <div className="bg-white rounded-2xl border border-dashed border-slate-300 p-12 text-center space-y-3">
           <div className="w-12 h-12 rounded-full bg-slate-100 text-slate-400 mx-auto flex items-center justify-center">
             <ImageIcon className="w-6 h-6" />
@@ -181,55 +212,104 @@ export const MediaLibraryPage: React.FC = () => {
         </div>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-          {filteredAssets.map(asset => (
-            <div
-              key={asset.id}
-              className="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-2xs hover:shadow-md transition-all flex flex-col justify-between"
+          {filteredAssets.map(asset => {
+            const resolved = resolveImageUrl(asset.url);
+            return (
+              <div
+                key={asset.id}
+                className="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-2xs hover:shadow-md transition-all flex flex-col justify-between"
+              >
+                {/* Image Preview */}
+                <div
+                  onClick={() => setLightboxAsset(asset)}
+                  className="h-40 bg-slate-50 relative overflow-hidden flex items-center justify-center p-2 cursor-pointer"
+                >
+                  <img
+                    src={resolved}
+                    alt={asset.name}
+                    className="max-h-full max-w-full object-contain rounded-lg group-hover:scale-105 transition-transform duration-300"
+                    onError={(e) => {
+                      (e.target as HTMLElement).style.opacity = '0.5';
+                    }}
+                  />
+                  <span className="absolute top-2 left-2 px-2 py-0.5 bg-slate-900/75 backdrop-blur-xs text-white text-[9px] font-extrabold uppercase rounded-md">
+                    {asset.label}
+                  </span>
+                  <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
+                    <ZoomIn className="w-6 h-6 drop-shadow-md" />
+                  </div>
+                </div>
+
+                {/* Asset Meta & Actions */}
+                <div className="p-3 border-t border-slate-100 flex items-center justify-between gap-2 bg-white">
+                  <div className="truncate">
+                    <p className="text-xs font-bold text-slate-900 truncate" title={asset.name}>
+                      {asset.name}
+                    </p>
+                    <p className="text-[10px] text-slate-400 font-mono truncate">
+                      {asset.storagePath || 'bucket/question-assets'}
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-1 shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => handleOpenEdit(asset)}
+                      className="p-1.5 text-slate-400 hover:text-teal-700 hover:bg-teal-50 rounded-lg transition-colors cursor-pointer"
+                      title="Edit Name"
+                    >
+                      <Edit3 className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleDelete(asset.id)}
+                      className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
+                      title="Delete Asset"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Lightbox Modal */}
+      {lightboxAsset && (
+        <div
+          onClick={() => setLightboxAsset(null)}
+          className="fixed inset-0 z-60 bg-black/80 flex items-center justify-center p-4 backdrop-blur-xs animate-in fade-in"
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            className="relative max-w-4xl max-h-[90vh] bg-white rounded-2xl overflow-hidden shadow-2xl p-4 flex flex-col items-center gap-3"
+          >
+            <button
+              type="button"
+              onClick={() => setLightboxAsset(null)}
+              className="absolute top-3 right-3 p-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors cursor-pointer"
             >
-              {/* Image Preview */}
-              <div className="h-40 bg-slate-50 relative overflow-hidden flex items-center justify-center p-2">
-                <img
-                  src={asset.url}
-                  alt={asset.name}
-                  className="max-h-full max-w-full object-contain rounded-lg group-hover:scale-105 transition-transform duration-300"
-                />
-                <span className="absolute top-2 left-2 px-2 py-0.5 bg-slate-900/75 backdrop-blur-xs text-white text-[9px] font-extrabold uppercase rounded-md">
-                  {asset.label}
-                </span>
-              </div>
-
-              {/* Asset Meta & Actions */}
-              <div className="p-3 border-t border-slate-100 flex items-center justify-between gap-2 bg-white">
-                <div className="truncate">
-                  <p className="text-xs font-bold text-slate-900 truncate" title={asset.name}>
-                    {asset.name}
-                  </p>
-                  <p className="text-[10px] text-slate-400 font-mono truncate">
-                    {asset.storagePath || 'bucket/question-assets'}
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-1 shrink-0">
-                  <button
-                    type="button"
-                    onClick={() => handleOpenEdit(asset)}
-                    className="p-1.5 text-slate-400 hover:text-teal-700 hover:bg-teal-50 rounded-lg transition-colors cursor-pointer"
-                    title="Edit Name"
-                  >
-                    <Edit3 className="w-3.5 h-3.5" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleDelete(asset.id)}
-                    className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
-                    title="Delete Asset"
-                  >
-                    <Trash2 className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              </div>
+              <X className="w-4 h-4" />
+            </button>
+            <h3 className="text-sm font-bold text-slate-800 self-start pr-8">{lightboxAsset.name}</h3>
+            <img
+              src={resolveImageUrl(lightboxAsset.url)}
+              alt={lightboxAsset.name}
+              className="max-h-[70vh] max-w-full object-contain rounded-lg border border-slate-200"
+            />
+            <div className="flex items-center justify-between w-full text-xs text-slate-500 pt-2 border-t border-slate-100">
+              <span className="font-semibold uppercase text-[10px] px-2 py-0.5 bg-slate-100 rounded">{lightboxAsset.label}</span>
+              <button
+                type="button"
+                onClick={() => setLightboxAsset(null)}
+                className="px-4 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-lg"
+              >
+                Close Preview
+              </button>
             </div>
-          ))}
+          </div>
         </div>
       )}
 

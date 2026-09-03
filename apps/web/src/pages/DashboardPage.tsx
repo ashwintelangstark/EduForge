@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../services/api.js';
+import { apiCache } from '../services/apiCache.js';
 import { DocumentModel, Question } from '@eduforge/shared';
-import { Plus, BookOpen, Layers, HelpCircle, FileText, BarChart3, TrendingUp, Award, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Plus, BookOpen, Layers, HelpCircle, FileText, BarChart3, TrendingUp, Award, ArrowRight, CheckCircle2, RotateCw, RefreshCw } from 'lucide-react';
 import { SubjectItem } from './SubjectsPage.js';
 import { ChapterItem } from './ChaptersPage.js';
 import { formatQuestionCode } from '../utils/questionCode.js';
@@ -36,17 +37,23 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   const [apiSubjects, setApiSubjects] = useState<any[]>([]);
   const [apiChapters, setApiChapters] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   useEffect(() => {
     loadDashboardData();
   }, []);
 
-  const loadDashboardData = async () => {
+  const loadDashboardData = async (force = false) => {
     try {
-      setLoading(true);
+      if (force) {
+        setIsRefreshing(true);
+        apiCache.invalidate();
+      } else {
+        setLoading(true);
+      }
       const [docs, qList, subList, chList] = await Promise.all([
         api.getDocuments(),
-        api.getQuestions(),
+        api.getQuestions(undefined, force),
         api.getSubjects(),
         api.getChapters()
       ]);
@@ -237,15 +244,27 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-8 py-4 sm:py-8 space-y-5 sm:space-y-7 font-sans animate-in fade-in slide-in-from-bottom-2 duration-300">
       {/* Top Banner / Welcome */}
-      <div className="border-b border-slate-200/80 pb-5">
-        <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight font-sans">
-          Welcome, {user.name}
-        </h1>
-        <p className="text-xs text-slate-500 font-medium mt-0.5">
-          {user.role === 'admin' 
-            ? 'Multi-Subject Central Dashboard · Real dynamic backend statistics' 
-            : `${user.assigned_subject} Department Dashboard · Scoped question authoring & test reports`}
-        </p>
+      <div className="border-b border-slate-200/80 pb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight font-sans">
+            Welcome, {user.name}
+          </h1>
+          <p className="text-xs text-slate-500 font-medium mt-0.5">
+            {user.role === 'admin' 
+              ? 'Multi-Subject Central Dashboard · Real dynamic backend statistics' 
+              : `${user.assigned_subject} Department Dashboard · Scoped question authoring & test reports`}
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={() => loadDashboardData(true)}
+          disabled={isRefreshing || loading}
+          className="px-3.5 py-2 bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 text-xs font-bold rounded-xl flex items-center gap-2 shadow-2xs transition-all active:scale-95 cursor-pointer self-start sm:self-auto disabled:opacity-50"
+          title="Refresh Dashboard Statistics"
+        >
+          <RotateCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-teal-700' : ''}`} />
+          <span>Refresh Live Stats</span>
+        </button>
       </div>
 
       {/* 4 Metric Stats Cards */}

@@ -100,27 +100,65 @@ assetsRouter.get('/', async (req: Request, res: Response, next: NextFunction) =>
 
     // Also scan questions table for images to ensure Media Library displays all question diagrams
     try {
-      const { data: qData } = await supabase.from('questions').select('id, image_url, diagram_url, content');
+      const { data: qData } = await supabase
+        .from('questions')
+        .select('id, question_code, image_url, diagram_url, content, raw_text, question_options(id, option_key, content, raw_text)');
       if (qData && qData.length > 0) {
         qData.forEach((q: any, idx: number) => {
-          const imgUrls: string[] = [q.image_url, q.diagram_url].filter(Boolean);
+          const imgUrls: Array<{ url: string; label: string; name: string }> = [];
+          if (q.image_url) imgUrls.push({ url: q.image_url, label: 'QUESTION IMAGE', name: `Question ${q.question_code || idx + 1} Image` });
+          if (q.diagram_url) imgUrls.push({ url: q.diagram_url, label: 'QUESTION DIAGRAM', name: `Question ${q.question_code || idx + 1} Diagram` });
+
           if (Array.isArray(q.content)) {
             q.content.forEach((blk: any) => {
-              if (blk.url) imgUrls.push(blk.url);
-              if (blk.src) imgUrls.push(blk.src);
-              if (blk.imageUrl) imgUrls.push(blk.imageUrl);
-              if (blk.diagramUrl) imgUrls.push(blk.diagramUrl);
+              const u = blk.url || blk.src || blk.imageUrl || blk.diagramUrl;
+              if (u) imgUrls.push({ url: u, label: 'QUESTION BLOCK', name: `Question ${q.question_code || idx + 1} Figure` });
             });
           }
-          imgUrls.forEach((url: string, uIdx: number) => {
-            if (url && (url.startsWith('http') || url.startsWith('data:')) && !assetsList.some(a => a.url === url)) {
+
+          if (typeof q.raw_text === 'string') {
+            const matches = q.raw_text.match(/<img[^>]*src=["']([^"']+)["']/gi);
+            if (matches) {
+              matches.forEach((m: string) => {
+                const srcMatch = m.match(/src=["']([^"']+)["']/i);
+                if (srcMatch && srcMatch[1]) {
+                  imgUrls.push({ url: srcMatch[1], label: 'STATEMENT IMAGE', name: `Question ${q.question_code || idx + 1} Statement Image` });
+                }
+              });
+            }
+          }
+
+          if (Array.isArray(q.question_options)) {
+            q.question_options.forEach((opt: any) => {
+              if (Array.isArray(opt.content)) {
+                opt.content.forEach((blk: any) => {
+                  const u = blk.url || blk.src || blk.imageUrl;
+                  if (u) imgUrls.push({ url: u, label: 'OPTION FIGURE', name: `Question ${q.question_code || idx + 1} Option ${opt.option_key?.toUpperCase()} Image` });
+                });
+              }
+              if (typeof opt.raw_text === 'string') {
+                const matches = opt.raw_text.match(/<img[^>]*src=["']([^"']+)["']/gi);
+                if (matches) {
+                  matches.forEach((m: string) => {
+                    const srcMatch = m.match(/src=["']([^"']+)["']/i);
+                    if (srcMatch && srcMatch[1]) {
+                      imgUrls.push({ url: srcMatch[1], label: 'OPTION FIGURE', name: `Question ${q.question_code || idx + 1} Option ${opt.option_key?.toUpperCase()} Image` });
+                    }
+                  });
+                }
+              }
+            });
+          }
+
+          imgUrls.forEach((img, uIdx) => {
+            if (img.url && (img.url.startsWith('http') || img.url.startsWith('data:') || img.url.startsWith('/')) && !assetsList.some(a => a.url === img.url)) {
               assetsList.push({
                 id: `q-img-${q.id || idx}-${uIdx}`,
-                name: `Question Image ${idx + 1}`,
-                filename: `question_img_${idx + 1}`,
-                label: 'QUESTION DIAGRAM',
-                url: url,
-                public_url: url,
+                name: img.name,
+                filename: img.name,
+                label: img.label,
+                url: img.url,
+                public_url: img.url,
                 storagePath: '',
                 mimeType: 'image/png',
                 sizeBytes: 0,

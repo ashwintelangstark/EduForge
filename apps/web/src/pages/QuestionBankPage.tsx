@@ -99,6 +99,7 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
   const [subjects, setSubjects] = useState<any[]>([]);
   const [chapters, setChapters] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const user = getUserProfile();
   const userSubject = user.assigned_subject || 'All';
@@ -169,15 +170,19 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
     }
   }, [selectedChapter]);
 
-  const loadMetadataAndQuestions = async () => {
+  const loadMetadataAndQuestions = async (force = false) => {
     try {
-      setLoading(true);
+      if (force) {
+        setIsRefreshing(true);
+      } else {
+        setLoading(true);
+      }
       const params: any = {};
       if (search) params.search = search;
       if (difficultyFilter !== 'all') params.difficulty = difficultyFilter;
 
       const [qData, subData, chData] = await Promise.all([
-        api.getQuestions(params),
+        api.getQuestions(params, force),
         api.getSubjects(),
         api.getChapters()
       ]);
@@ -189,6 +194,7 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
       console.error('Failed to load questions or metadata:', err);
     } finally {
       setLoading(false);
+      setIsRefreshing(false);
     }
   };
 
@@ -568,6 +574,18 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
               </button>
             </div>
           )}
+
+          {/* Live Refresh Button */}
+          <button
+            type="button"
+            onClick={() => loadMetadataAndQuestions(true)}
+            disabled={isRefreshing || loading}
+            className="px-3.5 py-2.5 bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 text-xs sm:text-sm font-bold rounded-xl flex items-center gap-2 shadow-2xs transition-all active:scale-[0.98] cursor-pointer disabled:opacity-50"
+            title="Refresh Questions Live from Database"
+          >
+            <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-teal-700' : ''}`} />
+            <span className="hidden sm:inline">Refresh</span>
+          </button>
 
           {/* Primary Create Question Button */}
           <button

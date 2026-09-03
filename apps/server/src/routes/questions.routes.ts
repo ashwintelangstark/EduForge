@@ -384,6 +384,82 @@ async function saveQuestionOptions(questionId: string, options: any[]) {
   }
 }
 
+// Helper to automatically register attached images into the assets media library
+async function syncQuestionImagesToAssets(questionId: string, body: any) {
+  try {
+    const urls: Array<{ url: string; name?: string }> = [];
+
+    if (body.imageUrl && (body.imageUrl.startsWith('http') || body.imageUrl.startsWith('data:'))) {
+      urls.push({ url: body.imageUrl, name: `Question ${body.questionCode || questionId} Image` });
+    }
+    if (body.diagramUrl && (body.diagramUrl.startsWith('http') || body.diagramUrl.startsWith('data:'))) {
+      urls.push({ url: body.diagramUrl, name: `Question ${body.questionCode || questionId} Diagram` });
+    }
+
+    // Extract images from rawText e.g. <img src="...">
+    if (typeof body.rawText === 'string') {
+      const matches = body.rawText.match(/<img[^>]*src=["']([^"']+)["']/gi);
+      if (matches) {
+        matches.forEach((m: string) => {
+          const srcMatch = m.match(/src=["']([^"']+)["']/i);
+          if (srcMatch && (srcMatch[1].startsWith('http') || srcMatch[1].startsWith('data:'))) {
+            urls.push({ url: srcMatch[1], name: `Question ${body.questionCode || questionId} Statement Image` });
+          }
+        });
+      }
+    }
+
+    // Extract from content blocks
+    if (Array.isArray(body.content)) {
+      body.content.forEach((b: any) => {
+        const u = b.url || b.imageUrl || b.src;
+        if (u && (u.startsWith('http') || u.startsWith('data:'))) {
+          urls.push({ url: u, name: `Question ${body.questionCode || questionId} Block Image` });
+        }
+      });
+    }
+
+    // Extract from options
+    if (Array.isArray(body.options)) {
+      body.options.forEach((o: any, idx: number) => {
+        const u = o.imageUrl;
+        if (u && (u.startsWith('http') || u.startsWith('data:'))) {
+          urls.push({ url: u, name: `Option ${o.key || String.fromCharCode(65 + idx)} Image` });
+        }
+        if (typeof o.rawText === 'string') {
+          const matches = o.rawText.match(/<img[^>]*src=["']([^"']+)["']/gi);
+          if (matches) {
+            matches.forEach((m: string) => {
+              const srcMatch = m.match(/src=["']([^"']+)["']/i);
+              if (srcMatch && (srcMatch[1].startsWith('http') || srcMatch[1].startsWith('data:'))) {
+                urls.push({ url: srcMatch[1], name: `Option ${o.key || String.fromCharCode(65 + idx)} Image` });
+              }
+            });
+          }
+        }
+      });
+    }
+
+    const uniqueUrls = urls.filter((item, index, self) => index === self.findIndex(t => t.url === item.url));
+
+    for (const item of uniqueUrls) {
+      const { data: existing } = await supabase.from('assets').select('id').eq('public_url', item.url).maybeSingle();
+      if (!existing) {
+        const subjectFolder = (body.subject || 'general').toLowerCase().trim();
+        await supabase.from('assets').insert({
+          storage_path: `${subjectFolder}/q_${questionId}_${Date.now()}.png`,
+          public_url: item.url,
+          filename: item.name || `question_asset_${Date.now()}`,
+          mime_type: 'image/png',
+          size_bytes: item.url.length
+        });
+      }
+    }
+  } catch (err) {
+    console.warn('Failed syncing question images to assets table:', err);
+  }
+}
+
 // POST /api/questions - Create Question
 questionsRouter.post('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -489,6 +565,9 @@ questionsRouter.post('/', async (req: Request, res: Response, next: NextFunction
       await saveQuestionOptions(newQ.id, body.options);
     }
 
+    // Auto-sync images into media library
+    syncQuestionImagesToAssets(newQ.id, body).catch(() => {});
+
     res.status(201).json({ success: true, data: { ...body, id: newQ.id, questionCode } });
   } catch (err) {
     console.error('Create question route error:', err);
@@ -542,6 +621,9 @@ questionsRouter.put('/:id', async (req: Request, res: Response, next: NextFuncti
       await supabase.from('question_options').delete().eq('question_id', String(id));
       await saveQuestionOptions(String(id), body.options);
     }
+
+    // Auto-sync images into media library
+    syncQuestionImagesToAssets(id, body).catch(() => {});
 
     res.json({ success: true, data: { ...body, id } });
   } catch (err) {
