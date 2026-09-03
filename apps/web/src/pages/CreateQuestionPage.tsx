@@ -207,52 +207,6 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
   const optionFileInputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const blockFileInputRefs = useRef<Record<string, HTMLInputElement | null>>({});
 
-  // Master Control: Single Button Toggle for Smart Assistant Features
-  const [isSmartAssistantEnabled, setIsSmartAssistantEnabled] = useState<boolean>(() => {
-    return localStorage.getItem('eduforge_smart_assistant') !== 'false';
-  });
-
-  // Duplicate Option Detector (Live Feature)
-  const duplicateOptionKeys = React.useMemo(() => {
-    if (!isSmartAssistantEnabled) return [];
-    const seen: Record<string, string> = {};
-    const dups = new Set<string>();
-
-    options.forEach(o => {
-      let raw = (o.rawText || (o as any).raw_text || '').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
-      if (!raw && Array.isArray(o.content)) {
-        raw = o.content.map((c: any) => c.text || c.html || '').join(' ').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
-      }
-      if (raw && raw.length > 0) {
-        if (seen[raw]) {
-          dups.add(seen[raw]);
-          dups.add(o.key);
-        } else {
-          seen[raw] = o.key;
-        }
-      }
-    });
-
-    return Array.from(dups).sort();
-  }, [options, isSmartAssistantEnabled]);
-
-  // Smart Punctuation Enforcer (Auto-appends ? to interrogative question statements)
-  const applySmartPunctuation = (text: string) => {
-    if (!isSmartAssistantEnabled || !text) return text;
-    let trimmed = text.trim();
-    const interrogativeRegex = /^\s*(?:<[^>]*>)*\s*(which|what|how|why|when|where|who|whom|whose|calculate|find|determine|select|name|state|identify|evaluate|explain|derive|describe|prove|compare)\b/i;
-    if (interrogativeRegex.test(trimmed)) {
-      const plainEnd = trimmed.replace(/<[^>]*>/g, '').trim();
-      if (plainEnd && !/[?.!:;]$/.test(plainEnd)) {
-        if (trimmed.endsWith('</p>')) {
-          return trimmed.replace(/<\/p>$/i, '?</p>');
-        }
-        return `${trimmed}?`;
-      }
-    }
-    return text;
-  };
-
   // Synchronize or Reset form fields whenever initialQuestion changes
   React.useEffect(() => {
     if (initialQuestion && (initialQuestion.id || initialQuestion.rawText)) {
@@ -457,13 +411,13 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
   const handleSaveDraft = async () => {
     if (isSaving) return false;
 
-    const rawStatement = cleanHtmlTags(applySmartPunctuation(
+    const rawStatement = cleanHtmlTags(
       blocks
         .filter(b => b.type === 'text')
         .map(b => b.text)
         .filter(Boolean)
         .join(' ')
-    ));
+    );
 
     const correctOpt = options.find(o => o.isCorrect);
     const subToUse = userSubject !== 'All' ? userSubject : subject;
@@ -645,23 +599,6 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
         </div>
 
         <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => {
-              const nextState = !isSmartAssistantEnabled;
-              setIsSmartAssistantEnabled(nextState);
-              localStorage.setItem('eduforge_smart_assistant', String(nextState));
-            }}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shadow-2xs border cursor-pointer ${
-              isSmartAssistantEnabled
-                ? 'bg-amber-50 text-amber-900 border-amber-300 hover:bg-amber-100 ring-1 ring-amber-400/20'
-                : 'bg-slate-100 text-slate-500 border-slate-300 hover:bg-slate-200'
-            }`}
-            title="Master Switch: Toggle Smart Assistant (Auto-Correct, Grammar & Validation)"
-          >
-            <Sparkles className={`w-3.5 h-3.5 ${isSmartAssistantEnabled ? 'text-amber-600 fill-amber-500' : 'text-slate-400'}`} />
-            <span>Smart Assistant: {isSmartAssistantEnabled ? 'ON' : 'OFF'}</span>
-          </button>
           <span className="px-2.5 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-xs font-semibold">
             Autosaved ✓
           </span>
@@ -888,7 +825,6 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
                       value={b.text || ''}
                       onChange={txt => updateTextBlock(b.id, txt)}
                       placeholder="Enter text block content..."
-                      smartAssistantEnabled={isSmartAssistantEnabled}
                     />
                   ) : b.type === 'diagram' && b.diagramSvg ? (
                     <div className="py-4 text-center space-y-2 bg-slate-50 border border-slate-200 rounded-lg p-3">
@@ -936,10 +872,10 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
                           type="button"
                           onClick={() => blockFileInputRefs.current[b.id]?.click()}
                           disabled={uploadingBlockId === b.id}
-                          className="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 text-slate-800 text-xs font-bold rounded-lg shadow-2xs flex items-center gap-1.5 transition-colors cursor-pointer disabled:opacity-50"
+                          className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg shadow-2xs flex items-center gap-1.5 transition-all cursor-pointer disabled:opacity-50"
                         >
                           {uploadingBlockId === b.id ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5" />}
-                          <span>Upload File</span>
+                          <span>Upload Image</span>
                         </button>
                         <button
                           type="button"
@@ -968,10 +904,10 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
                           type="button"
                           onClick={() => blockFileInputRefs.current[b.id]?.click()}
                           disabled={uploadingBlockId === b.id}
-                          className="px-3.5 py-1.5 bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold rounded-lg shadow-2xs flex items-center gap-1.5 transition-colors cursor-pointer disabled:opacity-50"
+                          className="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg shadow-2xs flex items-center gap-1.5 transition-all cursor-pointer disabled:opacity-50"
                         >
                           {uploadingBlockId === b.id ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5" />}
-                          <span>Upload from Computer</span>
+                          <span>Upload Image</span>
                         </button>
                         <button
                           type="button"
@@ -979,7 +915,7 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
                           className="px-3.5 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 text-slate-800 text-xs font-bold rounded-lg shadow-2xs flex items-center gap-1.5 transition-colors cursor-pointer"
                         >
                           <ImageIcon className="w-3.5 h-3.5" />
-                          <span>Select from Library</span>
+                          <span>Image Library</span>
                         </button>
                       </div>
                     </div>
@@ -996,15 +932,6 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
             <span className="font-bold text-xs text-slate-900">Multiple Choice Options</span>
             <span className="text-xs text-slate-400">Select one correct answer</span>
           </div>
-
-          {isSmartAssistantEnabled && duplicateOptionKeys.length > 0 && (
-            <div className="mx-5 mt-4 p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-900 text-xs font-medium flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
-              <span>
-                <strong>Smart Assistant Warning:</strong> Option {duplicateOptionKeys.join(' and Option ')} contain identical text! Please ensure all MCQ options are distinct.
-              </span>
-            </div>
-          )}
 
           <div className="p-5 space-y-4">
             {options.map((opt, idx) => (
@@ -1040,16 +967,15 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
                       type="button"
                       onClick={() => optionFileInputRefs.current[idx]?.click()}
                       disabled={uploadingOptionIdx === idx}
-                      className="px-2.5 py-1 bg-white border border-slate-300 hover:bg-slate-100 text-slate-800 text-xs font-bold rounded-lg shadow-2xs flex items-center gap-1 transition-colors cursor-pointer disabled:opacity-50"
+                      className="px-2.5 py-1 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-lg flex items-center gap-1 transition-all shadow-2xs cursor-pointer disabled:opacity-50"
                     >
-                      {uploadingOptionIdx === idx ? <Loader2 className="w-3 h-3 animate-spin" /> : <ImageIcon className="w-3 h-3" />}
-                      <span>{opt.imageUrl ? 'Replace Image' : '+ Image'}</span>
+                      {uploadingOptionIdx === idx ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <ImageIcon className="w-3.5 h-3.5" />}
+                      <span>{opt.imageUrl ? 'Image' : '+ Image'}</span>
                     </button>
                     <button
                       type="button"
                       onClick={() => setActiveImageLibraryTarget({ type: 'option', index: idx })}
-                      className="px-2 py-1 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 text-xs font-bold rounded-lg shadow-2xs transition-colors cursor-pointer"
-                      title="Choose from Image Library"
+                      className="px-2.5 py-1 bg-white border border-slate-300 hover:bg-slate-100 text-slate-800 text-xs font-bold rounded-lg shadow-2xs transition-colors cursor-pointer"
                     >
                       Library
                     </button>
@@ -1061,7 +987,6 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
                   value={opt.rawText || ''}
                   onChange={txt => updateOptionText(idx, txt)}
                   placeholder={`Option (${opt.key?.toUpperCase() || String.fromCharCode(65 + idx)}) text or formula...`}
-                  smartAssistantEnabled={isSmartAssistantEnabled}
                 />
 
                 {opt.imageUrl && (
@@ -1120,19 +1045,10 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
 
           {isSolutionExpanded && (
             <div className="p-5 space-y-3">
-              {isSmartAssistantEnabled && (!solutionText.trim() || !options.some(o => o.isCorrect)) && (
-                <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 text-xs font-medium flex items-center gap-2 mb-2">
-                  <AlertCircle className="w-4 h-4 text-slate-500 shrink-0" />
-                  <span>
-                    <strong>Smart Assistant Reminder:</strong> {!options.some(o => o.isCorrect) ? 'Please mark one option as correct.' : ''} {!solutionText.trim() ? 'Adding explanation text helps students understand the step-by-step solution.' : ''}
-                  </span>
-                </div>
-              )}
               <RichTextEditor
                 value={solutionText}
                 onChange={setSolutionText}
                 placeholder="Solution explanation..."
-                smartAssistantEnabled={isSmartAssistantEnabled}
               />
             </div>
           )}
