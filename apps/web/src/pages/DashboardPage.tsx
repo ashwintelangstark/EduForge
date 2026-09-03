@@ -32,7 +32,8 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 }) => {
   const user = getUserProfile();
 
-  const [questions, setQuestions] = useState<Question[]>([]);
+  const [allBankQuestions, setAllBankQuestions] = useState<Question[]>([]);
+  const [facultyScopedQuestions, setFacultyScopedQuestions] = useState<Question[]>([]);
   const [documents, setDocuments] = useState<DocumentModel[]>([]);
   const [apiSubjects, setApiSubjects] = useState<any[]>([]);
   const [apiChapters, setApiChapters] = useState<any[]>([]);
@@ -58,35 +59,31 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
         api.getChapters()
       ]);
 
-      let filteredDocs = docs || [];
-      let filteredQs = qList || [];
-      let filteredSubs = subList || [];
-      let filteredChs = chList || [];
+      const rawDocs = docs || [];
+      const rawQs = qList || [];
+      const rawSubs = subList || [];
+      const rawChs = chList || [];
 
-      if (user.role === 'faculty' && user.assigned_subject !== 'All') {
-        const targetSubLower = user.assigned_subject.toLowerCase();
-        filteredDocs = filteredDocs.filter(d => 
-          (((d as any).subject || d.metadata?.subject || '') + ' ' + (d.title || '')).toLowerCase().includes(targetSubLower)
-        );
-        filteredQs = filteredQs.filter(q => 
-          (q.subject || '').toLowerCase().includes(targetSubLower)
-        );
-        filteredSubs = filteredSubs.filter(s => 
-          (s.name || '').toLowerCase().includes(targetSubLower)
-        );
-        filteredChs = filteredChs.filter(c => 
-          ((c.subject_name || c.subject || '')).toLowerCase().includes(targetSubLower)
-        );
+      setDocuments(rawDocs);
+      setAllBankQuestions(rawQs);
+      setApiSubjects(rawSubs);
+      setApiChapters(rawChs);
+
+      if (user.role === 'faculty' && user.assigned_subject && user.assigned_subject !== 'All') {
+        const targetSubLower = user.assigned_subject.toLowerCase().trim();
+        const fQs = rawQs.filter(q => {
+          const qSub = (q.subject || (q as any).subject_name || (q as any).subjects?.name || '').toLowerCase().trim();
+          return qSub.includes(targetSubLower) || targetSubLower.includes(qSub);
+        });
+        setFacultyScopedQuestions(fQs);
+      } else {
+        setFacultyScopedQuestions(rawQs);
       }
-
-      setDocuments(filteredDocs);
-      setQuestions(filteredQs);
-      setApiSubjects(filteredSubs);
-      setApiChapters(filteredChs);
     } catch (err) {
       console.error('Failed to load dashboard:', err);
     } finally {
       setLoading(false);
+      setIsRefreshing(false);
     }
   };
 
@@ -125,7 +122,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
     }
   });
 
-  questions.forEach(q => {
+  allBankQuestions.forEach(q => {
     const subName = (q.subject || (q as any).subject_name || '').trim();
     if (subName && !allSubjectsMap.has(subName.toLowerCase())) {
       allSubjectsMap.set(subName.toLowerCase(), {
@@ -136,7 +133,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   });
 
   const unifiedSubjectsList = Array.from(allSubjectsMap.values());
-  const totalQuestionsCount = questions.length;
+  const totalBankQuestionsCount = allBankQuestions.length;
   const totalChaptersCount = apiChapters.length;
 
   // Compute Real Question Counts, Chapters Count & Subject Share dynamically
@@ -154,17 +151,17 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
     const chaptersCount = subjectChapters.length;
 
     // Filter questions belonging to this subject
-    const subjectQuestions = questions.filter(q => {
-      const qSub = (q.subject || (q as any).subject_name || '').trim().toLowerCase();
+    const subjectQuestions = allBankQuestions.filter(q => {
+      const qSub = (q.subject || (q as any).subject_name || (q as any).subjects?.name || '').trim().toLowerCase();
       const qSubId = (q as any).subject_id || (q as any).subjectId;
-      return (qSub && qSub === subNameLower) || (subId && qSubId === subId);
+      return (qSub && (qSub === subNameLower || qSub.includes(subNameLower) || subNameLower.includes(qSub))) || (subId && qSubId === subId);
     });
     const count = subjectQuestions.length;
 
     // Dynamic Share percentage with 1 decimal place precision
     let percent = 0;
-    if (totalQuestionsCount > 0) {
-      const rawPct = (count / totalQuestionsCount) * 100;
+    if (totalBankQuestionsCount > 0) {
+      const rawPct = (count / totalBankQuestionsCount) * 100;
       percent = rawPct === 0 ? 0 : Number(rawPct.toFixed(1));
     } else if (totalChaptersCount > 0) {
       const rawPct = (chaptersCount / totalChaptersCount) * 100;
@@ -181,28 +178,32 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
     };
   });
 
+  const activeQuestionsForChapters = user.role === 'faculty' && user.assigned_subject !== 'All'
+    ? facultyScopedQuestions
+    : allBankQuestions;
+
   const chapterPerformance = apiChapters.map(ch => {
     const chId = String(ch.id || '').toLowerCase();
-    const chTitle = (ch.title || '').toLowerCase();
+    const chTitle = (ch.title || ch.name || '').toLowerCase();
     const chSubLower = (ch.subject || ch.subject_name || '').trim().toLowerCase();
 
-    const count = questions.filter(q => {
+    const count = activeQuestionsForChapters.filter(q => {
       const qChId = String((q as any).chapter_id || (q as any).chapterId || '').toLowerCase();
       const qChapter = String((q as any).chapter || (q as any).chapter_name || '').toLowerCase();
-      return (qChId && qChId === chId) || (qChapter && (qChapter === chTitle || qChapter.includes(chTitle)));
+      return (qChId && qChId === chId) || (qChapter && (qChapter === chTitle || qChapter.includes(chTitle) || chTitle.includes(qChapter)));
     }).length;
 
-    const subjectQuestionsCount = questions.filter(q => {
+    const subjectQuestionsCount = activeQuestionsForChapters.filter(q => {
       const qSub = (q.subject || (q as any).subject_name || '').trim().toLowerCase();
-      return qSub && chSubLower && qSub === chSubLower;
-    }).length || totalQuestionsCount;
+      return qSub && chSubLower && (qSub === chSubLower || qSub.includes(chSubLower));
+    }).length || totalBankQuestionsCount;
 
     const percent = subjectQuestionsCount > 0 ? Math.round((count / subjectQuestionsCount) * 100) : 0;
 
     return {
-      title: ch.title,
+      title: ch.title || ch.name,
       code: ch.code || ch.chapter_code || 'CH-01',
-      subject: ch.subject || 'General',
+      subject: ch.subject || ch.subject_name || 'General',
       count,
       percent
     };
@@ -213,7 +214,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   let mediumCount = 0;
   let hardCount = 0;
 
-  questions.forEach(q => {
+  allBankQuestions.forEach(q => {
     const diff = (q.difficulty || 'Medium').toLowerCase();
     if (diff === 'easy') easyCount++;
     else if (diff === 'hard') hardCount++;
@@ -224,19 +225,19 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
     {
       level: 'Easy',
       count: easyCount,
-      percent: totalQuestionsCount > 0 ? Math.round((easyCount / totalQuestionsCount) * 100) : 0,
+      percent: totalBankQuestionsCount > 0 ? Math.round((easyCount / totalBankQuestionsCount) * 100) : 0,
       color: 'bg-emerald-500'
     },
     {
       level: 'Medium',
       count: mediumCount,
-      percent: totalQuestionsCount > 0 ? Math.round((mediumCount / totalQuestionsCount) * 100) : 0,
+      percent: totalBankQuestionsCount > 0 ? Math.round((mediumCount / totalBankQuestionsCount) * 100) : 0,
       color: 'bg-amber-500'
     },
     {
       level: 'Hard',
       count: hardCount,
-      percent: totalQuestionsCount > 0 ? Math.round((hardCount / totalQuestionsCount) * 100) : 0,
+      percent: totalBankQuestionsCount > 0 ? Math.round((hardCount / totalBankQuestionsCount) * 100) : 0,
       color: 'bg-rose-500'
     }
   ];
@@ -272,21 +273,29 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
         {/* Total Questions */}
         <div
           onClick={onNavigateToQuestionBank}
-          className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-2xs hover:shadow-md transition-all duration-300 cursor-pointer space-y-2 group"
+          className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-2xs hover:shadow-md hover:border-teal-300 transition-all duration-300 cursor-pointer space-y-2 group"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wide">
-              {user.role === 'admin' ? 'Total Questions' : `${user.assigned_subject} Questions`}
+              Total Questions
             </span>
             <div className="w-8 h-8 rounded-xl bg-teal-50 text-teal-700 flex items-center justify-center group-hover:scale-110 transition-transform">
               <HelpCircle className="w-4 h-4" />
             </div>
           </div>
           <div className="text-3xl font-black text-slate-900">
-            {loading ? '...' : totalQuestionsCount.toLocaleString()}
+            {loading ? '...' : totalBankQuestionsCount.toLocaleString()}
+          </div>
+          <div className="flex items-center justify-between text-[11px] font-semibold text-slate-500">
+            <span>
+              {user.role === 'faculty' && user.assigned_subject !== 'All' 
+                ? `${facultyScopedQuestions.length} in ${user.assigned_subject}`
+                : `${apiSubjects.length || 4} Subjects Active`}
+            </span>
+            <span className="text-teal-700 font-bold group-hover:underline">View Bank →</span>
           </div>
           <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
-            <div className="h-full bg-teal-600 rounded-full" style={{ width: totalQuestionsCount > 0 ? '100%' : '0%' }} />
+            <div className="h-full bg-teal-600 rounded-full transition-all duration-500" style={{ width: totalBankQuestionsCount > 0 ? '100%' : '0%' }} />
           </div>
         </div>
 
@@ -302,6 +311,9 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           </div>
           <div className="text-3xl font-black text-slate-900">
             {loading ? '...' : documents.length.toLocaleString()}
+          </div>
+          <div className="flex items-center justify-between text-[11px] font-semibold text-slate-500">
+            <span>Test papers in library</span>
           </div>
           <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
             <div className="h-full bg-indigo-600 rounded-full" style={{ width: documents.length > 0 ? '100%' : '0%' }} />
