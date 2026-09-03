@@ -101,10 +101,18 @@ export const supabaseDirect = {
           }
           const { data: rawQuestions } = await rawQuery;
           if (rawQuestions && rawQuestions.length > 0) {
-            const { data: rawOptions } = await supabase.from('question_options').select('*');
+            const qIds = rawQuestions.map((q: any) => q.id).filter(Boolean);
+            let rawOptions: any[] = [];
+            if (qIds.length > 0) {
+              const { data: fetchedOpts } = await supabase
+                .from('question_options')
+                .select('*')
+                .in('question_id', qIds);
+              rawOptions = fetchedOpts || [];
+            }
             data = rawQuestions.map((q: any) => ({
               ...q,
-              question_options: (rawOptions || []).filter((opt: any) => opt.question_id === q.id)
+              question_options: rawOptions.filter((opt: any) => opt.question_id === q.id)
             }));
           }
         } catch (fallbackErr) {

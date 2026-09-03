@@ -46,12 +46,21 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON ROUTINES TO anon, authent
 -- 4. Create essential performance indexes on existing columns
 CREATE INDEX IF NOT EXISTS idx_questions_subject_id ON public.questions(subject_id);
 CREATE INDEX IF NOT EXISTS idx_questions_chapter_id ON public.questions(chapter_id);
+CREATE INDEX IF NOT EXISTS idx_questions_subject_chapter ON public.questions(subject_id, chapter_id);
 CREATE INDEX IF NOT EXISTS idx_questions_difficulty ON public.questions(difficulty);
+CREATE INDEX IF NOT EXISTS idx_questions_code ON public.questions(question_code);
+CREATE INDEX IF NOT EXISTS idx_questions_created_at ON public.questions(created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_question_options_question_id ON public.question_options(question_id);
 CREATE INDEX IF NOT EXISTS idx_chapters_subject_id ON public.chapters(subject_id);
 CREATE INDEX IF NOT EXISTS idx_papers_created_at ON public.papers(created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_paper_questions_paper_id ON public.paper_questions(paper_id);
 CREATE INDEX IF NOT EXISTS idx_user_profiles_email ON public.user_profiles(email);
+CREATE INDEX IF NOT EXISTS idx_assets_created_at ON public.assets(created_at DESC);
 
--- 5. Force PostgREST schema cache reload
+-- 5. Extend default statement_timeout to 30s to prevent query cancellation errors
+ALTER ROLE anon SET statement_timeout = '30s';
+ALTER ROLE authenticated SET statement_timeout = '30s';
+ALTER ROLE service_role SET statement_timeout = '60s';
+
+-- 6. Force PostgREST schema cache reload
 NOTIFY pgrst, 'reload schema';
