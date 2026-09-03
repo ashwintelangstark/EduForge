@@ -559,50 +559,61 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
     }
   };
 
-  const handleStudioSave = (newBase64: string) => {
-    if (!newBase64 || newBase64.length < 50) return;
-    if (editor) {
-      // 1. Update matching image nodes across TipTap document
-      const { state } = editor;
-      let updated = false;
+  const handleStudioSave = async (newBase64: string) => {
+    if (!newBase64 || newBase64.length < 50 || !editor) return;
 
-      state.doc.descendants((node, pos) => {
-        if (node.type.name === 'image') {
-          const width = node.attrs.width || '50%';
-          const alignment = node.attrs.alignment || 'center';
-          editor.chain().focus().setNodeSelection(pos).setImage({ src: newBase64, width, alignment } as any).run();
-          updated = true;
-          return false;
-        }
-      });
-
-      if (!updated) {
-        const currentHtml = editor.getHTML();
-        if (/<img/i.test(currentHtml)) {
-          const replacedHtml = currentHtml.replace(/<img[^>]*src=["'][^"']*["'][^>]*>/i, `<img src="${newBase64}" />`);
-          editor.commands.setContent(replacedHtml, { emitUpdate: true });
-          onChange(replacedHtml);
-        } else {
-          editor.chain().focus().setImage({ src: newBase64, width: '50%', alignment: 'center' } as any).run();
+    let finalUrl = newBase64;
+    try {
+      if (newBase64.startsWith('data:image/')) {
+        const res = await api.uploadBase64Image(newBase64, undefined, `rte_img_${Date.now()}`);
+        if (res?.url) {
+          finalUrl = res.url;
         }
       }
-
-      // 2. Direct DOM image src update for instant UI feedback
-      const activeImgs = document.querySelectorAll('img.selected-img, img[data-selected="true"], .ProseMirror img');
-      activeImgs.forEach(img => {
-        (img as HTMLImageElement).src = newBase64;
-      });
-
-      setSelectedImageSrc(newBase64);
-
-      if (onImagePasted) {
-        onImagePasted(newBase64);
-      }
-
-      // 3. Immediately emit onChange with updated HTML content to parent component
-      const updatedHtml = editor.getHTML();
-      onChange(updatedHtml);
+    } catch (err) {
+      console.warn('RTE studio upload fallback:', err);
     }
+
+    // 1. Update matching image nodes across TipTap document
+    const { state } = editor;
+    let updated = false;
+
+    state.doc.descendants((node, pos) => {
+      if (node.type.name === 'image') {
+        const width = node.attrs.width || '50%';
+        const alignment = node.attrs.alignment || 'center';
+        editor.chain().focus().setNodeSelection(pos).setImage({ src: finalUrl, width, alignment } as any).run();
+        updated = true;
+        return false;
+      }
+    });
+
+    if (!updated) {
+      const currentHtml = editor.getHTML();
+      if (/<img/i.test(currentHtml)) {
+        const replacedHtml = currentHtml.replace(/<img[^>]*src=["'][^"']*["'][^>]*>/i, `<img src="${finalUrl}" />`);
+        editor.commands.setContent(replacedHtml, { emitUpdate: true });
+        onChange(replacedHtml);
+      } else {
+        editor.chain().focus().setImage({ src: finalUrl, width: '50%', alignment: 'center' } as any).run();
+      }
+    }
+
+    // 2. Direct DOM image src update for instant UI feedback
+    const activeImgs = document.querySelectorAll('img.selected-img, img[data-selected="true"], .ProseMirror img');
+    activeImgs.forEach(img => {
+      (img as HTMLImageElement).src = finalUrl;
+    });
+
+    setSelectedImageSrc(finalUrl);
+
+    if (onImagePasted) {
+      onImagePasted(finalUrl);
+    }
+
+    // 3. Immediately emit onChange with updated HTML content to parent component
+    const updatedHtml = editor.getHTML();
+    onChange(updatedHtml);
   };
 
   const activeMinHeight = minHeight || (compact ? 'min-h-[44px]' : 'min-h-[220px]');

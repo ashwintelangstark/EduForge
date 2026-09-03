@@ -152,6 +152,10 @@ export const api = {
     apiCache.invalidate('media');
     return withFallback(() => assetsApi.uploadImage(file, subject), () => supabaseDirect.uploadAsset(file, subject));
   },
+  uploadBase64Image: async (base64Str: string, subject?: string, name?: string) => {
+    apiCache.invalidate('media');
+    return supabaseDirect.uploadBase64Image(base64Str, subject, name);
+  },
   deleteMedia: async (id: string) => {
     apiCache.invalidate('media');
     return withFallback(() => assetsApi.deleteMedia(id), () => supabaseDirect.deleteMedia(id));

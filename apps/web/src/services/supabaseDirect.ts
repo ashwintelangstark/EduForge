@@ -754,6 +754,22 @@ export const supabaseDirect = {
     };
   },
 
+  async uploadBase64Image(base64Str: string, subject?: string, name?: string): Promise<{ id: string; url: string; originalName: string }> {
+    const res = await uploadBase64ToStorageDirect(base64Str, subject, name);
+    if (res?.publicUrl) {
+      return {
+        id: `asset-${Date.now()}`,
+        url: res.publicUrl,
+        originalName: name || `img_${Date.now()}.png`
+      };
+    }
+    return {
+      id: `asset-${Date.now()}`,
+      url: base64Str,
+      originalName: name || `img_${Date.now()}.png`
+    };
+  },
+
   async deleteMedia(id: string): Promise<void> {
     try {
       const { data: asset } = await supabase.from('assets').select('storage_path').eq('id', id).maybeSingle();

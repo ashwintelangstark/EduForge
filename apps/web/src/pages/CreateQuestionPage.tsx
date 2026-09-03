@@ -370,8 +370,10 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
     if (!file) return;
     try {
       setUploadingBlockId(blockId);
+      // 1. Save directly in Supabase Storage and Image Library (assets table)
       const res = await api.uploadAsset(file, subject);
       const url = res?.url || (res as any)?.public_url;
+      // 2. Display the saved permanent URL in the block for editing
       if (url) {
         updateImageBlockUrl(blockId, url);
       }
@@ -403,8 +405,10 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
     if (!file) return;
     try {
       setUploadingOptionIdx(index);
+      // 1. Save directly in Supabase Storage and Image Library (assets table)
       const res = await api.uploadAsset(file, subject);
       const url = res?.url || (res as any)?.public_url;
+      // 2. Display the saved permanent URL in the option for editing
       if (url) {
         updateOptionImageUrl(index, url);
       }
@@ -415,15 +419,29 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
     }
   };
 
-  const handleStudioSave = (processedBase64: string) => {
+  const handleStudioSave = async (processedBase64: string) => {
     const target = studioModalState.target;
     if (!target) return;
     setStudioModalState(prev => ({ ...prev, isOpen: false }));
 
+    // 1. Save processed image directly in Supabase Storage and Image Library first
+    let finalUrl = processedBase64;
+    try {
+      if (processedBase64.startsWith('data:image/')) {
+        const res = await api.uploadBase64Image(processedBase64, subject, `question_img_${Date.now()}`);
+        if (res?.url) {
+          finalUrl = res.url;
+        }
+      }
+    } catch (err) {
+      console.warn('Studio save cloud upload fallback:', err);
+    }
+
+    // 2. Display the permanent URL in question for further editing
     if (target.type === 'block') {
-      updateImageBlockUrl(target.id, processedBase64);
+      updateImageBlockUrl(target.id, finalUrl);
     } else if (target.type === 'option') {
-      updateOptionImageUrl(target.index, processedBase64);
+      updateOptionImageUrl(target.index, finalUrl);
     }
   };
 

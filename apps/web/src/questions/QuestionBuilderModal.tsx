@@ -399,25 +399,40 @@ export const QuestionBuilderModal: React.FC<QuestionBuilderModalProps> = ({
     setIsImageStudioOpen(true);
   };
 
-  const handleStudioSave = (newBase64: string) => {
+  const handleStudioSave = async (newBase64: string) => {
     if (!studioTarget || !newBase64) return;
+
+    // 1. Save directly in Supabase Storage and Image Library first
+    let finalUrl = newBase64;
+    try {
+      if (newBase64.startsWith('data:image/')) {
+        const res = await api.uploadBase64Image(newBase64, subject, `qb_img_${Date.now()}`);
+        if (res?.url) {
+          finalUrl = res.url;
+        }
+      }
+    } catch (err) {
+      console.warn('QB studio upload fallback:', err);
+    }
+
+    // 2. Display the saved permanent URL in question for further editing
     if (studioTarget.type === 'question') {
       const targetIdx = studioTarget.index >= 0 ? studioTarget.index : 0;
       const oldUrl = imageUrls[targetIdx];
       setImageUrls(prev => {
         const next = [...prev];
         if (next.length === 0) {
-          return [newBase64];
+          return [finalUrl];
         }
-        next[targetIdx] = newBase64;
+        next[targetIdx] = finalUrl;
         return next;
       });
       if (oldUrl && rawText.includes(oldUrl)) {
-        setRawText(prev => prev.split(oldUrl).join(newBase64));
+        setRawText(prev => prev.split(oldUrl).join(finalUrl));
       } else if (rawText.includes('<img')) {
-        setRawText(prev => prev.replace(/<img[^>]*src=["'][^"']*["'][^>]*>/i, `<img src="${newBase64}" />`));
+        setRawText(prev => prev.replace(/<img[^>]*src=["'][^"']*["'][^>]*>/i, `<img src="${finalUrl}" />`));
       } else {
-        setRawText(prev => prev.trim() ? `${prev.trim()} <img src="${newBase64}" />` : `<img src="${newBase64}" />`);
+        setRawText(prev => prev.trim() ? `${prev.trim()} <img src="${finalUrl}" />` : `<img src="${finalUrl}" />`);
       }
     } else if (studioTarget.type === 'option') {
       const optIdx = studioTarget.index;
@@ -428,15 +443,15 @@ export const QuestionBuilderModal: React.FC<QuestionBuilderModalProps> = ({
           const optRaw = next[optIdx].rawText || '';
           let updatedRaw = optRaw;
           if (oldUrl && optRaw.includes(oldUrl)) {
-            updatedRaw = optRaw.split(oldUrl).join(newBase64);
+            updatedRaw = optRaw.split(oldUrl).join(finalUrl);
           } else if (optRaw.includes('<img')) {
-            updatedRaw = optRaw.replace(/<img[^>]*src=["'][^"']*["'][^>]*>/i, `<img src="${newBase64}" />`);
+            updatedRaw = optRaw.replace(/<img[^>]*src=["'][^"']*["'][^>]*>/i, `<img src="${finalUrl}" />`);
           } else {
-            updatedRaw = optRaw ? `${optRaw} <img src="${newBase64}" />` : `<img src="${newBase64}" />`;
+            updatedRaw = optRaw ? `${optRaw} <img src="${finalUrl}" />` : `<img src="${finalUrl}" />`;
           }
           next[optIdx] = {
             ...next[optIdx],
-            imageUrl: newBase64,
+            imageUrl: finalUrl,
             rawText: updatedRaw
           };
         }
