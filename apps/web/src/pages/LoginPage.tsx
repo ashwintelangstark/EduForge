@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Eye, EyeOff, Lock, Mail, ArrowRight, ShieldCheck, UserPlus, LogIn, AlertCircle, User, BookOpen, Shield } from 'lucide-react';
 import { supabase } from '../services/supabaseDirect.js';
 import { api } from '../services/api.js';
+import { fetchApi } from '../services/api/client.js';
 
 interface LoginPageProps {
   onLoginSuccess: () => void;
@@ -104,11 +105,10 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
         };
 
         try {
-          await fetch('/api/auth/signup', {
+          await fetchApi('/api/auth/signup', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(profilePayload)
-          });
+          }).catch(() => null);
         } catch (pErr) {
           console.warn('Profile sync warning:', pErr);
         }
@@ -144,18 +144,18 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
           // Fetch synced profile from backend
           let userProfile: any = null;
           try {
-            const profRes = await fetch('/api/auth/login', {
+            const profData: any = await fetchApi('/api/auth/login', {
               method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ email: cleanEmail })
-            });
-            const profData = await profRes.json();
-            if (profData.success && profData.data) {
+            }).catch(() => null);
+
+            if (profData && (profData.success || profData.email)) {
+              const d = profData.data || profData;
               userProfile = {
-                email: profData.data.email || cleanEmail,
-                name: profData.data.name || cleanEmail.split('@')[0],
-                role: profData.data.role || (cleanEmail.startsWith('admin') ? 'admin' : 'faculty'),
-                assigned_subject: profData.data.assigned_subject || (cleanEmail.startsWith('admin') ? 'All' : 'Biology')
+                email: d.email || cleanEmail,
+                name: d.name || cleanEmail.split('@')[0],
+                role: d.role || (cleanEmail.startsWith('admin') ? 'admin' : 'faculty'),
+                assigned_subject: d.assigned_subject || (cleanEmail.startsWith('admin') ? 'All' : 'Biology')
               };
             }
           } catch (fetchErr) {
