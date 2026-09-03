@@ -16,7 +16,12 @@ import { attemptsRouter } from './routes/attempts.routes.js';
 
 export const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: true,
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-user-subject', 'x-user-role', 'X-Requested-With']
+}));
 app.use(express.json({ limit: '20mb' }));
 app.use(express.urlencoded({ extended: true, limit: '20mb' }));
 
