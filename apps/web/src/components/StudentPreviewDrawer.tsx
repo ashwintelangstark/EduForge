@@ -64,20 +64,54 @@ export const StudentPreviewDrawer: React.FC<StudentPreviewDrawerProps> = ({
     contentArr.find((b: any) => b.type === 'diagram' || b.diagramSvg || b.svg)?.diagramSvg ||
     contentArr.find((b: any) => b.type === 'diagram' || b.diagramSvg || b.svg)?.svg;
 
-  // Collect all image URLs
+  // Helper to check if an image is already embedded inline in the text HTML
+  const isAlreadyInText = (url: string | undefined, targetText: string = defaultQuestionText) => {
+    if (!url) return true;
+    const cleanUrl = url.trim();
+    if (!cleanUrl) return true;
+
+    // 1. Direct string or encoded URL match
+    if (targetText.includes(cleanUrl) || targetText.includes(encodeURI(cleanUrl))) {
+      return true;
+    }
+
+    // 2. Relative path match (e.g. physics/abc.png vs full Supabase URL)
+    const relativePath = cleanUrl.replace(/^https?:\/\/[^\/]+\/storage\/v1\/object\/public\/[^\/]+\//, '');
+    if (relativePath && relativePath !== cleanUrl && targetText.includes(relativePath)) {
+      return true;
+    }
+
+    // 3. Filename match (e.g. abc.png)
+    const fileName = cleanUrl.split('/').pop()?.split('?')[0];
+    if (fileName && fileName.length > 5 && targetText.includes(fileName)) {
+      return true;
+    }
+
+    return false;
+  };
+
+  // Collect all attached image URLs that are NOT already embedded inside the text statement HTML
   const allImgUrls: string[] = [];
-  if (question?.imageUrl) allImgUrls.push(question.imageUrl);
-  if ((question as any)?.diagramUrl && !allImgUrls.includes((question as any).diagramUrl)) {
+  if (question?.imageUrl && !isAlreadyInText(question.imageUrl)) {
+    allImgUrls.push(question.imageUrl);
+  }
+  if (
+    (question as any)?.diagramUrl &&
+    !allImgUrls.includes((question as any).diagramUrl) &&
+    !isAlreadyInText((question as any).diagramUrl)
+  ) {
     allImgUrls.push((question as any).diagramUrl);
   }
   if (Array.isArray((question as any)?.imageUrls)) {
     (question as any).imageUrls.forEach((u: string) => {
-      if (u && !allImgUrls.includes(u)) allImgUrls.push(u);
+      if (u && !allImgUrls.includes(u) && !isAlreadyInText(u)) allImgUrls.push(u);
     });
   }
   contentArr.forEach((b: any) => {
-    const u = b.url || b.imageUrl || b.src;
-    if (u && !allImgUrls.includes(u)) allImgUrls.push(u);
+    if (b.type === 'image') {
+      const u = b.url || b.imageUrl || b.src;
+      if (u && !allImgUrls.includes(u) && !isAlreadyInText(u)) allImgUrls.push(u);
+    }
   });
 
   const showNavigation = Boolean(onPrevious || onNext || currentIndex !== undefined);
@@ -195,7 +229,8 @@ export const StudentPreviewDrawer: React.FC<StudentPreviewDrawerProps> = ({
               defaultOptions.map((opt, idx) => {
                 const isCorrect = opt.isCorrect || (question?.correctAnswer && (opt.key || String.fromCharCode(65 + idx)).toLowerCase() === String(question.correctAnswer).toLowerCase());
                 const optRaw = (opt as any).rawText || (typeof (opt as any).content === 'string' ? (opt as any).content : (Array.isArray((opt as any).content) ? (opt as any).content.map((c: any) => c.latex ? `\\(${c.latex}\\)` : (c.html || c.text || '')).join(' ') : ''));
-                const optImg = opt.imageUrl || (opt as any).image_url;
+                const rawOptImg = opt.imageUrl || (opt as any).image_url;
+                const optImg = rawOptImg && !isAlreadyInText(rawOptImg, optRaw) ? rawOptImg : null;
 
                 return (
                   <div
