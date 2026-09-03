@@ -8,6 +8,7 @@ import { ImageLibraryModal } from '../components/ImageLibraryModal.js';
 import { formatQuestionCode } from '../utils/questionCode.js';
 import { getUserProfile } from '../utils/userProfile.js';
 import { setPersistedStatus } from './QuestionBankPage.js';
+import { cleanHtmlTags } from '../equation/MathTextRenderer.js';
 
 interface ContentBlock {
   id: string;
@@ -370,13 +371,13 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
   const handleSaveDraft = async () => {
     if (isSaving) return false;
 
-    const rawStatement = applySmartPunctuation(
+    const rawStatement = cleanHtmlTags(applySmartPunctuation(
       blocks
         .filter(b => b.type === 'text')
         .map(b => b.text)
         .filter(Boolean)
         .join(' ')
-    );
+    ));
 
     const correctOpt = options.find(o => o.isCorrect);
     const subToUse = userSubject !== 'All' ? userSubject : subject;
@@ -418,18 +419,19 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
       isSystem: false,
       isPublished: false,
       options: options.map((o, idx) => {
+        const cleanedOptRaw = cleanHtmlTags(o.rawText || '');
         const optImgMatch = (o.rawText || '').match(/<img[^>]*src=["']([^"']+)["']/i);
         const optImgUrl = optImgMatch ? optImgMatch[1] : (o.imageUrl || undefined);
         return {
           ...o,
           key: o.key || String.fromCharCode(65 + idx),
-          rawText: o.rawText || '',
+          rawText: cleanedOptRaw,
           imageUrl: optImgUrl,
-          content: [{ type: 'text', html: o.rawText || '' }]
+          content: [{ type: 'text', html: cleanedOptRaw }]
         };
       }),
       correctAnswer: correctOpt?.key || 'A',
-      explanationText: solutionText
+      explanationText: cleanHtmlTags(solutionText)
     } as any;
 
     try {

@@ -5,7 +5,7 @@ import { Search, Plus, Trash2, Edit3, Eye, Filter, BookOpen, Layers, Send, Bookm
 import { StudentPreviewDrawer } from '../components/StudentPreviewDrawer.js';
 import { CollegeExamPaper, HeaderPresetType } from '../components/CollegeExamPaper.js';
 import { formatQuestionCode } from '../utils/questionCode.js';
-import { MathTextRenderer } from '../equation/MathTextRenderer.js';
+import { MathTextRenderer, cleanHtmlTags } from '../equation/MathTextRenderer.js';
 import { getUserProfile } from '../utils/userProfile.js';
 
 export const getPersistedStatusMap = (): Record<string, 'saved' | 'published'> => {
@@ -422,11 +422,7 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
 
   const getCleanQuestionText = (htmlText?: string) => {
     if (!htmlText) return 'Question statement text';
-    const clean = htmlText
-      .replace(/<[^>]*>?/gm, ' ')
-      .replace(/&nbsp;/g, ' ')
-      .replace(/\s+/g, ' ')
-      .trim();
+    const clean = cleanHtmlTags(htmlText);
     return clean || 'Question statement text';
   };
 

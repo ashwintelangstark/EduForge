@@ -27,32 +27,36 @@ export function cleanHtmlTags(text: string): string {
   if (!text) return '';
   let str = String(text).trim();
 
-  // Strip empty/stray HTML tags in both escaped (&lt;p&gt;&lt;/p&gt;) and literal (<p></p>) formats
+  // 1. Decode HTML entities so escaped tags (&lt;p&gt;&lt;/p&gt;, &lt;br&gt;, etc.) become standardized
   str = str
-    .replace(/(?:&lt;|<)\s*(?:p|div|span|h[1-6]|ul|ol|li)\s*(?:&gt;|>)\s*(?:&lt;|<)\s*\/\s*(?:p|div|span|h[1-6]|ul|ol|li)\s*(?:&gt;|>)/gi, ' ')
-    .replace(/(?:&lt;|<)\s*p\s*(?:&gt;|>)/gi, ' ')
-    .replace(/(?:&lt;|<)\s*\/\s*p\s*(?:&gt;|>)/gi, ' ')
-    .replace(/(?:&lt;|<)\s*br\s*\/?\s*(?:&gt;|>)/gi, ' ');
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'")
+    .replace(/&amp;/gi, '&')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&#160;/gi, ' ');
 
-  // Decode standard HTML entities
-  str = str
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/&amp;/g, '&')
-    .replace(/&nbsp;/g, ' ');
+  // 2. Iteratively strip empty/stray HTML tags e.g. <p></p>, <p><br></p>, <div></div>, <span></span>
+  let prev = '';
+  while (prev !== str) {
+    prev = str;
+    str = str
+      .replace(/<\s*(?:p|div|span|h[1-6]|ul|ol|li)\s*>\s*(?:<\s*br\s*\/?\s*>|\s)*<\s*\/\s*(?:p|div|span|h[1-6]|ul|ol|li)\s*>/gi, ' ')
+      .replace(/<\s*br\s*\/?\s*>/gi, ' ');
+  }
 
-  // Strip remaining HTML wrapper and formatting tags (except <img>)
+  // 3. Strip remaining HTML formatting/wrapper tags (except <img>)
   str = str.replace(/<\/?(p|div|br|span|h[1-6]|ul|ol|li|strong|b|em|i|u|del|sub|sup)[^>]*>/gi, (match) => {
     if (/img/i.test(match)) return match;
     return ' ';
   });
 
-  // Final cleanup for any stray <p>, </p>, <p></p>, &lt;p&gt;, &lt;/p&gt;
+  // 4. Final safety cleanup for any lingering literal or encoded <p>, </p>, <p></p>
   str = str
-    .replace(/<\/?p>/gi, ' ')
-    .replace(/&lt;\/?p&gt;/gi, ' ')
+    .replace(/<\/?p\s*\/?>/gi, ' ')
+    .replace(/&lt;\/?p\s*\/?&gt;/gi, ' ')
+    .replace(/<\s*\/\s*p\s*>/gi, ' ')
     .replace(/\s+/g, ' ')
     .trim();
 
@@ -64,7 +68,7 @@ export function cleanHtmlTags(text: string): string {
  */
 export function stripQuestionCode(text: string | undefined): string {
   if (!text) return '';
-  let str = String(text).trim();
+  let str = cleanHtmlTags(text);
   str = str.replace(/^\s*\[?\s*Q\s*[-_]?[A-Za-z0-9_-]+\s*\]?\s*[:.-]?\s*/i, '');
   str = str.replace(/^\s*\[?\s*[A-Z]{2,6}-[A-Z0-9]{2,6}-[0-9]{1,6}\s*\]?\s*[:.-]?\s*/i, '');
   return str.trim();
@@ -213,9 +217,12 @@ export function autoDetectAndWrapLatex(str: string): string {
 
 function RenderSingleMathTextChunk({ text, block, className }: { text: string; block?: boolean; className?: string }) {
   if (!text) return null;
-  const tokens = parseAndTokenizeMath(text, block);
+  const cleaned = cleanHtmlTags(text);
+  if (!cleaned) return null;
+
+  const tokens = parseAndTokenizeMath(cleaned, block);
   if (tokens.length === 0) {
-    return text ? <span className={className}>{text}</span> : null;
+    return cleaned ? <span className={className}>{cleaned}</span> : null;
   }
 
   return (
@@ -269,12 +276,12 @@ const MathTextRendererComponent: React.FC<MathTextRendererProps> = ({
     }
   }
 
-  const textStr = typeof text === 'string' ? text : String(text);
+  const rawTextStr = typeof text === 'string' ? text : String(text);
 
   // If contains HTML <img> tags, parse them into uncropped JSX <img> elements
-  if (/<img\s+/i.test(textStr)) {
+  if (/<img\s+/i.test(rawTextStr)) {
     const imgTagRegex = /(<img\s+[^>]*>)/gi;
-    const parts = textStr.split(imgTagRegex);
+    const parts = rawTextStr.split(imgTagRegex);
 
     return (
       <span className={className}>
@@ -309,13 +316,19 @@ const MathTextRendererComponent: React.FC<MathTextRendererProps> = ({
             );
           }
 
-          return <RenderSingleMathTextChunk key={`chunk-${idx}`} text={part} block={block} className={className} />;
+          const cleanedChunk = cleanHtmlTags(part);
+          if (!cleanedChunk) return null;
+
+          return <RenderSingleMathTextChunk key={`chunk-${idx}`} text={cleanedChunk} block={block} className={className} />;
         })}
       </span>
     );
   }
 
-  return <RenderSingleMathTextChunk text={textStr} block={block} className={className} />;
+  const cleanedStr = cleanHtmlTags(rawTextStr);
+  if (!cleanedStr) return null;
+
+  return <RenderSingleMathTextChunk text={cleanedStr} block={block} className={className} />;
 };
 
 export const MathTextRenderer = React.memo(MathTextRendererComponent);
