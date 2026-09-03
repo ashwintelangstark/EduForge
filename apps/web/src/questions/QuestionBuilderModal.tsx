@@ -402,14 +402,22 @@ export const QuestionBuilderModal: React.FC<QuestionBuilderModalProps> = ({
   const handleStudioSave = (newBase64: string) => {
     if (!studioTarget || !newBase64) return;
     if (studioTarget.type === 'question') {
-      const oldUrl = imageUrls[studioTarget.index];
+      const targetIdx = studioTarget.index >= 0 ? studioTarget.index : 0;
+      const oldUrl = imageUrls[targetIdx];
       setImageUrls(prev => {
         const next = [...prev];
-        next[studioTarget.index] = newBase64;
+        if (next.length === 0) {
+          return [newBase64];
+        }
+        next[targetIdx] = newBase64;
         return next;
       });
-      if (oldUrl) {
+      if (oldUrl && rawText.includes(oldUrl)) {
         setRawText(prev => prev.split(oldUrl).join(newBase64));
+      } else if (rawText.includes('<img')) {
+        setRawText(prev => prev.replace(/<img[^>]*src=["'][^"']*["'][^>]*>/i, `<img src="${newBase64}" />`));
+      } else {
+        setRawText(prev => prev.trim() ? `${prev.trim()} <img src="${newBase64}" />` : `<img src="${newBase64}" />`);
       }
     } else if (studioTarget.type === 'option') {
       const optIdx = studioTarget.index;
@@ -417,10 +425,19 @@ export const QuestionBuilderModal: React.FC<QuestionBuilderModalProps> = ({
       setOptions(prev => {
         const next = [...prev];
         if (next[optIdx]) {
+          const optRaw = next[optIdx].rawText || '';
+          let updatedRaw = optRaw;
+          if (oldUrl && optRaw.includes(oldUrl)) {
+            updatedRaw = optRaw.split(oldUrl).join(newBase64);
+          } else if (optRaw.includes('<img')) {
+            updatedRaw = optRaw.replace(/<img[^>]*src=["'][^"']*["'][^>]*>/i, `<img src="${newBase64}" />`);
+          } else {
+            updatedRaw = optRaw ? `${optRaw} <img src="${newBase64}" />` : `<img src="${newBase64}" />`;
+          }
           next[optIdx] = {
             ...next[optIdx],
             imageUrl: newBase64,
-            rawText: oldUrl ? (next[optIdx].rawText || '').split(oldUrl).join(newBase64) : next[optIdx].rawText
+            rawText: updatedRaw
           };
         }
         return next;

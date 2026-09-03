@@ -568,31 +568,40 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
 
       state.doc.descendants((node, pos) => {
         if (node.type.name === 'image') {
-          const width = node.attrs.width || '100%';
+          const width = node.attrs.width || '50%';
           const alignment = node.attrs.alignment || 'center';
-          editor.chain().focus().setNodeSelection(pos).updateAttributes('image', { src: newBase64, width, alignment }).run();
+          editor.chain().focus().setNodeSelection(pos).setImage({ src: newBase64, width, alignment } as any).run();
           updated = true;
           return false;
         }
       });
 
       if (!updated) {
-        editor.chain().focus().updateAttributes('image', { src: newBase64 }).run();
+        const currentHtml = editor.getHTML();
+        if (/<img/i.test(currentHtml)) {
+          const replacedHtml = currentHtml.replace(/<img[^>]*src=["'][^"']*["'][^>]*>/i, `<img src="${newBase64}" />`);
+          editor.commands.setContent(replacedHtml, { emitUpdate: true });
+          onChange(replacedHtml);
+        } else {
+          editor.chain().focus().setImage({ src: newBase64, width: '50%', alignment: 'center' } as any).run();
+        }
       }
 
       // 2. Direct DOM image src update for instant UI feedback
-      const activeImgs = document.querySelectorAll('img.selected-img, img[data-selected="true"]');
+      const activeImgs = document.querySelectorAll('img.selected-img, img[data-selected="true"], .ProseMirror img');
       activeImgs.forEach(img => {
         (img as HTMLImageElement).src = newBase64;
       });
 
       setSelectedImageSrc(newBase64);
 
+      if (onImagePasted) {
+        onImagePasted(newBase64);
+      }
+
       // 3. Immediately emit onChange with updated HTML content to parent component
-      setTimeout(() => {
-        const updatedHtml = editor.getHTML();
-        onChange(updatedHtml);
-      }, 50);
+      const updatedHtml = editor.getHTML();
+      onChange(updatedHtml);
     }
   };
 

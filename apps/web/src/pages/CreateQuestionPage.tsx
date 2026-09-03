@@ -388,6 +388,10 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
     const selectedChObj = availableChapters.find(c => (c.title || '').trim().toLowerCase() === (chapter || '').trim().toLowerCase());
     const selectedChapterId = selectedChObj?.id;
 
+    // Extract any embedded images from statement text or image blocks
+    const imgMatches = rawStatement.match(/<img[^>]*src=["']([^"']+)["']/i);
+    const extractedImageUrl = imgMatches ? imgMatches[1] : (blocks.find(b => b.type === 'image' && b.imageUrl)?.imageUrl);
+
     const questionData: Partial<Question> = {
       ...(initialQuestion?.id ? { id: initialQuestion.id } : {}),
       questionCode: finalCode,
@@ -405,18 +409,25 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
       difficulty,
       marks,
       negativeMarks,
+      imageUrl: extractedImageUrl || initialQuestion?.imageUrl || undefined,
+      diagramUrl: extractedImageUrl || initialQuestion?.diagramUrl || undefined,
       author: user.name || user.email,
       created_by: user.name || user.email,
       source: 'saved',
       status: 'saved',
       isSystem: false,
       isPublished: false,
-      options: options.map((o, idx) => ({
-        ...o,
-        key: o.key || String.fromCharCode(65 + idx),
-        rawText: o.rawText || '',
-        content: [{ type: 'text', html: o.rawText || '' }]
-      })),
+      options: options.map((o, idx) => {
+        const optImgMatch = (o.rawText || '').match(/<img[^>]*src=["']([^"']+)["']/i);
+        const optImgUrl = optImgMatch ? optImgMatch[1] : (o.imageUrl || undefined);
+        return {
+          ...o,
+          key: o.key || String.fromCharCode(65 + idx),
+          rawText: o.rawText || '',
+          imageUrl: optImgUrl,
+          content: [{ type: 'text', html: o.rawText || '' }]
+        };
+      }),
       correctAnswer: correctOpt?.key || 'A',
       explanationText: solutionText
     } as any;
