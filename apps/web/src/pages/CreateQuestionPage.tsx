@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
-import { Sparkles, AlertTriangle, AlertCircle } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import {
+  Sparkles, AlertTriangle, AlertCircle, Image as ImageIcon,
+  Crop, Upload, Trash2, Loader2, Plus, ExternalLink, Check
+} from 'lucide-react';
 import { Question, QuestionOption, QuestionDifficulty } from '@eduforge/shared';
 import { api } from '../services/api.js';
 import { RichTextEditor } from '../components/RichTextEditor.js';
 import { StudentPreviewDrawer } from '../components/StudentPreviewDrawer.js';
 import { ImageLibraryModal } from '../components/ImageLibraryModal.js';
+import { ImageStudioModal } from '../components/ImageStudioModal.js';
 import { formatQuestionCode } from '../utils/questionCode.js';
 import { getUserProfile } from '../utils/userProfile.js';
 import { setPersistedStatus } from './QuestionBankPage.js';
-import { cleanHtmlTags } from '../equation/MathTextRenderer.js';
+import { cleanHtmlTags, resolveImageUrl } from '../equation/MathTextRenderer.js';
 
 interface ContentBlock {
   id: string;
@@ -190,9 +194,18 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
   // Internal Note
   const [internalNote, setInternalNote] = useState('');
 
-  // Student Preview Drawer & Image Library Modal State
+  // Student Preview Drawer, Image Library & Studio Modal States
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
-  const [activeImageBlockId, setActiveImageBlockId] = useState<string | null>(null);
+  const [activeImageLibraryTarget, setActiveImageLibraryTarget] = useState<{ type: 'block'; id: string } | { type: 'option'; index: number } | null>(null);
+  const [studioModalState, setStudioModalState] = useState<{ isOpen: boolean; imageSrc: string; target: { type: 'block'; id: string } | { type: 'option'; index: number } | null }>({
+    isOpen: false,
+    imageSrc: '',
+    target: null
+  });
+  const [uploadingOptionIdx, setUploadingOptionIdx] = useState<number | null>(null);
+  const [uploadingBlockId, setUploadingBlockId] = useState<string | null>(null);
+  const optionFileInputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const blockFileInputRefs = useRef<Record<string, HTMLInputElement | null>>({});
 
   // Master Control: Single Button Toggle for Smart Assistant Features
   const [isSmartAssistantEnabled, setIsSmartAssistantEnabled] = useState<boolean>(() => {
@@ -283,6 +296,7 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
           id: opt.id || `opt-${idx + 1}`,
           key: opt.key ? opt.key.toUpperCase() : String.fromCharCode(65 + idx),
           rawText: textVal,
+          imageUrl: opt.imageUrl || (opt as any).image_url || undefined,
           isCorrect: Boolean(
             opt.isCorrect ||
             (initialQuestion.correctAnswer && initialQuestion.correctAnswer.toUpperCase() === (opt.key || String.fromCharCode(65 + idx)).toUpperCase())
@@ -297,6 +311,7 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
           id: `opt-${idx + 1}`,
           key: String.fromCharCode(65 + idx),
           rawText: '',
+          imageUrl: undefined,
           isCorrect: idx === 0,
           content: []
         });
@@ -350,13 +365,66 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
     setBlocks(prev => prev.map(b => (b.id === id ? { ...b, imageUrl } : b)));
   };
 
+  const handleBlockImageUpload = async (blockId: string, e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      setUploadingBlockId(blockId);
+      const res = await api.uploadAsset(file, subject);
+      const url = res?.url || (res as any)?.public_url;
+      if (url) {
+        updateImageBlockUrl(blockId, url);
+      }
+    } catch (err) {
+      console.error('Failed uploading block image:', err);
+    } finally {
+      setUploadingBlockId(null);
+    }
+  };
+
   const updateOptionText = (index: number, text: string) => {
-    setBlocks(prev => prev);
     setOptions(prev => {
       const updated = [...prev];
       updated[index] = { ...updated[index], rawText: text };
       return updated;
     });
+  };
+
+  const updateOptionImageUrl = (index: number, imageUrl?: string) => {
+    setOptions(prev => {
+      const updated = [...prev];
+      updated[index] = { ...updated[index], imageUrl };
+      return updated;
+    });
+  };
+
+  const handleOptionImageUpload = async (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      setUploadingOptionIdx(index);
+      const res = await api.uploadAsset(file, subject);
+      const url = res?.url || (res as any)?.public_url;
+      if (url) {
+        updateOptionImageUrl(index, url);
+      }
+    } catch (err) {
+      console.error('Failed uploading option image:', err);
+    } finally {
+      setUploadingOptionIdx(null);
+    }
+  };
+
+  const handleStudioSave = (processedBase64: string) => {
+    const target = studioModalState.target;
+    if (!target) return;
+    setStudioModalState(prev => ({ ...prev, isOpen: false }));
+
+    if (target.type === 'block') {
+      updateImageBlockUrl(target.id, processedBase64);
+    } else if (target.type === 'option') {
+      updateOptionImageUrl(target.index, processedBase64);
+    }
   };
 
   const setCorrectOption = (index: number) => {
@@ -511,12 +579,26 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
     setInternalNote('');
   };
 
+  const imgFromBlocks = blocks.find(b => b.type === 'image' && b.imageUrl)?.imageUrl;
+  const diagFromBlocks = blocks.find(b => b.type === 'diagram')?.diagramSvg;
+  const rawStatementPreview = blocks
+    .filter(b => b.type === 'text')
+    .map(b => b.text)
+    .filter(Boolean)
+    .join(' ');
+  const imgMatches = rawStatementPreview.match(/<img[^>]*src=["']([^"']+)["']/i);
+  const effectiveImageUrl = imgFromBlocks || (imgMatches ? imgMatches[1] : undefined) || initialQuestion?.imageUrl;
+
   const previewQuestionObj: Question = {
     id: initialQuestion?.id || customQuestionCode || 'PHY-UNI-0001',
     questionNumber: 1,
     questionType: 'MCQ_SINGLE',
-    rawText: blocks.filter(b => b.type === 'text').map(b => b.text).join(' '),
-    content: [],
+    rawText: rawStatementPreview,
+    content: blocks as any,
+    imageUrl: effectiveImageUrl,
+    diagramUrl: effectiveImageUrl,
+    imageUrls: effectiveImageUrl ? [effectiveImageUrl] : [],
+    diagramSvg: diagFromBlocks || initialQuestion?.diagramSvg,
     tags: [],
     optionLayout: 'grid_2x2',
     subject,
@@ -661,78 +743,63 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
               </select>
             </div>
 
-            <div className="lg:col-span-2">
+            <div>
               <div className="flex items-center justify-between mb-1">
-                <label className="block font-bold text-[11px] text-slate-500 uppercase">
-                  Chapter / Unit
-                </label>
+                <label className="text-xs font-bold text-slate-700">Chapter</label>
                 <button
                   type="button"
-                  onClick={() => {
-                    setIsCustomChapter(!isCustomChapter);
-                    if (!isCustomChapter) setChapter('');
-                    else if (availableChapters.length > 0) setChapter(availableChapters[0].title);
-                  }}
-                  className="text-[10px] text-teal-700 font-bold hover:underline cursor-pointer"
+                  onClick={() => setIsCustomChapter(!isCustomChapter)}
+                  className="text-[10px] font-bold text-teal-700 hover:underline cursor-pointer"
                 >
-                  {isCustomChapter ? '← Choose from dropdown' : '+ Type custom chapter'}
+                  {isCustomChapter ? 'Select List' : '+ Custom'}
                 </button>
               </div>
-
-              {!isCustomChapter ? (
+              {isCustomChapter ? (
+                <input
+                  type="text"
+                  value={chapter}
+                  onChange={e => {
+                    const nextVal = e.target.value;
+                    setChapter(nextVal);
+                    if (!isManualQuestionCode) {
+                      setCustomQuestionCode(formatQuestionCode({ subject, chapter: nextVal, id: initialQuestion?.id }));
+                    }
+                  }}
+                  placeholder="Enter custom chapter..."
+                  className="w-full text-xs font-semibold p-2 border border-teal-400 rounded-lg text-slate-800 bg-white focus:ring-2 focus:ring-teal-500 shadow-2xs"
+                />
+              ) : (
                 <select
                   value={chapter}
                   onChange={e => {
-                    if (e.target.value === '__NEW__') {
-                      setIsCustomChapter(true);
-                      setChapter('');
-                    } else {
-                      const newCh = e.target.value;
-                      setChapter(newCh);
-                      if (!isManualQuestionCode) {
-                        const chObj = availableChapters.find(c => c.title === newCh || c.id === newCh);
-                        setCustomQuestionCode(formatQuestionCode({ subject, chapter: newCh, chapterCode: chObj?.code, id: initialQuestion?.id }));
-                      }
+                    const nextVal = e.target.value;
+                    setChapter(nextVal);
+                    if (!isManualQuestionCode) {
+                      const chObj = availableChapters.find(c => c.title.toLowerCase() === nextVal.toLowerCase());
+                      setCustomQuestionCode(formatQuestionCode({ subject, chapter: nextVal, chapterCode: chObj?.code, id: initialQuestion?.id }));
                     }
                   }}
-                  className="w-full p-2 border border-slate-300 rounded-lg text-slate-900 bg-white font-medium focus:outline-hidden focus:ring-2 focus:ring-slate-900 cursor-pointer"
+                  className="w-full text-xs font-semibold p-2 border border-slate-300 rounded-lg text-slate-800 bg-white focus:ring-2 focus:ring-teal-500 shadow-2xs"
                 >
-                  {availableChapters.length === 0 ? (
-                    <option value="">No chapters in database for {subject}</option>
-                  ) : (
-                    availableChapters.map(ch => (
-                      <option key={ch.id || ch.title} value={ch.title}>
-                        {ch.title} {ch.code ? `(${ch.code})` : ''}
+                  {availableChapters.length > 0 ? (
+                    availableChapters.map(c => (
+                      <option key={c.id || c.title} value={c.title}>
+                        {c.code ? `[${c.code}] ` : ''}{c.title}
                       </option>
                     ))
+                  ) : (
+                    <option value={chapter || 'General'}>{chapter || 'General'}</option>
                   )}
-                  <option value="__NEW__">+ Add new custom chapter...</option>
                 </select>
-              ) : (
-                <input
-                  type="text"
-                  placeholder="Type custom chapter name..."
-                  value={chapter}
-                  onChange={e => {
-                    const val = e.target.value;
-                    setChapter(val);
-                    if (!isManualQuestionCode) {
-                      setCustomQuestionCode(formatQuestionCode({ subject, chapter: val, id: initialQuestion?.id }));
-                    }
-                  }}
-                  className="w-full p-2 border border-slate-300 rounded-lg text-slate-900 bg-white font-medium focus:outline-hidden focus:ring-2 focus:ring-slate-900"
-                />
               )}
             </div>
 
             <div>
-              <label className="block font-bold text-[11px] text-slate-500 uppercase mb-1">
-                Difficulty
-              </label>
+              <label className="block text-xs font-bold text-slate-700 mb-1">Difficulty</label>
               <select
                 value={difficulty}
                 onChange={e => setDifficulty(e.target.value as QuestionDifficulty)}
-                className="w-full p-2 border border-slate-300 rounded-lg text-slate-900 bg-white font-medium focus:outline-hidden focus:ring-2 focus:ring-slate-900"
+                className="w-full text-xs font-semibold p-2 border border-slate-300 rounded-lg text-slate-800 bg-white focus:ring-2 focus:ring-teal-500 shadow-2xs"
               >
                 <option value="Easy">Easy</option>
                 <option value="Medium">Medium</option>
@@ -741,25 +808,23 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
             </div>
 
             <div>
-              <label className="block font-bold text-[11px] text-slate-500 uppercase mb-1">
-                Marks (+ / -)
-              </label>
-              <div className="flex items-center gap-1">
-                <input
-                  type="number"
-                  value={marks}
-                  onChange={e => setMarks(Number(e.target.value))}
-                  className="w-1/2 p-2 border border-slate-300 rounded-lg text-slate-900 bg-white font-medium focus:outline-hidden focus:ring-2 focus:ring-slate-900 text-center"
-                  title="Marks for correct answer"
-                />
-                <input
-                  type="number"
-                  value={negativeMarks}
-                  onChange={e => setNegativeMarks(Number(e.target.value))}
-                  className="w-1/2 p-2 border border-slate-300 rounded-lg text-slate-900 bg-white font-medium focus:outline-hidden focus:ring-2 focus:ring-slate-900 text-center"
-                  title="Negative marks for incorrect answer"
-                />
-              </div>
+              <label className="block text-xs font-bold text-slate-700 mb-1">Marks</label>
+              <input
+                type="number"
+                value={marks}
+                onChange={e => setMarks(Number(e.target.value) || 0)}
+                className="w-full text-xs font-semibold p-2 border border-slate-300 rounded-lg text-slate-800 bg-white focus:ring-2 focus:ring-teal-500 shadow-2xs"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-1">Negative Marks</label>
+              <input
+                type="number"
+                value={negativeMarks}
+                onChange={e => setNegativeMarks(Number(e.target.value) || 0)}
+                className="w-full text-xs font-semibold p-2 border border-slate-300 rounded-lg text-slate-800 bg-white focus:ring-2 focus:ring-teal-500 shadow-2xs"
+              />
             </div>
           </div>
         </div>
@@ -812,28 +877,93 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
                       <div className="max-h-52 w-full flex items-center justify-center scale-95" dangerouslySetInnerHTML={{ __html: b.diagramSvg }} />
                     </div>
                   ) : b.imageUrl ? (
-                    <div className="py-4 text-center space-y-2 bg-slate-50 border border-slate-200 rounded-lg p-3">
-                      <img src={b.imageUrl} alt="Diagram" className="max-h-48 mx-auto rounded border border-slate-200 object-contain shadow-2xs" />
-                      <button
-                        type="button"
-                        onClick={() => setActiveImageBlockId(b.id)}
-                        className="px-3 py-1 bg-white border border-slate-300 hover:bg-slate-100 text-slate-800 text-xs font-bold rounded-md shadow-2xs transition-colors cursor-pointer"
-                      >
-                        Change / Select Image
-                      </button>
+                    <div className="py-4 text-center space-y-3 bg-slate-50 border border-slate-200 rounded-lg p-3">
+                      <img
+                        src={resolveImageUrl(b.imageUrl)}
+                        alt="Diagram"
+                        className="max-h-52 mx-auto rounded-lg border border-slate-200 object-contain shadow-2xs bg-white p-1"
+                      />
+                      
+                      <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
+                        <input
+                          ref={el => (blockFileInputRefs.current[b.id] = el)}
+                          type="file"
+                          accept="image/*"
+                          onChange={e => handleBlockImageUpload(b.id, e)}
+                          className="hidden"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setStudioModalState({
+                              isOpen: true,
+                              imageSrc: resolveImageUrl(b.imageUrl!),
+                              target: { type: 'block', id: b.id }
+                            });
+                          }}
+                          className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg shadow-2xs flex items-center gap-1.5 transition-all cursor-pointer"
+                        >
+                          <Crop className="w-3.5 h-3.5" />
+                          <span>Crop & Filters (Studio)</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setActiveImageLibraryTarget({ type: 'block', id: b.id })}
+                          className="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 text-slate-800 text-xs font-bold rounded-lg shadow-2xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                        >
+                          <ImageIcon className="w-3.5 h-3.5" />
+                          <span>Change Image</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => blockFileInputRefs.current[b.id]?.click()}
+                          disabled={uploadingBlockId === b.id}
+                          className="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 text-slate-800 text-xs font-bold rounded-lg shadow-2xs flex items-center gap-1.5 transition-colors cursor-pointer disabled:opacity-50"
+                        >
+                          {uploadingBlockId === b.id ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5" />}
+                          <span>Upload File</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => updateImageBlockUrl(b.id, '')}
+                          className="px-2.5 py-1.5 text-slate-400 hover:text-rose-600 rounded-lg transition-colors cursor-pointer"
+                          title="Remove image"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
                   ) : (
-                    <div className="py-6 text-center space-y-2 bg-slate-50 border border-dashed border-slate-300 rounded-lg">
-                      <div className="text-xs font-bold text-slate-400 uppercase tracking-wide">
-                        IMAGE / DIAGRAM PLACEHOLDER
+                    <div className="py-6 text-center space-y-3 bg-slate-50 border border-dashed border-slate-300 rounded-lg p-4">
+                      <div className="text-xs font-bold text-slate-500 uppercase tracking-wide">
+                        Add Question Image / Diagram
                       </div>
-                      <button
-                        type="button"
-                        onClick={() => setActiveImageBlockId(b.id)}
-                        className="px-3 rounded-lg py-1.5 bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold shadow-2xs transition-colors cursor-pointer"
-                      >
-                        Select Image from Library / Upload
-                      </button>
+                      <div className="flex items-center justify-center gap-2">
+                        <input
+                          ref={el => (blockFileInputRefs.current[b.id] = el)}
+                          type="file"
+                          accept="image/*"
+                          onChange={e => handleBlockImageUpload(b.id, e)}
+                          className="hidden"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => blockFileInputRefs.current[b.id]?.click()}
+                          disabled={uploadingBlockId === b.id}
+                          className="px-3.5 py-1.5 bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold rounded-lg shadow-2xs flex items-center gap-1.5 transition-colors cursor-pointer disabled:opacity-50"
+                        >
+                          {uploadingBlockId === b.id ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5" />}
+                          <span>Upload from Computer</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setActiveImageLibraryTarget({ type: 'block', id: b.id })}
+                          className="px-3.5 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 text-slate-800 text-xs font-bold rounded-lg shadow-2xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                        >
+                          <ImageIcon className="w-3.5 h-3.5" />
+                          <span>Select from Library</span>
+                        </button>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -858,31 +988,100 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
             </div>
           )}
 
-          <div className="p-5 space-y-3">
+          <div className="p-5 space-y-4">
             {options.map((opt, idx) => (
-              <div key={opt.key || idx} className="grid grid-cols-[36px_1fr_28px] gap-2 items-start">
-                <div className="h-10 flex items-center justify-center bg-slate-50 border border-slate-200 rounded-md font-bold text-slate-900 text-xs">
-                  {opt.key?.toUpperCase() || String.fromCharCode(65 + idx)}
+              <div key={opt.key || idx} className="p-3 border border-slate-200 rounded-xl bg-slate-50/50 space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setCorrectOption(idx)}
+                      className={`w-6 h-6 rounded-full flex items-center justify-center border transition-all text-xs font-bold cursor-pointer ${
+                        opt.isCorrect
+                          ? 'bg-teal-700 text-white border-teal-700 shadow-2xs ring-2 ring-teal-200'
+                          : 'border-slate-300 text-transparent hover:border-slate-400 hover:text-slate-300 bg-white'
+                      }`}
+                      title={opt.isCorrect ? 'Correct Answer' : 'Mark as Correct'}
+                    >
+                      ✓
+                    </button>
+                    <span className={`text-xs font-bold uppercase tracking-wider ${opt.isCorrect ? 'text-teal-900 font-extrabold' : 'text-slate-700'}`}>
+                      Option ({opt.key?.toUpperCase() || String.fromCharCode(65 + idx)}) {opt.isCorrect && '— Correct Answer'}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-1.5">
+                    <input
+                      ref={el => (optionFileInputRefs.current[idx] = el)}
+                      type="file"
+                      accept="image/*"
+                      onChange={e => handleOptionImageUpload(idx, e)}
+                      className="hidden"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => optionFileInputRefs.current[idx]?.click()}
+                      disabled={uploadingOptionIdx === idx}
+                      className="px-2.5 py-1 bg-white border border-slate-300 hover:bg-slate-100 text-slate-800 text-xs font-bold rounded-lg shadow-2xs flex items-center gap-1 transition-colors cursor-pointer disabled:opacity-50"
+                    >
+                      {uploadingOptionIdx === idx ? <Loader2 className="w-3 h-3 animate-spin" /> : <ImageIcon className="w-3 h-3" />}
+                      <span>{opt.imageUrl ? 'Replace Image' : '+ Image'}</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setActiveImageLibraryTarget({ type: 'option', index: idx })}
+                      className="px-2 py-1 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 text-xs font-bold rounded-lg shadow-2xs transition-colors cursor-pointer"
+                      title="Choose from Image Library"
+                    >
+                      Library
+                    </button>
+                  </div>
                 </div>
+
                 <RichTextEditor
                   compact
                   value={opt.rawText || ''}
                   onChange={txt => updateOptionText(idx, txt)}
-                  placeholder={`Option ${opt.key?.toUpperCase() || String.fromCharCode(65 + idx)}...`}
+                  placeholder={`Option (${opt.key?.toUpperCase() || String.fromCharCode(65 + idx)}) text or formula...`}
                   smartAssistantEnabled={isSmartAssistantEnabled}
                 />
-                <button
-                  type="button"
-                  onClick={() => setCorrectOption(idx)}
-                  className={`w-7 h-7 rounded-full flex items-center justify-center border transition-all mt-1.5 cursor-pointer ${
-                    opt.isCorrect
-                      ? 'bg-teal-700 text-white border-teal-700 shadow-2xs ring-2 ring-teal-200'
-                      : 'border-slate-300 text-transparent hover:border-slate-400 hover:text-slate-300'
-                  }`}
-                  title={opt.isCorrect ? 'Correct Answer' : 'Mark as Correct'}
-                >
-                  ✓
-                </button>
+
+                {opt.imageUrl && (
+                  <div className="p-2 bg-white border border-slate-200 rounded-lg flex items-center justify-between gap-3 shadow-2xs">
+                    <div className="flex items-center gap-3">
+                      <img
+                        src={resolveImageUrl(opt.imageUrl)}
+                        alt={`Option ${opt.key}`}
+                        className="max-h-20 max-w-[120px] object-contain rounded border border-slate-200 p-0.5"
+                      />
+                      <span className="text-xs text-slate-600 font-medium">Image attached to Option ({opt.key})</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setStudioModalState({
+                            isOpen: true,
+                            imageSrc: resolveImageUrl(opt.imageUrl!),
+                            target: { type: 'option', index: idx }
+                          });
+                        }}
+                        className="px-2.5 py-1 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-md shadow-2xs flex items-center gap-1 cursor-pointer"
+                      >
+                        <Crop className="w-3 h-3" />
+                        <span>Studio</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => updateOptionImageUrl(idx, undefined)}
+                        className="p-1 text-slate-400 hover:text-rose-600 rounded cursor-pointer"
+                        title="Remove option image"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -931,14 +1130,25 @@ export const CreateQuestionPage: React.FC<CreateQuestionPageProps> = ({
 
       {/* Image Library Picker Modal */}
       <ImageLibraryModal
-        isOpen={activeImageBlockId !== null}
+        isOpen={activeImageLibraryTarget !== null}
         subject={subject}
-        onClose={() => setActiveImageBlockId(null)}
+        onClose={() => setActiveImageLibraryTarget(null)}
         onSelectImage={url => {
-          if (activeImageBlockId) {
-            updateImageBlockUrl(activeImageBlockId, url);
+          if (activeImageLibraryTarget?.type === 'block') {
+            updateImageBlockUrl(activeImageLibraryTarget.id, url);
+          } else if (activeImageLibraryTarget?.type === 'option') {
+            updateOptionImageUrl(activeImageLibraryTarget.index, url);
           }
+          setActiveImageLibraryTarget(null);
         }}
+      />
+
+      {/* Image Studio Modal */}
+      <ImageStudioModal
+        isOpen={studioModalState.isOpen}
+        imageSrc={studioModalState.imageSrc}
+        onClose={() => setStudioModalState(prev => ({ ...prev, isOpen: false }))}
+        onSave={handleStudioSave}
       />
     </div>
   );

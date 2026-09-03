@@ -384,6 +384,155 @@ async function saveQuestionOptions(questionId: string, options: any[]) {
   }
 }
 
+const BUCKET_NAME = process.env.VITE_SUPABASE_STORAGE_BUCKET || 'question-assets';
+
+// Helper to upload base64 images directly into Supabase Storage
+async function uploadBase64ToStorage(base64Str: string, subject?: string, name?: string): Promise<{ publicUrl: string; storagePath: string } | null> {
+  if (!base64Str || !base64Str.startsWith('data:image/')) return null;
+  try {
+    const matches = base64Str.match(/^data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+);base64,(.+)$/);
+    if (!matches) return null;
+    const mimeType = matches[1] || 'image/png';
+    const buffer = Buffer.from(matches[2], 'base64');
+    const ext = mimeType.split('/')[1] || 'png';
+    const folder = (subject || 'general').toLowerCase().trim().replace(/[^a-z0-9_-]/g, '_') || 'general';
+    const fileName = `q_${Date.now()}_${Math.random().toString(36).substring(2, 7)}.${ext}`;
+    const storagePath = `${folder}/${fileName}`;
+
+    const { data: storageData, error: storageError } = await supabase.storage
+      .from(BUCKET_NAME)
+      .upload(storagePath, buffer, { contentType: mimeType, upsert: true });
+
+    if (!storageError && storageData) {
+      const { data: urlData } = supabase.storage.from(BUCKET_NAME).getPublicUrl(storagePath);
+      const publicUrl = urlData.publicUrl;
+
+      // Insert into assets table
+      try {
+        await supabase.from('assets').insert({
+          storage_path: storagePath,
+          public_url: publicUrl,
+          filename: name || fileName,
+          mime_type: mimeType,
+          size_bytes: buffer.length
+        });
+      } catch (assetErr) {
+        console.warn('[uploadBase64ToStorage] assets insert notice:', assetErr);
+      }
+
+      return { publicUrl, storagePath };
+    }
+  } catch (err) {
+    console.warn('[uploadBase64ToStorage] error:', err);
+  }
+  return null;
+}
+
+// Helper to scan and convert any base64 images into permanent Supabase storage public URLs before saving
+async function processAndUploadQuestionImages(body: any): Promise<any> {
+  const processed = { ...body };
+  const sub = processed.subject || processed.subject_name || 'general';
+
+  // 1. Process imageUrl
+  if (processed.imageUrl && processed.imageUrl.startsWith('data:image/')) {
+    const res = await uploadBase64ToStorage(processed.imageUrl, sub, `Question ${processed.questionCode || 'Asset'} Image`);
+    if (res?.publicUrl) {
+      processed.imageUrl = res.publicUrl;
+      processed.diagramUrl = res.publicUrl;
+    }
+  }
+
+  // 2. Process diagramUrl
+  if (processed.diagramUrl && processed.diagramUrl.startsWith('data:image/')) {
+    const res = await uploadBase64ToStorage(processed.diagramUrl, sub, `Question ${processed.questionCode || 'Asset'} Diagram`);
+    if (res?.publicUrl) {
+      processed.diagramUrl = res.publicUrl;
+      if (!processed.imageUrl) processed.imageUrl = res.publicUrl;
+    }
+  }
+
+  // 3. Process rawText for <img src="data:image/...">
+  if (typeof processed.rawText === 'string' && processed.rawText.includes('data:image/')) {
+    const matches = processed.rawText.match(/<img[^>]*src=["'](data:image\/[^"']+)["']/gi);
+    if (matches) {
+      for (const m of matches) {
+        const srcMatch = m.match(/src=["'](data:image\/[^"']+)["']/i);
+        if (srcMatch && srcMatch[1]) {
+          const res = await uploadBase64ToStorage(srcMatch[1], sub, `Statement Image`);
+          if (res?.publicUrl) {
+            processed.rawText = processed.rawText.replace(srcMatch[1], res.publicUrl);
+          }
+        }
+      }
+    }
+  }
+
+  // 4. Process content blocks
+  if (Array.isArray(processed.content)) {
+    const newContent = [];
+    for (const b of processed.content) {
+      const bCopy = { ...b };
+      const u = bCopy.url || bCopy.imageUrl || bCopy.src;
+      if (u && u.startsWith('data:image/')) {
+        const res = await uploadBase64ToStorage(u, sub, `Block Image`);
+        if (res?.publicUrl) {
+          bCopy.url = res.publicUrl;
+          bCopy.imageUrl = res.publicUrl;
+          if (bCopy.src) bCopy.src = res.publicUrl;
+        }
+      }
+      if (typeof bCopy.html === 'string' && bCopy.html.includes('data:image/')) {
+        const matches = bCopy.html.match(/<img[^>]*src=["'](data:image\/[^"']+)["']/gi);
+        if (matches) {
+          for (const m of matches) {
+            const srcMatch = m.match(/src=["'](data:image\/[^"']+)["']/i);
+            if (srcMatch && srcMatch[1]) {
+              const res = await uploadBase64ToStorage(srcMatch[1], sub, `Block HTML Image`);
+              if (res?.publicUrl) {
+                bCopy.html = bCopy.html.replace(srcMatch[1], res.publicUrl);
+              }
+            }
+          }
+        }
+      }
+      newContent.push(bCopy);
+    }
+    processed.content = newContent;
+  }
+
+  // 5. Process options
+  if (Array.isArray(processed.options)) {
+    const newOpts = [];
+    for (let i = 0; i < processed.options.length; i++) {
+      const opt = { ...processed.options[i] };
+      if (opt.imageUrl && opt.imageUrl.startsWith('data:image/')) {
+        const res = await uploadBase64ToStorage(opt.imageUrl, sub, `Option ${opt.key || String.fromCharCode(65 + i)} Image`);
+        if (res?.publicUrl) {
+          opt.imageUrl = res.publicUrl;
+        }
+      }
+      if (typeof opt.rawText === 'string' && opt.rawText.includes('data:image/')) {
+        const matches = opt.rawText.match(/<img[^>]*src=["'](data:image\/[^"']+)["']/gi);
+        if (matches) {
+          for (const m of matches) {
+            const srcMatch = m.match(/src=["'](data:image\/[^"']+)["']/i);
+            if (srcMatch && srcMatch[1]) {
+              const res = await uploadBase64ToStorage(srcMatch[1], sub, `Option ${opt.key || String.fromCharCode(65 + i)} Image`);
+              if (res?.publicUrl) {
+                opt.rawText = opt.rawText.replace(srcMatch[1], res.publicUrl);
+              }
+            }
+          }
+        }
+      }
+      newOpts.push(opt);
+    }
+    processed.options = newOpts;
+  }
+
+  return processed;
+}
+
 // Helper to automatically register attached images into the assets media library
 async function syncQuestionImagesToAssets(questionId: string, body: any) {
   try {
@@ -443,16 +592,20 @@ async function syncQuestionImagesToAssets(questionId: string, body: any) {
     const uniqueUrls = urls.filter((item, index, self) => index === self.findIndex(t => t.url === item.url));
 
     for (const item of uniqueUrls) {
-      const { data: existing } = await supabase.from('assets').select('id').eq('public_url', item.url).maybeSingle();
-      if (!existing) {
-        const subjectFolder = (body.subject || 'general').toLowerCase().trim();
-        await supabase.from('assets').insert({
-          storage_path: `${subjectFolder}/q_${questionId}_${Date.now()}.png`,
-          public_url: item.url,
-          filename: item.name || `question_asset_${Date.now()}`,
-          mime_type: 'image/png',
-          size_bytes: item.url.length
-        });
+      if (item.url.startsWith('data:image/')) {
+        await uploadBase64ToStorage(item.url, body.subject, item.name);
+      } else {
+        const { data: existing } = await supabase.from('assets').select('id').eq('public_url', item.url).maybeSingle();
+        if (!existing) {
+          const subjectFolder = (body.subject || 'general').toLowerCase().trim();
+          await supabase.from('assets').insert({
+            storage_path: `${subjectFolder}/q_${questionId}_${Date.now()}.png`,
+            public_url: item.url,
+            filename: item.name || `question_asset_${Date.now()}`,
+            mime_type: 'image/png',
+            size_bytes: item.url.length
+          });
+        }
       }
     }
   } catch (err) {
@@ -463,7 +616,8 @@ async function syncQuestionImagesToAssets(questionId: string, body: any) {
 // POST /api/questions - Create Question
 questionsRouter.post('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const body = req.body;
+    const rawBody = req.body;
+    const body = await processAndUploadQuestionImages(rawBody);
     const { subject_id, chapter_id } = await resolveSubjectAndChapter(
       body.subject || body.subject_name,
       body.chapter || body.chapter_name,
@@ -579,7 +733,8 @@ questionsRouter.post('/', async (req: Request, res: Response, next: NextFunction
 questionsRouter.put('/:id', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
-    const body = req.body;
+    const rawBody = req.body;
+    const body = await processAndUploadQuestionImages(rawBody);
     const { subject_id, chapter_id } = await resolveSubjectAndChapter(
       body.subject || body.subject_name,
       body.chapter || body.chapter_name,
@@ -623,7 +778,7 @@ questionsRouter.put('/:id', async (req: Request, res: Response, next: NextFuncti
     }
 
     // Auto-sync images into media library
-    syncQuestionImagesToAssets(id, body).catch(() => {});
+    syncQuestionImagesToAssets(String(id), body).catch(() => {});
 
     res.json({ success: true, data: { ...body, id } });
   } catch (err) {

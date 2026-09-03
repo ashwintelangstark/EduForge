@@ -150,60 +150,61 @@ export const supabaseDirect = {
   },
 
   async createQuestion(question: Partial<Question>): Promise<Question> {
-    const rawText = question.rawText || (Array.isArray(question.content) ? question.content.map((b: any) => b.text || b.html || '').join(' ') : '');
-    let questionCode = (question as any).questionCode || (question as any).question_code;
+    const cleanQ = await processAndUploadQuestionImagesDirect(question);
+    const rawText = cleanQ.rawText || (Array.isArray(cleanQ.content) ? cleanQ.content.map((b: any) => b.text || b.html || '').join(' ') : '');
+    let questionCode = (cleanQ as any).questionCode || (cleanQ as any).question_code;
     if (!questionCode || questionCode.startsWith('Q-') || questionCode === 'undefined') {
-      const sub = (question.subject || 'BIO').trim().toUpperCase().substring(0, 3);
-      const chClean = (question.chapter || 'GEN').replace(/[^a-zA-Z]/g, '').substring(0, 3).toUpperCase() || 'GEN';
+      const sub = (cleanQ.subject || 'BIO').trim().toUpperCase().substring(0, 3);
+      const chClean = (cleanQ.chapter || 'GEN').replace(/[^a-zA-Z]/g, '').substring(0, 3).toUpperCase() || 'GEN';
       const num = String(Math.floor(Math.random() * 9000) + 1000);
       questionCode = `${sub}-${chClean.padEnd(3, 'X')}-${num}`;
     }
 
-    let subject_id = (question as any).subjectId || (question as any).subject_id || null;
-    let chapter_id = (question as any).chapterId || (question as any).chapter_id || null;
+    let subject_id = (cleanQ as any).subjectId || (cleanQ as any).subject_id || null;
+    let chapter_id = (cleanQ as any).chapterId || (cleanQ as any).chapter_id || null;
 
     // Resolve subject_id if missing
-    if (!subject_id && question.subject) {
-      const { data: subs } = await supabase.from('subjects').select('id, name').ilike('name', question.subject).maybeSingle();
+    if (!subject_id && cleanQ.subject) {
+      const { data: subs } = await supabase.from('subjects').select('id, name').ilike('name', cleanQ.subject).maybeSingle();
       if (subs?.id) subject_id = subs.id;
     }
     // Resolve chapter_id if missing
-    if (!chapter_id && question.chapter) {
-      let chQuery = supabase.from('chapters').select('id, title').ilike('title', question.chapter);
+    if (!chapter_id && cleanQ.chapter) {
+      let chQuery = supabase.from('chapters').select('id, title').ilike('title', cleanQ.chapter);
       if (subject_id) chQuery = chQuery.eq('subject_id', subject_id);
       const { data: chs } = await chQuery.maybeSingle();
       if (chs?.id) chapter_id = chs.id;
     }
 
-    let contentToSave: any[] = Array.isArray(question.content) ? [...question.content] : [];
-    if (question.diagramSvg && !contentToSave.some((b: any) => b.type === 'diagram' || b.diagramSvg || b.svg)) {
-      contentToSave.push({ type: 'diagram', diagramSvg: question.diagramSvg, svg: question.diagramSvg });
+    let contentToSave: any[] = Array.isArray(cleanQ.content) ? [...cleanQ.content] : [];
+    if (cleanQ.diagramSvg && !contentToSave.some((b: any) => b.type === 'diagram' || b.diagramSvg || b.svg)) {
+      contentToSave.push({ type: 'diagram', diagramSvg: cleanQ.diagramSvg, svg: cleanQ.diagramSvg });
     }
-    if (question.imageUrl && !contentToSave.some((b: any) => b.type === 'image' || b.url || b.imageUrl)) {
-      contentToSave.push({ type: 'image', url: question.imageUrl, imageUrl: question.imageUrl } as any);
+    if (cleanQ.imageUrl && !contentToSave.some((b: any) => b.type === 'image' || b.url || b.imageUrl)) {
+      contentToSave.push({ type: 'image', url: cleanQ.imageUrl, imageUrl: cleanQ.imageUrl } as any);
     }
 
     const insertPayload: any = {
       question_code: questionCode,
       subject_id,
       chapter_id,
-      question_type: question.questionType || 'MCQ_SINGLE',
+      question_type: cleanQ.questionType || 'MCQ_SINGLE',
       content: contentToSave,
-      explanation: question.explanation || (question as any).explanationText || [],
-      difficulty: question.difficulty || 'Medium',
-      marks: Number(question.marks) || 4,
-      negative_marks: Number(question.negativeMarks) !== undefined ? Number(question.negativeMarks) : 1,
-      correct_option: (question.correctAnswer || (question as any).correctOption || 'A').toLowerCase(),
-      option_layout: question.optionLayout || 'grid_2x2',
+      explanation: cleanQ.explanation || (cleanQ as any).explanationText || [],
+      difficulty: cleanQ.difficulty || 'Medium',
+      marks: Number(cleanQ.marks) || 4,
+      negative_marks: Number(cleanQ.negativeMarks) !== undefined ? Number(cleanQ.negativeMarks) : 1,
+      correct_option: (cleanQ.correctAnswer || (cleanQ as any).correctOption || 'A').toLowerCase(),
+      option_layout: cleanQ.optionLayout || 'grid_2x2',
       raw_text: rawText,
-      year: question.year || null,
-      source: question.source || 'saved',
+      year: cleanQ.year || null,
+      source: cleanQ.source || 'saved',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()
     };
 
-    if (question.id && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(question.id)) {
-      insertPayload.id = question.id;
+    if (cleanQ.id && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(cleanQ.id)) {
+      insertPayload.id = cleanQ.id;
     }
 
     const { data: newQ, error } = await supabase
@@ -218,8 +219,8 @@ export const supabaseDirect = {
     }
 
     // Save Options
-    if (Array.isArray(question.options) && question.options.length > 0) {
-      const formattedOpts = question.options.map((opt: any, idx: number) => {
+    if (Array.isArray(cleanQ.options) && cleanQ.options.length > 0) {
+      const formattedOpts = cleanQ.options.map((opt: any, idx: number) => {
         let rawVal = opt.rawText || '';
         if (!rawVal && Array.isArray(opt.content)) {
           rawVal = opt.content.map((c: any) => c.latex ? `\\(${c.latex}\\)` : (c.html || c.text || '')).join(' ');
@@ -236,18 +237,19 @@ export const supabaseDirect = {
     }
 
     // Auto-sync images into media library
-    syncQuestionImagesToAssetsDirect(newQ.id, question).catch(() => {});
+    syncQuestionImagesToAssetsDirect(newQ.id, cleanQ).catch(() => {});
 
-    return { ...question, id: newQ.id, questionCode } as Question;
+    return { ...cleanQ, id: newQ.id, questionCode } as Question;
   },
 
   async updateQuestion(id: string, question: Partial<Question>): Promise<Question> {
-    const rawText = question.rawText || (Array.isArray(question.content) ? question.content.map((b: any) => b.text || b.html || '').join(' ') : '');
-    const qAny = question as any;
+    const cleanQ = await processAndUploadQuestionImagesDirect(question);
+    const rawText = cleanQ.rawText || (Array.isArray(cleanQ.content) ? cleanQ.content.map((b: any) => b.text || b.html || '').join(' ') : '');
+    const qAny = cleanQ as any;
     const updatePayload: any = {
       updated_at: new Date().toISOString()
     };
-    if (question.questionCode) updatePayload.question_code = question.questionCode;
+    if (cleanQ.questionCode) updatePayload.question_code = cleanQ.questionCode;
     if (qAny.subjectId || qAny.subject_id) updatePayload.subject_id = qAny.subjectId || qAny.subject_id;
     if (qAny.chapterId || qAny.chapter_id) updatePayload.chapter_id = qAny.chapterId || qAny.chapter_id;
     if (question.questionType) updatePayload.question_type = question.questionType;
@@ -766,6 +768,160 @@ export const supabaseDirect = {
   }
 };
 
+// Upload a base64 Data URL to Supabase Storage bucket
+async function uploadBase64ToStorageDirect(base64Str: string, subject?: string, name?: string): Promise<{ publicUrl: string; storagePath: string } | null> {
+  if (!base64Str || !base64Str.startsWith('data:image/')) return null;
+  try {
+    const matches = base64Str.match(/^data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+);base64,(.+)$/);
+    if (!matches) return null;
+    const mimeType = matches[1] || 'image/png';
+    const byteCharacters = atob(matches[2]);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: mimeType });
+    const ext = mimeType.split('/')[1] || 'png';
+    const folder = (subject || 'general').toLowerCase().trim().replace(/[^a-z0-9_-]/g, '_') || 'general';
+    const fileName = `q_${Date.now()}_${Math.random().toString(36).substring(2, 7)}.${ext}`;
+    const storagePath = `${folder}/${fileName}`;
+
+    const BUCKET_NAME = import.meta.env.VITE_SUPABASE_STORAGE_BUCKET || 'question-assets';
+    const { data: storageData, error: storageError } = await supabase.storage
+      .from(BUCKET_NAME)
+      .upload(storagePath, blob, { contentType: mimeType, upsert: true });
+
+    if (!storageError && storageData) {
+      const { data: urlData } = supabase.storage.from(BUCKET_NAME).getPublicUrl(storagePath);
+      const publicUrl = urlData.publicUrl;
+
+      // Insert into assets table
+      try {
+        await supabase.from('assets').insert({
+          storage_path: storagePath,
+          public_url: publicUrl,
+          filename: name || fileName,
+          mime_type: mimeType,
+          size_bytes: blob.size
+        });
+      } catch (assetErr) {
+        console.warn('[uploadBase64ToStorageDirect] assets insert notice:', assetErr);
+      }
+
+      return { publicUrl, storagePath };
+    }
+  } catch (err) {
+    console.warn('[uploadBase64ToStorageDirect] error:', err);
+  }
+  return null;
+}
+
+// Helper to convert any base64 images into permanent Supabase storage public URLs before saving
+async function processAndUploadQuestionImagesDirect(question: any): Promise<any> {
+  const processed = { ...question };
+  const sub = processed.subject || processed.subject_name || 'general';
+
+  // 1. Process imageUrl
+  if (processed.imageUrl && processed.imageUrl.startsWith('data:image/')) {
+    const res = await uploadBase64ToStorageDirect(processed.imageUrl, sub, `Question ${processed.questionCode || 'Asset'} Image`);
+    if (res?.publicUrl) {
+      processed.imageUrl = res.publicUrl;
+      processed.diagramUrl = res.publicUrl;
+    }
+  }
+
+  // 2. Process diagramUrl
+  if (processed.diagramUrl && processed.diagramUrl.startsWith('data:image/')) {
+    const res = await uploadBase64ToStorageDirect(processed.diagramUrl, sub, `Question ${processed.questionCode || 'Asset'} Diagram`);
+    if (res?.publicUrl) {
+      processed.diagramUrl = res.publicUrl;
+      if (!processed.imageUrl) processed.imageUrl = res.publicUrl;
+    }
+  }
+
+  // 3. Process rawText for <img src="data:image/...">
+  if (typeof processed.rawText === 'string' && processed.rawText.includes('data:image/')) {
+    const matches = processed.rawText.match(/<img[^>]*src=["'](data:image\/[^"']+)["']/gi);
+    if (matches) {
+      for (const m of matches) {
+        const srcMatch = m.match(/src=["'](data:image\/[^"']+)["']/i);
+        if (srcMatch && srcMatch[1]) {
+          const res = await uploadBase64ToStorageDirect(srcMatch[1], sub, `Statement Image`);
+          if (res?.publicUrl) {
+            processed.rawText = processed.rawText.replace(srcMatch[1], res.publicUrl);
+          }
+        }
+      }
+    }
+  }
+
+  // 4. Process content blocks
+  if (Array.isArray(processed.content)) {
+    const newContent = [];
+    for (const b of processed.content) {
+      const bCopy = { ...b };
+      const u = bCopy.url || bCopy.imageUrl || bCopy.src;
+      if (u && u.startsWith('data:image/')) {
+        const res = await uploadBase64ToStorageDirect(u, sub, `Block Image`);
+        if (res?.publicUrl) {
+          bCopy.url = res.publicUrl;
+          bCopy.imageUrl = res.publicUrl;
+          if (bCopy.src) bCopy.src = res.publicUrl;
+        }
+      }
+      if (typeof bCopy.html === 'string' && bCopy.html.includes('data:image/')) {
+        const matches = bCopy.html.match(/<img[^>]*src=["'](data:image\/[^"']+)["']/gi);
+        if (matches) {
+          for (const m of matches) {
+            const srcMatch = m.match(/src=["'](data:image\/[^"']+)["']/i);
+            if (srcMatch && srcMatch[1]) {
+              const res = await uploadBase64ToStorageDirect(srcMatch[1], sub, `Block HTML Image`);
+              if (res?.publicUrl) {
+                bCopy.html = bCopy.html.replace(srcMatch[1], res.publicUrl);
+              }
+            }
+          }
+        }
+      }
+      newContent.push(bCopy);
+    }
+    processed.content = newContent;
+  }
+
+  // 5. Process options
+  if (Array.isArray(processed.options)) {
+    const newOpts = [];
+    for (let i = 0; i < processed.options.length; i++) {
+      const opt = { ...processed.options[i] };
+      if (opt.imageUrl && opt.imageUrl.startsWith('data:image/')) {
+        const res = await uploadBase64ToStorageDirect(opt.imageUrl, sub, `Option ${opt.key || String.fromCharCode(65 + i)} Image`);
+        if (res?.publicUrl) {
+          opt.imageUrl = res.publicUrl;
+        }
+      }
+      if (typeof opt.rawText === 'string' && opt.rawText.includes('data:image/')) {
+        const matches = opt.rawText.match(/<img[^>]*src=["'](data:image\/[^"']+)["']/gi);
+        if (matches) {
+          for (const m of matches) {
+            const srcMatch = m.match(/src=["'](data:image\/[^"']+)["']/i);
+            if (srcMatch && srcMatch[1]) {
+              const res = await uploadBase64ToStorageDirect(srcMatch[1], sub, `Option ${opt.key || String.fromCharCode(65 + i)} Image`);
+              if (res?.publicUrl) {
+                opt.rawText = opt.rawText.replace(srcMatch[1], res.publicUrl);
+              }
+            }
+          }
+        }
+      }
+      newOpts.push(opt);
+    }
+    processed.options = newOpts;
+  }
+
+  return processed;
+}
+
 // Helper to automatically register attached images into the assets media library
 async function syncQuestionImagesToAssetsDirect(questionId: string, question: any) {
   try {
@@ -824,16 +980,20 @@ async function syncQuestionImagesToAssetsDirect(questionId: string, question: an
     const uniqueUrls = urls.filter((item, index, self) => index === self.findIndex(t => t.url === item.url));
 
     for (const item of uniqueUrls) {
-      const { data: existing } = await supabase.from('assets').select('id').eq('public_url', item.url).maybeSingle();
-      if (!existing) {
-        const subjectFolder = (qAny.subject || 'general').toLowerCase().trim();
-        await supabase.from('assets').insert({
-          storage_path: `${subjectFolder}/q_${questionId}_${Date.now()}.png`,
-          public_url: item.url,
-          filename: item.name || `question_asset_${Date.now()}`,
-          mime_type: 'image/png',
-          size_bytes: item.url.length
-        });
+      if (item.url.startsWith('data:image/')) {
+        await uploadBase64ToStorageDirect(item.url, qAny.subject, item.name);
+      } else {
+        const { data: existing } = await supabase.from('assets').select('id').eq('public_url', item.url).maybeSingle();
+        if (!existing) {
+          const subjectFolder = (qAny.subject || 'general').toLowerCase().trim();
+          await supabase.from('assets').insert({
+            storage_path: `${subjectFolder}/q_${questionId}_${Date.now()}.png`,
+            public_url: item.url,
+            filename: item.name || `question_asset_${Date.now()}`,
+            mime_type: 'image/png',
+            size_bytes: item.url.length
+          });
+        }
       }
     }
   } catch (err) {

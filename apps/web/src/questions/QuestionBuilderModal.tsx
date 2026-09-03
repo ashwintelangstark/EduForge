@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Question, QuestionOption, OptionLayoutType, QuestionDifficulty } from '@eduforge/shared';
-import { MathTextRenderer } from '../equation/MathTextRenderer.js';
+import { MathTextRenderer, resolveImageUrl } from '../equation/MathTextRenderer.js';
 import { MathTypeEditor } from '../equation/MathTypeEditor.js';
 import { DiagramStudioModal } from './DiagramStudioModal.js';
 import { RichTextEditor } from '../components/RichTextEditor.js';
@@ -1023,6 +1023,45 @@ export const QuestionBuilderModal: React.FC<QuestionBuilderModalProps> = ({
                       showPreview
                       smartAssistantEnabled={isSmartAssistantEnabled}
                     />
+
+                    {opt.imageUrl && (
+                      <div className="mt-2 p-2.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between shadow-2xs">
+                        <div className="flex items-center gap-3">
+                          <img
+                            src={resolveImageUrl(opt.imageUrl)}
+                            alt={`Option ${opt.key}`}
+                            className="max-h-16 max-w-[100px] object-contain rounded border border-slate-200 bg-white p-0.5"
+                          />
+                          <span className="text-xs text-slate-600 font-medium">Image attached to Option ({opt.key})</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setStudioImageSrc(resolveImageUrl(opt.imageUrl!));
+                              setStudioTarget({ type: 'option', index: idx });
+                              setIsImageStudioOpen(true);
+                            }}
+                            className="px-2.5 py-1 bg-white border border-slate-300 hover:bg-slate-100 text-slate-800 text-xs font-bold rounded-lg shadow-2xs flex items-center gap-1 cursor-pointer"
+                          >
+                            <Crop className="w-3.5 h-3.5" />
+                            <span>Studio</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const updated = [...options];
+                              updated[idx] = { ...updated[idx], imageUrl: undefined };
+                              setOptions(updated);
+                            }}
+                            className="p-1 text-slate-400 hover:text-rose-600 rounded-lg cursor-pointer"
+                            title="Remove option image"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+                    )}
 
                     {opt.diagramSvg && (
                       <div className="mt-2 p-2.5 bg-slate-50 border-2 border-emerald-300 rounded-xl flex items-center justify-between">
