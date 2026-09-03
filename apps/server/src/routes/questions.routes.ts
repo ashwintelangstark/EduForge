@@ -20,11 +20,29 @@ questionsRouter.get('/', async (req: Request, res: Response, next: NextFunction)
       query = query.ilike('raw_text', `%${search}%`);
     }
 
-    const { data, error } = await query;
+    let { data, error } = await query;
 
-    if (error) {
-      console.error('Supabase getQuestions error:', error);
-      return res.json({ success: true, data: [] });
+    if (error || !data || data.length === 0) {
+      // Resilient fallback: Query questions directly without schema cache joins
+      try {
+        let rawQuery = supabase.from('questions').select('*');
+        if (difficulty && difficulty !== 'all') {
+          rawQuery = rawQuery.eq('difficulty', difficulty as string);
+        }
+        if (search) {
+          rawQuery = rawQuery.ilike('raw_text', `%${search}%`);
+        }
+        const { data: rawQuestions } = await rawQuery;
+        if (rawQuestions && rawQuestions.length > 0) {
+          const { data: rawOptions } = await supabase.from('question_options').select('*');
+          data = rawQuestions.map((q: any) => ({
+            ...q,
+            question_options: (rawOptions || []).filter((opt: any) => opt.question_id === q.id)
+          }));
+        }
+      } catch (fallbackErr) {
+        console.warn('Fallback questions query warning:', fallbackErr);
+      }
     }
 
     let formattedList = (data || []).map((q: any) => {

@@ -89,9 +89,30 @@ export const supabaseDirect = {
         query = query.ilike('raw_text', `%${filters.search}%`);
       }
 
-      const { data, error } = await query;
-      if (error || !data) {
-        console.warn('[SupabaseDirect] getQuestions error:', error);
+      let { data, error } = await query;
+      if (error || !data || data.length === 0) {
+        try {
+          let rawQuery = supabase.from('questions').select('*');
+          if (filters?.difficulty && filters.difficulty !== 'all') {
+            rawQuery = rawQuery.eq('difficulty', filters.difficulty);
+          }
+          if (filters?.search) {
+            rawQuery = rawQuery.ilike('raw_text', `%${filters.search}%`);
+          }
+          const { data: rawQuestions } = await rawQuery;
+          if (rawQuestions && rawQuestions.length > 0) {
+            const { data: rawOptions } = await supabase.from('question_options').select('*');
+            data = rawQuestions.map((q: any) => ({
+              ...q,
+              question_options: (rawOptions || []).filter((opt: any) => opt.question_id === q.id)
+            }));
+          }
+        } catch (fallbackErr) {
+          console.warn('[SupabaseDirect] getQuestions fallback error:', fallbackErr);
+        }
+      }
+
+      if (!data || data.length === 0) {
         return [];
       }
 
