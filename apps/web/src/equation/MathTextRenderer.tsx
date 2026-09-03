@@ -25,8 +25,16 @@ export function resolveImageUrl(src: string | undefined): string {
 
 export function cleanHtmlTags(text: string): string {
   if (!text) return '';
-  let str = text.trim();
-  // Decode HTML entities
+  let str = String(text).trim();
+
+  // Strip empty/stray HTML tags in both escaped (&lt;p&gt;&lt;/p&gt;) and literal (<p></p>) formats
+  str = str
+    .replace(/(?:&lt;|<)\s*(?:p|div|span|h[1-6]|ul|ol|li)\s*(?:&gt;|>)\s*(?:&lt;|<)\s*\/\s*(?:p|div|span|h[1-6]|ul|ol|li)\s*(?:&gt;|>)/gi, ' ')
+    .replace(/(?:&lt;|<)\s*p\s*(?:&gt;|>)/gi, ' ')
+    .replace(/(?:&lt;|<)\s*\/\s*p\s*(?:&gt;|>)/gi, ' ')
+    .replace(/(?:&lt;|<)\s*br\s*\/?\s*(?:&gt;|>)/gi, ' ');
+
+  // Decode standard HTML entities
   str = str
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
@@ -35,11 +43,20 @@ export function cleanHtmlTags(text: string): string {
     .replace(/&amp;/g, '&')
     .replace(/&nbsp;/g, ' ');
 
-  // Strip HTML wrapper and formatting tags (except <img>)
-  str = str.replace(/<\/?(p|div|br|span|h[1-6]|ul|ol|li|strong|b|em|i|u|del|sub|sup)[^>]*>/gi, ' ');
+  // Strip remaining HTML wrapper and formatting tags (except <img>)
+  str = str.replace(/<\/?(p|div|br|span|h[1-6]|ul|ol|li|strong|b|em|i|u|del|sub|sup)[^>]*>/gi, (match) => {
+    if (/img/i.test(match)) return match;
+    return ' ';
+  });
 
-  // Collapse multiple whitespace
-  return str.replace(/\s+/g, ' ').trim();
+  // Final cleanup for any stray <p>, </p>, <p></p>, &lt;p&gt;, &lt;/p&gt;
+  str = str
+    .replace(/<\/?p>/gi, ' ')
+    .replace(/&lt;\/?p&gt;/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  return str;
 }
 
 /**
@@ -164,7 +181,16 @@ export function parseAndTokenizeMath(text: string, defaultBlock = false): MathTo
         tokens.push({ type: 'math', latex: mb.latex, block: mb.block });
       }
     } else {
-      tokens.push({ type: 'text', content: part });
+      let cleanPart = part
+        .replace(/<\/?p>/gi, '')
+        .replace(/&lt;\/?p&gt;/gi, '')
+        .replace(/<p\s*\/?>/gi, '')
+        .replace(/<\/p>/gi, '')
+        .replace(/&lt;p&gt;&lt;\/p&gt;/gi, '')
+        .trim();
+      if (cleanPart) {
+        tokens.push({ type: 'text', content: cleanPart });
+      }
     }
   }
 

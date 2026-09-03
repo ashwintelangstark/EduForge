@@ -298,7 +298,7 @@ export const QuestionBuilderModal: React.FC<QuestionBuilderModalProps> = ({
 
       let updatedHtml = rawText || '';
       localDataUrls.forEach(url => {
-        updatedHtml += `<p><img src="${url}" /></p>`;
+        updatedHtml = updatedHtml.trim() ? `${updatedHtml.trim()} <img src="${url}" />` : `<img src="${url}" />`;
       });
 
       setRawText(updatedHtml);
@@ -340,7 +340,7 @@ export const QuestionBuilderModal: React.FC<QuestionBuilderModalProps> = ({
 
       let updatedText = options[index].rawText || '';
       localDataUrls.forEach(url => {
-        updatedText += `<p><img src="${url}" /></p>`;
+        updatedText = updatedText.trim() ? `${updatedText.trim()} <img src="${url}" />` : `<img src="${url}" />`;
       });
 
       const updated = [...options];

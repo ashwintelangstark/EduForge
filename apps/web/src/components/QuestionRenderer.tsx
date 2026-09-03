@@ -143,7 +143,7 @@ export const QuestionRenderer: React.FC<QuestionRendererProps> = ({
             <ContentBlockRenderer key={block.id || idx} block={block} />
           ))
         ) : (
-          <p>{question.rawText || 'Question Content'}</p>
+          <MathTextRenderer text={question.rawText || 'Question Content'} />
         )}
       </div>
 
