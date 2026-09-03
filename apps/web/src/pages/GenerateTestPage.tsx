@@ -11,6 +11,7 @@ import { MathTextRenderer } from '../equation/MathTextRenderer.js';
 import { OptionLayoutRenderer } from '../questions/OptionLayoutRenderer.js';
 import { getUserProfile } from '../utils/userProfile.js';
 import { CollegeExamPaper } from '../components/CollegeExamPaper.js';
+import { hasQuestionImage } from './QuestionBankPage.js';
 
 export interface SectionConfig {
   id: string;
@@ -97,6 +98,7 @@ export const GenerateTestPage: React.FC<GenerateTestPageProps> = ({
   const [selectedChapterFilter, setSelectedChapterFilter] = useState<string>('all'); // Filter questions by chapter
   const [searchQuery, setSearchQuery] = useState<string>(''); // Search input query for filtering questions
   const [difficultyFilter, setDifficultyFilter] = useState<string>('All'); // Difficulty filter: All | Easy | Medium | Hard
+  const [imageFilter, setImageFilter] = useState<'all' | 'with_image' | 'without_image'>('all'); // Image filter: all | with_image | without_image
 
   // ==========================================
   // Auto-Distribution Percentage Rules (Synced to 100%)
@@ -495,6 +497,14 @@ export const GenerateTestPage: React.FC<GenerateTestPageProps> = ({
       return false;
     }
 
+    // 5. Image & Media Filter
+    if (imageFilter === 'with_image' && !hasQuestionImage(q)) {
+      return false;
+    }
+    if (imageFilter === 'without_image' && hasQuestionImage(q)) {
+      return false;
+    }
+
     // 5. Search Query
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
@@ -553,6 +563,16 @@ export const GenerateTestPage: React.FC<GenerateTestPageProps> = ({
       });
       return updated;
     });
+  };
+
+  const toggleSelectAllForActiveSection = (filteredList: Question[]) => {
+    const secToUse = targetSectionId || testSections[0]?.id || 'sec-1';
+    const allSelected = filteredList.length > 0 && filteredList.every(q => questionSectionMap[q.id] === secToUse);
+    if (allSelected) {
+      handleDeselectAll();
+    } else {
+      handleSelectAll();
+    }
   };
 
   /**
@@ -1573,8 +1593,8 @@ export const GenerateTestPage: React.FC<GenerateTestPageProps> = ({
                 </div>
               </div>
 
-              {/* Filters Row: Target Section, Subject, Chapter, Difficulty & Search */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+              {/* Filters Row: Target Section, Subject, Chapter, Difficulty, Media & Search */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
                 {/* 1. Target Test Section Filter */}
                 <div>
                   <label className="block text-[11px] font-bold uppercase text-teal-800 mb-1 tracking-wide">
@@ -1660,7 +1680,23 @@ export const GenerateTestPage: React.FC<GenerateTestPageProps> = ({
                   </select>
                 </div>
 
-                {/* 5. Search Question Bank */}
+                {/* 5. Media / Image Filter */}
+                <div>
+                  <label className="block text-[11px] font-bold uppercase text-slate-500 mb-1 tracking-wide">
+                    Filter by Media
+                  </label>
+                  <select
+                    value={imageFilter}
+                    onChange={e => setImageFilter(e.target.value as any)}
+                    className="w-full text-xs font-semibold p-2.5 border border-slate-300 rounded-xl text-slate-900 bg-white focus:ring-2 focus:ring-teal-600 cursor-pointer shadow-2xs"
+                  >
+                    <option value="all">All Media</option>
+                    <option value="with_image">🖼️ With Images</option>
+                    <option value="without_image">📝 No Images (Text)</option>
+                  </select>
+                </div>
+
+                {/* 6. Search Question Bank */}
                 <div>
                   <label className="block text-[11px] font-bold uppercase text-slate-500 mb-1 tracking-wide">
                     Search Question Bank
@@ -1671,7 +1707,7 @@ export const GenerateTestPage: React.FC<GenerateTestPageProps> = ({
                       type="text"
                       value={searchQuery}
                       onChange={e => setSearchQuery(e.target.value)}
-                      placeholder="Search text, code or topic..."
+                      placeholder="Search text, code..."
                       className="w-full text-xs font-medium pl-9 pr-3 py-2 border border-slate-300 rounded-xl text-slate-900 bg-white focus:ring-2 focus:ring-teal-600"
                     />
                   </div>
@@ -1683,26 +1719,41 @@ export const GenerateTestPage: React.FC<GenerateTestPageProps> = ({
                 <div className="overflow-x-auto max-h-[500px]">
                   <table className="w-full text-left border-collapse min-w-[750px]">
                     <thead className="bg-slate-50 border-b border-slate-200 sticky top-0 z-10">
-                      <tr className="text-[11px] font-extrabold uppercase text-slate-500 tracking-wider">
-                        <th className="py-3 px-4 w-12 text-center">Select</th>
-                        <th className="py-3 px-4 w-28">Code</th>
-                        <th className="py-3 px-4">Question Content</th>
+                      <tr className="text-slate-600 text-xs uppercase font-bold tracking-wider">
+                        <th className="py-3 px-4 w-12 text-center">
+                          <input
+                            type="checkbox"
+                            checked={
+                              filteredQuestions.length > 0 &&
+                              filteredQuestions.every(q => questionSectionMap[q.id] === targetSectionId)
+                            }
+                            onChange={() => toggleSelectAllForActiveSection(filteredQuestions)}
+                            className="w-4 h-4 text-teal-600 rounded border-slate-300 cursor-pointer"
+                            title="Select / Unselect All matching questions for this Section"
+                          />
+                        </th>
+                        <th className="py-3 px-4 w-36">Code / ID</th>
+                        <th className="py-3 px-4">Statement</th>
                         <th className="py-3 px-4 w-28">Subject</th>
                         <th className="py-3 px-4 w-36">Chapter</th>
                         <th className="py-3 px-4 w-24 text-center">Difficulty</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-100 text-xs font-medium text-slate-800">
+                    <tbody className="divide-y divide-slate-100 text-xs font-medium">
                       {filteredQuestions.length === 0 ? (
                         <tr>
-                          <td colSpan={6} className="py-12 text-center text-slate-400 font-medium">
-                            No questions found matching your filter criteria.
+                          <td colSpan={6} className="py-12 text-center text-slate-400">
+                            <div className="flex flex-col items-center justify-center gap-2">
+                              <HelpCircle className="w-8 h-8 text-slate-300" />
+                              <p className="font-semibold text-sm">No questions matched the current filter criteria</p>
+                              <p className="text-xs text-slate-500">Try changing or clearing filters above</p>
+                            </div>
                           </td>
                         </tr>
                       ) : (
                         filteredQuestions.map(q => {
+                          const isAssignedToThisSec = questionSectionMap[q.id] === targetSectionId;
                           const assignedSecId = questionSectionMap[q.id];
-                          const isAssignedToThisSec = assignedSecId === targetSectionId;
                           const otherSec = assignedSecId && assignedSecId !== targetSectionId
                             ? testSections.find(s => s.id === assignedSecId)
                             : null;
@@ -1711,12 +1762,11 @@ export const GenerateTestPage: React.FC<GenerateTestPageProps> = ({
                           return (
                             <tr
                               key={q.id}
-                              onClick={() => toggleQuestionSelection(q.id)}
-                              className={`cursor-pointer transition-colors hover:bg-slate-50 ${
-                                isAssignedToThisSec ? 'bg-teal-50/70 font-semibold' : otherSec ? 'bg-slate-50/60' : ''
+                              className={`transition-colors hover:bg-slate-50/80 ${
+                                isAssignedToThisSec ? 'bg-teal-50/50' : ''
                               }`}
                             >
-                              <td className="py-3 px-4 text-center" onClick={e => e.stopPropagation()}>
+                              <td className="py-3 px-4 text-center">
                                 <input
                                   type="checkbox"
                                   checked={isAssignedToThisSec}
@@ -1733,8 +1783,13 @@ export const GenerateTestPage: React.FC<GenerateTestPageProps> = ({
                                 )}
                               </td>
                               <td className="py-3 px-4 text-slate-900">
-                                <div className="line-clamp-2 max-w-md">
+                                <div className="line-clamp-2 max-w-md flex items-center gap-1.5 flex-wrap">
                                   <MathTextRenderer text={q.rawText || ''} />
+                                  {hasQuestionImage(q) && (
+                                    <span className="inline-flex items-center gap-0.5 text-[9px] font-bold bg-sky-50 text-sky-700 border border-sky-200 px-1.5 py-0.5 rounded shrink-0">
+                                      🖼️ Image
+                                    </span>
+                                  )}
                                 </div>
                               </td>
                               <td className="py-3 px-4 font-semibold text-slate-700">

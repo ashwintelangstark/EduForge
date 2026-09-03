@@ -63,6 +63,22 @@ export const isQuestionSaved = (q: any): boolean => {
   return !isQuestionPublished(q) && !isQuestionPending(q);
 };
 
+export const hasQuestionImage = (q: any): boolean => {
+  if (!q) return false;
+  if (q.imageUrl && String(q.imageUrl).trim()) return true;
+  if (q.diagramUrl && String(q.diagramUrl).trim()) return true;
+  if (q.diagramSvg && String(q.diagramSvg).trim()) return true;
+  if (Array.isArray(q.imageUrls) && q.imageUrls.length > 0) return true;
+  if (typeof q.rawText === 'string' && /<img\s+/i.test(q.rawText)) return true;
+  if (Array.isArray(q.content) && q.content.some((b: any) =>
+    b.type === 'image' || b.type === 'diagram' || b.imageUrl || b.url || b.diagramSvg || b.svg || (typeof b.text === 'string' && /<img\s+/i.test(b.text)) || (typeof b.html === 'string' && /<img\s+/i.test(b.html))
+  )) return true;
+  if (Array.isArray(q.options) && q.options.some((o: any) =>
+    o.imageUrl || (typeof o.rawText === 'string' && /<img\s+/i.test(o.rawText)) || (Array.isArray(o.content) && o.content.some((c: any) => c.type === 'image' || (typeof c.text === 'string' && /<img\s+/i.test(c.text)) || (typeof c.html === 'string' && /<img\s+/i.test(c.html))))
+  )) return true;
+  return false;
+};
+
 interface QuestionBankPageProps {
   mode?: 'all' | 'saved' | 'published' | 'approvals';
   onBackToDashboard?: () => void;
@@ -93,6 +109,7 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
   const [selectedSubject, setSelectedSubject] = useState<string>('all');
   const [selectedChapterFilter, setSelectedChapterFilter] = useState<string>('all');
   const [difficultyFilter, setDifficultyFilter] = useState<string>('all');
+  const [imageFilter, setImageFilter] = useState<'all' | 'with_image' | 'without_image'>('all');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
@@ -499,6 +516,10 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
     if (statusFilter === 'Draft' && q.isSystem) return false;
     if (statusFilter === 'Published' && !q.isSystem) return false;
 
+    // 5. Image & Diagram Media Filter
+    if (imageFilter === 'with_image' && !hasQuestionImage(q)) return false;
+    if (imageFilter === 'without_image' && hasQuestionImage(q)) return false;
+
     return true;
   });
 
@@ -634,7 +655,7 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
 
       {/* Search & Comprehensive Filter Row */}
       <div className="bg-white p-3.5 sm:p-5 rounded-2xl border border-slate-200/80 shadow-2xs space-y-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5 sm:gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2.5 sm:gap-3">
           {/* Instant Search Box */}
           <div className="relative lg:col-span-2">
             <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
@@ -696,10 +717,23 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
               <option value="Hard">Hard</option>
             </select>
           </div>
+
+          {/* Image & Diagram Media Filter Dropdown */}
+          <div className="relative">
+            <select
+              value={imageFilter}
+              onChange={e => setImageFilter(e.target.value as any)}
+              className="w-full py-2.5 px-3 text-xs border border-slate-300 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-teal-600 bg-white text-slate-900 font-semibold cursor-pointer shadow-2xs"
+            >
+              <option value="all">All Media</option>
+              <option value="with_image">🖼️ With Images</option>
+              <option value="without_image">📝 No Images (Text)</option>
+            </select>
+          </div>
         </div>
 
         {/* Filter Summary & Quick Reset */}
-        {(selectedSubject !== 'all' || selectedChapterFilter !== 'all' || difficultyFilter !== 'all' || search.trim()) && (
+        {(selectedSubject !== 'all' || selectedChapterFilter !== 'all' || difficultyFilter !== 'all' || imageFilter !== 'all' || search.trim()) && (
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-1 border-t border-slate-100 text-xs font-semibold text-slate-500">
             <div className="flex items-center gap-2 flex-wrap">
               <Filter className="w-3.5 h-3.5 text-teal-600 shrink-0" />
@@ -708,6 +742,8 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
                 {selectedSubject !== 'all' && <b className="text-teal-700 ml-1">Subject: {selectedSubject}</b>}
                 {selectedChapterFilter !== 'all' && <b className="text-teal-700 ml-1">· Chapter: {chapters.find(c => c.id === selectedChapterFilter)?.title || selectedChapterFilter}</b>}
                 {difficultyFilter !== 'all' && <b className="text-teal-700 ml-1">· Difficulty: {difficultyFilter}</b>}
+                {imageFilter === 'with_image' && <b className="text-teal-700 ml-1">· 🖼️ With Images</b>}
+                {imageFilter === 'without_image' && <b className="text-teal-700 ml-1">· 📝 Text Only</b>}
                 {search.trim() && <b className="text-teal-700 ml-1">· Search: "{search}"</b>}
               </span>
             </div>
@@ -717,6 +753,7 @@ export const QuestionBankPage: React.FC<QuestionBankPageProps> = ({
                 setSelectedSubject('all');
                 setSelectedChapterFilter('all');
                 setDifficultyFilter('all');
+                setImageFilter('all');
                 setStatusFilter('all');
                 setSearch('');
                 if (onClearChapterFilter) onClearChapterFilter();
