@@ -22,5 +22,17 @@ export default defineConfig({
         changeOrigin: true
       }
     }
+  },
+  build: {
+    target: 'esnext',
+    chunkSizeWarningLimit: 1600,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          katex: ['katex'],
+          icons: ['lucide-react']
+        }
+      }
+    }
   }
 });

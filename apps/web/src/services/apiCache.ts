@@ -5,32 +5,70 @@ interface CacheEntry<T> {
 }
 
 const memoryCache = new Map<string, CacheEntry<any>>();
-const DEFAULT_TTL_MS = 60 * 1000; // 60 seconds TTL
+const DEFAULT_TTL_MS = 3 * 60 * 1000; // 3 minutes default TTL
 
 export const apiCache = {
   get<T>(key: string, maxAgeMs = DEFAULT_TTL_MS): T | null {
+    // 1. Check in-memory cache
     const entry = memoryCache.get(key);
-    if (!entry) return null;
-    if (Date.now() - entry.timestamp > maxAgeMs) {
+    if (entry) {
+      if (Date.now() - entry.timestamp <= maxAgeMs) {
+        return entry.data;
+      }
       memoryCache.delete(key);
-      return null;
     }
-    return entry.data;
+
+    // 2. Check sessionStorage fallback for instant reload persistence
+    try {
+      if (typeof window !== 'undefined' && window.sessionStorage) {
+        const stored = sessionStorage.getItem(`edu_cache_${key}`);
+        if (stored) {
+          const parsed: CacheEntry<T> = JSON.parse(stored);
+          if (Date.now() - parsed.timestamp <= maxAgeMs) {
+            memoryCache.set(key, parsed);
+            return parsed.data;
+          }
+          sessionStorage.removeItem(`edu_cache_${key}`);
+        }
+      }
+    } catch {}
+
+    return null;
   },
 
   set<T>(key: string, data: T): void {
     if (data === null || data === undefined) return;
-    memoryCache.set(key, { data, timestamp: Date.now() });
+    const entry: CacheEntry<T> = { data, timestamp: Date.now() };
+    memoryCache.set(key, entry);
+
+    try {
+      if (typeof window !== 'undefined' && window.sessionStorage) {
+        sessionStorage.setItem(`edu_cache_${key}`, JSON.stringify(entry));
+      }
+    } catch {}
   },
 
   invalidate(keyPattern?: string): void {
     if (!keyPattern) {
       memoryCache.clear();
+      try {
+        if (typeof window !== 'undefined' && window.sessionStorage) {
+          Object.keys(sessionStorage).forEach(k => {
+            if (k.startsWith('edu_cache_')) sessionStorage.removeItem(k);
+          });
+        }
+      } catch {}
       return;
     }
+
     for (const key of memoryCache.keys()) {
       if (key.includes(keyPattern)) {
         memoryCache.delete(key);
+        try {
+          if (typeof window !== 'undefined' && window.sessionStorage) {
+            sessionStorage.removeItem(`edu_cache_${key}`);
+          }
+        } catch {}
       }
     }
   },
