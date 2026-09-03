@@ -89,10 +89,12 @@ export const supabaseDirect = {
         query = query.ilike('raw_text', `%${filters.search}%`);
       }
 
+      query = query.order('created_at', { ascending: false }).limit(200);
+
       let { data, error } = await query;
       if (error || !data || data.length === 0) {
         try {
-          let rawQuery = supabase.from('questions').select('*');
+          let rawQuery = supabase.from('questions').select('*').order('created_at', { ascending: false }).limit(200);
           if (filters?.difficulty && filters.difficulty !== 'all') {
             rawQuery = rawQuery.eq('difficulty', filters.difficulty);
           }
@@ -110,9 +112,15 @@ export const supabaseDirect = {
                 .in('question_id', qIds);
               rawOptions = fetchedOpts || [];
             }
+            const optsMap = new Map<string, any[]>();
+            rawOptions.forEach((opt: any) => {
+              const arr = optsMap.get(opt.question_id) || [];
+              arr.push(opt);
+              optsMap.set(opt.question_id, arr);
+            });
             data = rawQuestions.map((q: any) => ({
               ...q,
-              question_options: rawOptions.filter((opt: any) => opt.question_id === q.id)
+              question_options: optsMap.get(q.id) || []
             }));
           }
         } catch (fallbackErr) {

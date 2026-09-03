@@ -11,11 +11,11 @@ import { attemptsApi } from './api/attempts.js';
 import { supabaseDirect } from './supabaseDirect.js';
 import { apiCache } from './apiCache.js';
 
-// Fast parallel resolution helper with 1.2s timeout
+// Fast parallel resolution helper with ultra-responsive 200ms timeout
 async function withFallback<T>(primaryFn: () => Promise<T>, fallbackFn: () => Promise<T>): Promise<T> {
   try {
     const timeoutPromise = new Promise<never>((_, reject) =>
-      setTimeout(() => reject(new Error('API request timeout, switching to direct data engine')), 1200)
+      setTimeout(() => reject(new Error('API request timeout, switching to direct data engine')), 200)
     );
     const result = await Promise.race([primaryFn(), timeoutPromise]);
     if (result && Array.isArray(result) && result.length === 0) {
